@@ -125,6 +125,12 @@
   function step(p) {
     const { stage, input, marker, mem } = p;
     const r = read(input.text, stage);
+    // A reading from the AI, already checked by verify(), replaces "unclear".
+    if (p.override && r.strategy === "unclear") {
+      r.strategy = p.override.strategy;
+      if (p.override.total !== null && p.override.total !== undefined) r.total = p.override.total;
+      r.byAI = true;
+    }
     // The two halves of the split may come in two messages.
     if (r.strategy !== "split" && mem.halfText && read(`${mem.halfText} ${input.text}`, stage).strategy === "split") {
       r.strategy = "split";
@@ -152,6 +158,15 @@
         answerOK
           ? `Pertanyaan yang bagus. Menurutmu, apa yang istimewa dari 0 °C di termometer, dibandingkan angka lainnya?`
           : `Pertanyaan yang bagus. Coba kita lihat bersama di termometer: dari ${s}, penandanya perlu bergerak ke mana supaya sampai di ${e}?`);
+    }
+
+    if (r.strategy === "offTopic") {
+      return out("L1", "offTopic",
+        `Kita lanjutkan soal suhunya dulu, ya. Dari ${s}, penanda di termometer perlu bergerak ke mana supaya sampai di ${e}?`);
+    }
+    if (r.strategy === "splitIdea") {
+      return out("L4", "splitIdea",
+        `Kamu mau berhenti di 0 dulu. Dari ${s} sampai 0 °C, berapa derajat ${verb}nya?`);
     }
 
     // Goal reached: correct answer and the split at 0 in the student's own words.
@@ -209,17 +224,21 @@
         case "counting": {
           // A stuck student skips the "faster way?" question and gets the pointer to 0.
           const n = stuck ? Math.max(1, mem.counting) : mem.counting;
+          const kind = stuck ? "stuck" : "counting";
           if (n === 0) {
-            return out("L4", "counting",
+            return out("L4", kind,
               `Kamu menghitung satu per satu dan sampai di ${size}. Bisakah kamu menemukannya lebih cepat, tanpa menghitung satu per satu?`);
           }
           if (n === 1) {
-            return out("L2", "counting",
+            return out("L2", kind,
               `Perhatikan angka 0 di termometer. Kalau kamu berhenti sebentar di 0 °C, berapa derajat yang sudah ${verb} dari ${s}?`);
           }
-          return out("L3", "counting",
+          return out("L3", kind,
             `Berapa derajat dari ${s} sampai 0 °C, dan berapa derajat dari 0 °C sampai ${e}? Tuliskan keduanya.`);
         }
+        case "direction":
+          return out("L4", "direction",
+            `Ya, suhunya ${verb}. Berapa derajat ${noun}nya, dan bagaimana kamu menghitungnya di termometer?`);
         case "splitHalf":
           return out("L4", "splitHalf",
             `Kamu sudah berhenti di 0. Bagian yang satunya lagi berapa derajat? Tulis kedua bagiannya.`);
@@ -273,6 +292,9 @@
     direction: "baru arah gerak",
     unclear: "belum jelas",
     howTo: "bertanya cara memakai applet",
+    offTopic: "di luar soal",
+    stuck: "macet, belum tahu cara lebih cepat",
+    splitIdea: "ide berhenti di 0, belum ada angka",
     why: "bertanya kenapa",
     "wrong:noSign": "salah: mengurangkan tanpa tanda",
     "wrong:fencepost": "salah: menghitung angka, bukan lompatan",
@@ -295,6 +317,7 @@
     const k = res.kind;
     const AIM = {
       "L1:unclear": [`Ajak siswa mencoba dengan termometer di applet, lalu tanya berapa ${noun} suhunya dan bagaimana ia mendapatkannya.`, noAnswer],
+      "L4:direction": [`Siswa menyebut arah perubahan suhu saja. Tanggapi arahnya, lalu tanya berapa derajat perubahannya dan bagaimana ia menghitungnya di termometer.`, noSplit],
       "L1:direction": [`Tanggapi arah yang disebut siswa, lalu minta ia menggerakkan penanda dari ${s} sampai ${e} dan menyebut berapa ${noun} yang ia lihat.`, noAnswer],
       "L1:countingNoTotal": [`Siswa bergerak derajat demi derajat tapi belum menyebut totalnya. Tanyakan totalnya.`, noAnswer],
       "L2:wrong": [`Jawaban siswa belum tepat. Tanpa bilang salah, ajak siswa memeriksa jawabannya sendiri di termometer (mulai dari ${s}, bergerak sebanyak jawabannya, lihat sampai di mana).`, noAnswer + " " + noSplit],
@@ -309,9 +332,11 @@
       "L4:formal": [`Siswa memakai hitungan simbolik. Hargai, lalu minta ia menunjukkan langkahnya di termometer.`, noSplit],
       "L1:howTo": [`Siswa bertanya cara memakai applet. Jelaskan singkat: penanda biru dan merah ditarik ke atas atau ke bawah. Lalu ajak ia meletakkan penanda biru di ${s}.`, noAnswer + " " + noSplit],
       "L2:howTo": [`Siswa masih bingung memakai applet. Jelaskan lagi dengan kata lain cara menarik penanda, lalu ajak mencoba dari ${s}.`, noAnswer + " " + noSplit],
+      "L1:offTopic": [`Siswa menulis hal di luar soal. Tanggapi singkat dan ramah, lalu ajak kembali ke soal termometer dengan satu pertanyaan.`, noAnswer + " " + noSplit],
+      "L4:splitIdea": [`Siswa sendiri punya ide berhenti di 0 tapi belum menyebut angka. Hargai idenya, lalu tanya berapa derajat dari ${s} sampai 0 °C.`, noAnswer],
       "L4:why": [`Siswa bertanya kenapa. Jangan langsung menjawab; kembalikan pertanyaannya supaya ia berpikir sendiri, dengan melihat termometer.`, noAnswer + " " + noSplit],
     };
-    const key = `${res.move}:${k.startsWith("wrong") ? "wrong" : k}`;
+    const key = `${res.move}:${k.startsWith("wrong") ? "wrong" : k === "stuck" ? "counting" : k}`;
     const [aim, avoid] = AIM[key] || [null, null];
     if (!aim) return null;
     const allow = new Set([stage.start, stage.end]);
@@ -320,7 +345,59 @@
     return { aim, avoid, allowNumbers: [...allow] };
   }
 
-  const api = { normalise, numbers, read, step, opening, isCorrect, fmt, deg, KIND_LABEL, brief };
+  const AI_STRATEGIES = ["split", "splitHalf", "splitIdea", "counting", "sumOnly", "formal", "answerOnly",
+    "dontKnow", "direction", "howTo", "why", "offTopic", "unclear"];
+  const ZERO_WORDS = /(\b0\b|nol|titik beku|beku)/;
+
+  /**
+   * Checks an AI reading of the student's text against the text itself and the task.
+   * Anything the AI claims about numbers must be visible in what the student wrote.
+   * Returns {strategy, total} to use, or null to stay with "unclear".
+   */
+  function verify(ai, text, stage) {
+    if (!ai || !AI_STRATEGIES.includes(ai.strategy) || ai.strategy === "unclear") return null;
+    const t = normalise(text);
+    const ns = numbers(t);
+    const abs = ns.map(Math.abs);
+    const has = (v) => abs.includes(Math.abs(v));
+    const zero = ZERO_WORDS.test(t);
+    let total = Number.isFinite(Number(ai.total)) && ai.total !== null ? Number(ai.total) : null;
+    if (total !== null && !has(total)) total = null; // the AI may not invent the student's number
+
+    // The part below 0 must appear as a positive amount ("naik 6"), not only as the temperature
+    // "-6"; the part above 0 has the same number as its temperature, so either counts.
+    const below = Math.abs(Math.min(stage.start, stage.end));
+    const above = Math.max(stage.start, stage.end);
+    const partBelow = ns.includes(below);
+    const partAbove = ns.includes(above);
+    // One part alone counts only if it is clearly an amount: the part below 0 written as a
+    // positive number, or the part above 0 written twice (as temperature and as amount).
+    const halfPart = partBelow || ns.filter((n) => n === above).length >= 2;
+
+    switch (ai.strategy) {
+      case "split":
+        // The final confirmation depends on this, so both parts and the stop at 0 must be written.
+        if (partBelow && partAbove && zero) return { strategy: "split", total };
+        if (zero && halfPart) return { strategy: "splitHalf", total };
+        return zero ? { strategy: "splitIdea", total: null } : null;
+      case "splitHalf":
+        if (zero && halfPart) return { strategy: "splitHalf", total };
+        return zero ? { strategy: "splitIdea", total: null } : null;
+      case "splitIdea":
+        return zero ? { strategy: "splitIdea", total: null } : null;
+      case "counting":
+        return ns.length >= 2 || /satu|per derajat|tiap derajat/.test(t) ? { strategy: "counting", total } : null;
+      case "answerOnly":
+        return total !== null ? { strategy: "answerOnly", total } : null;
+      case "sumOnly":
+      case "formal":
+        return ns.length >= 2 ? { strategy: ai.strategy, total } : null;
+      default:
+        return { strategy: ai.strategy, total: null };
+    }
+  }
+
+  const api = { normalise, numbers, read, step, opening, isCorrect, fmt, deg, KIND_LABEL, brief, verify };
   if (typeof module !== "undefined") module.exports = api;
   else window.SuhuTutor = api;
 })();

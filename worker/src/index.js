@@ -145,6 +145,35 @@ function similarity(a, b) {
   return inter / Math.min(A.size, B.size);
 }
 
+/* /classify: reads which strategy a student's sentence shows, for sentences the page's
+   rules could not place. The page checks the result against the sentence before using it. */
+function classifyPrompt(b) {
+  const st = b.stage || {};
+  const s = Number(st.start);
+  const e = Number(st.end);
+  const a = Math.abs(s);
+  const c = Math.abs(e);
+  return `Kamu membantu guru matematika membaca jawaban siswa SMP. Soal: suhu dari ${s} °C ke ${e} °C (perubahan ${Math.abs(e - s)} derajat). Siswa menulis penjelasan dengan bahasa sehari-hari.
+
+Pilih SATU strategi yang paling cocok dengan kalimat siswa:
+- split: siswa memecah perubahan di 0 °C dan menyebut kedua bagian (${a} derajat sampai 0, lalu ${c} derajat dari 0). "Titik beku" berarti 0 °C.
+- splitHalf: siswa berhenti di 0 °C dan menyebut satu bagian saja.
+- splitIdea: siswa punya ide berhenti atau lewat 0 °C dulu, tapi belum menyebut angka bagiannya.
+- counting: siswa menghitung satu derajat demi satu derajat.
+- sumOnly: siswa menjumlahkan dua angka tanpa menjelaskan asalnya.
+- formal: siswa memakai hitungan pengurangan atau rumus.
+- answerOnly: siswa hanya menyebut hasil akhir tanpa cara.
+- dontKnow: siswa bilang tidak tahu, tidak mengerti, atau bingung.
+- direction: siswa hanya menyebut arah (naik, ke atas, turun) tanpa angka.
+- howTo: siswa bertanya cara memakai applet.
+- why: siswa bertanya kenapa.
+- offTopic: kalimat di luar soal.
+- unclear: tidak ada yang cocok.
+
+Isi "total" dengan angka hasil akhir yang DITULIS siswa (bukan hasil hitunganmu), atau null.
+Balas HANYA JSON satu baris: {"strategy":"...","total":null,"reason":"alasan singkat"}`;
+}
+
 function parseJSON(text) {
   if (text && typeof text === "object") return text;
   const m = String(text || "").match(/\{[\s\S]*\}/);
@@ -185,13 +214,50 @@ export default {
     if (!ALLOWED_ORIGINS.includes(origin)) return send(403, { error: "origin not allowed" });
 
     const { pathname } = new URL(request.url);
-    if (pathname !== "/chat") return send(404, { error: "not found" });
+    if (pathname !== "/chat" && pathname !== "/classify") return send(404, { error: "not found" });
 
     let b;
     try {
       b = await request.json();
     } catch {
       return send(400, { error: "bad json" });
+    }
+
+    if (pathname === "/classify") {
+      const text = clip(b?.text, MAX_CHARS).trim();
+      if (!text || !Number.isFinite(Number(b?.stage?.start)) || !Number.isFinite(Number(b?.stage?.end))) {
+        return send(400, { error: "missing text or stage" });
+      }
+      const messages = [
+        { role: "system", content: classifyPrompt(b) },
+        { role: "user", content: `Kalimat siswa: "${text}"` },
+      ];
+      for (const model of [MODEL_MAIN, MODEL_BACKUP]) {
+        try {
+          const out = await env.AI.run(model, { messages, max_tokens: 120, temperature: 0.1 });
+          let j = parseJSON(out?.response);
+          if (!j || typeof j.strategy !== "string") {
+            // Plain text instead of JSON: take the first strategy name it mentions.
+            const raw = String(out?.response || "");
+            const names = ["splitHalf", "splitIdea", "split", "counting", "sumOnly", "formal", "answerOnly",
+              "dontKnow", "direction", "howTo", "why", "offTopic", "unclear"];
+            const hit = names.find((n) => new RegExp(`\\b${n}\\b`).test(raw));
+            if (hit) j = { strategy: hit, total: null, reason: raw.slice(0, 160) };
+          }
+          if (j && typeof j.strategy === "string") {
+            const total = j.total === null || j.total === undefined || j.total === "" ? null : Number(j.total);
+            return send(200, {
+              strategy: j.strategy.trim(),
+              total: Number.isFinite(total) ? total : null,
+              reason: clip(j.reason, 200),
+              model: model.split("/").pop(),
+            });
+          }
+        } catch {
+          // try the next model
+        }
+      }
+      return send(502, { error: "no reading" });
     }
 
     // Two page types: the dolphin task sends A/B, other tasks send a context text and

@@ -302,6 +302,25 @@ const NALAR_API = "https://nalar-demo.zainun.workers.dev";
 
   /* ---------------- AI call ---------------- */
 
+  async function classify(payload) {
+    if (!NALAR_API) return null;
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 12000);
+    try {
+      const r = await fetch(`${NALAR_API.replace(/\/$/, "")}/classify`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+        signal: ctrl.signal,
+      });
+      return r.ok ? await r.json() : null;
+    } catch {
+      return null;
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
   async function askAI(payload) {
     if (!NALAR_API) return null;
     const ctrl = new AbortController();
@@ -358,11 +377,24 @@ const NALAR_API = "https://nalar-demo.zainun.workers.dev";
     else bubble("student", inp.text);
     history.push({ role: "user", content: inp.from === "applet" ? `(jawaban di applet) ${inp.text}` : inp.text });
 
-    const res = T.step({ stage: s, input: inp, marker: m, mem });
-    const size = Math.abs(s.end - s.start);
-
     typing(true);
     const t0 = performance.now();
+
+    // When the rules cannot place a chat answer, the AI reads it; the reading is used only
+    // if what it claims can be seen in the student's own words.
+    let override = null;
+    let aiReading = null;
+    if (inp.from === "chat" && T.read(inp.text, s).strategy === "unclear" && !mem.halfText) {
+      aiReading = await classify({
+        stage: { start: s.start, end: s.end, question: s.question },
+        text: inp.text,
+        markers: m,
+        answerCorrect: mem.answerOK,
+      });
+      override = T.verify(aiReading, inp.text, s);
+    }
+    const res = T.step({ stage: s, input: inp, marker: m, mem, override });
+    const size = Math.abs(s.end - s.start);
     const forbid = res.answerOK ? [] : [String(size)];
     const plan = T.brief(res, s, inp.text);
     const ai = res.move === "OK" || res.move === "HINT" ? null : await askAI({
@@ -410,7 +442,7 @@ const NALAR_API = "https://nalar-demo.zainun.workers.dev";
 
     mem.answerOK = res.answerOK;
     if (res.kind.startsWith("wrong")) mem.wrong += 1;
-    if (res.kind === "counting") mem.counting += 1;
+    if (res.kind === "counting" || res.kind === "stuck") mem.counting += 1;
     if (res.kind === "splitHalf") mem.halfText = inp.text;
     mem.lastKind = res.kind;
     addLog({ stage: s.id, m, inp, res, source, reply });
@@ -442,7 +474,7 @@ const NALAR_API = "https://nalar-demo.zainun.workers.dev";
       input_from: inp.from,
       student_text: inp.text,
       numbers_read: res.reading.ns.join(" "),
-      diagnosis: T.KIND_LABEL[res.kind] || res.kind,
+      diagnosis: (T.KIND_LABEL[res.kind] || res.kind) + (res.reading.byAI ? " (dibaca AI)" : ""),
       move: MOVE_NAME[res.move] || res.move,
       source,
       ai_text: reply,

@@ -27,3 +27,11 @@ sets task type 5 (-6 to 4) and type 4 (3 to -5), then random crossing-zero tasks
 ("Soal baru"). It translates the task texts, hides the applet's own right/wrong feedback, reads the
 blue and red markers (`L`, `E`) and the answer text (`Zad<n>Upisano`), and logs when the student
 opens the help box (it shows the subtraction formula).
+
+AI layers in the temperature demo (worker at `nalar-demo.zainun.workers.dev`):
+- `/chat` writes each reply from a brief (aim, what to avoid, allowed numbers) built by `tutor.brief()`;
+  replies that change the move, add numbers, judge ("benar", "salah"...), drop the question or copy
+  the script are rejected, and the script is used instead.
+- `/classify` reads the strategy of chat answers the rules mark "unclear". `tutor.verify()` keeps the
+  reading only if what it claims is visible in the student's words (for the split: both parts and
+  0 or "titik beku"). The log marks these rows "(dibaca AI)".
