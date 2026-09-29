@@ -234,7 +234,7 @@ export default {
           if (forbid.some((f) => new RegExp(`(^|[^0-9])${f}([^0-9]|$)`).test(t))) { r("forbidden"); continue; }
           const extra = signed(reply).filter((n) => !allow.has(n));
           if (extra.length) { r(`new numbers ${extra.join(",")}`); continue; }
-          if (/(benar|salah|betul|tepat|memang|hebat|pintar)/i.test(reply)) { r("judges"); continue; }
+          if (/\b(benar|salah|betul|tepat|memang|hebat|pintar)\b/i.test(reply)) { r("judges"); continue; }
           if (similarity(reply, b.scriptReply) > 0.8) { r("copies script"); continue; }
           if (prev.some((p) => similarity(reply, p) > 0.8)) { r("repeats"); continue; }
           return send(200, { reply, move: b.analysis.suggestedMove, model: model.split("/").pop() });
