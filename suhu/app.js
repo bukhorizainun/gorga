@@ -364,7 +364,8 @@ const NALAR_API = "https://nalar-demo.shelbot-plus.workers.dev";
     typing(true);
     const t0 = performance.now();
     const forbid = res.answerOK ? [] : [String(size)];
-    const ai = res.move === "OK" ? null : await askAI({
+    const plan = T.brief(res, s, inp.text);
+    const ai = res.move === "OK" || res.move === "HINT" ? null : await askAI({
       task: { id: TASK.id, title: TASK.title, unit: TASK.unit, misconceptions: TASK.misconceptions, moves: TASK.moves },
       stage: { id: s.id, question: s.question, target: TASK.target },
       context:
@@ -380,6 +381,7 @@ const NALAR_API = "https://nalar-demo.shelbot-plus.workers.dev";
         wrongAttempts: mem.wrong,
       },
       forbid,
+      brief: plan,
       scriptReply: res.reply,
       history: history.slice(-10),
     });
@@ -392,8 +394,8 @@ const NALAR_API = "https://nalar-demo.shelbot-plus.workers.dev";
     if (ai) {
       // The AI may rephrase, but may not change the move or bring in a number that is not in
       // the scripted reply or the student's message (that is how it would give the split away).
-      const allowed = new Set([...T.numbers(T.normalise(res.reply)), ...T.numbers(T.normalise(inp.text))].map(Math.abs));
-      const newNumber = T.numbers(T.normalise(ai.reply)).some((n) => !allowed.has(Math.abs(n)));
+      const allowed = new Set(plan ? plan.allowNumbers : [...T.numbers(T.normalise(res.reply)), ...T.numbers(T.normalise(inp.text))]);
+      const newNumber = T.numbers(T.normalise(ai.reply)).some((n) => !allowed.has(n));
       const lostQuestion = res.reply.includes("?") && !ai.reply.includes("?");
       if (!leaks(ai.reply, forbid) && ai.move === res.move && !newNumber && !lostQuestion) {
         reply = ai.reply;

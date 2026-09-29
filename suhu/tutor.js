@@ -282,7 +282,45 @@
     "wrong:none": "salah",
   };
 
-  const api = { normalise, numbers, read, step, opening, isCorrect, fmt, deg, KIND_LABEL };
+  /**
+   * What the AI has to achieve with this turn, in words, plus the numbers it may use.
+   * The AI writes its own sentence from this; the scripted reply is only the fallback.
+   */
+  function brief(res, stage, studentText) {
+    const s = deg(stage.start);
+    const e = deg(stage.end);
+    const { noun } = verbs(stage);
+    const noSplit = "Jangan menyebut angka 0 sebagai titik pemecah dan jangan menyebut dua bagian perubahan (dari suhu awal ke 0, dari 0 ke suhu akhir).";
+    const noAnswer = "Jangan menyebut jawaban akhir.";
+    const k = res.kind;
+    const AIM = {
+      "L1:unclear": [`Ajak siswa mencoba dengan termometer di applet, lalu tanya berapa ${noun} suhunya dan bagaimana ia mendapatkannya.`, noAnswer],
+      "L1:direction": [`Tanggapi arah yang disebut siswa, lalu minta ia menggerakkan penanda dari ${s} sampai ${e} dan menyebut berapa ${noun} yang ia lihat.`, noAnswer],
+      "L1:countingNoTotal": [`Siswa bergerak derajat demi derajat tapi belum menyebut totalnya. Tanyakan totalnya.`, noAnswer],
+      "L2:wrong": [`Jawaban siswa belum tepat. Tanpa bilang salah, ajak siswa memeriksa jawabannya sendiri di termometer (mulai dari ${s}, bergerak sebanyak jawabannya, lihat sampai di mana).`, noAnswer + " " + noSplit],
+      "L3:wrong": [`Pecah soal menjadi dua pertanyaan kecil: berapa derajat dari ${s} sampai 0 °C, dan berapa dari 0 °C sampai ${e}. Jangan beri hasilnya.`, noAnswer],
+      "L4:answerOnly": [`Siswa sudah menulis jawaban yang benar tapi belum menjelaskan. Jangan bilang benar. Minta ia menceritakan bagaimana ia mendapatkannya dengan termometer.`, noSplit],
+      "L4:counting": [`Siswa menghitung satu per satu. Sebut kembali caranya dengan kata-katamu, hargai usahanya, lalu tanya apakah ada cara yang lebih cepat tanpa menghitung satu per satu.`, noSplit],
+      "L2:counting": [`Arahkan perhatian siswa ke angka 0 di termometer: tanya berapa derajat dari ${s} sampai 0 °C.`, "Jangan beri hasilnya."],
+      "L3:counting": [`Minta siswa menuliskan dua bagian: dari ${s} sampai 0 °C, dan dari 0 °C sampai ${e}.`, "Jangan beri hasilnya."],
+      "L4:splitHalf": [`Siswa sudah berhenti di 0 dan menyebut satu bagian. Minta bagian yang satunya lagi.`, noAnswer],
+      "L4:splitNoTotal": [`Siswa sudah memecah di 0. Tanya total perubahannya.`, noAnswer],
+      "L4:sumOnly": [`Siswa menjumlahkan dua angka. Tanya dari mana kedua angka itu di termometer, dari mana ke mana.`, noSplit],
+      "L4:formal": [`Siswa memakai hitungan simbolik. Hargai, lalu minta ia menunjukkan langkahnya di termometer.`, noSplit],
+      "L1:howTo": [`Siswa bertanya cara memakai applet. Jelaskan singkat: penanda biru dan merah ditarik ke atas atau ke bawah. Lalu ajak ia meletakkan penanda biru di ${s}.`, noAnswer + " " + noSplit],
+      "L2:howTo": [`Siswa masih bingung memakai applet. Jelaskan lagi dengan kata lain cara menarik penanda, lalu ajak mencoba dari ${s}.`, noAnswer + " " + noSplit],
+      "L4:why": [`Siswa bertanya kenapa. Jangan langsung menjawab; kembalikan pertanyaannya supaya ia berpikir sendiri, dengan melihat termometer.`, noAnswer + " " + noSplit],
+    };
+    const key = `${res.move}:${k.startsWith("wrong") ? "wrong" : k}`;
+    const [aim, avoid] = AIM[key] || [null, null];
+    if (!aim) return null;
+    const allow = new Set([stage.start, stage.end]);
+    for (const n of numbers(normalise(res.reply))) allow.add(n);
+    for (const n of numbers(normalise(studentText))) allow.add(n);
+    return { aim, avoid, allowNumbers: [...allow] };
+  }
+
+  const api = { normalise, numbers, read, step, opening, isCorrect, fmt, deg, KIND_LABEL, brief };
   if (typeof module !== "undefined") module.exports = api;
   else window.SuhuTutor = api;
 })();

@@ -89,6 +89,62 @@ FORMAT KELUARAN
 Balas HANYA dengan JSON satu baris: {"move":"<langkah dari daftar>","reply":"<teks untuk siswa>"}`;
 }
 
+/* Flexible mode: the page sends a brief (aim, what to avoid, allowed numbers) instead of
+   asking for a paraphrase. The model writes its own reply to what the student said. */
+const STYLE = [
+  "Coba kerjakan dengan termometer. Berapa kenaikan suhunya, dan bagaimana kamu mendapatkannya?",
+  "Oke, coba jelaskan caramu menggunakan termometer. Bagaimana kamu bisa mendapatkan 10 kali kenaikan?",
+  "Di applet, coba letakkan suhu awal di −6 °C. Dari −6 °C, ke arah mana kamu harus menggerakkan suhu agar mendekati 4 °C?",
+];
+
+function flexPrompt(b) {
+  const t = b.task || {};
+  const s = b.stage || {};
+  const br = b.brief || {};
+  const prev = (Array.isArray(b.history) ? b.history : [])
+    .filter((m) => m && m.role === "assistant")
+    .slice(-3)
+    .map((m) => `- ${clip(m.content, 200)}`)
+    .join("\n");
+  return `Kamu "guru bayangan" untuk siswa SMP di Indonesia. Siswa mengerjakan soal di applet termometer GeoGebra, lalu menjelaskan cara berpikirnya kepadamu di chat. Kamu tidak memberi jawaban; kamu bertanya supaya siswa menemukan dan menjelaskan sendiri.
+
+SOAL: ${clip(s.question, 300)}
+KEADAAN APPLET: ${clip(b.context, 500)}
+IDE TARGET (rahasia, jangan diucapkan sebelum siswa menyatakannya): ${clip(s.target, 300)}
+
+TUGASMU UNTUK BALASAN INI
+${clip(br.aim, 400)}
+${br.avoid ? "LARANGAN: " + clip(br.avoid, 300) : ""}
+Angka yang boleh kamu pakai hanya: ${(br.allowNumbers || []).join(", ")}.
+
+CARA MENULIS
+- Tanggapi kalimat terakhir siswa secara spesifik: pakai kembali kata atau angka yang ia tulis.
+- Tulis dengan kata-katamu sendiri, hangat dan santai seperti guru yang sabar. Variasikan kalimat; jangan mengulang balasan sebelumnya.
+- Tepat satu pertanyaan, di akhir. Maksimal 2 kalimat pendek, maksimal 40 kata.
+- Jangan bilang "benar" atau "salah". Tanpa emoji, tanpa markdown.
+- Termometer itu tegak: suhu naik = penanda ke atas, suhu turun = penanda ke bawah.
+
+CONTOH GAYA GURU (jangan disalin; angkanya hanya contoh):
+${STYLE.map((x) => "- " + x).join("\n")}
+
+BALASANMU SEBELUMNYA (jangan diulang):
+${prev || "- (belum ada)"}
+
+Balas HANYA dengan JSON satu baris: {"reply":"<teks untuk siswa>"}`;
+}
+
+function words(s) {
+  return new Set(String(s || "").toLowerCase().replace(/[^a-z0-9\u00C0-\u024f\s-]/g, " ").split(/\s+/).filter((w) => w.length > 2));
+}
+function similarity(a, b) {
+  const A = words(a);
+  const B = words(b);
+  if (!A.size || !B.size) return 0;
+  let inter = 0;
+  for (const w of A) if (B.has(w)) inter++;
+  return inter / Math.min(A.size, B.size);
+}
+
 function parseJSON(text) {
   if (text && typeof text === "object") return text;
   const m = String(text || "").match(/\{[\s\S]*\}/);
@@ -152,8 +208,38 @@ export default {
       .filter((m) => m.content.trim());
     if (!turns.length || turns[turns.length - 1].role !== "user") return send(400, { error: "no student turn" });
 
-    const messages = [{ role: "system", content: systemPrompt(b) }, ...turns];
     const correct = b?.analysis?.kind === "correct";
+
+    if (forbid && b.brief && b.brief.aim) {
+      const messages = [{ role: "system", content: flexPrompt(b) }, ...turns];
+      const allow = new Set((b.brief.allowNumbers || []).map(Number));
+      const prev = turns.filter((m) => m.role === "assistant").map((m) => m.content);
+      const signed = (x) => (String(x || "").replace(/[−–—]/g, "-").match(/-?\d+/g) || []).map(Number);
+      const tries = [[MODEL_MAIN, 0.8], [MODEL_MAIN, 0.95], [MODEL_BACKUP, 0.8]];
+      const why = [];
+      const reject = (r) => { why.push(r); };
+      for (const [model, temperature] of tries) {
+        try {
+          const out = await env.AI.run(model, { messages, max_tokens: 200, temperature });
+          const j = parseJSON(out?.response);
+          const reply = clip(j?.reply, 400).trim();
+          if (!reply || !reply.includes("?")) continue;
+          if (reply.split(/\s+/).length > 55) continue;
+          const t = normalise(reply);
+          if (forbid.some((f) => new RegExp(`(^|[^0-9])${f}([^0-9]|$)`).test(t))) continue;
+          if (signed(reply).some((n) => !allow.has(n))) continue;
+          if (/\b(benar|salah|betul|tepat)\b/i.test(reply)) continue;
+          if (similarity(reply, b.scriptReply) > 0.8) continue;
+          if (prev.some((p) => similarity(reply, p) > 0.8)) continue;
+          return send(200, { reply, move: b.analysis.suggestedMove, model: model.split("/").pop() });
+        } catch (e) {
+          reject(`error: ${String(e && e.message).slice(0, 120)}`);
+        }
+      }
+      return send(502, { error: "no usable reply", why });
+    }
+
+    const messages = [{ role: "system", content: systemPrompt(b) }, ...turns];
 
     for (const model of [MODEL_MAIN, MODEL_BACKUP]) {
       try {
