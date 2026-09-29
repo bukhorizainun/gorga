@@ -2,7 +2,7 @@
    the chat only probes how the student got the answer. */
 
 // Worker URL for AI mode. Empty = scripted mode (no AI, no network beyond GeoGebra).
-const NALAR_API = "https://nalar-demo.shelbot-plus.workers.dev";
+const NALAR_API = "https://nalar-demo.zainun.workers.dev";
 
 (function () {
   const TASK = window.SUHU_TASK;

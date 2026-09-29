@@ -221,16 +221,22 @@ export default {
       for (const [model, temperature] of tries) {
         try {
           const out = await env.AI.run(model, { messages, max_tokens: 200, temperature });
+          // Llama often answers in plain text instead of the JSON asked for; take either.
+          const raw = typeof out?.response === "string" ? out.response.trim() : "";
           const j = parseJSON(out?.response);
-          const reply = clip(j?.reply, 400).trim();
-          if (!reply || !reply.includes("?")) continue;
-          if (reply.split(/\s+/).length > 55) continue;
+          const plain = raw.startsWith("{") ? "" : raw.replace(/^(balasan|jawaban)\s*:\s*/i, "").replace(/^["'“]|["'”]$/g, "");
+          const reply = clip(j?.reply || plain, 400).trim();
+          const r = (why) => { reject(`${why}: ${reply || String(out?.response).slice(0, 160)}`); };
+          if (!reply) { reject(`no json [${typeof out?.response}] ${JSON.stringify(out?.response).slice(0, 120)}`); continue; }
+          if (!reply.includes("?")) { r("no question"); continue; }
+          if (reply.split(/\s+/).length > 55) { r("too long"); continue; }
           const t = normalise(reply);
-          if (forbid.some((f) => new RegExp(`(^|[^0-9])${f}([^0-9]|$)`).test(t))) continue;
-          if (signed(reply).some((n) => !allow.has(n))) continue;
-          if (/\b(benar|salah|betul|tepat)\b/i.test(reply)) continue;
-          if (similarity(reply, b.scriptReply) > 0.8) continue;
-          if (prev.some((p) => similarity(reply, p) > 0.8)) continue;
+          if (forbid.some((f) => new RegExp(`(^|[^0-9])${f}([^0-9]|$)`).test(t))) { r("forbidden"); continue; }
+          const extra = signed(reply).filter((n) => !allow.has(n));
+          if (extra.length) { r(`new numbers ${extra.join(",")}`); continue; }
+          if (/(benar|salah|betul|tepat|memang|hebat|pintar)/i.test(reply)) { r("judges"); continue; }
+          if (similarity(reply, b.scriptReply) > 0.8) { r("copies script"); continue; }
+          if (prev.some((p) => similarity(reply, p) > 0.8)) { r("repeats"); continue; }
           return send(200, { reply, move: b.analysis.suggestedMove, model: model.split("/").pop() });
         } catch (e) {
           reject(`error: ${String(e && e.message).slice(0, 120)}`);

@@ -1,7 +1,7 @@
 /* Nalar demo: GeoGebra applet + scaffolding chat. */
 
 // Worker URL for AI mode. Empty = scripted mode (no AI, no network beyond GeoGebra).
-const NALAR_API = "https://nalar-demo.shelbot-plus.workers.dev";
+const NALAR_API = "https://nalar-demo.zainun.workers.dev";
 
 (function () {
   const TASK = window.NALAR_TASK;
