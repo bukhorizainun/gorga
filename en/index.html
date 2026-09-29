@@ -159,19 +159,57 @@
     <section class="block" id="activities">
       <div class="wrap">
         <div class="head2">
-          <div><span class="eyebrow">Activities</span><h2>Starting with integers.</h2></div>
-          <p>Activities use the teacher's own GeoGebra applets. The protocol and the questions are written with the teacher for each activity.</p>
+          <div><span class="eyebrow">Activities</span><h2>One window per topic.</h2></div>
+          <p>Activities are grouped in windows. The Integers window holds the teacher's seven climate-action activities. Applet 1 runs the full protocol with a task card; the others use the general protocol until their task cards are ready.</p>
         </div>
-        <div class="acts">
+        <div class="wins" role="group" aria-label="Topic windows">
+          <button type="button" class="win on" data-win="0" aria-pressed="true">Integers <small>7 activities</small></button><button type="button" class="win" data-win="1">Geometry <small>coming</small></button><button type="button" class="win" data-win="2">Algebra <small>coming</small></button><button type="button" class="win" data-win="3">Data & Statistics <small>coming</small></button>
+        </div>
+        <div class="win-panel" data-panel="0">
+        <div class="acts seven">
           <a class="act" href="../suhu/?lang=en">
-            <div class="thumb"><img src="../assets/thumb-suhu.png" alt="Thermometer applet with a temperature question" loading="lazy"><span class="chip live">Live · AI</span></div>
-            <div class="body"><h3>Temperature Scale</h3><p>Temperatures rising and falling across 0 °C. A GeoGebra thermometer, questions from the teacher's activity, full AI tutor.</p><span class="go">Open the activity →</span></div>
+            <div class="thumb"><img src="https://www.geogebra.org/resource/yx7ubuvn/8cOttCfpDRkrsJfX/material-yx7ubuvn-thumb.png" alt="" loading="lazy"><span class="chip live">Full protocol · AI</span><span class="num">1</span></div>
+            <div class="body"><span class="label">Applet 1 · 9 questions</span><h3>Temperature Scale</h3><p>Comparing and computing temperature changes across 0 °C.</p><span class="go">Open →</span></div>
           </a>
-          <a class="act" href="../laut/?lang=en">
-            <div class="thumb"><img src="../assets/thumb-laut.png" alt="Applet with two dolphins above and below sea level" loading="lazy"><span class="chip">Prototype</span></div>
-            <div class="body"><h3>Sea Level</h3><p>Comparing integers through two dolphins above and below sea level. An early prototype; its tutor speaks Indonesian.</p><span class="go">Open the prototype →</span></div>
+          <a class="act" href="../aktivitas/?a=2&lang=en">
+            <div class="thumb"><img src="https://www.geogebra.org/resource/mmbs5mud/vHm9p6FMTSFSSPnz/material-mmbs5mud-thumb.png" alt="" loading="lazy"><span class="chip">General protocol · AI</span><span class="num">2</span></div>
+            <div class="body"><span class="label">Applet 2 · 3 questions</span><h3>Carbon Balance</h3><p>Adding integers with balloons (up) and sandbags (down).</p><span class="go">Open →</span></div>
           </a>
+          <a class="act" href="../aktivitas/?a=3&lang=en">
+            <div class="thumb"><img src="https://www.geogebra.org/resource/k6j6pdbw/ihXB4bDz6R4e6YWr/material-k6j6pdbw-thumb.png" alt="" loading="lazy"><span class="chip">General protocol · AI</span><span class="num">3</span></div>
+            <div class="body"><span class="label">Applet 3 · 7 questions</span><h3>Sea Level</h3><p>Positive and negative integers for positions above and below sea level.</p><span class="go">Open →</span></div>
+          </a>
+          <a class="act" href="../aktivitas/?a=4&lang=en">
+            <div class="thumb"><img src="https://www.geogebra.org/resource/smhk6ugm/AthRGTSR8MHlPrDE/material-smhk6ugm-thumb.png" alt="" loading="lazy"><span class="chip">General protocol · AI</span><span class="num">4</span></div>
+            <div class="body"><span class="label">Applet 4 · 5 questions</span><h3>Sustainable Transport</h3><p>Multiplying integers through direction, speed and walking time.</p><span class="go">Open →</span></div>
+          </a>
+          <a class="act" href="../aktivitas/?a=5&lang=en">
+            <div class="thumb"><img src="https://www.geogebra.org/resource/r2azmb49/ivepo5MSeeqLgcEs/material-r2azmb49-thumb.png" alt="" loading="lazy"><span class="chip">General protocol · AI</span><span class="num">5</span></div>
+            <div class="body"><span class="label">Applet 5 · 5 questions</span><h3>Patterns for Sustainable Decisions</h3><p>Patterns in multiplying and dividing positive and negative integers.</p><span class="go">Open →</span></div>
+          </a>
+          <a class="act" href="../aktivitas/?a=6&lang=en">
+            <div class="thumb"><img src="https://www.geogebra.org/resource/rpte5ypj/nBzEudRQvgmr2UCx/material-rpte5ypj-thumb.png" alt="" loading="lazy"><span class="chip">General protocol · AI</span><span class="num">6</span></div>
+            <div class="body"><span class="label">Applet 6 · 4 questions</span><h3>Reforestation Planning</h3><p>Dividing fractions to plan tree seedlings.</p><span class="go">Open →</span></div>
+          </a>
+          <a class="act" href="../aktivitas/?a=7&lang=en">
+            <div class="thumb"><img src="https://www.geogebra.org/resource/exejm4ye/S5syrLSY5MtIshiG/material-exejm4ye-thumb.png" alt="" loading="lazy"><span class="chip">General protocol · AI</span><span class="num">7</span></div>
+            <div class="body"><span class="label">Applet 7 · 2 questions</span><h3>Estimating Carbon Emissions</h3><p>Estimating decimal products by rounding and with an area model.</p><span class="go">Open →</span></div>
+          </a>
+          <div class="act next"><img src="../assets/logo.svg" alt=""><p>Next windows: <b>Geometry</b>, <b>Algebra</b> and <b>Data &amp; Statistics</b>. Built with the teacher in the next stage.</p></div>
         </div>
+        </div>
+        <div class="win-panel soon" data-panel="soon" hidden>
+          <div class="soon-box"><img src="../assets/logo.svg" alt=""><p>This window is prepared for the next stage. Activities will be added with the teacher.</p></div>
+        </div>
+        <script>
+          document.querySelector(".wins").addEventListener("click", function (e) {
+            var b = e.target.closest(".win"); if (!b) return;
+            document.querySelectorAll(".win").forEach(function (x) { x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", x === b); });
+            var first = b.dataset.win === "0";
+            document.querySelector('[data-panel="0"]').hidden = !first;
+            document.querySelector('[data-panel="soon"]').hidden = first;
+          });
+        </script>
       </div>
     </section>
 

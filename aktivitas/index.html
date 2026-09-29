@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aktivitas — Gorga</title>
+  <meta name="description" content="Aktivitas Gorga: applet GeoGebra guru dengan tutor AI yang bertanya balik, dengan level scaffold L1–L4.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gloock&family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/gorga.css">
+  <script src="../assets/i18n.js"></script>
+</head>
+<body>
+  <header class="bar">
+    <div style="display:flex;align-items:center;gap:22px">
+      <a class="mark" href="../" id="home-link" aria-label="Gorga"><img src="../assets/logo.svg" alt=""><span>gorga</span></a>
+      <nav class="crumbs" aria-label="Lokasi"><a href="../#aktivitas" id="acts-link" data-i18n="crumb">Bilangan</a><span>/</span><span aria-current="page" id="crumb-here">Aplet</span></nav>
+    </div>
+    <div class="bar-right">
+      <span id="mode-badge" class="badge">Mode naskah</span>
+      <label class="switch">
+        <input type="checkbox" id="teacher-toggle">
+        <span data-i18n="teacher">Mode guru</span>
+      </label>
+      <div class="langs" role="group" aria-label="Bahasa / Language">
+        <a href="#" data-set-lang="id" id="lang-id">ID</a><a href="#" data-set-lang="en" id="lang-en">EN</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="intro-band">
+    <div>
+      <span class="eyebrow"><span data-i18n="window">Jendela Bilangan</span> · <span id="act-no">Applet 2 dari 7</span></span>
+      <h1 id="act-title">Aktivitas</h1>
+      <nav class="act-steps" id="act-steps" aria-label="Aktivitas lain"></nav>
+    </div>
+    <details class="context intro-more">
+      <summary><span class="label" data-i18n="ctxLabel">Pengantar</span><span id="intro-lead"></span></summary>
+      <div id="intro-rest"></div>
+    </details>
+  </div>
+
+  <main class="layout">
+    <section class="pane pane-applet" aria-label="Applet GeoGebra">
+      <div class="applet-wrap" id="applet-wrap">
+        <div id="ggb"></div>
+        <div class="applet-loading" id="applet-loading" data-i18n="loading">Memuat applet GeoGebra…</div>
+      </div>
+      <div id="notes"></div>
+      <div class="journey" aria-live="polite">
+        <div class="journey-head">
+          <span class="label" data-i18n="level">Tingkat bantuan</span>
+          <span class="hint" id="level-name">L1 · Bertanya</span>
+        </div>
+        <div class="level-meter" id="level-meter" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="journey-head" style="margin-top:14px">
+          <span class="label" data-i18n="path">Jejak penalaran</span>
+          <span class="hint" data-i18n="pathHint">setiap langkah tutor menambah satu motif</span>
+        </div>
+        <ol class="path" id="journey"><li class="empty">–</li></ol>
+      </div>
+    </section>
+
+    <section class="pane pane-chat" aria-label="Tutor Gorga">
+      <div class="qbox">
+        <div class="qbox-head">
+          <span class="label" id="q-no">Soal 1 dari 3</span>
+          <div class="qnav">
+            <button type="button" class="ghost" id="q-prev" aria-label="Soal sebelumnya">←</button>
+            <span class="qdots" id="q-dots"></span>
+            <button type="button" class="ghost" id="q-next" aria-label="Soal berikutnya">→</button>
+          </div>
+        </div>
+        <div class="qtext" id="q-text"></div>
+      </div>
+      <div class="chat-log" id="chat-log" aria-live="polite"></div>
+      <div class="chat-foot">
+        <form class="chat-form" id="chat-form" autocomplete="off">
+          <input id="chat-input" type="text" maxlength="600" placeholder="Tulis jawaban dan alasanmu…" data-i18n-ph="placeholder" aria-label="Jawaban">
+          <button type="submit" id="send-btn" data-i18n="send">Kirim</button>
+        </form>
+        <p class="open-note" data-i18n="openNote">Protokol umum: kartu tugas per soal untuk aktivitas ini menyusul dari guru.</p>
+      </div>
+    </section>
+
+    <section class="pane pane-log" id="log-pane" hidden aria-label="Mode guru">
+      <div class="log-head">
+        <div><span class="eyebrow" data-i18n="teacher">Mode guru</span><div style="font:400 26px/1.1 var(--serif);margin-top:4px" data-i18n="summary">Ringkasan sesi</div></div>
+        <div class="actions">
+          <button class="ghost" id="copy-btn" type="button" data-i18n="copy">Salin transkrip</button>
+          <button class="ghost" id="csv-btn" type="button" data-i18n="csv">Unduh CSV</button>
+        </div>
+      </div>
+      <div class="panel-grid">
+        <div class="stat"><span class="label" data-i18n="stTurns">Giliran siswa</span><b id="st-turns">0</b><small data-i18n="stTurnsNote">sesi ini</small></div>
+        <div class="stat"><span class="label" data-i18n="stAi">Balasan AI</span><b id="st-ai">–</b><small data-i18n="stAiNote">sisanya dari naskah</small></div>
+        <div class="stat"><span class="label" data-i18n="stDone">Soal tuntas</span><b id="st-done">0</b><small id="st-done-note">dari 0</small></div>
+        <div class="stat"><span class="label" data-i18n="stMoves">Langkah tutor</span><div class="bars" id="st-bars"></div></div>
+      </div>
+      <div class="log-scroll">
+        <table>
+          <thead><tr><th>#</th><th data-i18n="thTime">waktu</th><th data-i18n="thQ">soal</th><th data-i18n="thText">jawaban siswa</th><th data-i18n="thMove">langkah</th><th data-i18n="thSource">sumber</th><th data-i18n="thReply">balasan tutor</th></tr></thead>
+          <tbody id="log-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="ipon thin"></div>
+    <span data-i18n="foot">Prototipe riset, non-komersial. Aktivitas dan pertanyaan: Dr. Rahmi Ramadhani Umar, lewat GeoGebra. Applet mengikuti lisensi dan atribusi pembuat aslinya di GeoGebra.</span>
+  </footer>
+
+  <script>
+    gorgaApplyI18n({
+      id: {},
+      en: {
+        crumb: "Integers", teacher: "Teacher mode", window: "Integers window", ctxLabel: "Introduction",
+        loading: "Loading the GeoGebra applet…", level: "Level of help", path: "Reasoning path",
+        pathHint: "each tutor step adds one motif", placeholder: "Write your answer and your reason…", send: "Send",
+        openNote: "General protocol: the task card for each question in this activity is still to come from the teacher.",
+        summary: "Session summary", copy: "Copy transcript", csv: "Download CSV",
+        stTurns: "Student turns", stTurnsNote: "this session", stAi: "AI replies", stAiNote: "the rest from the script",
+        stDone: "Questions done", stMoves: "Tutor moves",
+        thTime: "time", thQ: "question", thText: "student answer", thMove: "move", thSource: "source", thReply: "tutor reply",
+        foot: "Research prototype, non-commercial. Activities and questions: Dr. Rahmi Ramadhani Umar, via GeoGebra. Applets follow the licence and attribution of their original authors on GeoGebra.",
+      },
+    });
+    document.getElementById("home-link").href = window.GORGA_LANG === "en" ? "../en/" : "../";
+    document.getElementById("acts-link").href = window.GORGA_LANG === "en" ? "../en/#activities" : "../#aktivitas";
+  </script>
+  <script src="https://www.geogebra.org/apps/deployggb.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

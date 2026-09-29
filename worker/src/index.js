@@ -196,6 +196,44 @@ ${en ? `BAHASA: siswa memakai halaman berbahasa Inggris. Tulis balasan dalam BAH
 ` : ""}Balas HANYA JSON satu baris: {"move":"L1|L2|L3|L4|OK","reply":"..."}`;
 }
 
+const PROTOCOL_OPEN = `Protokol guru (wajib):
+- Pertanyaan pertama selalu L1: minta siswa mencoba di applet.
+- Jika jawaban siswa tampak benar, JANGAN langsung bilang benar; pakai L4 untuk meminta penjelasan atau alasan.
+- Jika jawaban salah, kurang, atau siswa tidak tahu: L2, lalu L3 bila perlu.
+- Jangan memberi jawaban. Pakai pertanyaan agar siswa menemukan dan menjelaskan sendiri, dengan melihat applet.
+Arti langkah: L1 = bertanya terbuka / mengajak mencoba; L4 = mengulang ide siswa dengan kata lain lalu minta penjelasan; L2 = menunjuk satu hal spesifik di applet atau di soal; L3 = memecah soal menjadi pertanyaan kecil; OK = konfirmasi akhir.`;
+
+function openPrompt(b) {
+  const s = b.stage || {};
+  const L = b.lead || {};
+  const en = b.lang === "en";
+  const facts = (Array.isArray(L.facts) ? L.facts : []).map((f) => `- ${clip(f, 200)}`).join("\n");
+  return `Kamu guru matematika yang sabar untuk siswa SMP di Indonesia. Siswa mengerjakan aktivitas di applet GeoGebra, lalu menjawab pertanyaan esai dan berdiskusi denganmu di chat.
+
+${PROTOCOL_OPEN}
+
+AKTIVITAS: ${clip(b.context, 900)}
+PERTANYAAN YANG SEDANG DIJAWAB: ${clip(s.question, 700)}
+
+FAKTA DARI SISTEM:
+${facts}
+
+TUGAS: tulis balasan berikutnya sebagai guru. ${LEVEL_TEXT[L.maxHelp] || LEVEL_TEXT[1]}
+${L.mayConfirm ? `Jika jawaban DAN alasan siswa untuk pertanyaan ini sudah lengkap dan masuk akal, beri konfirmasi singkat yang hangat dengan "move":"OK": sebut apa yang sudah tepat dari penjelasannya, tanpa pertanyaan. Jika belum lengkap atau masih keliru, JANGAN konfirmasi; lanjutkan dengan pertanyaan.` : "Jangan memberi konfirmasi dulu."}
+
+CARA MENANGGAPI
+- Baca jawaban terakhir siswa dengan teliti. Mulai dari yang ia tulis: sebut kembali kata, angka, atau caranya secara spesifik.
+- Bangun dari bagian yang sudah tepat. Kalau ada yang keliru, tanyakan sesuatu yang membuat siswa melihat sendiri kelirunya di applet.
+- Jangan menanyakan hal yang sudah ia jawab. Jangan mengulang pertanyaanmu sebelumnya.
+- Kalau siswa bertanya, jawab singkat dulu, lalu kembalikan ke soal.
+- Kecuali saat konfirmasi: jangan memakai kata ${en ? '"correct", "wrong", "right", atau "exactly"' : '"benar", "salah", "tepat", atau "memang"'}, dan akhiri dengan tepat satu pertanyaan.
+- Maksimal 2 kalimat, maksimal 45 kata. Bahasa sehari-hari yang hangat, sapa "kamu". Tanpa emoji dan markdown.
+- Jangan pernah menyebut jawaban akhir soal sebelum siswa menyebutnya sendiri.
+
+${en ? `BAHASA: tulis balasan dalam BAHASA INGGRIS yang sederhana (level siswa SMP), sapa dengan "you".
+` : ""}Balas HANYA JSON satu baris: {"move":"L1|L2|L3|L4|OK","reply":"..."}`;
+}
+
 const HELP_RANK = { L1: 1, L4: 1, L2: 2, L3: 3, HINT: 4, OK: 0 };
 
 function words(s) {
@@ -343,7 +381,7 @@ export default {
 
     if (forbid && b.lead && Number.isFinite(Number(b.lead.maxHelp))) {
       const L = b.lead;
-      const messages = [{ role: "system", content: leadPrompt(b) }, ...turns];
+      const messages = [{ role: "system", content: b.open ? openPrompt(b) : leadPrompt(b) }, ...turns];
       const allow = new Set((L.allowNumbers || []).map(Number));
       const prev = turns.filter((m) => m.role === "assistant").map((m) => m.content);
       const signed = (x) => (String(x || "").replace(/[−–—]/g, "-").match(/-?\d+/g) || []).map(Number);
@@ -360,14 +398,16 @@ export default {
           if (!reply) { why.push("empty"); continue; }
           if (!L.goal && HELP_RANK[move] > L.maxHelp) { r(`too much help ${move}`); continue; }
           if (L.goal && move !== "OK") move = "OK";
-          if (!L.goal && move === "OK") move = "L4";
-          if (!L.goal && !reply.includes("?")) { r("no question"); continue; }
+          if (!L.goal && move === "OK" && !L.mayConfirm) move = "L4";
+          // A confirmation: set by the page (goal), or chosen by the AI where the page allows it.
+          const confirming = L.goal || move === "OK";
+          if (!confirming && !reply.includes("?")) { r("no question"); continue; }
           if (reply.split(/\s+/).length > 60) { r("too long"); continue; }
           const t = normalise(reply);
           if (forbid.some((f) => new RegExp(`(^|[^0-9])${f}([^0-9]|$)`).test(t))) { r("forbidden"); continue; }
           const extra = signed(reply).filter((n) => !allow.has(n));
           if (extra.length) { r(`new numbers ${extra.join(",")}`); continue; }
-          if (!L.goal && /\b(benar|salah|betul|tepat|memang|correct|wrong|right|exactly|well done)\b/i.test(reply)) { r("judges"); continue; }
+          if (!confirming && /\b(benar|salah|betul|tepat|memang|correct|wrong|right|exactly|well done)\b/i.test(reply)) { r("judges"); continue; }
           const low = reply.toLowerCase();
           if (!L.zeroOK && /(\b0\b|\bnol\b|titik beku|\bzero\b|freezing)/.test(low)) { r("mentions 0"); continue; }
           if (!L.splitOK && /(dua bagian|pecah|dibagi dua|bagi (jadi|menjadi) dua|dua langkah|two parts|two steps|split|break it)/.test(low)) { r("splits"); continue; }

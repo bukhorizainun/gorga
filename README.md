@@ -39,3 +39,12 @@ AI layers in the temperature demo (worker at `gorga.zainun.workers.dev`):
 - `/classify` reads the strategy of chat answers the rules mark "unclear". `tutor.verify()` keeps the
   reading only if what it claims is visible in the student's words (for the split: both parts and
   0 or "titik beku"). The log marks these rows "(dibaca AI)".
+
+## Integers window: seven activities
+
+`assets/activities.json` holds the teacher's seven GeoGebra activities (intro texts, questions,
+applet id), fetched with `python tools/fetch_activities.py` and split into Indonesian and English.
+Applet 1 runs the full protocol in `suhu/`. Applets 2 to 7 run in `aktivitas/?a=N` with the general
+protocol: help rises one level every two turns (sooner after "I don't know"), the tutor never gives
+the answer, and the AI may confirm from the second turn on, once answer and reason are complete
+(worker `open` mode). Task cards per question will replace the general protocol.

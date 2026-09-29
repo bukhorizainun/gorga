@@ -287,3 +287,38 @@ td:nth-child(6) { min-width: 220px; }
 .bar.dark .langs a:hover { color: var(--putih); }
 .bar.dark .langs a[aria-current] { background: var(--putih); color: var(--ink); }
 .bar-end { display: flex; align-items: center; gap: 14px; }
+
+/* ---------- general activity page ---------- */
+.act-steps { display: flex; gap: 6px; margin-top: 14px; flex-wrap: wrap; }
+.act-steps a { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--garis-2); font: 12px var(--mono); text-decoration: none; color: var(--ink-2); }
+.act-steps a:hover { border-color: var(--hitam); color: var(--ink); }
+.act-steps a[aria-current] { background: var(--hitam); color: var(--putih); border-color: var(--hitam); }
+details.intro-more summary { cursor: pointer; list-style: none; color: var(--ink-2); font-size: 15px; }
+details.intro-more summary::-webkit-details-marker { display: none; }
+details.intro-more summary .label { display: block; color: var(--ink-3); margin-bottom: 4px; }
+details.intro-more summary::after { content: "  + selengkapnya"; color: var(--merah); font-size: 13px; }
+html[lang="en"] details.intro-more summary::after { content: "  + more"; }
+details.intro-more[open] summary::after { content: ""; }
+#intro-rest p { margin: 8px 0 0; color: var(--ink-2); font-size: 15px; }
+.note-card { margin-top: 12px; padding: 12px 14px; border-radius: 10px; background: var(--kertas); border: 1px solid var(--garis); font-size: 14.5px; color: var(--ink-2); }
+.note-card .label { display: block; color: var(--merah); margin-bottom: 4px; }
+.level-meter { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-bottom: 4px; }
+.level-meter i { height: 8px; border-radius: 3px; background: var(--garis); transition: background 0.3s; }
+.level-meter i.on { background: var(--merah); }
+.level-meter i.on:first-child { background: var(--hitam); }
+.qbox { padding: 16px 18px 14px; border-bottom: 1px solid var(--garis); background: var(--kertas); }
+.qbox-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 8px; }
+.qbox-head .label { color: var(--merah); }
+.qnav { display: flex; align-items: center; gap: 6px; }
+.qnav .ghost { padding: 3px 9px; }
+.qnav .ghost:disabled { opacity: 0.35; cursor: default; }
+.qdots { display: flex; gap: 4px; }
+.qdots button { width: 9px; height: 9px; padding: 0; border-radius: 50%; border: 1px solid var(--ink-3); background: transparent; cursor: pointer; }
+.qdots button.done { background: var(--merah); border-color: var(--merah); }
+.qdots button.on { outline: 2px solid var(--hitam); outline-offset: 1px; }
+.qtext { font-size: 15.5px; line-height: 1.5; max-height: 190px; overflow-y: auto; }
+.qtext ul { margin: 6px 0; padding-left: 20px; }
+.open-note { margin: 8px 0 0; font-size: 12px; color: var(--ink-3); }
+.next-q { padding-top: 4px; }
+.pane-chat { max-height: 880px; }
+.intro-band h1.long { font-size: clamp(28px, 3.1vw, 42px); line-height: 1.08; }

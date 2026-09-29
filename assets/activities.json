@@ -1,0 +1,613 @@
+[
+ {
+  "n": 1,
+  "activity": "yx7ubuvn",
+  "title": {
+   "id": "Menjelajahi Bilangan Bulat pada Skala Suhu",
+   "en": "Exploring integers on a temperature scale"
+  },
+  "thumb": "https://www.geogebra.org/resource/yx7ubuvn/8cOttCfpDRkrsJfX/material-yx7ubuvn-thumb.png",
+  "items": [
+   {
+    "type": "text",
+    "title": {
+     "id": "Pengantar (Introduction)",
+     "en": ""
+    },
+    "body": {
+     "id": "Bumi kita semakin panas. Keadaan ini disebut pemanasan global. Karena itu, suhu di berbagai tempat berubah-ubah. Ada daerah yang sangat dingin, dengan suhu di bawah nol derajat. Ada daerah yang panas. Pada aplet ini kamu akan membandingkan dan mengurutkan suhu dari berbagai tempat menggunakan termometer. Geser titik berwarna pada termometer untuk membantumu.",
+     "en": "Our Earth is getting hotter. This phenomenon is called global warming. As a result, temperatures in various places are changing. Some areas are very cold, with temperatures below zero degrees. Other areas are hot. In this applet, you will compare and sort temperatures from various places using a thermometer. Drag the colored dot on the thermometer to help you.)\n\nAda 8 jenis soal dalam latihan ini. Klik tombol “Tugas Baru” untuk mendapatkan 1 soal yang dipilih secara acak.\nAnda dapat menggambarkan setiap soal pada model termometer dengan menggeser titik-titik berbentuk berlian berwarna menggunakan penggeser.\n\n(Explore integers using a thermometer model.\nThere are 8 types of problems in this exercise. Click the New task button to get randomly selected 1 of them.\nYou can illustrate each problem on the thermometer model, moving coloured diamond-shaped points on sliders."
+    }
+   },
+   {
+    "type": "applet",
+    "material": "gEvAbJ6C"
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "Soal tipe 1 (Task type 1)",
+     "en": ""
+    },
+    "body": {
+     "id": "Berdasarkan percobaan yang dilakukan, manakah suhu yang terendah dan tertinggi pada soal tipe 1?",
+     "en": "Based on the experiment conducted, what are the lowest and highest temperatures in Question Type 1?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "Soal Tipe 2 (Task Type 2)",
+     "en": ""
+    },
+    "body": {
+     "id": "Berdasarkan percobaan yang dilakukan, manakah suhu yang terendah dan tertinggi pada soal tipe 2?",
+     "en": "Based on the experiment conducted, what are the lowest and highest temperatures in Question Type 1?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "Soal Tipe 3 (Task Type 3)",
+     "en": ""
+    },
+    "body": {
+     "id": "Berdasarkan percobaan yang dilakukan, manakah suhu yang terendah dan tertinggi pada soal tipe 3?",
+     "en": "Based on the experiment conducted, what are the lowest and highest temperatures in Question Type 3?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "Soal Tipe 4 (Task Type 4)",
+     "en": ""
+    },
+    "body": {
+     "id": "Berdasarkan percobaan yang dilakukan, manakah suhu yang terendah dan tertinggi pada soal tipe 4?",
+     "en": "Based on the experiment conducted, what are the lowest and highest temperatures in Question Type 4?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "Soal Tipe 5 (Task Type 5)",
+     "en": ""
+    },
+    "body": {
+     "id": "Berdasarkan percobaan yang dilakukan, manakah suhu yang terendah dan tertinggi pada soal tipe 5?",
+     "en": "Based on the experiment conducted, what are the lowest and highest temperatures in Question Type 5?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "Soal Tipe 6 (Task Type 6)",
+     "en": ""
+    },
+    "body": {
+     "id": "Berdasarkan percobaan yang dilakukan, manakah suhu yang terendah dan tertinggi pada soal tipe 6?",
+     "en": "Based on the experiment conducted, what are the lowest and highest temperatures in Question Type 6?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "Soal Tipe 7 (Task Type 7)",
+     "en": ""
+    },
+    "body": {
+     "id": "Berdasarkan percobaan yang dilakukan, manakah suhu yang terendah dan tertinggi pada soal tipe 7?",
+     "en": "Based on the experiment conducted, what are the lowest and highest temperatures in Question Type 7?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "Soal Tipe 8 (Task Type 8)",
+     "en": ""
+    },
+    "body": {
+     "id": "Berdasarkan percobaan yang dilakukan, manakah suhu yang terendah dan tertinggi pada soal tipe 8?",
+     "en": "Based on the experiment conducted, what are the lowest and highest temperatures in Question Type 8?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "Closing Task",
+     "en": ""
+    },
+    "body": {
+     "id": "Menurut kamu, manakah suhu terendah dan suhu tertinggi dari 8 tipe percobaan di atas? Berikan alasannya.",
+     "en": "In your opinion, what are the lowest and highest temperatures among the 8 types of experiments listed above? Explain your answer."
+    }
+   }
+  ]
+ },
+ {
+  "n": 2,
+  "activity": "pdujyyp8",
+  "title": {
+   "id": "Karbon di Udara: Belajar Bilangan Bulat Melalui Neraca Karbon-Balon dan Karung Pasir",
+   "en": "Carbon in the Air: Learning Whole Numbers Through the Carbon Balance-Balloons and Sandbags"
+  },
+  "thumb": "https://www.geogebra.org/resource/mmbs5mud/vHm9p6FMTSFSSPnz/material-mmbs5mud-thumb.png",
+  "items": [
+   {
+    "type": "text",
+    "title": {
+     "id": "Pengantar (Introduction)",
+     "en": ""
+    },
+    "body": {
+     "id": "Udara di bumi bisa menjadi kotor atau bersih. Asap dari kendaraan dan pabrik menambah zat bernama karbon ke udara, membuat udara lebih kotor. Pohon menyerap karbon, membuat udara lebih bersih. Pada aplet ini: balon berarti karbon yang masuk ke udara, arahnya naik (bilangan positif). Karung pasir berarti karbon yang diserap pohon, arahnya turun (bilangan negatif). Posisi keranjang menunjukkan berapa karbon yang tersisa di udara.",
+     "en": "The air on Earth can be either polluted or clean. Exhaust from vehicles and factories adds a substance called carbon to the air, making it more polluted. Trees absorb carbon, making the air cleaner. In this applet: the balloon represents carbon entering the air, moving upward (positive numbers). The sandbag represents carbon absorbed by trees, moving downward (negative numbers). The position of the basket shows how much carbon remains in the air."
+    }
+   },
+   {
+    "type": "applet",
+    "material": "mmbs5mud"
+   },
+   {
+    "type": "text",
+    "title": {
+     "id": "Lakukan bersama-sama (Let's do it together)",
+     "en": ""
+    },
+    "body": {
+     "id": "Coba tekan tombol untuk menambah balon dan karung pasir. Perhatikan ke mana keranjang bergerak. Posisi keranjang adalah jumlah karbon yang tersisa di udara.",
+     "en": "Try pressing the button to add balloons and sandbags. Watch where the basket moves. The basket’s position represents the amount of carbon remaining in the air"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "Soal 1 (Task 1)",
+     "en": ""
+    },
+    "body": {
+     "id": "Ke mana keranjang bergerak saat kamu menambah balon? Ke mana saat kamu menambah karung pasir? Tulis jawabanmu dengan kata-katamu sendiri.",
+     "en": "Where does the basket move when you add a balloon? Where does it go when you add a sandbag? Write your answer in your own words."
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "Soal 2 (Task 2)",
+     "en": ""
+    },
+    "body": {
+     "id": "Di sebuah kota, asap kendaraan menambah 8 karbon ke udara. Pohon di kota itu menyerap 5 karbon. Berapa karbon yang tersisa di udara? Tunjukkan di aplet, lalu tulis sebagai penjumlahan bilangan bulat.",
+     "en": "In a city, vehicle exhaust adds 8 units of carbon to the air. The trees in that city absorb 5 units of carbon. How many units of carbon remain in the air? Show your work in the applet, then write your answer as a sum of integers."
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "Soal 3 (Task 3)",
+     "en": ""
+    },
+    "body": {
+     "id": "Kota itu ingin udaranya bersih, artinya karbon yang tersisa menjadi nol. Kalau asap menambah 6 karbon, berapa karbon yang harus diserap pohon agar tersisa nol? Jelaskan caramu menemukannya.",
+     "en": "The city wants its air to be clean, which means the remaining carbon must be zero. If the smoke adds 6 units of carbon, how much carbon must the trees absorb so that the remaining carbon is zero? Explain how you figured this out."
+    }
+   }
+  ]
+ },
+ {
+  "n": 3,
+  "activity": "zjjfsxst",
+  "title": {
+   "id": "Menjelajahi Permukaan Laut dan Kedalaman Laut Menggunakan Bilangan Bulat",
+   "en": "Exploring Sea Level and Ocean Depth with Integers"
+  },
+  "thumb": "https://www.geogebra.org/resource/k6j6pdbw/ihXB4bDz6R4e6YWr/material-k6j6pdbw-thumb.png",
+  "items": [
+   {
+    "type": "text",
+    "title": {
+     "id": "Pengantar (Introduction)",
+     "en": ""
+    },
+    "body": {
+     "id": "Perubahan iklim menyebabkan permukaan laut terus meningkat dan memengaruhi ekosistem laut di berbagai belahan dunia. Para ilmuwan kelautan memantau posisi lumba-lumba terhadap permukaan laut untuk memahami perubahan habitatnya. Pada aktivitas ini, bilangan positif menunjukkan posisi di atas permukaan laut, sedangkan bilangan negatif menunjukkan kedalaman di bawah permukaan laut. Gunakan bilangan bulat untuk membandingkan posisi kedua lumba-lumba dan jelaskan makna setiap bilangan.",
+     "en": "Climate change is causing sea levels to rise and affecting marine ecosystems around the world. Marine scientists monitor the positions of dolphins relative to sea level to better understand changes in their habitats. In this activity, positive integers represent positions above sea level, while negative integers represent depths below sea level. Use integers to compare the dolphins' positions and explain what the numbers mean."
+    }
+   },
+   {
+    "type": "applet",
+    "material": "k6j6pdbw"
+   },
+   {
+    "type": "text",
+    "title": {
+     "id": "Ayo Lakukan Bersama-sama! (Let's do it together!)",
+     "en": ""
+    },
+    "body": {
+     "id": "Refleksikan bagaimana bilangan bulat membantu ilmuwan memahami perubahan lingkungan laut yang disebabkan oleh perubahan iklim.",
+     "en": "Reflect on how integers help scientists understand changes in marine environments caused by climate change."
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "Soal 1 (Task 1)",
+     "en": ""
+    },
+    "body": {
+     "id": "<b>Posisi lumba-lumba ditunjukkan dengan bilangan positif dan bilangan negatif.</b>\na. Apa arti bilangan positif pada applet ini?",
+     "en": "<b> The dolphins' positions are shown using positive and negative integers.</b>\na. What do the positive integers represent in this activity?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "b. Apa arti bilangan negatif pada applet ini?",
+     "en": "b. What do the negative integers represent?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "c. Mengapa ilmuwan menggunakan bilangan positif dan negatif untuk menunjukkan posisi lumba-lumba terhadap permukaan laut?",
+     "en": "c. Why do scientists use positive and negative integers to describe the dolphins' positions relative to sea level?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "Soal 2 (Task 2)",
+     "en": ""
+    },
+    "body": {
+     "id": "<b>Perhatikan posisi ketiga lumba-lumba berikut.</b><ul><li>Lumba-lumba A berada <b>25 kaki di atas permukaan laut (+25)</b>.</li><li>Lumba-lumba B berada <b>32 kaki di bawah permukaan laut (−32)</b>.</li><li>Lumba-lumba C berada <b>18 kaki di atas permukaan laut (+18)</b>.</li></ul>Jawablah pertanyaan berikut.\na. Lumba-lumba manakah yang berada paling tinggi?",
+     "en": "<b>Look at the positions of the three dolphins below.</b><ul><li>Dolphin A is <b>25 feet above sea level (+25)</b>.</li><li>Dolphin B is <b>32 feet below sea level (−32)</b>.</li><li>Dolphin C is <b>18 feet above sea level (+18)</b>.</li></ul>Answer the questions below.\na. Which dolphin is the highest above sea level?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "b. Lumba-lumba manakah yang berada paling dalam?",
+     "en": "b. Which dolphin is the deepest below sea level?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "c. Urutkan posisi ketiga lumba-lumba dari yang <b>paling rendah</b> hingga <b>paling tinggi</b>.",
+     "en": "c. Arrange the dolphins' positions from the <b>lowest</b> to the <b>highest</b>."
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "d. Menurutmu, mengapa ilmuwan perlu mengetahui posisi lumba-lumba terhadap permukaan laut?",
+     "en": "d. Why do you think scientists need to know the dolphins' positions relative to sea level?"
+    }
+   }
+  ]
+ },
+ {
+  "n": 4,
+  "activity": "wbamqk9r",
+  "title": {
+   "id": "Memilih Transportasi Ramah Lingkungan",
+   "en": "Climate Action: Choosing Sustainable Transportation"
+  },
+  "thumb": "https://www.geogebra.org/resource/smhk6ugm/AthRGTSR8MHlPrDE/material-smhk6ugm-thumb.png",
+  "items": [
+   {
+    "type": "text",
+    "title": {
+     "id": "Aksi Iklim (Climate Action): Memilih Transportasi Ramah Lingkungan",
+     "en": ""
+    },
+    "body": {
+     "id": "Berjalan kaki merupakan salah satu moda transportasi yang ramah lingkungan karena dapat membantu mengurangi emisi karbon dan mendukung terwujudnya masa depan yang lebih berkelanjutan. Dengan memilih berjalan kaki daripada menggunakan kendaraan bermotor untuk perjalanan jarak dekat, kita turut berkontribusi dalam mendukung pencapaian <b>Tujuan Pembangunan Berkelanjutan (Sustainable Development Goals/SDGs) 13: Penanganan Perubahan Iklim (Climate Action).</b>\n\nPada aktivitas ini, kamu akan membantu <b>Sada</b> menentukan posisinya pada garis bilangan dengan mempertimbangkan arah gerak, kecepatan berjalan, dan waktu tempuh untuk mengeksplorasi konsep perkalian bilangan bulat positif dan negatif.",
+     "en": "Walking is an environmentally friendly mode of transportation that helps reduce carbon emissions and supports a more sustainable future. By choosing to walk instead of using motorized vehicles for short trips, we can contribute to achieving <b>Sustainable Development Goal (SDG) 13: Climate Action</b>.\n\nIn this activity, you will help <b>Sada</b> determine her position on a number line by considering the direction of movement, walking speed, and elapsed time to explore the concept of multiplying positive and negative integers."
+    }
+   },
+   {
+    "type": "applet",
+    "material": "smhk6ugm"
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "Sada berjalan ke arah kanan dengan kecepatan 10 kaki per detik. Di manakah posisi Sada setelah 2 detik?",
+     "en": "Sada walks at a rate of 10 feet per second. Where will she be after 2 seconds?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "Sada berjalan mundur (ke arah kiri) dengan kecepatan 10 kaki per detik. Di manakah posisi Sada setelah 2 detik?",
+     "en": "Sada walks backward at a rate of 10 feet per second. Where will she be after 2 seconds?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "Misalkan waktu bergerak 2 detik ke masa lalu. Jika Sada berjalan ke arah kanan dengan kecepatan 10 kaki per detik, di manakah posisi Sada 2 detik yang lalu?",
+     "en": "Suppose time moves 2 seconds into the past. If Sada walks at a rate of 10 feet per second, where was she 2 seconds ago?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "Misalkan waktu bergerak 2 detik ke masa lalu. Jika Sada berjalan mundur (ke arah kiri) dengan kecepatan 10 kaki per detik, di manakah posisi Sada 2 detik yang lalu?",
+     "en": "Suppose time moves 2 seconds into the past. If Sada walks backward at a rate of 10 feet per second, where was she 2 seconds ago?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "Apa simpulan yang dapat kamu ambil dari aktivitas di atas?",
+     "en": "What conclusion can you draw from the activity above?"
+    }
+   }
+  ]
+ },
+ {
+  "n": 5,
+  "activity": "qhyyqxbm",
+  "title": {
+   "id": "Memahami Pola Matematika untuk Mendukung Keputusan Berkelanjutan",
+   "en": "Climate Action: Understanding Mathematical Patterns for Sustainable Decisions"
+  },
+  "thumb": "https://www.geogebra.org/resource/r2azmb49/ivepo5MSeeqLgcEs/material-r2azmb49-thumb.png",
+  "items": [
+   {
+    "type": "text",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "Upaya penanganan perubahan iklim memerlukan kemampuan untuk memahami informasi, mengenali pola, dan mengambil keputusan yang tepat. Penalaran matematis membantu kita membandingkan nilai, menemukan hubungan, serta menyelesaikan berbagai permasalahan yang berkaitan dengan keberlanjutan lingkungan.\n\nPada aktivitas ini, kamu akan memperkuat pemahaman tentang operasi perkalian dan pembagian bilangan bulat positif dan negatif dengan mengidentifikasi ekspresi-ekspresi yang memiliki nilai yang sama.",
+     "en": "Climate action requires people to interpret information, recognize patterns, and make informed decisions. Mathematical reasoning helps us compare values, identify relationships, and solve real-world problems related to environmental sustainability.\n\nIn this activity, you will strengthen your understanding of multiplication and division of positive and negative integers by identifying expressions that have the same value."
+    }
+   },
+   {
+    "type": "applet",
+    "material": "r2azmb49"
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "<b>Ekspresi mana saja yang memiliki nilai yang sama?</b>\nKelompokkan kartu-kartu tersebut berdasarkan nilainya.",
+     "en": "Which expressions have the same value?\nGroup the cards according to their values."
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "<b>Bagaimana kamu menentukan bahwa ekspresi-ekspresi tersebut berada dalam kelompok yang sama?</b>\nJelaskan alasanmu.",
+     "en": "How did you determine that the expressions belong to the same group?\nExplain your reasoning."
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "Pola apa yang kamu temukan ketika melakukan operasi perkalian dan pembagian bilangan bulat positif dan negatif?",
+     "en": "What patterns did you notice when multiplying and dividing positive and negative integers?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "Apa simpulan yang dapat kamu buat mengenai aturan perkalian dan pembagian bilangan bulat positif dan negatif?",
+     "en": "What conclusion can you draw about the rules for multiplying and dividing positive and negative integers?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "<b>Refleksi</b>\n\nDalam upaya penanganan perubahan iklim, seseorang perlu menganalisis berbagai informasi sebelum mengambil keputusan.\n\nMenurutmu, bagaimana kemampuan penalaran matematis dapat membantu seseorang mengambil keputusan yang mendukung aksi penanganan perubahan iklim?",
+     "en": "Reflection\nClimate action often requires people to analyze information before making decisions.\nHow can mathematical reasoning help people make better decisions to support climate action?"
+    }
+   }
+  ]
+ },
+ {
+  "n": 6,
+  "activity": "umkeqpct",
+  "title": {
+   "id": "Perencanaan Reboisasi",
+   "en": "Reforestation Planning"
+  },
+  "thumb": "https://www.geogebra.org/resource/rpte5ypj/nBzEudRQvgmr2UCx/material-rpte5ypj-thumb.png",
+  "items": [
+   {
+    "type": "text",
+    "title": {
+     "id": "Pengantar (Introduction)",
+     "en": ""
+    },
+    "body": {
+     "id": "Menanam pohon merupakan salah satu cara yang efektif untuk menyerap karbon dioksida, memulihkan ekosistem, dan mengurangi dampak perubahan iklim. Agar kegiatan reboisasi berjalan dengan baik, diperlukan perencanaan yang tepat untuk menentukan jumlah bibit pohon yang dibutuhkan pada setiap area. Pada aktivitas ini, kamu akan menggunakan konsep bilangan bulat dan pecahan untuk menyelesaikan permasalahan yang berkaitan dengan perencanaan reboisasi.",
+     "en": "Planting trees is one of the most effective ways to absorb carbon dioxide, restore ecosystems, and reduce the impacts of climate change. Careful planning is essential to determine the number of tree seedlings needed to reforest different areas. In this activity, you will use whole numbers and fractions to solve reforestation planning problems."
+    }
+   },
+   {
+    "type": "applet",
+    "material": "rpte5ypj"
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "Jika 4 bibit pohon cukup untuk menghijaukan 1<sup>1</sup>&frasl;<sub>3</sub> bagian area reboisasi, berapa banyak bibit pohon yang diperlukan untuk menghijaukan 1 bagian area?\nJumlah bibit pohon: ........",
+     "en": "If 4 tree seedlings are enough to reforest 1<sup>1</sup>&frasl;<sub>3</sub> sections of a restoration area, how many tree seedlings are needed to reforest 1 section?\nNumber of tree seedlings: ....."
+    }
+   },
+   {
+    "type": "text",
+    "title": {
+     "id": "Menghubungkan Semua Konsep (Putting It All Together)",
+     "en": ""
+    },
+    "body": {
+     "id": "Jawablah pertanyaan terbuka berikut secara mandiri atau bersama teman untuk membangun pemahaman matematika yang lebih mendalam.",
+     "en": "Answer these open ended questions on your own or with others to form deeper math connections."
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "Jika 40 bibit pohon cukup untuk menghijaukan<sup>5</sup>&frasl;<sub>8</sub> dari sebuah taman kota, jelaskan bagaimana kamu menentukan jumlah bibit pohon yang diperlukan untuk menghijaukan seluruh taman tersebut.",
+     "en": "If 40 tree seedlings are enough to reforest <sup>5</sup>&frasl;<sub>8</sub> of a park, describe how you would determine the number of tree seedlings needed to reforest the entire park."
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "Jika 34 bibit pohon cukup untuk menghijaukan  5<sup>2</sup>&frasl;<sub>3</sub> bagian hutan kota, jelaskan bagaimana kamu menentukan jumlah bibit pohon yang diperlukan untuk menghijaukan satu bagian hutan tersebut.",
+     "en": "If 34 tree seedlings are enough to reforest 5<sup>2</sup>&frasl;<sub>3</sub> sections of a community forest, describe how you would determine the number of tree seedlings needed to reforest one section."
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "Refleksi (Reflection)",
+     "en": ""
+    },
+    "body": {
+     "id": "Mengapa perencanaan yang tepat penting dalam kegiatan penanaman pohon untuk mendukung upaya penanganan perubahan iklim?",
+     "en": "Why is careful planning important when carrying out tree-planting activities to support climate action?"
+    }
+   }
+  ]
+ },
+ {
+  "n": 7,
+  "activity": "kkund5uy",
+  "title": {
+   "id": "Mengestimasi Emisi Karbon",
+   "en": "Estimating Carbon Emissions"
+  },
+  "thumb": "https://www.geogebra.org/resource/exejm4ye/S5syrLSY5MtIshiG/material-exejm4ye-thumb.png",
+  "items": [
+   {
+    "type": "text",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "Memahami perubahan iklim sering kali memerlukan kemampuan mengestimasi berbagai besaran, seperti emisi karbon, konsumsi energi, dan dampak lingkungan. Estimasi membantu kita memperoleh perkiraan yang cepat sebelum melakukan perhitungan yang lebih rinci.\n\nPada aktivitas ini, bulatkan setiap bilangan desimal ke bilangan bulat terdekat untuk mengestimasi hasil perkalian. Selanjutnya, bandingkan hasil estimasimu dengan hasil sebenarnya menggunakan model luas.",
+     "en": "Understanding climate change often requires estimating measurements such as carbon emissions, energy consumption, and environmental impacts. Estimation helps people make quick and informed decisions before carrying out more detailed calculations.\n\nIn this activity, round each decimal to the nearest whole number to estimate the product. Then, compare your estimate with the exact value using the area model."
+    }
+   },
+   {
+    "type": "text",
+    "title": {
+     "id": "Activitas (Activity)",
+     "en": ""
+    },
+    "body": {
+     "id": "Sebuah program transportasi masyarakat memperkirakan bahwa penggunaan kendaraan pribadi menghasilkan sekitar <b>7,6 kg</b> emisi karbon dalam satu perjalanan. Jika dilakukan <b>9,6</b> perjalanan yang serupa, perkirakan total emisi karbon yang dihasilkan.\n\nBulatkan setiap bilangan desimal ke bilangan bulat terdekat sebelum melakukan perkalian.\n7,6 × 9,6",
+     "en": "A community transportation program estimates that using private vehicles produces <b>7.6 kg</b> of carbon emissions per trip. Over <b>9.6</b> similar trips, estimate the total carbon emissions.\n\nRound each decimal to the nearest whole number before multiplying. \n7.6 × 9.6"
+    }
+   },
+   {
+    "type": "applet",
+    "material": "exejm4ye"
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "Apa manfaat memperkirakan hasil perkalian sebelum menghitung hasil yang sebenarnya?",
+     "en": "Why is it helpful to estimate the answer before calculating the exact result?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "Bagaimana memperkirakan jumlah emisi karbon atau penggunaan energi dapat membantu kita memilih tindakan yang lebih ramah lingkungan?",
+     "en": "How can estimating carbon emissions or energy use help us make more environmentally friendly choices?"
+    }
+   }
+  ]
+ }
+]
