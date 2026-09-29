@@ -15,159 +15,142 @@ const NALAR_API = "";
   const sendBtn = $("send-btn");
   const logBody = $("log-body");
 
-  // Applet size in GeoGebra pixels; the page scales it to the column width.
-  const W = 600;
-  const H = 520;
-  const VIEW = { xmin: -5, xmax: 15, ymin: -13.5, ymax: 12 };
-  const QX = 3.2; // left edge of the question block, in applet units
+  // The teacher's applet (original by A.M. Vuković, 2013), 898 x 698 GeoGebra pixels,
+  // scaled by GeoGebra to the column width.
+  const W = 898;
+  const H = 698;
 
   let api = null;
   let stageIdx = 0;
+  let cur = null; // current stage: {id, type, start, end, question, origin}
   let mem = null;
   let history = [];
   let log = [];
   let busy = false;
   let done = false;
   let quiet = false; // true while the page itself changes the applet
-  let qObjects = [];
+  let randomNo = 0;
 
-  const stage = () => TASK.stages[stageIdx];
-  const px = (x) => Math.round(((x - VIEW.xmin) / (VIEW.xmax - VIEW.xmin)) * W);
-  const py = (y) => Math.round(((VIEW.ymax - y) / (VIEW.ymax - VIEW.ymin)) * H);
+  const stage = () => cur;
 
   /* ---------------- GeoGebra ---------------- */
 
-  function marker() {
-    return api ? Math.round(api.getYcoord("P")) : 0;
+  // Two draggable diamonds on the thermometer: L (blue, left scale) and E (red, right scale).
+  function temp(name) {
+    if (!api) return 0;
+    const y0 = api.getYcoord("A_1"); // bottom of the scale, -20 °C
+    const unit = api.getValue("jedDuzina"); // one degree
+    return Math.round((api.getYcoord(name) - y0) / unit) - 20;
+  }
+  function markers() {
+    return [temp("L"), temp("E")];
+  }
+  function setTemp(name, t) {
+    const y = api.getYcoord("A_1") + (t + 20) * api.getValue("jedDuzina");
+    api.setCoords(name, api.getXcoord(name), y);
   }
 
   function appletAnswer() {
-    return api ? String(api.getValueString("jwb") || "").trim() : "";
+    return api && cur ? String(api.getValueString(`Zad${cur.type}Upisano`) || "").trim() : "";
   }
 
   function showState() {
-    $("val-t").textContent = T.deg(marker());
-    const a = appletAnswer();
-    $("val-ans").textContent = a || "–";
+    const [b, r] = markers();
+    $("val-blue").textContent = T.deg(b);
+    $("val-red").textContent = T.deg(r);
+    $("val-ans").textContent = appletAnswer() || "–";
   }
 
+  const ANSWER = /^Zad([456])Upisano$/;
+  const CHECK = { gumb5: 4, gumb6: 5, gumb7: 6 };
+  const HELP = { o_2: 4, u_2: 5, v_2: 6 };
+
   window.suhuOnUpdate = function (name) {
-    if (!api || quiet) return;
-    if (name === "P") {
-      const y = api.getYcoord("P");
-      const r = Math.max(TASK.range[0], Math.min(TASK.range[1], Math.round(y)));
-      if (Math.abs(y - r) > 1e-9) {
-        quiet = true;
-        api.setCoords("P", 0, r);
-        quiet = false;
-      }
+    if (!api || quiet || !cur) return;
+    if (name === "E" || name === "L") showState();
+    else if (ANSWER.test(name) && Number(name[3]) === cur.type) {
       showState();
-    } else if (name === "jwb") {
-      showState();
+      const a = appletAnswer();
+      if (a) onAppletAnswer(a);
+    } else if (HELP[name] === cur.type && api.getValue(name) === 1 && !mem.help) {
+      mem.help = true;
+      note("Siswa membuka “Bantuan” di applet", "bantuan menampilkan rumus pengurangan");
+      logEvent("membuka bantuan applet");
+    }
+  };
+
+  window.suhuOnClick = function (name) {
+    if (!api || quiet || !cur) return;
+    if (name === "gumb1") {
+      // The applet's own "New task" script picks a random type; the page then sets a
+      // temperature-change task that crosses 0, so the protocol applies.
+      stageIdx = Math.max(stageIdx, TASK.stages.length + 1);
+      setTimeout(() => startStage(randomStage()), 60);
+    } else if (CHECK[name] === cur.type) {
       const a = appletAnswer();
       if (a) onAppletAnswer(a);
     }
   };
 
-  function style(name, rgb, opts = {}) {
-    if (rgb) api.setColor(name, ...rgb);
-    if (opts.fill !== undefined) api.setFilling(name, opts.fill);
-    if (opts.line !== undefined) api.setLineThickness(name, opts.line);
-    api.setLabelVisible(name, false);
-    if (opts.fixed !== false) api.setFixed(name, true, false);
+  function translate() {
+    const c = (cmd) => api.evalCommand(cmd);
+    const NL = "UnicodeToLetter(10)";
+    const tail = `${NL} + "Gunakan termometer di kiri untuk membantu." + ${NL} + ${NL} + "Tulis jawabanmu, lalu tekan Periksa."`;
+    c(`Zad4Tekst = "Suhu turun dari " + Zad4Br1 + " °C ke " + Zad4Br2 + " °C." + ${NL} + "Berapa derajat penurunan suhunya?" + ${tail}`);
+    c(`Zad5Tekst = "Suhu awal " + Zad5Br1 + " °C. Berapa kenaikan suhu yang" + ${NL} + "diperlukan untuk mencapai " + Zad5Br2 + " °C?" + ${tail}`);
+    c(`Zad6Tekst = "Suhu awal " + Zad6Br1 + " °C. Berapa derajat suhu harus" + ${NL} + "turun untuk mencapai " + Zad6Br2 + " °C?" + ${tail}`);
+    api.setCaption("gumb1", "Soal baru");
+    for (const b of ["gumb4", "gumb5", "gumb6", "gumb7", "gumb8", "gumb9"]) api.setCaption(b, "Periksa");
+    for (const h of ["o_1", "o_2", "u_2", "v_2"]) api.setCaption(h, "Bantuan");
+    // The applet grades the answer itself ("Excellent! ..."). The protocol keeps that for the
+    // end of the conversation, so the applet's own feedback is hidden here.
+    for (let n = 3; n <= 8; n++) api.setVisible(`Zad${n}Provjera`, false);
+    api.setVisible("Type", false);
   }
 
-  const NILA = [20, 29, 51];
-  const SOGA = [176, 102, 63];
-  const EMAS = [201, 161, 91];
-  const INK3 = [128, 120, 104];
-
-  function buildApplet(a) {
-    api = a;
+  function applyStage(st) {
+    quiet = true;
     const c = (cmd) => api.evalCommand(cmd);
-    api.setAxesVisible(false, false);
-    api.setGridVisible(false);
-    c(`ZoomIn(${VIEW.xmin},${VIEW.ymin},${VIEW.xmax},${VIEW.ymax})`);
+    c(`VrstaZadatka = ${st.type}`);
+    c(`Zad${st.type}Br1 = ${st.start}`);
+    c(`Zad${st.type}Br2 = ${st.end}`);
+    api.setTextValue(`Zad${st.type}Upisano`, "");
+    for (const h of Object.keys(HELP)) api.setValue(h, 0);
+    setTemp("L", 0);
+    setTemp("E", 0);
+    quiet = false;
+    st.question = String(api.getValueString(`Zad${st.type}Tekst`)).split("\n").slice(0, 2).join(" ");
+    showState();
+  }
 
-    // Thermometer: tube, bulb, scale, mercury column.
-    c("tube = Polygon((-0.5,-11.2),(0.5,-11.2),(0.5,10.8),(-0.5,10.8))");
-    style("tube", [230, 224, 212], { fill: 0.35, line: 3 });
-    c("blb = Polygon(Sequence((0.95 cos(t), -12 + 1.3 sin(t)), t, 0, 2pi - pi/18, pi/18))");
-    style("blb", SOGA, { fill: 1, line: 1 });
-    c("tks = Sequence(Segment((0.5,k),(If(Mod(k,5)==0,1.3,0.9),k)),k,-10,10)");
-    style("tks", INK3, { line: 2 });
-    c("lbs = Sequence(Text(k, (1.55, k - 0.3)), k, -10, 10)");
-    style("lbs", INK3);
-    c("z0 = Segment((-1.1,0),(1.3,0))");
-    style("z0", EMAS, { line: 6 });
+  function rnd(a, b) {
+    return a + Math.floor(Math.random() * (b - a + 1));
+  }
+  function randomStage() {
+    const type = [4, 5, 6][rnd(0, 2)];
+    // Different sizes on each side of 0, so the two parts of the split can be told apart.
+    const neg = -rnd(1, 12);
+    let pos = rnd(1, 12);
+    while (pos === -neg) pos = rnd(1, 12);
+    randomNo += 1;
+    return type === 5
+      ? { id: `acak${randomNo}`, type, start: neg, end: pos, origin: "soal acak dari applet" }
+      : { id: `acak${randomNo}`, type, start: pos, end: neg, origin: "soal acak dari applet" };
+  }
 
-    c("trk = Segment((0,-10),(0,10))");
-    api.setVisible("trk", false);
-    c("P = Point(trk)");
-    api.setCoords("P", 0, 0);
-    api.setColor("P", ...NILA);
-    api.setPointSize("P", 7);
-    api.setLabelVisible("P", false);
-    c("merc = Polygon((-0.26,-11.2),(0.26,-11.2),(0.26,y(P)),(-0.26,y(P)))");
-    style("merc", SOGA, { fill: 1, line: 0 });
-    c("mk = Segment((-1.1,y(P)),(0.5,y(P)))");
-    style("mk", NILA, { line: 5 });
-    c('tP = Text(round(y(P)) + " °C", (-3.9, y(P) - 0.3))');
-    style("tP", NILA);
-
-    // Answer box inside the applet.
-    c('jwb = ""');
-    c(`cap = Text("Jawaban (°C):", (${QX}, -0.6))`);
-    style("cap", NILA);
-    c("ib = InputBox(jwb)");
-    api.setLabelVisible("ib", false);
-    c(`SetCoords(ib, ${px(QX) - 4}, ${py(-1.1)})`);
-    c(`hint = Text("tulis angkanya, lalu tekan Enter", (${QX}, -4.3))`);
-    style("hint", INK3);
-
+  function onLoad(a) {
+    api = a;
+    translate();
     api.registerUpdateListener("suhuOnUpdate");
+    api.registerClickListener("suhuOnClick");
     $("applet-loading").remove();
     $("applet-wrap").classList.add("loaded");
-    showQuestion();
-    showState();
-  }
-
-  function wrap(text, width) {
-    const out = [];
-    let line = "";
-    for (const w of text.split(" ")) {
-      if ((line + " " + w).trim().length > width) {
-        out.push(line.trim());
-        line = w;
-      } else line += " " + w;
-    }
-    if (line.trim()) out.push(line.trim());
-    return out;
-  }
-
-  function showQuestion() {
-    if (!api) return;
-    quiet = true;
-    for (const n of qObjects) api.deleteObject(n);
-    qObjects = [];
-    const s = stage();
-    const lines = [`Soal ${stageIdx + 1}`, ...wrap(s.question, 30)];
-    lines.forEach((ln, i) => {
-      const name = `q${i}`;
-      const safe = ln.replace(/"/g, "'");
-      api.evalCommand(`${name} = Text("${safe}", (${QX}, ${10 - i * 1.35}))`);
-      style(name, i === 0 ? SOGA : NILA);
-      qObjects.push(name);
-    });
-    api.setTextValue("jwb", "");
-    api.setCoords("P", 0, 0);
-    quiet = false;
-    showState();
+    applyStage(cur);
   }
 
   function injectApplet() {
     const params = {
-      appName: "classic",
+      material_id: TASK.material,
       width: W,
       height: H,
       scaleContainerClass: "applet-wrap",
@@ -180,10 +163,8 @@ const NALAR_API = "";
       enableShiftDragZoom: false,
       enableLabelDrags: false,
       showZoomButtons: false,
-      language: "id",
-      perspective: "G",
       borderColor: "#FFFFFF",
-      appletOnLoad: (a) => buildApplet(a || window.ggbApplet),
+      appletOnLoad: (a) => onLoad(a || window.ggbApplet),
     };
     try {
       new GGBApplet(params, true).inject("ggb");
@@ -240,15 +221,17 @@ const NALAR_API = "";
     } else if (!on && el) el.remove();
   }
 
-  function startStage() {
-    const s = stage();
-    mem = { answerOK: false, wrong: 0, counting: 0, halfText: null };
-    $("stage-no").textContent = `soal ${stageIdx + 1} dari ${TASK.stages.length}`;
-    note(`Soal ${stageIdx + 1} dari ${TASK.stages.length} ada di applet`, s.origin);
-    const open = T.opening(s);
+  function startStage(st) {
+    cur = st;
+    mem = { answerOK: false, wrong: 0, counting: 0, halfText: null, help: false };
+    lastApplet = { v: "", t: 0 };
+    const fixed = stageIdx < TASK.stages.length;
+    $("stage-no").textContent = fixed ? `soal ${stageIdx + 1} dari ${TASK.stages.length}` : "soal acak";
+    note(fixed ? `Soal ${stageIdx + 1} dari ${TASK.stages.length} ada di applet` : "Soal baru ada di applet", st.origin);
+    if (api) applyStage(st);
+    const open = T.opening(st);
     bubble("ai", open, `${MOVE_NAME.L1} · naskah`);
     history.push({ role: "assistant", content: open });
-    showQuestion();
     renderQuick();
   }
 
@@ -260,7 +243,7 @@ const NALAR_API = "";
     const verb = up ? "naik" : "turun";
     const walk = [];
     for (let v = s.start; up ? v <= s.end : v >= s.end; v += up ? 1 : -1) walk.push(f(v));
-    if (s.id === "soal1") {
+    if (s.start === -6 && s.end === 4) {
       return {
         applet: [["2", "salah: 6 − 4"], ["11", "salah: hitung angka"], ["10", "benar"]],
         chat: [
@@ -308,7 +291,8 @@ const NALAR_API = "";
     };
     row("Isi kotak applet:", set.applet, (v) => {
       if (!api) return;
-      api.setTextValue("jwb", v); // fires the update listener like a typed answer
+      if (!cur) return;
+      api.setTextValue(`Zad${cur.type}Upisano`, v); // fires the update listener like a typed answer
     });
     row("Contoh penjelasan:", set.chat, (t) => {
       input.value = t;
@@ -346,10 +330,12 @@ const NALAR_API = "";
 
   /* ---------------- Turn ---------------- */
 
-  let lastApplet = "";
+  let lastApplet = { v: "", t: 0 };
   function onAppletAnswer(a) {
-    if (done || a === lastApplet) return;
-    lastApplet = a;
+    // Enter in the box and a click on Periksa report the same answer; count it once.
+    const now = Date.now();
+    if (done || (a === lastApplet.v && now - lastApplet.t < 2000)) return;
+    lastApplet = { v: a, t: now };
     turn({ from: "applet", text: a });
   }
 
@@ -366,7 +352,7 @@ const NALAR_API = "";
     busy = true;
     sendBtn.disabled = true;
     const s = stage();
-    const m = marker();
+    const m = markers();
 
     if (inp.from === "applet") bubble("student applet", `Jawaban di applet: ${inp.text}`);
     else bubble("student", inp.text);
@@ -382,8 +368,10 @@ const NALAR_API = "";
       task: { id: TASK.id, title: TASK.title, unit: TASK.unit, misconceptions: TASK.misconceptions, moves: TASK.moves },
       stage: { id: s.id, question: s.question, target: TASK.target },
       context:
-        `Termometer di applet, skala ${TASK.range[0]} sampai ${TASK.range[1]} °C. Penanda siswa sekarang di ${m} °C. ` +
-        `Jawaban di kotak applet: ${appletAnswer() || "belum diisi"}. Soal: dari ${s.start} °C ke ${s.end} °C.`,
+        `Termometer di applet, skala ${TASK.range[0]} sampai ${TASK.range[1]} °C, dengan penanda biru dan merah. ` +
+        `Penanda biru di ${m[0]} °C, penanda merah di ${m[1]} °C. ` +
+        `Jawaban di kotak applet: ${appletAnswer() || "belum diisi"}. Soal: dari ${s.start} °C ke ${s.end} °C. ` +
+        `Siswa ${mem.help ? "sudah" : "belum"} membuka bantuan applet (bantuan menampilkan rumus pengurangan).`,
       analysis: {
         kind: res.kind,
         label: T.KIND_LABEL[res.kind],
@@ -422,13 +410,12 @@ const NALAR_API = "";
     if (res.done) {
       await new Promise((r) => setTimeout(r, 900));
       stageIdx += 1;
-      lastApplet = "";
-      if (stageIdx < TASK.stages.length) startStage();
+      if (stageIdx < TASK.stages.length) startStage({ ...TASK.stages[stageIdx] });
       else {
-        done = true;
-        bubble("ai end", "Kedua soal selesai. Tekan “Ulangi” untuk mencoba jalur jawaban yang lain.", MOVE_NAME.END);
-        input.disabled = true;
-        renderQuick();
+        if (stageIdx === TASK.stages.length) {
+          note("Soal tetap selesai. Berikutnya soal acak; tombol “Soal baru” di applet juga bisa dipakai kapan saja.");
+        }
+        startStage(randomStage());
       }
     }
     busy = false;
@@ -443,7 +430,7 @@ const NALAR_API = "";
       turn: log.length + 1,
       time_utc: new Date().toISOString(),
       stage: sid,
-      marker_c: m,
+      marker_c: m.join("/"),
       input_from: inp.from,
       student_text: inp.text,
       numbers_read: res.reading.ns.join(" "),
@@ -456,6 +443,21 @@ const NALAR_API = "";
     const tr = document.createElement("tr");
     const cells = [row.turn, row.time_utc.slice(11, 19), row.stage, row.marker_c, row.input_from, row.student_text, row.diagnosis, row.move, row.source];
     for (const v of cells) {
+      const td = document.createElement("td");
+      td.textContent = v;
+      tr.appendChild(td);
+    }
+    logBody.appendChild(tr);
+  }
+
+  function logEvent(text) {
+    const row = {
+      turn: log.length + 1, time_utc: new Date().toISOString(), stage: cur.id, marker_c: markers().join("/"),
+      input_from: "applet", student_text: "", numbers_read: "", diagnosis: text, move: "", source: "", ai_text: "",
+    };
+    log.push(row);
+    const tr = document.createElement("tr");
+    for (const v of [row.turn, row.time_utc.slice(11, 19), row.stage, row.marker_c, "applet", "", text, "", ""]) {
       const td = document.createElement("td");
       td.textContent = v;
       tr.appendChild(td);
@@ -482,11 +484,10 @@ const NALAR_API = "";
     history = [];
     done = false;
     busy = false;
-    lastApplet = "";
     chatLog.innerHTML = "";
     input.disabled = false;
     sendBtn.disabled = false;
-    startStage();
+    startStage({ ...TASK.stages[0] });
   }
 
   form.addEventListener("submit", onSubmit);
@@ -498,6 +499,6 @@ const NALAR_API = "";
   });
   $("mode-badge").textContent = NALAR_API ? "Mode AI · menyambung…" : "Mode naskah (tanpa AI)";
 
-  startStage();
+  startStage({ ...TASK.stages[0] });
   injectApplet();
 })();

@@ -202,4 +202,6 @@ body.teacher .meta-inline { display: inline; }
 .quick.stacked { flex-direction: column; align-items: stretch; }
 .quick-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .quick-row > span { min-width: 8.5em; }
-.applet-wrap.fixed-ratio { aspect-ratio: 600 / 520; min-height: 0; }
+.applet-wrap.fixed-ratio { aspect-ratio: 898 / 698; min-height: 0; }
+.dot-blue { background: #1f3fd6; }
+.dot-red { background: #d83a2c; }

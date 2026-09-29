@@ -155,9 +155,12 @@
       const k = r.strategy === "dontKnow" && claimed === null ? "dontKnow" : wrongKind(claimed, stage);
       const n = mem.wrong;
       if (n === 0) {
-        if (marker !== stage.start) {
+        const markers = [].concat(marker);
+        if (!markers.includes(stage.start)) {
           return out("L2", "wrong:" + k,
-            `Letakkan dulu penanda termometer di ${s}. Lalu gerakkan sampai ${e}: ke arah mana penandanya bergerak, dan melewati angka apa saja?`);
+            markers.length > 1
+              ? `Geser penanda biru ke ${s} dan penanda merah ke ${e}. Dari biru ke merah, ke arah mana suhunya bergerak, dan melewati angka apa saja?`
+              : `Letakkan dulu penanda termometer di ${s}. Lalu gerakkan sampai ${e}: ke arah mana penandanya bergerak, dan melewati angka apa saja?`);
         }
         const replies = {
           noSign: `Kamu menjawab ${fmt(claimed)}. Coba cek dengan termometer: mulai dari ${s}, ${verb} ${Math.abs(claimed)} derajat. Penandanya sampai di angka berapa?`,
@@ -228,7 +231,7 @@
 
   function opening(stage) {
     const { noun } = verbs(stage);
-    return `Coba kerjakan dengan termometer di applet. Berapa ${noun} suhunya, dan bagaimana kamu mendapatkannya? Tulis jawabanmu di kotak jawaban applet.`;
+    return `Coba kerjakan dengan termometer di applet. Berapa ${noun} suhunya, dan bagaimana kamu mendapatkannya? Tulis jawabanmu di kotak jawaban applet, lalu tekan Periksa.`;
   }
 
   const KIND_LABEL = {

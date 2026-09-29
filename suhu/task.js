@@ -7,10 +7,14 @@ window.SUHU_TASK = {
   id: "bilangan/skala-suhu",
   title: "Skala suhu",
   unit: "°C",
-  range: [-10, 10],
+  range: [-20, 20],
+  // Applet from the teacher (original by A.M. Vuković, 2013). Task types 4, 5 and 6 are the
+  // temperature-change questions this protocol covers; the numbers are set by the page.
+  material: "yx7ubuvn",
   stages: [
     {
       id: "soal1",
+      type: 5,
       start: -6,
       end: 4,
       question: "Suhu awal −6 °C. Berapa kenaikan suhu yang diperlukan untuk mencapai 4 °C?",
@@ -18,9 +22,10 @@ window.SUHU_TASK = {
     },
     {
       id: "soal2",
+      type: 4,
       start: 3,
       end: -5,
-      question: "Suhu awal 3 °C, lalu turun sampai −5 °C. Berapa derajat penurunan suhunya?",
+      question: "Suhu turun dari 3 °C ke −5 °C. Berapa derajat penurunan suhunya?",
       origin: "contoh tambahan untuk demo",
     },
   ],

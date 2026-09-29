@@ -21,3 +21,9 @@ it, following the teacher's protocol: L1 first, a correct answer gets L4 (not "b
 wrong answer gets L2 then L3, counting one by one is not enough, and the session ends with a
 confirmation once the answer and the split at 0 are both there. `suhu/tutor.js` reads the numbers
 in the student's text and decides the move; the optional worker only rephrases it.
+
+The applet is the teacher's GeoGebra material `yx7ubuvn` (original by A.M. Vuković, 2013). The page
+sets task type 5 (-6 to 4) and type 4 (3 to -5), then random crossing-zero tasks of types 4 to 6
+("Soal baru"). It translates the task texts, hides the applet's own right/wrong feedback, reads the
+blue and red markers (`L`, `E`) and the answer text (`Zad<n>Upisano`), and logs when the student
+opens the help box (it shows the subtraction formula).
