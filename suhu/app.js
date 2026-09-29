@@ -2,7 +2,7 @@
    the chat only probes how the student got the answer. */
 
 // Worker URL for AI mode. Empty = scripted mode (no AI, no network beyond GeoGebra).
-const NALAR_API = "";
+const NALAR_API = "https://nalar-demo.shelbot-plus.workers.dev";
 
 (function () {
   const TASK = window.SUHU_TASK;
@@ -390,7 +390,12 @@ const NALAR_API = "";
     let reply = res.reply;
     let source = "naskah";
     if (ai) {
-      if (!leaks(ai.reply, forbid)) {
+      // The AI may rephrase, but may not change the move or bring in a number that is not in
+      // the scripted reply or the student's message (that is how it would give the split away).
+      const allowed = new Set([...T.numbers(T.normalise(res.reply)), ...T.numbers(T.normalise(inp.text))].map(Math.abs));
+      const newNumber = T.numbers(T.normalise(ai.reply)).some((n) => !allowed.has(Math.abs(n)));
+      const lostQuestion = res.reply.includes("?") && !ai.reply.includes("?");
+      if (!leaks(ai.reply, forbid) && ai.move === res.move && !newNumber && !lostQuestion) {
         reply = ai.reply;
         source = ai.model || "AI";
         $("mode-badge").textContent = `Mode AI · ${source}`;
@@ -405,6 +410,7 @@ const NALAR_API = "";
     if (res.kind.startsWith("wrong")) mem.wrong += 1;
     if (res.kind === "counting") mem.counting += 1;
     if (res.kind === "splitHalf") mem.halfText = inp.text;
+    mem.lastKind = res.kind;
     addLog({ stage: s.id, m, inp, res, source, reply });
 
     if (res.done) {

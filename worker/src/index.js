@@ -82,6 +82,8 @@ ATURAN KERAS
 4. Semua angka harus sama dengan keadaan applet di atas. Jangan mengarang angka lain.
 5. Jangan menilai siswa dengan kata "salah" secara langsung; ajak ia melihat lagi.
 6. Tanpa emoji, tanpa markdown.
+7. Pakai langkah yang disarankan sistem. Jangan memberi cara penyelesaian yang belum disebut siswa atau naskah.${b.context ? `
+8. Termometer itu tegak: suhu naik = penanda ke atas, suhu turun = penanda ke bawah.` : ""}
 
 FORMAT KELUARAN
 Balas HANYA dengan JSON satu baris: {"move":"<langkah dari daftar>","reply":"<teks untuk siswa>"}`;
@@ -163,6 +165,12 @@ export default {
         if (forbid) {
           const t = normalise(reply);
           if (forbid.some((f) => new RegExp(`(^|[^0-9])${f}([^0-9]|$)`).test(t))) continue;
+          // Keep the move the page chose, and no numbers beyond the script and the student's text.
+          if (b?.analysis?.suggestedMove && move !== b.analysis.suggestedMove) continue;
+          const nums = (x) => (normalise(x).match(/\d+/g) || []).map(Number);
+          const allowed = new Set([...nums(b.scriptReply), ...nums(turns[turns.length - 1].content)]);
+          if (nums(reply).some((n) => !allowed.has(n))) continue;
+          if (String(b.scriptReply || "").includes("?") && !reply.includes("?")) continue;
         } else if (!correct && leaksAnswer(reply, a, bb)) continue;
         return send(200, { reply, move, model: model.split("/").pop() });
       } catch {

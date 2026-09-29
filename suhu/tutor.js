@@ -41,6 +41,8 @@
   const DONTKNOW = /(tidak tahu|gak tau|ga tau|gatau|nggak tahu|ngga tahu|tdk tahu|belum tahu|bingung|entah|lupa)/;
   const ONE_BY_ONE = /(satu per satu|satu-satu|satu satu|masing-masing 1|naiknya 1|turunnya 1|per 1|tiap 1)/;
   const DIRECTION = /\b(atas|bawah|naik|turun)\b/;
+  const HOWTO = /(gimana|bagaimana|gmn|cara)\s*(cara\s*)?(geser|gerak|pakai|pake|menggeser|memakai|mengisi|isi)/;
+  const WHY = /\b(kenapa|mengapa|knp|kok)\b/;
 
   /**
    * Reads a text against one stage.
@@ -80,6 +82,8 @@
     else if (splitHalf) strategy = "splitHalf";
     else if (sumExpr) strategy = "sumOnly";
     else if (diffExpr) strategy = "formal";
+    else if (HOWTO.test(t)) strategy = "howTo";
+    else if (WHY.test(t) && ns.length <= 1) strategy = "why";
     else if (DONTKNOW.test(t)) strategy = "dontKnow";
     else if (total !== null && ns.length <= 3) strategy = "answerOnly";
     else if (DIRECTION.test(t) && !ns.length) strategy = "direction";
@@ -137,6 +141,19 @@
 
     const out = (move, kind, reply, done = false) => ({ move, kind, reply, done, answerOK, reading: r });
 
+    // Questions from the student about the tool, or "why", come before the protocol.
+    if (r.strategy === "howTo") {
+      return out(mem.lastKind === "howTo" ? "L2" : "L1", "howTo",
+        `Tarik penanda biru atau merah ke atas atau ke bawah di sepanjang termometer. ` +
+        `Coba letakkan penanda biru di ${s}. Lalu apa yang kamu lihat saat penandanya digerakkan ke ${e}?`);
+    }
+    if (r.strategy === "why") {
+      return out("L4", "why",
+        answerOK
+          ? `Pertanyaan yang bagus. Menurutmu, apa yang istimewa dari 0 °C di termometer, dibandingkan angka lainnya?`
+          : `Pertanyaan yang bagus. Coba kita lihat bersama di termometer: dari ${s}, penandanya perlu bergerak ke mana supaya sampai di ${e}?`);
+    }
+
     // Goal reached: correct answer and the split at 0 in the student's own words.
     if (r.strategy === "split" && (answerOK || claimed === null)) {
       if (!answerOK && claimed === null) {
@@ -151,6 +168,11 @@
     }
 
     // Wrong total, or "tidak tahu": L2, then L3, then the teacher's hint.
+    // Once the answer is right, "tidak tahu" is about the faster way, not the answer:
+    // it moves one rung up the counting ladder instead.
+    const stuck = answerOK && claimed === null && r.strategy === "dontKnow";
+    if (stuck) r.strategy = "counting";
+
     if ((claimed !== null && !answerOK) || r.strategy === "dontKnow") {
       const k = r.strategy === "dontKnow" && claimed === null ? "dontKnow" : wrongKind(claimed, stage);
       const n = mem.wrong;
@@ -185,7 +207,8 @@
     if (answerOK) {
       switch (r.strategy) {
         case "counting": {
-          const n = mem.counting;
+          // A stuck student skips the "faster way?" question and gets the pointer to 0.
+          const n = stuck ? Math.max(1, mem.counting) : mem.counting;
           if (n === 0) {
             return out("L4", "counting",
               `Kamu menghitung satu per satu dan sampai di ${size}. Bisakah kamu menemukannya lebih cepat, tanpa menghitung satu per satu?`);
@@ -207,6 +230,10 @@
           return out("L4", "formal",
             `Hitunganmu cocok. Bisakah kamu menunjukkannya di termometer: dari ${s} ke mana dulu, lalu ke mana?`);
         default:
+          if (mem.lastKind === "answerOnly") {
+            return out("L4", "answerOnly",
+              `Coba ceritakan langkahnya satu per satu: dari ${s}, penandanya kamu gerakkan ke mana, dan sampai mana?`);
+          }
           if (input.from === "applet") {
             return out("L4", "answerOnly",
               `Kamu menulis ${fmt(claimed)} di applet. Bagaimana kamu mendapatkan ${fmt(claimed)}? Ceritakan langkahmu di termometer.`);
@@ -245,6 +272,8 @@
     answerOnly: "benar, belum ada penjelasan",
     direction: "baru arah gerak",
     unclear: "belum jelas",
+    howTo: "bertanya cara memakai applet",
+    why: "bertanya kenapa",
     "wrong:noSign": "salah: mengurangkan tanpa tanda",
     "wrong:fencepost": "salah: menghitung angka, bukan lompatan",
     "wrong:signOfRise": "salah: kenaikan diberi tanda minus",
