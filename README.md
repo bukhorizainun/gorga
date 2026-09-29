@@ -29,9 +29,11 @@ blue and red markers (`L`, `E`) and the answer text (`Zad<n>Upisano`), and logs 
 opens the help box (it shows the subtraction formula).
 
 AI layers in the temperature demo (worker at `nalar-demo.zainun.workers.dev`):
-- `/chat` writes each reply from a brief (aim, what to avoid, allowed numbers) built by `tutor.brief()`;
-  replies that change the move, add numbers, judge ("benar", "salah"...), drop the question or copy
-  the script are rejected, and the script is used instead.
+- `/chat` (AI-led): the model reads the conversation, the applet state and the teacher's protocol and
+  chooses the move itself. `tutor.limits()` sets the most help allowed at this point, the numbers the
+  reply may contain, and whether 0 and the split may be mentioned yet; `tutor.overreach()` checks the
+  sentence itself (a label can say L4 while the words give the split away). Rejected replies fall
+  back to the script.
 - `/classify` reads the strategy of chat answers the rules mark "unclear". `tutor.verify()` keeps the
   reading only if what it claims is visible in the student's words (for the split: both parts and
   0 or "titik beku"). The log marks these rows "(dibaca AI)".

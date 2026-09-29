@@ -133,6 +133,68 @@ ${prev || "- (belum ada)"}
 Balas HANYA dengan JSON satu baris: {"reply":"<teks untuk siswa>"}`;
 }
 
+/* AI-led mode: the model reads the whole conversation and chooses the move itself.
+   The page sends the facts and the limits; the worker and the page both check the reply. */
+const PROTOCOL = `Protokol guru (wajib):
+- Pertanyaan pertama selalu L1: minta siswa mencoba dengan termometer.
+- Jika jawaban siswa benar, JANGAN langsung bilang benar; pakai L4 untuk meminta penjelasan.
+- Jika jawaban salah atau siswa tidak tahu: L2, lalu L3 bila perlu.
+- Untuk perubahan suhu yang melewati 0, penalaran target adalah memecah di 0.
+- Menghitung satu per satu belum cukup untuk mengakhiri percakapan.
+- Percakapan selesai hanya jika jawaban benar DAN penalaran target muncul dari siswa sendiri; saat itu beri konfirmasi.
+- Jangan memberi jawaban terlalu cepat; pakai pertanyaan agar siswa menemukan dan menjelaskan sendiri.
+Arti langkah: L1 = bertanya terbuka / mengajak mencoba; L4 = mengulang ide siswa dengan kata lain lalu minta penjelasan; L2 = menunjuk satu hal spesifik di termometer; L3 = memecah soal menjadi pertanyaan kecil; OK = konfirmasi akhir.`;
+
+const EXAMPLE = `Contoh percakapan dari sesi guru (soal: suhu awal -6 °C, berapa kenaikan untuk mencapai 4 °C):
+Guru: Di applet, coba letakkan suhu awal di -6 °C. Dari -6 °C, ke arah mana kamu harus menggerakkan suhu agar mendekati 4 °C?
+Siswa: ke arah atas
+Guru: Sekarang, di applet, coba gerakkan dari -6 °C ke atas sampai 4 °C. Berapa banyak kenaikan yang kamu lihat?
+Siswa: jadi -6 naik ke 4 itu naik 10 kali.
+Guru: Oke, coba jelaskan caramu menggunakan termometer. Bagaimana kamu bisa mendapatkan 10 kali kenaikan?`;
+
+const LEVEL_TEXT = {
+  1: "Bantuan paling jauh saat ini: L1 atau L4 saja. Bertanya dan merefleksikan; jangan menunjuk angka atau titik tertentu.",
+  2: "Bantuan paling jauh saat ini: L2. Boleh menunjuk satu hal di termometer (misalnya angka 0 atau posisi penanda). Jangan memecah soal untuk siswa.",
+  3: "Bantuan paling jauh saat ini: L3. Boleh memecah soal menjadi dua pertanyaan kecil, tapi jangan memberi hasilnya.",
+  4: "Siswa sudah beberapa kali macet. Boleh memberi petunjuk yang lebih jelas, tapi biarkan siswa yang menghitung hasil akhirnya.",
+};
+
+function leadPrompt(b) {
+  const s = b.stage || {};
+  const L = b.lead || {};
+  const facts = (Array.isArray(L.facts) ? L.facts : []).map((f) => `- ${clip(f, 200)}`).join("\n");
+  const task = L.goal
+    ? `TUGAS: siswa sudah menemukan penalaran target sendiri. Tulis konfirmasi singkat yang hangat: sebut bahwa jawabannya benar, ulangi cara siswa memecah di 0 dengan angkanya, dan total ${L.size} derajat. Tanpa pertanyaan. Pakai "move":"OK".`
+    : `TUGAS: tulis balasan berikutnya sebagai guru. ${LEVEL_TEXT[L.maxHelp] || LEVEL_TEXT[1]}`;
+  return `Kamu guru matematika yang sabar untuk siswa SMP di Indonesia. Siswa mengerjakan soal di applet termometer GeoGebra (termometer tegak: naik = ke atas, turun = ke bawah), lalu berdiskusi denganmu di chat.
+
+${PROTOCOL}
+
+SOAL: ${clip(s.question, 300)}
+KEADAAN APPLET: ${clip(b.context, 500)}
+
+FAKTA DARI SISTEM (sudah dicek, pasti benar):
+${facts}
+
+${task}
+
+CARA MENANGGAPI
+- Baca jawaban terakhir siswa dengan teliti. Mulai dari yang ia tulis: sebut kembali kata, angka, atau caranya secara spesifik.
+- Bangun dari bagian yang sudah tepat. Kalau ada yang keliru, tanyakan sesuatu yang membuat siswa melihat sendiri kelirunya di termometer, misalnya dari posisi penanda atau angka yang ia sebut.
+- Jangan menanyakan hal yang sudah ia jawab. Jangan mengulang pertanyaanmu sebelumnya.
+- Kalau siswa bertanya, jawab singkat dulu, lalu kembalikan ke soal.
+- Angka yang boleh muncul hanya: ${(L.allowNumbers || []).join(", ")}.${L.zeroOK ? "" : `
+- Jangan menyebut angka 0, "nol", atau ide berhenti di 0: itu kunci yang harus ditemukan siswa sendiri.`}${L.splitOK ? "" : `
+- Jangan menyarankan memecah soal menjadi dua bagian.`}
+- ${L.goal ? "" : 'Jangan memakai kata "benar", "salah", "tepat", atau "memang". '}Tepat satu pertanyaan di akhir${L.goal ? " (kecuali konfirmasi)" : ""}. Maksimal 2 kalimat, maksimal 45 kata. Bahasa sehari-hari yang hangat, sapa "kamu". Tanpa emoji dan markdown.
+
+${EXAMPLE}
+
+Balas HANYA JSON satu baris: {"move":"L1|L2|L3|L4|OK","reply":"..."}`;
+}
+
+const HELP_RANK = { L1: 1, L4: 1, L2: 2, L3: 3, HINT: 4, OK: 0 };
+
 function words(s) {
   return new Set(String(s || "").toLowerCase().replace(/[^a-z0-9\u00C0-\u024f\s-]/g, " ").split(/\s+/).filter((w) => w.length > 2));
 }
@@ -275,6 +337,45 @@ export default {
     if (!turns.length || turns[turns.length - 1].role !== "user") return send(400, { error: "no student turn" });
 
     const correct = b?.analysis?.kind === "correct";
+
+    if (forbid && b.lead && Number.isFinite(Number(b.lead.maxHelp))) {
+      const L = b.lead;
+      const messages = [{ role: "system", content: leadPrompt(b) }, ...turns];
+      const allow = new Set((L.allowNumbers || []).map(Number));
+      const prev = turns.filter((m) => m.role === "assistant").map((m) => m.content);
+      const signed = (x) => (String(x || "").replace(/[−–—]/g, "-").match(/-?\d+/g) || []).map(Number);
+      const why = [];
+      for (const [model, temperature] of [[MODEL_MAIN, 0.6], [MODEL_MAIN, 0.8], [MODEL_MAIN, 0.9]]) {
+        try {
+          const out = await env.AI.run(model, { messages, max_tokens: 220, temperature });
+          const raw = typeof out?.response === "string" ? out.response.trim() : "";
+          const j = parseJSON(out?.response);
+          const reply = clip(j?.reply || (raw.startsWith("{") ? "" : raw), 400).trim().replace(/^["“]|["”]$/g, "");
+          let move = typeof j?.move === "string" ? j.move.trim() : "";
+          if (!(move in HELP_RANK)) move = L.goal ? "OK" : "L1";
+          const r = (w) => why.push(`${w}: ${reply.slice(0, 160)}`);
+          if (!reply) { why.push("empty"); continue; }
+          if (!L.goal && HELP_RANK[move] > L.maxHelp) { r(`too much help ${move}`); continue; }
+          if (L.goal && move !== "OK") move = "OK";
+          if (!L.goal && move === "OK") move = "L4";
+          if (!L.goal && !reply.includes("?")) { r("no question"); continue; }
+          if (reply.split(/\s+/).length > 60) { r("too long"); continue; }
+          const t = normalise(reply);
+          if (forbid.some((f) => new RegExp(`(^|[^0-9])${f}([^0-9]|$)`).test(t))) { r("forbidden"); continue; }
+          const extra = signed(reply).filter((n) => !allow.has(n));
+          if (extra.length) { r(`new numbers ${extra.join(",")}`); continue; }
+          if (!L.goal && /\b(benar|salah|betul|tepat|memang)\b/i.test(reply)) { r("judges"); continue; }
+          const low = reply.toLowerCase();
+          if (!L.zeroOK && /(\b0\b|\bnol\b|titik beku)/.test(low)) { r("mentions 0"); continue; }
+          if (!L.splitOK && /(dua bagian|pecah|dibagi dua|bagi (jadi|menjadi) dua|dua langkah)/.test(low)) { r("splits"); continue; }
+          if (prev.some((p) => similarity(reply, p) > 0.8)) { r("repeats"); continue; }
+          return send(200, { reply, move, model: model.split("/").pop() });
+        } catch (e) {
+          why.push(`error: ${String(e && e.message).slice(0, 120)}`);
+        }
+      }
+      return send(502, { error: "no usable reply", why });
+    }
 
     if (forbid && b.brief && b.brief.aim) {
       const messages = [{ role: "system", content: flexPrompt(b) }, ...turns];

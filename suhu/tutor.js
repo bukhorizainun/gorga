@@ -72,7 +72,13 @@
     }
 
     let strategy = "unclear";
-    const splitFull = crosses && hasZero && count(partA) >= 2 && count(partB) >= 2;
+    const below = Math.abs(Math.min(stage.start, stage.end));
+    const above = Math.max(stage.start, stage.end);
+    const splitFull = crosses && hasZero && (
+      (count(partA) >= 2 && count(partB) >= 2) ||
+      // both parts as amounts plus the total, e.g. "-6 ke 0 naik 6, terus 4 lagi, jadi 10"
+      (ns.includes(below) && ns.includes(above) && abs.includes(size))
+    );
     const splitHalf = crosses && hasZero && (count(partA) >= 2 || count(partB) >= 2);
     const sumExpr = new RegExp(`\\b${partA}\\s*\\+\\s*${partB}\\b|\\b${partB}\\s*\\+\\s*${partA}\\b`).test(t);
     const diffExpr = /-?\d+\s*-\s*\(\s*-?\d+\s*\)|-?\d+\s*-\s*-\d+/.test(t);
@@ -397,7 +403,64 @@
     }
   }
 
-  const api = { normalise, numbers, read, step, opening, isCorrect, fmt, deg, KIND_LABEL, brief, verify };
+  // How much help each move gives. The AI may pick any move up to the level the protocol
+  // has reached; L4 (revoice) and L1 (probe) give no new information.
+  const HELP = { L1: 1, L4: 1, L2: 2, L3: 3, HINT: 4, OK: 0 };
+
+  /**
+   * AI-led mode: the rules no longer write the reply. They state the facts, the most help
+   * allowed at this point of the protocol, and the numbers the reply may contain.
+   * @param texts all student texts of this stage (chat and applet), oldest first
+   */
+  function limits(res, stage, mem, texts) {
+    const size = Math.abs(stage.end - stage.start);
+    const below = Math.abs(Math.min(stage.start, stage.end));
+    const above = Math.max(stage.start, stage.end);
+    const goal = res.move === "OK";
+    const maxHelp = goal ? 4 : HELP[res.move] || 1;
+    const allow = new Set([stage.start, stage.end]);
+    for (const t of texts) for (const n of numbers(normalise(t))) allow.add(n);
+    if (res.answerOK || goal) allow.add(size);
+    const studentRaisedZero = ["splitIdea", "splitHalf", "splitNoTotal", "why"].includes(res.kind);
+    const zeroOK = goal || maxHelp >= 2 || studentRaisedZero;
+    if (zeroOK) allow.add(0);
+    else allow.delete(0);
+    if (maxHelp >= 4) { allow.add(0); allow.add(below); allow.add(above); }
+    if (goal) { allow.add(0); allow.add(below); allow.add(above); allow.add(size); }
+    const claimed = res.reading.total;
+    const facts = [
+      `Jawaban akhir siswa: ${res.answerOK ? `sudah benar (${size})` : claimed !== null ? `belum benar (siswa menulis ${fmt(claimed)})` : "belum ada"}.`,
+      `Cara siswa di pesan terakhir: ${KIND_LABEL[res.kind] || res.kind}.`,
+      goal
+        ? "Penalaran target SUDAH muncul dari siswa sendiri. Saatnya konfirmasi akhir."
+        : "Penalaran target (memecah di 0) BELUM muncul dari siswa.",
+      `Percobaan salah sejauh ini: ${mem.wrong}. Berapa kali siswa menghitung satu per satu atau macet: ${mem.counting}.`,
+    ];
+    return { goal, maxHelp, allowNumbers: [...allow], facts, size, zeroOK, splitOK: goal || maxHelp >= 3 || studentRaisedZero };
+  }
+
+  /**
+   * Content check for AI replies: a label can say L4 while the sentence gives the split away.
+   * Returns the reason to reject, or null.
+   */
+  function overreach(reply, lim, stage) {
+    const t = String(reply || "").toLowerCase().replace(/[−–—]/g, "-");
+    const digits = (t.match(/-?\d+/g) || []).map(Number);
+    const bad = digits.filter((n) => !lim.allowNumbers.includes(n));
+    if (bad.length) return `angka ${bad.join(",")}`;
+    if (!lim.zeroOK && /(\b0\b|\bnol\b|titik beku)/.test(t)) return "menyebut 0";
+    if (!lim.splitOK) {
+      if (/(dua bagian|pecah|dibagi dua|bagi (jadi|menjadi) dua|dua langkah)/.test(t)) return "memecah soal";
+      const s = String(stage.start), e = String(stage.end);
+      if (new RegExp(`${s}\\s*(°c)?\\s*(ke|sampai|hingga)\\s*(0|nol)`).test(t) &&
+          new RegExp(`(0|nol)\\s*(°c)?\\s*(ke|sampai|hingga)\\s*${e}`).test(t)) return "memecah soal";
+    }
+    if (!lim.goal && /\b(benar|salah|betul|tepat|memang)\b/.test(t)) return "menilai";
+    if (!lim.goal && !t.includes("?")) return "tanpa pertanyaan";
+    return null;
+  }
+
+  const api = { normalise, numbers, read, step, opening, isCorrect, fmt, deg, KIND_LABEL, brief, verify, limits, HELP, overreach };
   if (typeof module !== "undefined") module.exports = api;
   else window.SuhuTutor = api;
 })();

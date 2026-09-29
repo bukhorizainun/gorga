@@ -221,8 +221,10 @@ const NALAR_API = "https://nalar-demo.zainun.workers.dev";
     } else if (!on && el) el.remove();
   }
 
+  let stageTexts = [];
   function startStage(st) {
     cur = st;
+    stageTexts = [];
     mem = { answerOK: false, wrong: 0, counting: 0, halfText: null, help: false };
     lastApplet = { v: "", t: 0 };
     const fixed = stageIdx < TASK.stages.length;
@@ -396,8 +398,10 @@ const NALAR_API = "https://nalar-demo.zainun.workers.dev";
     const res = T.step({ stage: s, input: inp, marker: m, mem, override });
     const size = Math.abs(s.end - s.start);
     const forbid = res.answerOK ? [] : [String(size)];
-    const plan = T.brief(res, s, inp.text);
-    const ai = res.move === "OK" || res.move === "HINT" ? null : await askAI({
+    stageTexts.push(inp.text);
+    const lim = T.limits(res, s, mem, stageTexts);
+    const ai = await askAI({
+      lead: lim,
       task: { id: TASK.id, title: TASK.title, unit: TASK.unit, misconceptions: TASK.misconceptions, moves: TASK.moves },
       stage: { id: s.id, question: s.question, target: TASK.target },
       context:
@@ -413,7 +417,6 @@ const NALAR_API = "https://nalar-demo.zainun.workers.dev";
         wrongAttempts: mem.wrong,
       },
       forbid,
-      brief: plan,
       scriptReply: res.reply,
       history: history.slice(-10),
     });
@@ -424,12 +427,11 @@ const NALAR_API = "https://nalar-demo.zainun.workers.dev";
     let reply = res.reply;
     let source = "naskah";
     if (ai) {
-      // The AI may rephrase, but may not change the move or bring in a number that is not in
-      // the scripted reply or the student's message (that is how it would give the split away).
-      const allowed = new Set(plan ? plan.allowNumbers : [...T.numbers(T.normalise(res.reply)), ...T.numbers(T.normalise(inp.text))]);
-      const newNumber = T.numbers(T.normalise(ai.reply)).some((n) => !allowed.has(n));
-      const lostQuestion = res.reply.includes("?") && !ai.reply.includes("?");
-      if (!leaks(ai.reply, forbid) && ai.move === res.move && !newNumber && !lostQuestion) {
+      // The AI leads, within the limits: no more help than the protocol allows now, no
+      // number the student has not earned yet, no "benar" before the goal, one question.
+      const tooMuch = (T.HELP[ai.move] ?? 9) > lim.maxHelp;
+      const why = T.overreach(ai.reply, lim, s);
+      if (!leaks(ai.reply, forbid) && !tooMuch && !why) {
         reply = ai.reply;
         source = ai.model || "AI";
         $("mode-badge").textContent = `Mode AI · ${source}`;
@@ -437,7 +439,8 @@ const NALAR_API = "https://nalar-demo.zainun.workers.dev";
       } else source = "naskah (jaga)";
     }
 
-    bubble(res.move === "OK" ? "ai confirm" : "ai", reply, `${MOVE_NAME[res.move]} · ${source}`);
+    const shownMove = ai && source === (ai.model || "AI") && MOVE_NAME[ai.move] ? ai.move : res.move;
+    bubble(res.move === "OK" ? "ai confirm" : "ai", reply, `${MOVE_NAME[shownMove]} · ${source}`);
     history.push({ role: "assistant", content: reply });
 
     mem.answerOK = res.answerOK;
@@ -445,7 +448,7 @@ const NALAR_API = "https://nalar-demo.zainun.workers.dev";
     if (res.kind === "counting" || res.kind === "stuck") mem.counting += 1;
     if (res.kind === "splitHalf") mem.halfText = inp.text;
     mem.lastKind = res.kind;
-    addLog({ stage: s.id, m, inp, res, source, reply });
+    addLog({ stage: s.id, m, inp, res: { ...res, move: shownMove }, source, reply });
 
     if (res.done) {
       await new Promise((r) => setTimeout(r, 900));
