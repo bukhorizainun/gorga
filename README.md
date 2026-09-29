@@ -12,3 +12,12 @@ the answer away.
   page runs in scripted mode.
 
 Turn on "Mode guru" to see the move labels and the per-turn log (CSV export).
+
+## Skala suhu (`suhu/`)
+
+Second demo, closer to the teacher's own sessions: the question and the answer box are inside
+the applet (a thermometer). The chat does not re-grade the answer; it probes how the student got
+it, following the teacher's protocol: L1 first, a correct answer gets L4 (not "benar" yet), a
+wrong answer gets L2 then L3, counting one by one is not enough, and the session ends with a
+confirmation once the answer and the split at 0 are both there. `suhu/tutor.js` reads the numbers
+in the student's text and decides the move; the optional worker only rephrases it.

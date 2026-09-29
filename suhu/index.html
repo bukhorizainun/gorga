@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nalar · Demo</title>
-  <meta name="description" content="Demo Nalar: applet GeoGebra berdampingan dengan guru bayangan AI yang menjawab dengan pertanyaan lanjutan.">
+  <title>Nalar · Skala Suhu</title>
+  <meta name="description" content="Demo Nalar: soal dan jawaban di applet termometer, guru bayangan menggali cara berpikir siswa.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23141D33'/%3E%3Cpath d='M4 17h24' stroke='%23C9A15B' stroke-width='2'/%3E%3Ccircle cx='12' cy='11' r='3' fill='%23E2C48A'/%3E%3Ccircle cx='20' cy='24' r='3' fill='%23B0663F'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23141D33'/%3E%3Crect x='14' y='4' width='4' height='18' rx='2' fill='%23F4EFE5'/%3E%3Crect x='14' y='13' width='4' height='10' fill='%23B0663F'/%3E%3Ccircle cx='16' cy='24' r='4' fill='%23B0663F'/%3E%3C/svg%3E">
 </head>
 <body>
   <header class="top">
     <div class="brand">
       <span class="logo">Nalar</span>
       <nav class="demos" aria-label="Demo">
-        <a href="./" aria-current="page">Lumba-lumba</a>
-        <a href="suhu/">Skala suhu</a>
+        <a href="../">Lumba-lumba</a>
+        <a href="./" aria-current="page">Skala suhu</a>
       </nav>
     </div>
     <div class="top-right">
@@ -32,20 +32,19 @@
   <main class="layout">
     <section class="pane pane-applet" aria-label="Applet GeoGebra">
       <div class="pane-head">
-        <span class="eyebrow">Tugas 15 · Bilangan bulat</span>
-        <h1>Permukaan laut dan kedalaman laut</h1>
-        <p class="intro">Bilangan positif menunjukkan posisi di atas permukaan laut. Bilangan negatif
-          menunjukkan kedalaman di bawah permukaan laut. Geser kedua lumba-lumba, lalu jawab pertanyaan
-          di panel chat.</p>
+        <span class="eyebrow">Tahap 1 · Skala suhu · <span id="stage-no">soal 1 dari 2</span></span>
+        <h1>Suhu naik, suhu turun</h1>
+        <p class="intro">Kerjakan soal di dalam applet: geser penanda termometer, lalu tulis jawabanmu di kotak
+          jawaban dan tekan Enter. Guru bayangan di sebelah akan bertanya bagaimana kamu mendapatkannya.</p>
       </div>
-      <div class="applet-wrap" id="applet-wrap">
+      <div class="applet-wrap fixed-ratio" id="applet-wrap">
         <div id="ggb"></div>
         <div class="applet-loading" id="applet-loading">Memuat applet GeoGebra…</div>
       </div>
       <div class="state-strip">
-        <span class="item"><span class="dot dot-a"></span> Lumba-lumba A <b id="val-a">8</b></span>
+        <span class="item"><span class="dot dot-t"></span> Penanda <b id="val-t">0 °C</b></span>
         <span class="sep"></span>
-        <span class="item"><span class="dot dot-b"></span> Lumba-lumba B <b id="val-b">-25</b></span>
+        <span class="item">Jawaban di applet <b id="val-ans">–</b></span>
         <span class="state-note">dibaca langsung dari applet</span>
       </div>
     </section>
@@ -57,15 +56,10 @@
       </div>
       <div class="chat-log" id="chat-log" aria-live="polite"></div>
       <form class="chat-form" id="chat-form" autocomplete="off">
-        <input id="chat-input" type="text" maxlength="400" placeholder="Tulis jawabanmu…" aria-label="Jawaban">
+        <input id="chat-input" type="text" maxlength="400" placeholder="Jelaskan caramu…" aria-label="Penjelasan">
         <button type="submit" id="send-btn">Kirim</button>
       </form>
-      <div class="quick" id="quick">
-        <span>Coba jawaban contoh:</span>
-        <button type="button" data-q="-25 > 8 karena 25 lebih besar dari 8">salah (nilai mutlak)</button>
-        <button type="button" data-q="8 > -25">benar tanpa alasan</button>
-        <button type="button" data-q="8 > -25 karena A ada 8 m di atas permukaan laut dan B 25 m di bawah permukaan laut">benar + alasan</button>
-      </div>
+      <div class="quick stacked" id="quick"></div>
     </section>
 
     <section class="pane pane-log" id="log-pane" hidden aria-label="Log sesi">
@@ -75,7 +69,7 @@
       </div>
       <div class="log-scroll">
         <table>
-          <thead><tr><th>#</th><th>waktu</th><th>tahap</th><th>A</th><th>B</th><th>jawaban siswa</th><th>diagnosis</th><th>langkah</th><th>sumber</th></tr></thead>
+          <thead><tr><th>#</th><th>waktu</th><th>soal</th><th>penanda</th><th>dari</th><th>jawaban siswa</th><th>diagnosis</th><th>langkah</th><th>sumber</th></tr></thead>
           <tbody id="log-body"></tbody>
         </table>
       </div>
@@ -83,8 +77,9 @@
   </main>
 
   <footer class="foot">
-    Demo ini hanya untuk diskusi. Applet dibangun ulang lewat GeoGebra Apps API untuk contoh; versi akhir
-    memakai applet asli dari GeoGebra Classroom.
+    Demo untuk diskusi. Applet termometer dibangun sementara lewat GeoGebra Apps API; versi akhir memakai
+    applet Ibu sendiri dengan cara baca yang sama. Contoh jawaban bertanda “sesi asli” diambil dari percakapan
+    siswa yang sudah dianonimkan.
   </footer>
 
   <script src="https://www.geogebra.org/apps/deployggb.js"></script>

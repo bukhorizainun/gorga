@@ -15,7 +15,7 @@ const MODEL_MAIN = "@cf/meta/llama-3.3-70b-instruct-fp8-fast";
 const MODEL_BACKUP = "@cf/meta/llama-3.1-8b-instruct-fast";
 const MAX_TURNS = 10;
 const MAX_CHARS = 500;
-const MOVES = ["L1", "L2", "L4", "R", "HINT"];
+const MOVES = ["L1", "L2", "L3", "L4", "R", "OK", "HINT"];
 
 const ALLOWED_ORIGINS = [
   "https://bukhorizainun.github.io",
@@ -46,7 +46,7 @@ function systemPrompt(b) {
     .join("\n");
   const mis = (t.misconceptions || []).map((m) => `- ${clip(m, 200)}`).join("\n");
 
-  return `Kamu adalah "guru bayangan" dalam aplikasi Nalar. Siswa SMP sedang mengerjakan applet GeoGebra tentang bilangan bulat, lalu menjawab di chat.
+  return `Kamu adalah "guru bayangan" dalam aplikasi Nalar. Siswa SMP sedang mengerjakan applet GeoGebra tentang bilangan bulat, lalu menjelaskan cara berpikirnya di chat.
 
 TUGAS
 Judul: ${clip(t.title, 120)}
@@ -60,13 +60,14 @@ DAFTAR LANGKAH SCAFFOLDING GURU (pilih tepat satu)
 ${moves}
 
 KEADAAN APPLET SAAT INI (dibaca langsung dari GeoGebra)
-- Lumba-lumba A (biru) di ${st.A} ${t.unit || "m"}
+${b.context ? clip(b.context, 600) : `- Lumba-lumba A (biru) di ${st.A} ${t.unit || "m"}
 - Lumba-lumba B (hitam) di ${st.B} ${t.unit || "m"}
-- Permukaan laut = 0. Positif = di atas permukaan, negatif = di bawah permukaan.
+- Permukaan laut = 0. Positif = di atas permukaan, negatif = di bawah permukaan.`}
 
 DIAGNOSIS DARI SISTEM (sudah pasti benar, jangan dibantah)
 - Jenis jawaban: ${clip(an.label, 80)}
 - Perbandingan yang ditulis siswa: ${an.studentComparison || "tidak ada"}
+- Jawaban akhir siswa sudah benar: ${an.answerCorrect ? "ya" : "belum"}
 - Miskonsepsi terdeteksi: ${an.misconception || "tidak ada"}
 - Percobaan salah sebelumnya: ${Number(an.wrongAttempts) || 0}
 - Langkah yang disarankan: ${an.suggestedMove}
@@ -83,7 +84,7 @@ ATURAN KERAS
 6. Tanpa emoji, tanpa markdown.
 
 FORMAT KELUARAN
-Balas HANYA dengan JSON satu baris: {"move":"<L1|L2|L4|R|HINT>","reply":"<teks untuk siswa>"}`;
+Balas HANYA dengan JSON satu baris: {"move":"<langkah dari daftar>","reply":"<teks untuk siswa>"}`;
 }
 
 function parseJSON(text) {
@@ -135,9 +136,12 @@ export default {
       return send(400, { error: "bad json" });
     }
 
+    // Two page types: the dolphin task sends A/B, other tasks send a context text and
+    // a list of strings the reply must not contain yet.
+    const forbid = Array.isArray(b.forbid) ? b.forbid.map((f) => normalise(f)).filter(Boolean).slice(0, 10) : null;
     const a = Number(b?.state?.A);
     const bb = Number(b?.state?.B);
-    if (!Number.isFinite(a) || !Number.isFinite(bb)) return send(400, { error: "missing state" });
+    if (!forbid && (!Number.isFinite(a) || !Number.isFinite(bb))) return send(400, { error: "missing state" });
 
     const turns = (Array.isArray(b.history) ? b.history : [])
       .filter((m) => m && (m.role === "user" || m.role === "assistant"))
@@ -156,7 +160,10 @@ export default {
         const reply = clip(j?.reply, 400).trim();
         const move = MOVES.includes(j?.move) ? j.move : null;
         if (!reply || !move) continue;
-        if (!correct && leaksAnswer(reply, a, bb)) continue;
+        if (forbid) {
+          const t = normalise(reply);
+          if (forbid.some((f) => new RegExp(`(^|[^0-9])${f}([^0-9]|$)`).test(t))) continue;
+        } else if (!correct && leaksAnswer(reply, a, bb)) continue;
         return send(200, { reply, move, model: model.split("/").pop() });
       } catch {
         // allowance used up or model busy: try the next model

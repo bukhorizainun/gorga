@@ -178,3 +178,28 @@ td:nth-child(6) { min-width: 220px; }
   .foot { padding: 0 16px; }
   .state-note { margin-left: 0; width: 100%; }
 }
+
+/* Navigation between demos, and pieces used by the temperature demo. */
+.demos { display: flex; gap: 4px; }
+.demos a {
+  font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: #a9b0c0; text-decoration: none; padding: 4px 9px; border-radius: 999px; border: 1px solid transparent;
+}
+.demos a:hover { color: var(--kertas); }
+.demos a[aria-current="page"] { color: var(--emas-2); border-color: var(--warp); }
+.dot-t { background: var(--soga-2); }
+.msg.student.applet p {
+  background: #fff; color: var(--nila); border: 1px dashed var(--nila);
+  font-family: "IBM Plex Mono", monospace; font-size: 13px;
+}
+.msg.ai.confirm p { background: #eef3e6; border: 1px solid #9fb07a; }
+.chat-note {
+  align-self: center; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--ink-3); padding: 6px 0 2px;
+}
+.meta-inline { display: none; color: var(--soga); }
+body.teacher .meta-inline { display: inline; }
+.quick.stacked { flex-direction: column; align-items: stretch; }
+.quick-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.quick-row > span { min-width: 8.5em; }
+.applet-wrap.fixed-ratio { aspect-ratio: 600 / 520; min-height: 0; }
