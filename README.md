@@ -1,5 +1,7 @@
-# Gorga demo
+# Gorga
 
+
+Live: https://rahmiumar.github.io/gorga/
 Prototype for discussion: a GeoGebra applet next to an AI "shadow teacher" that answers each
 student response with one scaffolding move (Probe, Point, Revoice, Reinforce) and never gives
 the answer away.
@@ -28,7 +30,7 @@ sets task type 5 (-6 to 4) and type 4 (3 to -5), then random crossing-zero tasks
 blue and red markers (`L`, `E`) and the answer text (`Zad<n>Upisano`), and logs when the student
 opens the help box (it shows the subtraction formula).
 
-AI layers in the temperature demo (worker at `nalar-demo.zainun.workers.dev`):
+AI layers in the temperature demo (worker at `gorga.zainun.workers.dev`):
 - `/chat` (AI-led): the model reads the conversation, the applet state and the teacher's protocol and
   chooses the move itself. `tutor.limits()` sets the most help allowed at this point, the numbers the
   reply may contain, and whether 0 and the split may be mentioned yet; `tutor.overreach()` checks the
