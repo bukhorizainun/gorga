@@ -150,3 +150,8 @@ section.block + section.block { border-top: 1px solid var(--garis); }
 .soon-box p { margin: 0; max-width: 40em; }
 @media (max-width: 1100px) { .acts.seven { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 620px) { .acts.seven { grid-template-columns: 1fr; } }
+.act.dual:hover { transform: translateY(-3px); box-shadow: 0 22px 44px -26px rgba(23,18,14,.45); }
+.act.dual .thumb { display: block; }
+.act.dual .go { display: block; text-decoration: none; }
+.act.dual .go:hover { text-decoration: underline; text-underline-offset: 3px; }
+.act.dual .go.alt { margin-top: 6px; color: var(--ink-2); font-weight: 400; }

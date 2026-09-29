@@ -68,6 +68,13 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
     document.title = `${L(act.title)} — Gorga`;
     $("act-title").textContent = L(act.title);
     $("act-title").classList.toggle("long", L(act.title).length > 45);
+    if (n === 1) {
+      const a = document.createElement("a");
+      a.className = "sibling";
+      a.href = `../suhu/?lang=${EN ? "en" : "id"}`;
+      a.textContent = tr("Versi protokol penuh dengan kartu tugas: Skala Suhu →", "Full-protocol version with a task card: Temperature Scale →");
+      $("act-title").after(a);
+    }
     $("crumb-here").textContent = `${tr("Applet", "Applet")} ${n}`;
     $("act-no").textContent = tr(`Applet ${n} dari 7`, `Applet ${n} of 7`);
 

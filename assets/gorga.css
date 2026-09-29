@@ -322,3 +322,5 @@ details.intro-more[open] summary::after { content: ""; }
 .next-q { padding-top: 4px; }
 .pane-chat { max-height: 880px; }
 .intro-band h1.long { font-size: clamp(28px, 3.1vw, 42px); line-height: 1.08; }
+.sibling { display: inline-block; margin-top: 12px; font-size: 14px; color: var(--merah); text-decoration: none; border-bottom: 1px solid var(--merah-soft); }
+.sibling:hover { border-bottom-color: var(--merah); }

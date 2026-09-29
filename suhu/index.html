@@ -34,6 +34,7 @@
     <div>
       <span class="eyebrow"><span data-i18n="stageLabel">Tahap 1 · Skala suhu</span> · <span id="stage-no">soal 1 dari 2</span></span>
       <h1 data-i18n="h1">Suhu naik, suhu turun</h1>
+      <a class="sibling" id="sibling-link" href="../aktivitas/?a=1" data-i18n="sibling">Soal asli aktivitas ini: 9 soal, protokol umum →</a>
     </div>
     <div class="context">
       <span class="label" data-i18n="ctxLabel">Konteks</span>
@@ -129,11 +130,13 @@
         stTurns: "Student turns", stTurnsNote: "this session", stAi: "AI replies", stAiNote: "the rest from the script",
         stTime: "Time to target", stTimeNote: "minutes, last question", stMoves: "Tutor moves",
         thTime: "time", thQ: "question", thMarkers: "blue/red", thFrom: "from", thText: "student answer", thDiag: "diagnosis", thMove: "move", thSource: "source",
+        sibling: "This activity's own questions: 9 questions, general protocol →",
         foot: "Research prototype, non-commercial. Activity “Exploring integers on a temperature scale”: Dr. Rahmi Ramadhani Umar (GeoGebra yx7ubuvn); thermometer applet inside it: A.M. Vuković (2013). The applet's own right/wrong feedback is hidden, because the tutor confirms at the end of the conversation. Samples marked “real session” come from anonymised student conversations, translated.",
       },
     });
     document.getElementById("home-link").href = window.GORGA_LANG === "en" ? "../en/" : "../";
     document.getElementById("acts-link").href = window.GORGA_LANG === "en" ? "../en/#activities" : "../#aktivitas";
+    document.getElementById("sibling-link").href = "../aktivitas/?a=1&lang=" + window.GORGA_LANG;
   </script>
   <script src="https://www.geogebra.org/apps/deployggb.js"></script>
   <script src="task.js"></script>
