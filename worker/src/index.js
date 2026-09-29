@@ -18,6 +18,7 @@ const MAX_CHARS = 500;
 const MOVES = ["L1", "L2", "L3", "L4", "R", "OK", "HINT"];
 
 const ALLOWED_ORIGINS = [
+  "https://rahmiumar.github.io",
   "https://bukhorizainun.github.io",
   "http://localhost:8765",
   "http://127.0.0.1:8765",
