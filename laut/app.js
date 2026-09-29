@@ -1,7 +1,7 @@
 /* Gorga demo: GeoGebra applet + scaffolding chat. */
 
 // Worker URL for AI mode. Empty = scripted mode (no AI, no network beyond GeoGebra).
-const GORGA_API = "https://nalar-demo.zainun.workers.dev";
+const GORGA_API = "https://gorga.zainun.workers.dev";
 
 (function () {
   const TASK = window.GORGA_TASK;

@@ -2,7 +2,7 @@
    the chat only probes how the student got the answer. */
 
 // Worker URL for AI mode. Empty = scripted mode (no AI, no network beyond GeoGebra).
-const GORGA_API = "https://nalar-demo.zainun.workers.dev";
+const GORGA_API = "https://gorga.zainun.workers.dev";
 
 (function () {
   const TASK = window.SUHU_TASK;
@@ -180,6 +180,24 @@ const GORGA_API = "https://nalar-demo.zainun.workers.dev";
     OK: "Konfirmasi akhir", HINT: "Petunjuk guru", END: "Penutup",
   };
 
+  // Reasoning path under the applet: one motif per tutor move, in student words.
+  const STEP_WORD = { L1: "Bertanya", L4: "Mengulang", L2: "Menunjuk", L3: "Memecah", HINT: "Petunjuk", OK: "Ditemukan" };
+  const journey = $("journey");
+  function journeyReset() {
+    journey.innerHTML = '<li class="empty">Belum ada langkah.</li>';
+  }
+  function journeyAdd(move) {
+    const empty = journey.querySelector(".empty");
+    if (empty) empty.remove();
+    const li = document.createElement("li");
+    const step = document.createElement("span");
+    step.className = "step" + (move === "OK" ? " goal" : "");
+    step.dataset.move = move;
+    step.innerHTML = `<i></i>${STEP_WORD[move] || move}<span class="code">${move === "OK" ? "✓" : move}</span>`;
+    li.appendChild(step);
+    journey.appendChild(li);
+  }
+
   function bubble(cls, text, meta) {
     const el = document.createElement("div");
     el.className = `msg ${cls}`;
@@ -222,9 +240,12 @@ const GORGA_API = "https://nalar-demo.zainun.workers.dev";
   }
 
   let stageTexts = [];
+  let stageStartedAt = Date.now();
   function startStage(st) {
     cur = st;
     stageTexts = [];
+    stageStartedAt = Date.now();
+    journeyReset();
     mem = { answerOK: false, wrong: 0, counting: 0, halfText: null, help: false };
     lastApplet = { v: "", t: 0 };
     const fixed = stageIdx < TASK.stages.length;
@@ -233,6 +254,7 @@ const GORGA_API = "https://nalar-demo.zainun.workers.dev";
     if (api) applyStage(st);
     const open = T.opening(st);
     bubble("ai", open, `${MOVE_NAME.L1} · naskah`);
+    journeyAdd("L1");
     history.push({ role: "assistant", content: open });
     renderQuick();
   }
@@ -434,14 +456,19 @@ const GORGA_API = "https://nalar-demo.zainun.workers.dev";
       if (!leaks(ai.reply, forbid) && !tooMuch && !why) {
         reply = ai.reply;
         source = ai.model || "AI";
-        $("mode-badge").textContent = `Mode AI · ${source}`;
+        $("mode-badge").textContent = "AI aktif";
         $("mode-badge").classList.add("on");
       } else source = "naskah (jaga)";
     }
 
     const shownMove = ai && source === (ai.model || "AI") && MOVE_NAME[ai.move] ? ai.move : res.move;
     bubble(res.move === "OK" ? "ai confirm" : "ai", reply, `${MOVE_NAME[shownMove]} · ${source}`);
+    journeyAdd(res.move === "OK" ? "OK" : shownMove);
     history.push({ role: "assistant", content: reply });
+    if (res.done) {
+      lastTarget = (Date.now() - stageStartedAt) / 1000;
+      reasonCard(s, mem.halfText ? `${mem.halfText} … ${inp.text}` : inp.text);
+    }
 
     mem.answerOK = res.answerOK;
     if (res.kind.startsWith("wrong")) mem.wrong += 1;
@@ -451,7 +478,7 @@ const GORGA_API = "https://nalar-demo.zainun.workers.dev";
     addLog({ stage: s.id, m, inp, res: { ...res, move: shownMove }, source, reply });
 
     if (res.done) {
-      await new Promise((r) => setTimeout(r, 900));
+      await new Promise((r) => setTimeout(r, 1400));
       stageIdx += 1;
       if (stageIdx < TASK.stages.length) startStage({ ...TASK.stages[stageIdx] });
       else {
@@ -479,10 +506,12 @@ const GORGA_API = "https://nalar-demo.zainun.workers.dev";
       numbers_read: res.reading.ns.join(" "),
       diagnosis: (T.KIND_LABEL[res.kind] || res.kind) + (res.reading.byAI ? " (dibaca AI)" : ""),
       move: MOVE_NAME[res.move] || res.move,
+      code: res.move,
       source,
       ai_text: reply,
     };
     log.push(row);
+    updateStats();
     const tr = document.createElement("tr");
     const cells = [row.turn, row.time_utc.slice(11, 19), row.stage, row.marker_c, row.input_from, row.student_text, row.diagnosis, row.move, row.source];
     for (const v of cells) {
@@ -499,6 +528,7 @@ const GORGA_API = "https://nalar-demo.zainun.workers.dev";
       input_from: "applet", student_text: "", numbers_read: "", diagnosis: text, move: "", source: "", ai_text: "",
     };
     log.push(row);
+    updateStats();
     const tr = document.createElement("tr");
     for (const v of [row.turn, row.time_utc.slice(11, 19), row.stage, row.marker_c, "applet", "", text, "", ""]) {
       const td = document.createElement("td");
@@ -506,6 +536,145 @@ const GORGA_API = "https://nalar-demo.zainun.workers.dev";
       tr.appendChild(td);
     }
     logBody.appendChild(tr);
+  }
+
+  /* ---------------- Teacher summary, transcript, reasoning card ---------------- */
+
+  let lastTarget = null;
+  function updateStats() {
+    const turns = log.filter((r) => r.student_text);
+    $("st-turns").textContent = turns.length;
+    const ai = turns.filter((r) => r.source && !r.source.startsWith("naskah")).length;
+    $("st-ai").textContent = turns.length ? `${Math.round((100 * ai) / turns.length)}%` : "–";
+    if (lastTarget !== null) {
+      const t = Math.round(lastTarget);
+      $("st-time").textContent = `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`;
+    }
+    const counts = { L1: 0, L2: 0, L3: 0, L4: 0 };
+    for (const r of turns) if (r.code in counts) counts[r.code] += 1;
+    const max = Math.max(1, ...Object.values(counts));
+    $("st-bars").innerHTML = Object.entries(counts)
+      .map(([k, v]) => `<div>${k}<span class="b" style="width:${Math.round((100 * v) / max)}%"></span>${v}</div>`)
+      .join("");
+  }
+
+  function flash(btn, text) {
+    const old = btn.textContent;
+    btn.textContent = text;
+    setTimeout(() => (btn.textContent = old), 1400);
+  }
+
+  function copyTranscript() {
+    const lines = [];
+    for (const el of chatLog.children) {
+      if (el.classList.contains("chat-note")) lines.push(`— ${el.firstChild.textContent} —`);
+      else if (el.classList.contains("card-wrap")) lines.push(`[Kartu penalaran] ${el.querySelector("blockquote").textContent}`);
+      else if (el.classList.contains("msg") && !el.classList.contains("typing")) {
+        const who = el.classList.contains("student") ? "Siswa" : "Tutor";
+        const meta = el.querySelector(".meta");
+        lines.push(`${who}: ${el.querySelector("p").textContent}${meta ? `  [${meta.textContent}]` : ""}`);
+      }
+    }
+    navigator.clipboard.writeText(lines.join("\n")).then(
+      () => flash($("copy-btn"), "Tersalin"),
+      () => flash($("copy-btn"), "Gagal menyalin"));
+  }
+
+  // Shown when the student reaches the target reasoning: their own words, kept as a card.
+  function reasonCard(st, text) {
+    const date = new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+    const wrap = document.createElement("div");
+    wrap.className = "card-wrap";
+    wrap.innerHTML = `<div class="reason-card"><span class="label">Kartu penalaran · kata-katamu sendiri</span>
+      <blockquote></blockquote><div class="q"></div>
+      <div class="row"><span class="label">${date}</span><button type="button">Simpan kartu</button></div>
+      <div class="ipon"></div></div>`;
+    const quote = `“${text}”`;
+    const question = st.question || `Dari ${T.deg(st.start)} ke ${T.deg(st.end)}`;
+    wrap.querySelector("blockquote").textContent = quote;
+    wrap.querySelector(".q").textContent = question;
+    wrap.querySelector("button").addEventListener("click", () => saveCard(quote, question, date));
+    chatLog.appendChild(wrap);
+    chatLog.scrollTop = chatLog.scrollHeight;
+  }
+
+  function wrapLines(g, text, maxW) {
+    const out = [];
+    let line = "";
+    for (const w of text.split(/\s+/)) {
+      const t = line ? `${line} ${w}` : w;
+      if (g.measureText(t).width > maxW && line) {
+        out.push(line);
+        line = w;
+      } else line = t;
+    }
+    if (line) out.push(line);
+    return out;
+  }
+
+  async function saveCard(quote, question, date) {
+    const W = 1080, H = 1350;
+    const c = document.createElement("canvas");
+    c.width = W;
+    c.height = H;
+    const g = c.getContext("2d");
+    await document.fonts.ready;
+    g.fillStyle = "#17120e";
+    g.fillRect(0, 0, W, H);
+    // The mark is drawn as vector paths: an SVG image drawn at a new size on a canvas can
+    // come out blank in Chrome the first time.
+    try {
+      const svg = new DOMParser().parseFromString(await (await fetch("../assets/logo-light.svg")).text(), "image/svg+xml");
+      const paths = [...svg.querySelectorAll("path")];
+      const mark = (x, y, size, alpha) => {
+        g.save();
+        g.globalAlpha = alpha;
+        g.translate(x, y);
+        g.scale(size / 64, size / 64);
+        for (const el of paths) {
+          const path = new Path2D(el.getAttribute("d"));
+          if (el.getAttribute("fill") && el.getAttribute("fill") !== "none") {
+            g.fillStyle = el.getAttribute("fill");
+            g.fill(path);
+          }
+          if (el.getAttribute("stroke")) {
+            g.strokeStyle = el.getAttribute("stroke");
+            g.lineWidth = Number(el.getAttribute("stroke-width")) || 3;
+            g.lineCap = "round";
+            g.lineJoin = "round";
+            g.stroke(path);
+          }
+        }
+        g.restore();
+      };
+      mark(W - 600, H - 640, 560, 0.12);
+      mark(84, 84, 120, 1);
+    } catch { /* card works without the mark */ }
+    g.fillStyle = "#fffcf7";
+    g.font = "64px Gloock, Georgia, serif";
+    g.fillText("gorga", 222, 168);
+    g.fillStyle = "#e0876f";
+    g.font = '500 26px "JetBrains Mono", monospace';
+    g.fillText("KARTU PENALARAN", 90, 330);
+    g.fillStyle = "#fffcf7";
+    g.font = "62px Gloock, Georgia, serif";
+    let y = 430;
+    for (const ln of wrapLines(g, quote, W - 180).slice(0, 8)) { g.fillText(ln, 90, y); y += 80; }
+    g.fillStyle = "#bfb4a6";
+    g.font = "30px Onest, system-ui, sans-serif";
+    y += 36;
+    for (const ln of wrapLines(g, question, W - 180).slice(0, 4)) { g.fillText(ln, 90, y); y += 44; }
+    g.fillStyle = "#8f8375";
+    g.font = '500 24px "JetBrains Mono", monospace';
+    g.fillText(date.toUpperCase(), 90, H - 100);
+    g.fillStyle = "#a31d1a";
+    for (let x = 0; x < W; x += 36) {
+      g.beginPath(); g.moveTo(x, H); g.lineTo(x + 18, H - 26); g.lineTo(x + 36, H); g.fill();
+    }
+    const a = document.createElement("a");
+    a.download = "kartu-penalaran-gorga.png";
+    a.href = c.toDataURL("image/png");
+    a.click();
   }
 
   function downloadCSV() {
@@ -536,11 +705,13 @@ const GORGA_API = "https://nalar-demo.zainun.workers.dev";
   form.addEventListener("submit", onSubmit);
   $("reset-btn").addEventListener("click", reset);
   $("csv-btn").addEventListener("click", downloadCSV);
+  $("copy-btn").addEventListener("click", copyTranscript);
   $("teacher-toggle").addEventListener("change", (e) => {
     document.body.classList.toggle("teacher", e.target.checked);
     $("log-pane").hidden = !e.target.checked;
+    updateStats();
   });
-  $("mode-badge").textContent = GORGA_API ? "Mode AI · menyambung…" : "Mode naskah (tanpa AI)";
+  $("mode-badge").textContent = GORGA_API ? "AI · menyambung" : "Mode naskah";
 
   startStage({ ...TASK.stages[0] });
   injectApplet();

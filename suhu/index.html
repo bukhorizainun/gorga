@@ -3,41 +3,43 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gorga · Skala Suhu</title>
-  <meta name="description" content="Demo Gorga: soal dan jawaban di applet termometer, guru bayangan menggali cara berpikir siswa.">
+  <title>Skala Suhu — Gorga</title>
+  <meta name="description" content="Aktivitas Gorga: soal suhu di applet termometer GeoGebra, dengan tutor AI yang menggali cara berpikir siswa.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../style.css">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23141D33'/%3E%3Crect x='14' y='4' width='4' height='18' rx='2' fill='%23F4EFE5'/%3E%3Crect x='14' y='13' width='4' height='10' fill='%23B0663F'/%3E%3Ccircle cx='16' cy='24' r='4' fill='%23B0663F'/%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css2?family=Gloock&family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/gorga.css">
 </head>
 <body>
-  <header class="top">
-    <div class="brand">
-      <span class="logo">Gorga</span>
-      <nav class="demos" aria-label="Demo">
-        <a href="../">Lumba-lumba</a>
-        <a href="./" aria-current="page">Skala suhu</a>
-      </nav>
+  <header class="bar">
+    <div style="display:flex;align-items:center;gap:22px">
+      <a class="mark" href="../" aria-label="Gorga, beranda"><img src="../assets/logo.svg" alt=""><span>gorga</span></a>
+      <nav class="crumbs" aria-label="Lokasi"><a href="../#aktivitas">Aktivitas</a><span>/</span><span aria-current="page">Skala suhu</span></nav>
     </div>
-    <div class="top-right">
+    <div class="bar-right">
       <span id="mode-badge" class="badge">Mode naskah</span>
-      <label class="switch" title="Tampilkan label langkah scaffolding dan log">
+      <label class="switch" title="Tampilkan label langkah, ringkasan sesi, dan log">
         <input type="checkbox" id="teacher-toggle">
         <span>Mode guru</span>
       </label>
     </div>
   </header>
 
+  <div class="intro-band">
+    <div>
+      <span class="eyebrow">Tahap 1 · Skala suhu · <span id="stage-no">soal 1 dari 2</span></span>
+      <h1>Suhu naik, suhu turun</h1>
+    </div>
+    <div class="context">
+      <span class="label">Konteks</span>
+      <p>Bumi kita semakin panas, dan suhu di berbagai tempat berubah-ubah. Ada daerah dengan suhu di bawah nol
+        derajat. Geser penanda biru dan merah di termometer, tulis jawabanmu, lalu tekan <b>Periksa</b>.</p>
+    </div>
+  </div>
+
   <main class="layout">
     <section class="pane pane-applet" aria-label="Applet GeoGebra">
-      <div class="pane-head">
-        <span class="eyebrow">Tahap 1 · Skala suhu · <span id="stage-no">soal 1 dari 2</span></span>
-        <h1>Suhu naik, suhu turun</h1>
-        <p class="intro">Kerjakan soal di dalam applet: geser penanda biru dan merah di termometer, tulis
-          jawabanmu di kotak jawaban, lalu tekan Periksa. Guru bayangan di sebelah akan bertanya bagaimana kamu
-          mendapatkannya.</p>
-      </div>
       <div class="applet-wrap fixed-ratio" id="applet-wrap">
         <div id="ggb"></div>
         <div class="applet-loading" id="applet-loading">Memuat applet GeoGebra…</div>
@@ -46,28 +48,49 @@
         <span class="item"><span class="dot dot-blue"></span> Biru <b id="val-blue">0 °C</b></span>
         <span class="item"><span class="dot dot-red"></span> Merah <b id="val-red">0 °C</b></span>
         <span class="sep"></span>
-        <span class="item">Jawaban di applet <b id="val-ans">–</b></span>
+        <span class="item">Jawaban <b id="val-ans">–</b></span>
         <span class="state-note">dibaca langsung dari applet</span>
+      </div>
+      <div class="journey" aria-live="polite">
+        <div class="journey-head">
+          <span class="label">Jejak penalaran</span>
+          <span class="hint">setiap langkah tutor menambah satu motif</span>
+        </div>
+        <ol class="path" id="journey"><li class="empty">Belum ada langkah.</li></ol>
       </div>
     </section>
 
-    <section class="pane pane-chat" aria-label="Guru bayangan">
+    <section class="pane pane-chat" aria-label="Tutor Gorga">
       <div class="chat-head">
-        <span class="eyebrow">Guru bayangan</span>
+        <div class="who"><img src="../assets/logo.svg" alt=""><div><b>Tutor Gorga</b><small>bertanya, tidak memberi jawaban</small></div></div>
         <button class="ghost" id="reset-btn" type="button">Ulangi</button>
       </div>
       <div class="chat-log" id="chat-log" aria-live="polite"></div>
-      <form class="chat-form" id="chat-form" autocomplete="off">
-        <input id="chat-input" type="text" maxlength="400" placeholder="Jelaskan caramu…" aria-label="Penjelasan">
-        <button type="submit" id="send-btn">Kirim</button>
-      </form>
-      <div class="quick stacked" id="quick"></div>
+      <div class="chat-foot">
+        <form class="chat-form" id="chat-form" autocomplete="off">
+          <input id="chat-input" type="text" maxlength="400" placeholder="Jelaskan caramu…" aria-label="Penjelasan">
+          <button type="submit" id="send-btn">Kirim</button>
+        </form>
+        <details class="try">
+          <summary>Contoh jawaban untuk mencoba</summary>
+          <div class="quick stacked" id="quick"></div>
+        </details>
+      </div>
     </section>
 
-    <section class="pane pane-log" id="log-pane" hidden aria-label="Log sesi">
+    <section class="pane pane-log" id="log-pane" hidden aria-label="Mode guru">
       <div class="log-head">
-        <span class="eyebrow">Log sesi · satu baris per giliran</span>
-        <button class="ghost" id="csv-btn" type="button">Unduh CSV</button>
+        <div><span class="eyebrow">Mode guru</span><div style="font:400 26px/1.1 var(--serif);margin-top:4px">Ringkasan sesi</div></div>
+        <div class="actions">
+          <button class="ghost" id="copy-btn" type="button">Salin transkrip</button>
+          <button class="ghost" id="csv-btn" type="button">Unduh CSV</button>
+        </div>
+      </div>
+      <div class="panel-grid">
+        <div class="stat"><span class="label">Giliran siswa</span><b id="st-turns">0</b><small id="st-turns-note">sesi ini</small></div>
+        <div class="stat"><span class="label">Balasan AI</span><b id="st-ai">–</b><small>sisanya dari naskah</small></div>
+        <div class="stat"><span class="label">Sampai target</span><b id="st-time">–</b><small id="st-time-note">menit, soal terakhir</small></div>
+        <div class="stat"><span class="label">Langkah tutor</span><div class="bars" id="st-bars"></div></div>
       </div>
       <div class="log-scroll">
         <table>
@@ -79,10 +102,11 @@
   </main>
 
   <footer class="foot">
-    Demo untuk diskusi riset, non-komersial. Aktivitas “Menjelajahi Bilangan Bulat pada Skala
-    Suhu”: Dr. Rahmi Ramadhani Umar (GeoGebra yx7ubuvn); applet termometer di dalamnya: A.M. Vuković (2013). Untuk demo ini teks soal diterjemahkan dan umpan balik “benar/salah” bawaan applet
-    disembunyikan, karena konfirmasi diberikan di akhir percakapan. Contoh jawaban bertanda “sesi asli” diambil
-    dari percakapan siswa yang sudah dianonimkan.
+    <div class="ipon thin"></div>
+    Prototipe riset, non-komersial. Aktivitas “Menjelajahi Bilangan Bulat pada Skala Suhu”: Dr. Rahmi Ramadhani Umar
+    (GeoGebra yx7ubuvn); applet termometer di dalamnya: A.M. Vuković (2013). Teks soal diterjemahkan dan umpan balik
+    benar/salah bawaan applet disembunyikan, karena konfirmasi diberikan tutor di akhir percakapan. Contoh jawaban
+    bertanda “sesi asli” berasal dari percakapan siswa yang sudah dianonimkan.
   </footer>
 
   <script src="https://www.geogebra.org/apps/deployggb.js"></script>

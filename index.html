@@ -3,93 +3,194 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gorga · Demo</title>
-  <meta name="description" content="Demo Gorga: applet GeoGebra berdampingan dengan guru bayangan AI yang menjawab dengan pertanyaan lanjutan.">
+  <title>Gorga — tutor yang bertanya balik</title>
+  <meta name="description" content="Gorga menyandingkan applet GeoGebra dengan tutor AI yang tidak memberi jawaban. Ia bertanya, menunjuk, dan menunggu sampai siswa menemukan penalarannya sendiri.">
+  <meta property="og:title" content="Gorga — tutor yang bertanya balik">
+  <meta property="og:description" content="Applet GeoGebra dan tutor AI dengan protokol scaffolding guru.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23141D33'/%3E%3Cpath d='M4 17h24' stroke='%23C9A15B' stroke-width='2'/%3E%3Ccircle cx='12' cy='11' r='3' fill='%23E2C48A'/%3E%3Ccircle cx='20' cy='24' r='3' fill='%23B0663F'/%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css2?family=Gloock&family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/gorga.css">
+  <link rel="stylesheet" href="assets/home.css">
 </head>
 <body>
-  <header class="top">
-    <div class="brand">
-      <span class="logo">Gorga</span>
-      <nav class="demos" aria-label="Demo">
-        <a href="./" aria-current="page">Lumba-lumba</a>
-        <a href="suhu/">Skala suhu</a>
-      </nav>
-    </div>
-    <div class="top-right">
-      <span id="mode-badge" class="badge">Mode naskah</span>
-      <label class="switch" title="Tampilkan label langkah scaffolding dan log">
-        <input type="checkbox" id="teacher-toggle">
-        <span>Mode guru</span>
-      </label>
-    </div>
+  <header class="bar dark">
+    <a class="mark" href="./" aria-label="Gorga, beranda"><img src="assets/logo-light.svg" alt=""><span>gorga</span></a>
+    <nav aria-label="Bagian">
+      <a href="#percakapan">Percakapan</a>
+      <a href="#protokol">Protokol</a>
+      <a href="#guru">Untuk guru</a>
+      <a href="#aktivitas">Aktivitas</a>
+    </nav>
+    <a class="btn small" href="suhu/" style="background:#fffcf7;color:#17120e;border-color:#fffcf7">Coba aktivitas <span class="arrow">→</span></a>
   </header>
 
-  <main class="layout">
-    <section class="pane pane-applet" aria-label="Applet GeoGebra">
-      <div class="pane-head">
-        <span class="eyebrow">Tugas 15 · Bilangan bulat</span>
-        <h1>Permukaan laut dan kedalaman laut</h1>
-        <p class="intro">Bilangan positif menunjukkan posisi di atas permukaan laut. Bilangan negatif
-          menunjukkan kedalaman di bawah permukaan laut. Geser kedua lumba-lumba, lalu jawab pertanyaan
-          di panel chat.</p>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">GeoGebra · tutor AI · penalaran matematis</span>
+        <h1>Tutor yang <em>bertanya</em> balik.</h1>
+        <p class="lead">Siswa mengerjakan soal di applet GeoGebra. Gorga tidak memberi jawaban. Ia bertanya,
+          menunjuk satu hal di layar, dan menunggu sampai siswa menemukan dan menjelaskan penalarannya sendiri.</p>
+        <div class="cta">
+          <a class="btn" href="suhu/">Coba aktivitas Skala Suhu <span class="arrow">→</span></a>
+          <a class="btn ghost" href="#percakapan">Lihat contoh percakapan</a>
+        </div>
+        <div class="facts">
+          <div><b>L1–L4</b><span>langkah scaffolding guru</span></div>
+          <div><b>Tanpa bocoran</b><span>setiap kalimat AI diperiksa dulu</span></div>
+          <div><b>CSV</b><span>log per giliran untuk riset</span></div>
+        </div>
       </div>
-      <div class="applet-wrap" id="applet-wrap">
-        <div id="ggb"></div>
-        <div class="applet-loading" id="applet-loading">Memuat applet GeoGebra…</div>
-      </div>
-      <div class="state-strip">
-        <span class="item"><span class="dot dot-a"></span> Lumba-lumba A <b id="val-a">8</b></span>
-        <span class="sep"></span>
-        <span class="item"><span class="dot dot-b"></span> Lumba-lumba B <b id="val-b">-25</b></span>
-        <span class="state-note">dibaca langsung dari applet</span>
+      <figure class="art" style="margin:0">
+        <svg data-gorga role="img" aria-label="Panel motif gorga: gulungan simeol-eol dan pita ipon-ipon"></svg>
+        <figcaption><b>Simeol-eol</b> — dua spiral Archimedes <b>r = aθ</b>, yang satu diputar 180°.
+          Ornamen Batak ini sekaligus matematika. Arahkan kursor ke motif.</figcaption>
+      </figure>
+    </div>
+    <div class="ipon"></div>
+  </section>
+
+  <main>
+    <section class="block" id="percakapan">
+      <div class="wrap">
+        <div class="head2">
+          <div><span class="eyebrow">Sebuah percakapan</span><h2>Siswa menemukan nol sendiri.</h2></div>
+          <p>Soal: suhu awal −6 °C, berapa kenaikan untuk mencapai 4 °C? Siswa sudah menjawab 10 dengan menghitung
+            satu per satu. Protokol melarang tutor menyebut angka 0. Perhatikan cara Gorga memancingnya.</p>
+        </div>
+        <div class="dialog">
+          <div class="convo">
+            <div class="line st"><span class="who">Siswa</span><span class="txt">jadi, dari -6 naik ke -5 lalu ke -4, terus -3, ke -2, ke -1, lalu ke 0. Terus lanjut naik ke 1, ke 2, ke 3, sampai terakhir ke 4.</span></div>
+            <div class="line ai"><span class="who">Gorga</span><span class="txt">Kamu naik dari -6 ke -5, -4, -3, -2, -1, lalu ke 1, 2, 3, sampai 4. Apa yang terjadi saat melewati suhu tertentu sebelum 1?<span class="tag">L4</span></span></div>
+            <div class="line st"><span class="who">Siswa</span><span class="txt">oh berhenti di nol dulu ya</span></div>
+            <div class="line ai"><span class="who">Gorga</span><span class="txt">Kamu berhenti di nol dulu. Bagaimana kamu menghitung kenaikan suhu dari -6 ke 0, lalu dari 0 ke 4?<span class="tag">L4</span></span></div>
+            <div class="line st"><span class="who">Siswa</span><span class="txt">dari -6 ke 0 naik 6</span></div>
+            <div class="line ai"><span class="who">Gorga</span><span class="txt">Dari -6 ke 0 naik 6, lalu dari 0 ke 4 naik berapa, dan bagaimana itu membuat total kenaikan suhu?<span class="tag">L1</span></span></div>
+            <div class="line st"><span class="who">Siswa</span><span class="txt">terus 4 lagi jadi 10</span></div>
+            <div class="line ai win"><span class="who">Gorga</span><span class="txt">Jawabanmu benar. Kamu memecah kenaikan suhu menjadi dua bagian: dari -6 ke 0 naik 6 derajat, lalu dari 0 ke 4 naik 4 derajat, totalnya 10 derajat.</span></div>
+            <div class="ipon"></div>
+          </div>
+          <div class="aside-note">
+            <h3>Kata “benar” baru muncul di akhir.</h3>
+            <p>Menghitung satu per satu sudah menghasilkan 10, tapi belum cukup. Gorga baru memberi konfirmasi setelah
+              siswa sendiri memecah perubahan di angka 0, sesuai protokol guru.</p>
+            <p>Balasan Gorga di contoh ini ditulis AI apa adanya, dari uji simulasi. Kalimat siswanya disusun tim
+              sebagai kalimat uji.</p>
+            <a class="btn ghost small" href="suhu/">Coba sendiri <span class="arrow">→</span></a>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="pane pane-chat" aria-label="Guru bayangan">
-      <div class="chat-head">
-        <span class="eyebrow">Guru bayangan</span>
-        <button class="ghost" id="reset-btn" type="button">Ulangi</button>
-      </div>
-      <div class="chat-log" id="chat-log" aria-live="polite"></div>
-      <form class="chat-form" id="chat-form" autocomplete="off">
-        <input id="chat-input" type="text" maxlength="400" placeholder="Tulis jawabanmu…" aria-label="Jawaban">
-        <button type="submit" id="send-btn">Kirim</button>
-      </form>
-      <div class="quick" id="quick">
-        <span>Coba jawaban contoh:</span>
-        <button type="button" data-q="-25 > 8 karena 25 lebih besar dari 8">salah (nilai mutlak)</button>
-        <button type="button" data-q="8 > -25">benar tanpa alasan</button>
-        <button type="button" data-q="8 > -25 karena A ada 8 m di atas permukaan laut dan B 25 m di bawah permukaan laut">benar + alasan</button>
+    <section class="block" id="protokol">
+      <div class="wrap">
+        <div class="head2">
+          <div><span class="eyebrow">Protokol guru</span><h2>Bantuan bertingkat, bukan jawaban.</h2></div>
+          <p>AI memilih langkah berikutnya sendiri, tapi hanya sampai batas yang sedang berlaku. Makin lama siswa
+            macet, makin besar bantuan yang boleh diberikan. Jawaban tetap harus datang dari siswa.</p>
+        </div>
+        <div class="ladder">
+          <div class="rung"><span class="code">L1 · Probe</span><h3>Bertanya</h3><p>Mengajak mencoba di applet dan bertanya terbuka.</p><blockquote>“Coba kerjakan dengan termometer. Bagaimana kamu mendapatkannya?”</blockquote><div class="meter"><i class="on"></i><i></i><i></i><i></i></div></div>
+          <div class="rung"><span class="code">L4 · Revoice</span><h3>Mengulang</h3><p>Mengulang ide siswa dengan kata lain, lalu meminta penjelasan.</p><blockquote>“Kamu hitung kotaknya ada 10. Bagaimana kamu menghitungnya?”</blockquote><div class="meter"><i class="on"></i><i></i><i></i><i></i></div></div>
+          <div class="rung"><span class="code">L2 · Point</span><h3>Menunjuk</h3><p>Mengarahkan perhatian ke satu hal di termometer.</p><blockquote>“Lihat angka 0. Berapa derajat dari −6 sampai 0?”</blockquote><div class="meter"><i class="on"></i><i class="on"></i><i></i><i></i></div></div>
+          <div class="rung"><span class="code">L3 · Langkah</span><h3>Memecah</h3><p>Memecah soal menjadi pertanyaan kecil, tanpa memberi hasil.</p><blockquote>“Dari −6 ke 0 berapa? Lalu dari 0 ke 4?”</blockquote><div class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div></div>
+          <div class="rung"><span class="code">Konfirmasi</span><h3>Ditemukan</h3><p>Baru diberikan setelah jawaban benar dan penalaran target muncul dari siswa.</p><blockquote>“Kamu memecah di 0: 6 lalu 4, jadi 10.”</blockquote></div>
+        </div>
+        <div class="guards">
+          <div class="guard"><b>Tidak ada bocoran</b><p>Setiap kalimat AI diperiksa: angka yang belum ditemukan siswa tidak boleh muncul.</p></div>
+          <div class="guard"><b>Isi, bukan label</b><p>Pemeriksaan membaca isi kalimat. Label L4 yang ternyata memecah soal tetap ditolak.</p></div>
+          <div class="guard"><b>Selalu ada cadangan</b><p>Kalau AI melanggar, siswa menerima kalimat naskah yang sudah disetujui guru.</p></div>
+        </div>
       </div>
     </section>
 
-    <section class="pane pane-log" id="log-pane" hidden aria-label="Log sesi">
-      <div class="log-head">
-        <span class="eyebrow">Log sesi · satu baris per giliran</span>
-        <button class="ghost" id="csv-btn" type="button">Unduh CSV</button>
+    <section class="block" id="cara">
+      <div class="wrap">
+        <div class="head2">
+          <div><span class="eyebrow">Cara kerja</span><h2>Tiga langkah di kelas.</h2></div>
+          <p>Siswa tidak perlu memasang apa pun. Cukup buka tautan di laptop atau tablet.</p>
+        </div>
+        <div class="steps">
+          <div class="stepc"><div class="n">1</div><h3>Kerjakan di applet</h3><p>Geser penanda di applet GeoGebra, tulis jawaban, tekan Periksa. Gorga membaca jawaban dan posisi penanda langsung dari applet.</p></div>
+          <div class="stepc"><div class="n">2</div><h3>Jelaskan caramu</h3><p>Gorga tidak menilai. Ia bertanya bagaimana siswa mendapatkannya, dengan bahasa sehari-hari siswa itu sendiri.</p></div>
+          <div class="stepc"><div class="n">3</div><h3>Temukan sendiri</h3><p>Langkah demi langkah sampai penalaran target muncul. Jejaknya tergambar sebagai motif di bawah applet.</p></div>
+        </div>
       </div>
-      <div class="log-scroll">
-        <table>
-          <thead><tr><th>#</th><th>waktu</th><th>tahap</th><th>A</th><th>B</th><th>jawaban siswa</th><th>diagnosis</th><th>langkah</th><th>sumber</th></tr></thead>
-          <tbody id="log-body"></tbody>
-        </table>
+    </section>
+
+    <section class="block" id="guru">
+      <div class="wrap teach">
+        <div>
+          <span class="eyebrow">Untuk guru dan peneliti</span>
+          <h2 style="font:400 clamp(34px,4.2vw,56px)/1.02 var(--serif);margin:10px 0 24px;letter-spacing:-.015em">Setiap giliran tercatat.</h2>
+          <ul class="feat">
+            <li><i></i><div><b>Mode guru</b><span>Label langkah L1–L4 di setiap balasan, dan tanda jawaban yang dibaca AI.</span></div></li>
+            <li><i></i><div><b>Ringkasan sesi</b><span>Jumlah giliran, sebaran langkah, balasan AI dibanding naskah, dan waktu sampai penalaran ditemukan.</span></div></li>
+            <li><i></i><div><b>Log dan transkrip</b><span>Unduh CSV per giliran untuk analisis, atau salin transkrip percakapan.</span></div></li>
+            <li><i></i><div><b>Penyimpanan per kelas <span class="soon">tahap berikut</span></b><span>Kode kelas dan data tersimpan otomatis untuk riset.</span></div></li>
+          </ul>
+        </div>
+        <div class="mock" aria-hidden="true">
+          <div class="panel-grid">
+            <div class="stat"><span class="label">Giliran</span><b>7</b><small>soal 1</small></div>
+            <div class="stat"><span class="label">Balasan AI</span><b>94%</b><small>sisanya naskah</small></div>
+            <div class="stat"><span class="label">Sampai target</span><b>2:41</b><small>menit</small></div>
+            <div class="stat"><span class="label">Langkah</span>
+              <div class="bars"><div>L1<span class="b" style="width:30%"></span>2</div><div>L2<span class="b" style="width:15%"></span>1</div><div>L3<span class="b" style="width:0"></span>0</div><div>L4<span class="b" style="width:60%"></span>4</div></div></div>
+          </div>
+          <table><thead><tr><th>#</th><th>jawaban siswa</th><th>diagnosis</th><th>langkah</th></tr></thead>
+            <tbody><tr><td>3</td><td>aku hitung kotaknya ada 10</td><td>benar, belum ada penjelasan</td><td>L4</td></tr>
+            <tr><td>4</td><td>gak tau</td><td>macet</td><td>L2</td></tr>
+            <tr><td>5</td><td>dari -6 ke 0 itu 6, terus 0 ke 4 itu 4</td><td>pecah di 0 (target)</td><td>Konfirmasi</td></tr></tbody></table>
+          <p class="label" style="margin:12px 0 0;color:var(--ink-3)">Contoh tampilan mode guru</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="aktivitas">
+      <div class="wrap">
+        <div class="head2">
+          <div><span class="eyebrow">Aktivitas</span><h2>Mulai dari bilangan bulat.</h2></div>
+          <p>Aktivitas memakai applet GeoGebra milik guru. Protokol dan soal disusun bersama guru untuk setiap aktivitas.</p>
+        </div>
+        <div class="acts">
+          <a class="act" href="suhu/">
+            <div class="thumb"><img src="assets/thumb-suhu.png" alt="Applet termometer dengan soal suhu" loading="lazy"><span class="chip live">Aktif · AI</span></div>
+            <div class="body"><h3>Skala Suhu</h3><p>Suhu naik dan turun melewati 0 °C. Termometer GeoGebra, soal dari aktivitas guru, tutor AI penuh.</p><span class="go">Buka aktivitas →</span></div>
+          </a>
+          <a class="act" href="laut/">
+            <div class="thumb"><img src="assets/thumb-laut.png" alt="Applet dua lumba-lumba di atas dan di bawah permukaan laut" loading="lazy"><span class="chip">Prototipe</span></div>
+            <div class="body"><h3>Permukaan Laut</h3><p>Membandingkan bilangan bulat lewat posisi dua lumba-lumba terhadap permukaan laut.</p><span class="go">Buka prototipe →</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="name">
+      <div class="wrap">
+        <img src="assets/logo-light.svg" alt="Logo Gorga">
+        <div>
+          <span class="eyebrow">Tentang nama</span>
+          <h2>Gorga: ornamen yang dihitung.</h2>
+          <p>Gorga adalah ukiran pada rumah adat Batak, dengan tiga warna: merah, putih, dan hitam. Polanya penuh
+            simetri, pencerminan, dan pengulangan. Matematika sudah lama tinggal di dalamnya.</p>
+          <p>Logo Gorga adalah gulungan simeol-eol: satu spiral r = aθ dan pencerminan titiknya, dengan pita segitiga
+            ipon-ipon di bawahnya.</p>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="foot">
-    Demo ini hanya untuk diskusi. Applet dibangun ulang lewat GeoGebra Apps API untuk contoh; versi akhir
-    memakai applet asli dari GeoGebra Classroom.
+  <footer class="site-foot">
+    <div class="wrap">
+      <p>Gorga · prototipe riset pendidikan matematika, non-komersial. Aktivitas Skala Suhu: Dr. Rahmi Ramadhani Umar.
+        Applet termometer: A.M. Vuković (2013), lewat GeoGebra.</p>
+      <p>© 2026 Gorga</p>
+    </div>
   </footer>
 
-  <script src="https://www.geogebra.org/apps/deployggb.js"></script>
-  <script src="task.js"></script>
-  <script src="tutor.js"></script>
-  <script src="app.js"></script>
+  <script src="assets/motif.js"></script>
 </body>
 </html>

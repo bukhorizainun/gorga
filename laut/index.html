@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Permukaan Laut — Gorga</title>
+  <meta name="description" content="Prototipe Gorga: membandingkan bilangan bulat lewat posisi dua lumba-lumba terhadap permukaan laut.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gloock&family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/gorga.css">
+</head>
+<body>
+  <header class="bar">
+    <div style="display:flex;align-items:center;gap:22px">
+      <a class="mark" href="../" aria-label="Gorga, beranda"><img src="../assets/logo.svg" alt=""><span>gorga</span></a>
+      <nav class="crumbs" aria-label="Lokasi"><a href="../#aktivitas">Aktivitas</a><span>/</span><span aria-current="page">Permukaan laut</span></nav>
+    </div>
+    <div class="bar-right">
+      <span id="mode-badge" class="badge">Mode naskah</span>
+      <label class="switch" title="Tampilkan label langkah dan log">
+        <input type="checkbox" id="teacher-toggle">
+        <span>Mode guru</span>
+      </label>
+    </div>
+  </header>
+
+  <div class="intro-band">
+    <div>
+      <span class="eyebrow">Prototipe · Tugas 15 · Bilangan bulat</span>
+      <h1>Permukaan laut dan kedalaman laut</h1>
+    </div>
+    <div class="context">
+      <span class="label">Konteks</span>
+      <p>Bilangan positif menunjukkan posisi di atas permukaan laut, bilangan negatif menunjukkan kedalaman di bawahnya.
+        Geser kedua lumba-lumba, lalu jawab pertanyaan di panel tutor.</p>
+    </div>
+  </div>
+
+  <main class="layout">
+    <section class="pane pane-applet" aria-label="Applet GeoGebra">
+      <div class="applet-wrap" id="applet-wrap">
+        <div id="ggb"></div>
+        <div class="applet-loading" id="applet-loading">Memuat applet GeoGebra…</div>
+      </div>
+      <div class="state-strip">
+        <span class="item"><span class="dot dot-a"></span> Lumba-lumba A <b id="val-a">8</b></span>
+        <span class="item"><span class="dot dot-b"></span> Lumba-lumba B <b id="val-b">-25</b></span>
+        <span class="state-note">dibaca langsung dari applet</span>
+      </div>
+    </section>
+
+    <section class="pane pane-chat" aria-label="Tutor Gorga">
+      <div class="chat-head">
+        <div class="who"><img src="../assets/logo.svg" alt=""><div><b>Tutor Gorga</b><small>prototipe dengan naskah guru</small></div></div>
+        <button class="ghost" id="reset-btn" type="button">Ulangi</button>
+      </div>
+      <div class="chat-log" id="chat-log" aria-live="polite"></div>
+      <div class="chat-foot">
+        <form class="chat-form" id="chat-form" autocomplete="off">
+          <input id="chat-input" type="text" maxlength="400" placeholder="Tulis jawabanmu…" aria-label="Jawaban">
+          <button type="submit" id="send-btn">Kirim</button>
+        </form>
+        <details class="try">
+          <summary>Contoh jawaban untuk mencoba</summary>
+          <div class="quick" id="quick"></div>
+        </details>
+      </div>
+    </section>
+
+    <section class="pane pane-log" id="log-pane" hidden aria-label="Log sesi">
+      <div class="log-head">
+        <div><span class="eyebrow">Mode guru</span><div style="font:400 26px/1.1 var(--serif);margin-top:4px">Log sesi</div></div>
+        <div class="actions"><button class="ghost" id="csv-btn" type="button">Unduh CSV</button></div>
+      </div>
+      <div class="log-scroll">
+        <table>
+          <thead><tr><th>#</th><th>waktu</th><th>tahap</th><th>A</th><th>B</th><th>jawaban siswa</th><th>diagnosis</th><th>langkah</th><th>sumber</th></tr></thead>
+          <tbody id="log-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="ipon thin"></div>
+    Prototipe riset, non-komersial. Applet dibangun ulang lewat GeoGebra Apps API sebagai contoh.
+  </footer>
+
+  <script src="https://www.geogebra.org/apps/deployggb.js"></script>
+  <script src="task.js"></script>
+  <script src="tutor.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
