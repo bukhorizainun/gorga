@@ -19,6 +19,7 @@ window.SUHU_TASK = {
       end: 4,
       question: "Suhu awal −6 °C. Berapa kenaikan suhu yang diperlukan untuk mencapai 4 °C?",
       origin: "soal dari sesi guru",
+      origin_en: "question from the teacher's session",
     },
     {
       id: "soal2",
@@ -27,6 +28,7 @@ window.SUHU_TASK = {
       end: -5,
       question: "Suhu turun dari 3 °C ke −5 °C. Berapa derajat penurunan suhunya?",
       origin: "contoh tambahan untuk demo",
+      origin_en: "extra example for the demo",
     },
   ],
   target:
@@ -43,7 +45,7 @@ window.SUHU_TASK = {
     L2: "Point: mengarahkan perhatian ke satu hal di termometer (titik awal, arah gerak, angka 0).",
     L3: "Langkah terarah: memecah soal menjadi pertanyaan yang lebih kecil. (Definisi sementara, menunggu rumusan guru.)",
     L4: "Revoice: mengulang jawaban siswa lalu meminta penjelasan atau cara yang lebih ringkas.",
-    OK: "Konfirmasi akhir: jawaban benar dan pegorgaan target sudah muncul.",
+    OK: "Konfirmasi akhir: jawaban benar dan penalaran target sudah muncul.",
     HINT: "Petunjuk cadangan dari guru setelah beberapa percobaan belum berhasil.",
   },
 };

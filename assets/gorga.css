@@ -276,3 +276,14 @@ td:nth-child(6) { min-width: 220px; }
   .chat-log { padding: 14px; }
   .msg { max-width: 92%; }
 }
+
+/* ---------- language switch ---------- */
+.langs { display: inline-flex; border: 1px solid var(--garis-2); border-radius: 999px; overflow: hidden; }
+.langs a { padding: 5px 9px; font: 11px/1 var(--mono); letter-spacing: 0.08em; text-decoration: none; color: var(--ink-3); }
+.langs a:hover { color: var(--ink); }
+.langs a[aria-current] { background: var(--hitam); color: var(--putih); }
+.bar.dark .langs { border-color: #4a3f36; }
+.bar.dark .langs a { color: #a79b8d; }
+.bar.dark .langs a:hover { color: var(--putih); }
+.bar.dark .langs a[aria-current] { background: var(--putih); color: var(--ink); }
+.bar-end { display: flex; align-items: center; gap: 14px; }

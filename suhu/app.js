@@ -7,6 +7,9 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
 (function () {
   const TASK = window.SUHU_TASK;
   const T = window.SuhuTutor;
+  const EN = window.GORGA_LANG === "en";
+  const tr = (id, en) => (EN ? en : id);
+  const SCRIPT = tr("naskah", "script"); // label for replies that come from the script
 
   const $ = (id) => document.getElementById(id);
   const chatLog = $("chat-log");
@@ -74,8 +77,9 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
       if (a) onAppletAnswer(a);
     } else if (HELP[name] === cur.type && api.getValue(name) === 1 && !mem.help) {
       mem.help = true;
-      note("Siswa membuka “Bantuan” di applet", "bantuan menampilkan rumus pengurangan");
-      logEvent("membuka bantuan applet");
+      note(tr("Siswa membuka “Bantuan” di applet", "The student opened “Show help” in the applet"),
+        tr("bantuan menampilkan rumus pengurangan", "the help shows the subtraction formula"));
+      logEvent(tr("membuka bantuan applet", "opened the applet help"));
     }
   };
 
@@ -93,6 +97,11 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
   };
 
   function translate() {
+    // The applet grades the answer itself ("Excellent! ..."). The protocol keeps that for the
+    // end of the conversation, so the applet's own feedback is hidden in both languages.
+    for (let n = 3; n <= 8; n++) api.setVisible(`Zad${n}Provjera`, false);
+    api.setVisible("Type", false);
+    if (EN) return; // the original applet is in English
     const c = (cmd) => api.evalCommand(cmd);
     const NL = "UnicodeToLetter(10)";
     const tail = `${NL} + "Gunakan termometer di kiri untuk membantu." + ${NL} + ${NL} + "Tulis jawabanmu, lalu tekan Periksa."`;
@@ -102,10 +111,6 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
     api.setCaption("gumb1", "Soal baru");
     for (const b of ["gumb4", "gumb5", "gumb6", "gumb7", "gumb8", "gumb9"]) api.setCaption(b, "Periksa");
     for (const h of ["o_1", "o_2", "u_2", "v_2"]) api.setCaption(h, "Bantuan");
-    // The applet grades the answer itself ("Excellent! ..."). The protocol keeps that for the
-    // end of the conversation, so the applet's own feedback is hidden here.
-    for (let n = 3; n <= 8; n++) api.setVisible(`Zad${n}Provjera`, false);
-    api.setVisible("Type", false);
   }
 
   function applyStage(st) {
@@ -119,7 +124,9 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
     setTemp("L", 0);
     setTemp("E", 0);
     quiet = false;
-    st.question = String(api.getValueString(`Zad${st.type}Tekst`)).split("\n").slice(0, 2).join(" ");
+    // The Indonesian text is split over two lines on purpose; the English original has the
+    // question on its first line.
+    st.question = String(api.getValueString(`Zad${st.type}Tekst`)).split("\n").slice(0, EN ? 1 : 2).join(" ");
     showState();
   }
 
@@ -134,8 +141,8 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
     while (pos === -neg) pos = rnd(1, 12);
     randomNo += 1;
     return type === 5
-      ? { id: `acak${randomNo}`, type, start: neg, end: pos, origin: "soal acak dari applet" }
-      : { id: `acak${randomNo}`, type, start: pos, end: neg, origin: "soal acak dari applet" };
+      ? { id: `acak${randomNo}`, type, start: neg, end: pos, origin: tr("soal acak dari applet", "random question from the applet") }
+      : { id: `acak${randomNo}`, type, start: pos, end: neg, origin: tr("soal acak dari applet", "random question from the applet") };
   }
 
   function onLoad(a) {
@@ -169,22 +176,24 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
     try {
       new GGBApplet(params, true).inject("ggb");
     } catch (e) {
-      $("applet-loading").textContent = "Applet GeoGebra tidak dapat dimuat. Periksa koneksi internet.";
+      $("applet-loading").textContent = tr("Applet GeoGebra tidak dapat dimuat. Periksa koneksi internet.", "The GeoGebra applet could not load. Check the internet connection.");
     }
   }
 
   /* ---------------- Chat UI ---------------- */
 
   const MOVE_NAME = {
-    L1: "L1 Probe", L2: "L2 Point", L3: "L3 Langkah terarah", L4: "L4 Revoice",
-    OK: "Konfirmasi akhir", HINT: "Petunjuk guru", END: "Penutup",
+    L1: "L1 Probe", L2: "L2 Point", L3: tr("L3 Langkah terarah", "L3 Guided step"), L4: "L4 Revoice",
+    OK: tr("Konfirmasi akhir", "Final confirmation"), HINT: tr("Petunjuk guru", "Teacher hint"), END: tr("Penutup", "Closing"),
   };
 
   // Reasoning path under the applet: one motif per tutor move, in student words.
-  const STEP_WORD = { L1: "Bertanya", L4: "Mengulang", L2: "Menunjuk", L3: "Memecah", HINT: "Petunjuk", OK: "Ditemukan" };
+  const STEP_WORD = EN
+    ? { L1: "Asking", L4: "Revoicing", L2: "Pointing", L3: "Breaking down", HINT: "Hint", OK: "Found" }
+    : { L1: "Bertanya", L4: "Mengulang", L2: "Menunjuk", L3: "Memecah", HINT: "Petunjuk", OK: "Ditemukan" };
   const journey = $("journey");
   function journeyReset() {
-    journey.innerHTML = '<li class="empty">Belum ada langkah.</li>';
+    journey.innerHTML = `<li class="empty">${tr("Belum ada langkah.", "No steps yet.")}</li>`;
   }
   function journeyAdd(move) {
     const empty = journey.querySelector(".empty");
@@ -249,11 +258,15 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
     mem = { answerOK: false, wrong: 0, counting: 0, halfText: null, help: false };
     lastApplet = { v: "", t: 0 };
     const fixed = stageIdx < TASK.stages.length;
-    $("stage-no").textContent = fixed ? `soal ${stageIdx + 1} dari ${TASK.stages.length}` : "soal acak";
-    note(fixed ? `Soal ${stageIdx + 1} dari ${TASK.stages.length} ada di applet` : "Soal baru ada di applet", st.origin);
+    $("stage-no").textContent = fixed
+      ? tr(`soal ${stageIdx + 1} dari ${TASK.stages.length}`, `question ${stageIdx + 1} of ${TASK.stages.length}`)
+      : tr("soal acak", "random question");
+    note(fixed
+      ? tr(`Soal ${stageIdx + 1} dari ${TASK.stages.length} ada di applet`, `Question ${stageIdx + 1} of ${TASK.stages.length} is in the applet`)
+      : tr("Soal baru ada di applet", "A new question is in the applet"), (EN && st.origin_en) || st.origin);
     if (api) applyStage(st);
     const open = T.opening(st);
-    bubble("ai", open, `${MOVE_NAME.L1} · naskah`);
+    bubble("ai", open, `${MOVE_NAME.L1} · ${SCRIPT}`);
     journeyAdd("L1");
     history.push({ role: "assistant", content: open });
     renderQuick();
@@ -267,6 +280,17 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
     const verb = up ? "naik" : "turun";
     const walk = [];
     for (let v = s.start; up ? v <= s.end : v >= s.end; v += up ? 1 : -1) walk.push(f(v));
+    if (s.start === -6 && s.end === 4 && EN) {
+      return {
+        applet: [["2", "wrong: 6 − 4"], ["11", "wrong: counts numbers"], ["10", "correct"]],
+        chat: [
+          ["so -6 up to 4 is going up 10 times.", "real session (translated): 10 times"],
+          ["so -6 goes up to -5, then up again to -4, until 4. It goes up 1 degree each time.", "real session (translated): one by one"],
+          ["so from -6 to 0 it goes up 6, then from 0 to 4 it goes up 4", "real session (translated): split at 0"],
+          ["I don't know", "don't know"],
+        ],
+      };
+    }
     if (s.start === -6 && s.end === 4) {
       return {
         applet: [["2", "salah: 6 − 4"], ["11", "salah: hitung angka"], ["10", "benar"]],
@@ -279,8 +303,12 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
       };
     }
     return {
-      applet: [[String(Math.abs(Math.abs(s.start) - Math.abs(s.end))), "salah: tanpa tanda"], [String(size + 1), "salah: hitung angka"], [String(size), "benar"]],
-      chat: [
+      applet: [[String(Math.abs(Math.abs(s.start) - Math.abs(s.end))), tr("salah: tanpa tanda", "wrong: no signs")], [String(size + 1), tr("salah: hitung angka", "wrong: counts numbers")], [String(size), tr("benar", "correct")]],
+      chat: EN ? [
+        [`${f(s.start)} ${up ? "goes up" : "goes down"} to ${f(s.end)} so ${size}`, `${size}, no reason`],
+        [`${walk.join(", ")}`, "one by one"],
+        [`from ${f(s.start)} to 0 it goes ${up ? "up" : "down"} ${Math.abs(s.start)}, then from 0 to ${f(s.end)} it goes ${up ? "up" : "down"} ${Math.abs(s.end)}`, "split at 0"],
+      ] : [
         [`${f(s.start)} ${verb} ke ${f(s.end)} jadi ${size}`, `${size} tanpa alasan`],
         [`${walk.join(", ")}`, "satu-satu"],
         [`dari ${f(s.start)} ke 0 ${verb} ${Math.abs(s.start)}, lalu dari 0 ke ${f(s.end)} ${verb} ${Math.abs(s.end)}`, "pecah di 0"],
@@ -313,12 +341,12 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
       }
       q.appendChild(div);
     };
-    row("Isi kotak applet:", set.applet, (v) => {
+    row(tr("Isi kotak applet:", "Fill the applet box:"), set.applet, (v) => {
       if (!api) return;
       if (!cur) return;
       api.setTextValue(`Zad${cur.type}Upisano`, v); // fires the update listener like a typed answer
     });
-    row("Contoh penjelasan:", set.chat, (t) => {
+    row(tr("Contoh penjelasan:", "Sample explanations:"), set.chat, (t) => {
       input.value = t;
       form.requestSubmit();
     });
@@ -397,7 +425,7 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
     const s = stage();
     const m = markers();
 
-    if (inp.from === "applet") bubble("student applet", `Jawaban di applet: ${inp.text}`);
+    if (inp.from === "applet") bubble("student applet", tr(`Jawaban di applet: ${inp.text}`, `Answer in the applet: ${inp.text}`));
     else bubble("student", inp.text);
     history.push({ role: "user", content: inp.from === "applet" ? `(jawaban di applet) ${inp.text}` : inp.text });
 
@@ -423,6 +451,7 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
     stageTexts.push(inp.text);
     const lim = T.limits(res, s, mem, stageTexts);
     const ai = await askAI({
+      lang: EN ? "en" : "id",
       lead: lim,
       task: { id: TASK.id, title: TASK.title, unit: TASK.unit, misconceptions: TASK.misconceptions, moves: TASK.moves },
       stage: { id: s.id, question: s.question, target: TASK.target },
@@ -447,7 +476,7 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
     typing(false);
 
     let reply = res.reply;
-    let source = "naskah";
+    let source = SCRIPT;
     if (ai) {
       // The AI leads, within the limits: no more help than the protocol allows now, no
       // number the student has not earned yet, no "benar" before the goal, one question.
@@ -456,9 +485,9 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
       if (!leaks(ai.reply, forbid) && !tooMuch && !why) {
         reply = ai.reply;
         source = ai.model || "AI";
-        $("mode-badge").textContent = "AI aktif";
+        $("mode-badge").textContent = tr("AI aktif", "AI on");
         $("mode-badge").classList.add("on");
-      } else source = "naskah (jaga)";
+      } else source = tr("naskah (jaga)", "script (guard)");
     }
 
     const shownMove = ai && source === (ai.model || "AI") && MOVE_NAME[ai.move] ? ai.move : res.move;
@@ -483,7 +512,8 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
       if (stageIdx < TASK.stages.length) startStage({ ...TASK.stages[stageIdx] });
       else {
         if (stageIdx === TASK.stages.length) {
-          note("Soal tetap selesai. Berikutnya soal acak; tombol “Soal baru” di applet juga bisa dipakai kapan saja.");
+          note(tr("Soal tetap selesai. Berikutnya soal acak; tombol “Soal baru” di applet juga bisa dipakai kapan saja.",
+            "The set questions are done. Random questions follow; the “New task” button in the applet works at any time too."));
         }
         startStage(randomStage());
       }
@@ -504,7 +534,7 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
       input_from: inp.from,
       student_text: inp.text,
       numbers_read: res.reading.ns.join(" "),
-      diagnosis: (T.KIND_LABEL[res.kind] || res.kind) + (res.reading.byAI ? " (dibaca AI)" : ""),
+      diagnosis: (T.KIND_LABEL[res.kind] || res.kind) + (res.reading.byAI ? tr(" (dibaca AI)", " (read by AI)") : ""),
       move: MOVE_NAME[res.move] || res.move,
       code: res.move,
       source,
@@ -544,7 +574,7 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
   function updateStats() {
     const turns = log.filter((r) => r.student_text);
     $("st-turns").textContent = turns.length;
-    const ai = turns.filter((r) => r.source && !r.source.startsWith("naskah")).length;
+    const ai = turns.filter((r) => r.source && !r.source.startsWith(SCRIPT)).length;
     $("st-ai").textContent = turns.length ? `${Math.round((100 * ai) / turns.length)}%` : "–";
     if (lastTarget !== null) {
       const t = Math.round(lastTarget);
@@ -568,29 +598,29 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
     const lines = [];
     for (const el of chatLog.children) {
       if (el.classList.contains("chat-note")) lines.push(`— ${el.firstChild.textContent} —`);
-      else if (el.classList.contains("card-wrap")) lines.push(`[Kartu penalaran] ${el.querySelector("blockquote").textContent}`);
+      else if (el.classList.contains("card-wrap")) lines.push(`[${tr("Kartu penalaran", "Reasoning card")}] ${el.querySelector("blockquote").textContent}`);
       else if (el.classList.contains("msg") && !el.classList.contains("typing")) {
-        const who = el.classList.contains("student") ? "Siswa" : "Tutor";
+        const who = el.classList.contains("student") ? tr("Siswa", "Student") : "Tutor";
         const meta = el.querySelector(".meta");
         lines.push(`${who}: ${el.querySelector("p").textContent}${meta ? `  [${meta.textContent}]` : ""}`);
       }
     }
     navigator.clipboard.writeText(lines.join("\n")).then(
-      () => flash($("copy-btn"), "Tersalin"),
-      () => flash($("copy-btn"), "Gagal menyalin"));
+      () => flash($("copy-btn"), tr("Tersalin", "Copied")),
+      () => flash($("copy-btn"), tr("Gagal menyalin", "Copy failed")));
   }
 
   // Shown when the student reaches the target reasoning: their own words, kept as a card.
   function reasonCard(st, text) {
-    const date = new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+    const date = new Date().toLocaleDateString(EN ? "en-GB" : "id-ID", { day: "numeric", month: "long", year: "numeric" });
     const wrap = document.createElement("div");
     wrap.className = "card-wrap";
-    wrap.innerHTML = `<div class="reason-card"><span class="label">Kartu penalaran · kata-katamu sendiri</span>
+    wrap.innerHTML = `<div class="reason-card"><span class="label">${tr("Kartu penalaran · kata-katamu sendiri", "Reasoning card · in your own words")}</span>
       <blockquote></blockquote><div class="q"></div>
-      <div class="row"><span class="label">${date}</span><button type="button">Simpan kartu</button></div>
+      <div class="row"><span class="label">${date}</span><button type="button">${tr("Simpan kartu", "Save card")}</button></div>
       <div class="ipon"></div></div>`;
     const quote = `“${text}”`;
-    const question = st.question || `Dari ${T.deg(st.start)} ke ${T.deg(st.end)}`;
+    const question = st.question || tr(`Dari ${T.deg(st.start)} ke ${T.deg(st.end)}`, `From ${T.deg(st.start)} to ${T.deg(st.end)}`);
     wrap.querySelector("blockquote").textContent = quote;
     wrap.querySelector(".q").textContent = question;
     wrap.querySelector("button").addEventListener("click", () => saveCard(quote, question, date));
@@ -655,7 +685,7 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
     g.fillText("gorga", 222, 168);
     g.fillStyle = "#e0876f";
     g.font = '500 26px "JetBrains Mono", monospace';
-    g.fillText("KARTU PENALARAN", 90, 330);
+    g.fillText(tr("KARTU PENALARAN", "REASONING CARD"), 90, 330);
     g.fillStyle = "#fffcf7";
     g.font = "62px Gloock, Georgia, serif";
     let y = 430;
@@ -672,7 +702,7 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
       g.beginPath(); g.moveTo(x, H); g.lineTo(x + 18, H - 26); g.lineTo(x + 36, H); g.fill();
     }
     const a = document.createElement("a");
-    a.download = "kartu-penalaran-gorga.png";
+    a.download = tr("kartu-penalaran-gorga.png", "gorga-reasoning-card.png");
     a.href = c.toDataURL("image/png");
     a.click();
   }
@@ -711,7 +741,7 @@ const GORGA_API = "https://gorga.zainun.workers.dev";
     $("log-pane").hidden = !e.target.checked;
     updateStats();
   });
-  $("mode-badge").textContent = GORGA_API ? "AI · menyambung" : "Mode naskah";
+  $("mode-badge").textContent = GORGA_API ? tr("AI · menyambung", "AI · connecting") : tr("Mode naskah", "Script mode");
 
   startStage({ ...TASK.stages[0] });
   injectApplet();

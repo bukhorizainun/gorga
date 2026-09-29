@@ -8,6 +8,8 @@
   <meta property="og:title" content="Gorga — tutor yang bertanya balik">
   <meta property="og:description" content="Applet GeoGebra dan tutor AI dengan protokol scaffolding guru.">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="alternate" hreflang="en" href="https://rahmiumar.github.io/gorga/en/">
+  <link rel="alternate" hreflang="id" href="https://rahmiumar.github.io/gorga/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gloock&family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
@@ -23,7 +25,12 @@
       <a href="#guru">Untuk guru</a>
       <a href="#aktivitas">Aktivitas</a>
     </nav>
-    <a class="btn small" href="suhu/" style="background:#fffcf7;color:#17120e;border-color:#fffcf7">Coba aktivitas <span class="arrow">→</span></a>
+    <div class="bar-end">
+      <div class="langs" role="group" aria-label="Bahasa / Language">
+        <a href="./" aria-current="true">ID</a><a href="en/" onclick="try{localStorage.setItem('gorga-lang','en')}catch(e){}">EN</a>
+      </div>
+      <a class="btn small" href="suhu/?lang=id" style="background:#fffcf7;color:#17120e;border-color:#fffcf7">Coba aktivitas <span class="arrow">→</span></a>
+    </div>
   </header>
 
   <section class="hero">
@@ -34,7 +41,7 @@
         <p class="lead">Siswa mengerjakan soal di applet GeoGebra. Gorga tidak memberi jawaban. Ia bertanya,
           menunjuk satu hal di layar, dan menunggu sampai siswa menemukan dan menjelaskan penalarannya sendiri.</p>
         <div class="cta">
-          <a class="btn" href="suhu/">Coba aktivitas Skala Suhu <span class="arrow">→</span></a>
+          <a class="btn" href="suhu/?lang=id">Coba aktivitas Skala Suhu <span class="arrow">→</span></a>
           <a class="btn ghost" href="#percakapan">Lihat contoh percakapan</a>
         </div>
         <div class="facts">
@@ -78,7 +85,7 @@
               siswa sendiri memecah perubahan di angka 0, sesuai protokol guru.</p>
             <p>Balasan Gorga di contoh ini ditulis AI apa adanya, dari uji simulasi. Kalimat siswanya disusun tim
               sebagai kalimat uji.</p>
-            <a class="btn ghost small" href="suhu/">Coba sendiri <span class="arrow">→</span></a>
+            <a class="btn ghost small" href="suhu/?lang=id">Coba sendiri <span class="arrow">→</span></a>
           </div>
         </div>
       </div>
@@ -156,11 +163,11 @@
           <p>Aktivitas memakai applet GeoGebra milik guru. Protokol dan soal disusun bersama guru untuk setiap aktivitas.</p>
         </div>
         <div class="acts">
-          <a class="act" href="suhu/">
+          <a class="act" href="suhu/?lang=id">
             <div class="thumb"><img src="assets/thumb-suhu.png" alt="Applet termometer dengan soal suhu" loading="lazy"><span class="chip live">Aktif · AI</span></div>
             <div class="body"><h3>Skala Suhu</h3><p>Suhu naik dan turun melewati 0 °C. Termometer GeoGebra, soal dari aktivitas guru, tutor AI penuh.</p><span class="go">Buka aktivitas →</span></div>
           </a>
-          <a class="act" href="laut/">
+          <a class="act" href="laut/?lang=id">
             <div class="thumb"><img src="assets/thumb-laut.png" alt="Applet dua lumba-lumba di atas dan di bawah permukaan laut" loading="lazy"><span class="chip">Prototipe</span></div>
             <div class="body"><h3>Permukaan Laut</h3><p>Membandingkan bilangan bulat lewat posisi dua lumba-lumba terhadap permukaan laut.</p><span class="go">Buka prototipe →</span></div>
           </a>
@@ -191,6 +198,7 @@
     </div>
   </footer>
 
+  <script>try { localStorage.setItem("gorga-lang", "id"); } catch (e) {}</script>
   <script src="assets/motif.js"></script>
 </body>
 </html>

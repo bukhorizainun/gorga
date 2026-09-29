@@ -140,9 +140,9 @@ const PROTOCOL = `Protokol guru (wajib):
 - Pertanyaan pertama selalu L1: minta siswa mencoba dengan termometer.
 - Jika jawaban siswa benar, JANGAN langsung bilang benar; pakai L4 untuk meminta penjelasan.
 - Jika jawaban salah atau siswa tidak tahu: L2, lalu L3 bila perlu.
-- Untuk perubahan suhu yang melewati 0, pegorgaan target adalah memecah di 0.
+- Untuk perubahan suhu yang melewati 0, penalaran target adalah memecah di 0.
 - Menghitung satu per satu belum cukup untuk mengakhiri percakapan.
-- Percakapan selesai hanya jika jawaban benar DAN pegorgaan target muncul dari siswa sendiri; saat itu beri konfirmasi.
+- Percakapan selesai hanya jika jawaban benar DAN penalaran target muncul dari siswa sendiri; saat itu beri konfirmasi.
 - Jangan memberi jawaban terlalu cepat; pakai pertanyaan agar siswa menemukan dan menjelaskan sendiri.
 Arti langkah: L1 = bertanya terbuka / mengajak mencoba; L4 = mengulang ide siswa dengan kata lain lalu minta penjelasan; L2 = menunjuk satu hal spesifik di termometer; L3 = memecah soal menjadi pertanyaan kecil; OK = konfirmasi akhir.`;
 
@@ -163,9 +163,10 @@ const LEVEL_TEXT = {
 function leadPrompt(b) {
   const s = b.stage || {};
   const L = b.lead || {};
+  const en = b.lang === "en";
   const facts = (Array.isArray(L.facts) ? L.facts : []).map((f) => `- ${clip(f, 200)}`).join("\n");
   const task = L.goal
-    ? `TUGAS: siswa sudah menemukan pegorgaan target sendiri. Tulis konfirmasi singkat yang hangat: sebut bahwa jawabannya benar, ulangi cara siswa memecah di 0 dengan angkanya, dan total ${L.size} derajat. Tanpa pertanyaan. Pakai "move":"OK".`
+    ? `TUGAS: siswa sudah menemukan penalaran target sendiri. Tulis konfirmasi singkat yang hangat: sebut bahwa jawabannya benar, ulangi cara siswa memecah di 0 dengan angkanya, dan total ${L.size} derajat. Tanpa pertanyaan. Pakai "move":"OK".`
     : `TUGAS: tulis balasan berikutnya sebagai guru. ${LEVEL_TEXT[L.maxHelp] || LEVEL_TEXT[1]}`;
   return `Kamu guru matematika yang sabar untuk siswa SMP di Indonesia. Siswa mengerjakan soal di applet termometer GeoGebra (termometer tegak: naik = ke atas, turun = ke bawah), lalu berdiskusi denganmu di chat.
 
@@ -187,11 +188,12 @@ CARA MENANGGAPI
 - Angka yang boleh muncul hanya: ${(L.allowNumbers || []).join(", ")}.${L.zeroOK ? "" : `
 - Jangan menyebut angka 0, "nol", atau ide berhenti di 0: itu kunci yang harus ditemukan siswa sendiri.`}${L.splitOK ? "" : `
 - Jangan menyarankan memecah soal menjadi dua bagian.`}
-- ${L.goal ? "" : 'Jangan memakai kata "benar", "salah", "tepat", atau "memang". '}Tepat satu pertanyaan di akhir${L.goal ? " (kecuali konfirmasi)" : ""}. Maksimal 2 kalimat, maksimal 45 kata. Bahasa sehari-hari yang hangat, sapa "kamu". Tanpa emoji dan markdown.
+- ${L.goal ? "" : en ? 'Jangan memakai kata "correct", "wrong", "right", atau "exactly". ' : 'Jangan memakai kata "benar", "salah", "tepat", atau "memang". '}Tepat satu pertanyaan di akhir${L.goal ? " (kecuali konfirmasi)" : ""}. Maksimal 2 kalimat, maksimal 45 kata. Bahasa sehari-hari yang hangat, sapa "kamu". Tanpa emoji dan markdown.
 
 ${EXAMPLE}
 
-Balas HANYA JSON satu baris: {"move":"L1|L2|L3|L4|OK","reply":"..."}`;
+${en ? `BAHASA: siswa memakai halaman berbahasa Inggris. Tulis balasan dalam BAHASA INGGRIS yang sederhana (level siswa SMP), sapa dengan "you". Contoh di atas berbahasa Indonesia hanya untuk gaya.
+` : ""}Balas HANYA JSON satu baris: {"move":"L1|L2|L3|L4|OK","reply":"..."}`;
 }
 
 const HELP_RANK = { L1: 1, L4: 1, L2: 2, L3: 3, HINT: 4, OK: 0 };
@@ -216,7 +218,7 @@ function classifyPrompt(b) {
   const e = Number(st.end);
   const a = Math.abs(s);
   const c = Math.abs(e);
-  return `Kamu membantu guru matematika membaca jawaban siswa SMP. Soal: suhu dari ${s} °C ke ${e} °C (perubahan ${Math.abs(e - s)} derajat). Siswa menulis penjelasan dengan bahasa sehari-hari.
+  return `Kamu membantu guru matematika membaca jawaban siswa SMP. Soal: suhu dari ${s} °C ke ${e} °C (perubahan ${Math.abs(e - s)} derajat). Siswa menulis penjelasan dengan bahasa sehari-hari, dalam bahasa Indonesia atau Inggris. "Zero" dan "freezing point" berarti 0 °C.
 
 Pilih SATU strategi yang paling cocok dengan kalimat siswa:
 - split: siswa memecah perubahan di 0 °C dan menyebut kedua bagian (${a} derajat sampai 0, lalu ${c} derajat dari 0). "Titik beku" berarti 0 °C.
@@ -365,10 +367,10 @@ export default {
           if (forbid.some((f) => new RegExp(`(^|[^0-9])${f}([^0-9]|$)`).test(t))) { r("forbidden"); continue; }
           const extra = signed(reply).filter((n) => !allow.has(n));
           if (extra.length) { r(`new numbers ${extra.join(",")}`); continue; }
-          if (!L.goal && /\b(benar|salah|betul|tepat|memang)\b/i.test(reply)) { r("judges"); continue; }
+          if (!L.goal && /\b(benar|salah|betul|tepat|memang|correct|wrong|right|exactly|well done)\b/i.test(reply)) { r("judges"); continue; }
           const low = reply.toLowerCase();
-          if (!L.zeroOK && /(\b0\b|\bnol\b|titik beku)/.test(low)) { r("mentions 0"); continue; }
-          if (!L.splitOK && /(dua bagian|pecah|dibagi dua|bagi (jadi|menjadi) dua|dua langkah)/.test(low)) { r("splits"); continue; }
+          if (!L.zeroOK && /(\b0\b|\bnol\b|titik beku|\bzero\b|freezing)/.test(low)) { r("mentions 0"); continue; }
+          if (!L.splitOK && /(dua bagian|pecah|dibagi dua|bagi (jadi|menjadi) dua|dua langkah|two parts|two steps|split|break it)/.test(low)) { r("splits"); continue; }
           if (prev.some((p) => similarity(reply, p) > 0.8)) { r("repeats"); continue; }
           return send(200, { reply, move, model: model.split("/").pop() });
         } catch (e) {

@@ -4,22 +4,28 @@
    The AI mode gets the same result, so every number and every decision comes from here. */
 
 (function () {
+  // Page language: the page sets window.GORGA_LANG before this file loads ("id" or "en").
+  const LANG = typeof window !== "undefined" && window.GORGA_LANG === "en" ? "en" : "id";
+  const tx = (id, en) => (LANG === "en" ? en : id);
+
   const WORDS = {
     nol: 0, satu: 1, dua: 2, tiga: 3, empat: 4, lima: 5, enam: 6, tujuh: 7, delapan: 8,
     sembilan: 9, sepuluh: 10, sebelas: 11, "dua belas": 12,
+    zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8,
+    nine: 9, ten: 10, eleven: 11, twelve: 12,
   };
 
   function normalise(text) {
     let t = String(text || "")
       .toLowerCase()
       .replace(/[−–—]/g, "-")
-      .replace(/°\s*c?|derajat( celcius| celsius)?/g, " ")
+      .replace(/°\s*c?|derajat( celcius| celsius)?|degrees?( celsius)?/g, " ")
       .replace(/\s+/g, " ");
     for (const [w, n] of Object.entries(WORDS).sort((a, b) => b[0].length - a[0].length)) {
       t = t.replace(new RegExp(`\\b${w}\\b`, "g"), String(n));
     }
     return t
-      .replace(/\b(min|minus|negatif)\s*(\d)/g, "-$2")
+      .replace(/\b(min|minus|negatif|negative)\s*(\d)/g, "-$2")
       .replace(/(^|[\s(,:=])-\s+(\d)/g, "$1-$2")
       .trim();
   }
@@ -38,11 +44,11 @@
     return false;
   }
 
-  const DONTKNOW = /(tidak tahu|gak tau|ga tau|gatau|nggak tahu|ngga tahu|tdk tahu|belum tahu|bingung|entah|lupa)/;
-  const ONE_BY_ONE = /(satu per satu|satu-satu|satu satu|masing-masing 1|naiknya 1|turunnya 1|per 1|tiap 1)/;
-  const DIRECTION = /\b(atas|bawah|naik|turun)\b/;
-  const HOWTO = /(gimana|bagaimana|gmn|cara)\s*(cara\s*)?(geser|gerak|pakai|pake|menggeser|memakai|mengisi|isi)/;
-  const WHY = /\b(kenapa|mengapa|knp|kok)\b/;
+  const DONTKNOW = /(tidak tahu|gak tau|ga tau|gatau|nggak tahu|ngga tahu|tdk tahu|belum tahu|bingung|entah|lupa|don'?t know|do not know|not sure|no idea|idk|confused)/;
+  const ONE_BY_ONE = /(satu per satu|satu-satu|satu satu|masing-masing 1|naiknya 1|turunnya 1|per 1|tiap 1|1 by 1|one at a time|each degree|every degree|1 each)/;
+  const DIRECTION = /\b(atas|bawah|naik|turun|up|down|upward|downward|rise|rises|fall|falls)\b/;
+  const HOWTO = /(gimana|bagaimana|gmn|cara)\s*(cara\s*)?(geser|gerak|pakai|pake|menggeser|memakai|mengisi|isi)|how (do|can|should) i (move|drag|use|slide)|how to (move|drag|use)/;
+  const WHY = /\b(kenapa|mengapa|knp|kok|why)\b/;
 
   /**
    * Reads a text against one stage.
@@ -109,7 +115,9 @@
 
   function verbs(stage) {
     const up = stage.end > stage.start;
-    return { up, verb: up ? "naik" : "turun", noun: up ? "kenaikan" : "penurunan" };
+    return LANG === "en"
+      ? { up, verb: up ? "rises" : "falls", noun: up ? "rise" : "fall" }
+      : { up, verb: up ? "naik" : "turun", noun: up ? "kenaikan" : "penurunan" };
   }
 
   /** The misconception behind a wrong total, if we recognise it. */
@@ -141,7 +149,7 @@
     if (r.strategy !== "split" && mem.halfText && read(`${mem.halfText} ${input.text}`, stage).strategy === "split") {
       r.strategy = "split";
     }
-    const { verb, noun } = verbs(stage);
+    const { verb, noun, up } = verbs(stage);
     const size = Math.abs(stage.end - stage.start);
     const s = deg(stage.start);
     const e = deg(stage.end);
@@ -156,36 +164,45 @@
     // Questions from the student about the tool, or "why", come before the protocol.
     if (r.strategy === "howTo") {
       return out(mem.lastKind === "howTo" ? "L2" : "L1", "howTo",
-        `Tarik penanda biru atau merah ke atas atau ke bawah di sepanjang termometer. ` +
-        `Coba letakkan penanda biru di ${s}. Lalu apa yang kamu lihat saat penandanya digerakkan ke ${e}?`);
+        tx(`Tarik penanda biru atau merah ke atas atau ke bawah di sepanjang termometer. ` +
+          `Coba letakkan penanda biru di ${s}. Lalu apa yang kamu lihat saat penandanya digerakkan ke ${e}?`,
+          `Drag the blue or the red marker up or down along the thermometer. ` +
+          `Try putting the blue marker at ${s}. What do you notice as you move it to ${e}?`));
     }
     if (r.strategy === "why") {
       return out("L4", "why",
         answerOK
-          ? `Pertanyaan yang bagus. Menurutmu, apa yang istimewa dari 0 °C di termometer, dibandingkan angka lainnya?`
-          : `Pertanyaan yang bagus. Coba kita lihat bersama di termometer: dari ${s}, penandanya perlu bergerak ke mana supaya sampai di ${e}?`);
+          ? tx(`Pertanyaan yang bagus. Menurutmu, apa yang istimewa dari 0 °C di termometer, dibandingkan angka lainnya?`,
+              `Good question. What do you think is special about 0 °C on the thermometer, compared with the other numbers?`)
+          : tx(`Pertanyaan yang bagus. Coba kita lihat bersama di termometer: dari ${s}, penandanya perlu bergerak ke mana supaya sampai di ${e}?`,
+              `Good question. Let's look at the thermometer together: from ${s}, which way does the marker have to move to reach ${e}?`));
     }
 
     if (r.strategy === "offTopic") {
       return out("L1", "offTopic",
-        `Kita lanjutkan soal suhunya dulu, ya. Dari ${s}, penanda di termometer perlu bergerak ke mana supaya sampai di ${e}?`);
+        tx(`Kita lanjutkan soal suhunya dulu, ya. Dari ${s}, penanda di termometer perlu bergerak ke mana supaya sampai di ${e}?`,
+          `Let's get back to the temperature question. From ${s}, which way does the marker have to move to reach ${e}?`));
     }
     if (r.strategy === "splitIdea") {
       return out("L4", "splitIdea",
-        `Kamu mau berhenti di 0 dulu. Dari ${s} sampai 0 °C, berapa derajat ${verb}nya?`);
+        tx(`Kamu mau berhenti di 0 dulu. Dari ${s} sampai 0 °C, berapa derajat ${verb}nya?`,
+          `You want to stop at 0 first. From ${s} to 0 °C, how many degrees does it ${up ? "rise" : "fall"}?`));
     }
 
     // Goal reached: correct answer and the split at 0 in the student's own words.
     if (r.strategy === "split" && (answerOK || claimed === null)) {
       if (!answerOK && claimed === null) {
         return out("L4", "splitNoTotal",
-          `Kamu sudah memecahnya di 0. Jadi, berapa total ${noun} suhu dari ${s} sampai ${e}?`);
+          tx(`Kamu sudah memecahnya di 0. Jadi, berapa total ${noun} suhu dari ${s} sampai ${e}?`,
+            `You split it at 0. So what is the total ${noun} in temperature from ${s} to ${e}?`));
       }
       const a = Math.abs(stage.start);
       const b = Math.abs(stage.end);
       return out("OK", "goal",
-        `Benar. Dari ${s} ke 0 °C ${verb} ${a} derajat, lalu dari 0 °C ke ${e} ${verb} ${b} derajat, ` +
-        `jadi total ${verb} ${size} °C. Memecah di 0 membuat hitungannya cepat.`, true);
+        tx(`Benar. Dari ${s} ke 0 °C ${verb} ${a} derajat, lalu dari 0 °C ke ${e} ${verb} ${b} derajat, ` +
+          `jadi total ${verb} ${size} °C. Memecah di 0 membuat hitungannya cepat.`,
+          `Correct. From ${s} to 0 °C it ${verb} ${a} degrees, then from 0 °C to ${e} it ${verb} ${b} degrees, ` +
+          `so in total it ${verb} ${size} °C. Splitting at 0 makes the counting quick.`), true);
     }
 
     // Wrong total, or "tidak tahu": L2, then L3, then the teacher's hint.
@@ -202,26 +219,39 @@
         if (!markers.includes(stage.start)) {
           return out("L2", "wrong:" + k,
             markers.length > 1
-              ? `Geser penanda biru ke ${s} dan penanda merah ke ${e}. Dari biru ke merah, ke arah mana suhunya bergerak, dan melewati angka apa saja?`
-              : `Letakkan dulu penanda termometer di ${s}. Lalu gerakkan sampai ${e}: ke arah mana penandanya bergerak, dan melewati angka apa saja?`);
+              ? tx(`Geser penanda biru ke ${s} dan penanda merah ke ${e}. Dari biru ke merah, ke arah mana suhunya bergerak, dan melewati angka apa saja?`,
+                  `Move the blue marker to ${s} and the red marker to ${e}. Going from blue to red, which way does the temperature move, and which numbers does it pass?`)
+              : tx(`Letakkan dulu penanda termometer di ${s}. Lalu gerakkan sampai ${e}: ke arah mana penandanya bergerak, dan melewati angka apa saja?`,
+                  `First put the thermometer marker at ${s}. Then move it to ${e}: which way does it move, and which numbers does it pass?`));
         }
-        const replies = {
-          noSign: `Kamu menjawab ${fmt(claimed)}. Coba cek dengan termometer: mulai dari ${s}, ${verb} ${Math.abs(claimed)} derajat. Penandanya sampai di angka berapa?`,
-          fencepost: `Kamu menjawab ${fmt(claimed)}. Yang kamu hitung angka-angkanya atau lompatannya? Coba hitung berapa kali penanda bergerak dari ${s} sampai ${e}.`,
-          signOfRise: `Kamu menjawab ${fmt(claimed)}. Dari ${s} ke ${e}, suhunya naik atau turun? Kalau naik, apa arti tanda minus di jawabanmu?`,
+        const c = claimed === null ? "" : fmt(claimed);
+        const replies = LANG === "en" ? {
+          noSign: `You answered ${c}. Check it on the thermometer: start at ${s} and go ${up ? "up" : "down"} ${Math.abs(claimed)} degrees. Where does the marker end up?`,
+          fencepost: `You answered ${c}. Did you count the numbers or the jumps? Count how many times the marker moves from ${s} to ${e}.`,
+          signOfRise: `You answered ${c}. From ${s} to ${e}, does the temperature rise or fall? If it rises, what does the minus sign in your answer mean?`,
+          dontKnow: `That's fine. The marker is at ${s} now. Move it slowly to ${e}: which way does it go?`,
+          other: `You answered ${c}. Move the marker from ${s} to ${e}. Which numbers does it pass?`,
+          none: `Move the marker from ${s} to ${e}. Which numbers does it pass?`,
+        } : {
+          noSign: `Kamu menjawab ${c}. Coba cek dengan termometer: mulai dari ${s}, ${verb} ${Math.abs(claimed)} derajat. Penandanya sampai di angka berapa?`,
+          fencepost: `Kamu menjawab ${c}. Yang kamu hitung angka-angkanya atau lompatannya? Coba hitung berapa kali penanda bergerak dari ${s} sampai ${e}.`,
+          signOfRise: `Kamu menjawab ${c}. Dari ${s} ke ${e}, suhunya naik atau turun? Kalau naik, apa arti tanda minus di jawabanmu?`,
           dontKnow: `Tidak apa-apa. Penanda termometer sekarang di ${s}. Gerakkan pelan-pelan ke ${e}: ke arah mana penandanya bergerak?`,
-          other: `Kamu menjawab ${fmt(claimed)}. Gerakkan penanda dari ${s} sampai ${e}. Angka apa saja yang dilewati penandanya?`,
+          other: `Kamu menjawab ${c}. Gerakkan penanda dari ${s} sampai ${e}. Angka apa saja yang dilewati penandanya?`,
           none: `Gerakkan penanda dari ${s} sampai ${e}. Angka apa saja yang dilewati penandanya?`,
         };
         return out("L2", "wrong:" + k, replies[k] || replies.other);
       }
       if (n === 1) {
         return out("L3", "wrong:" + k,
-          `Coba bagi jadi dua bagian. Berapa derajat dari ${s} sampai 0 °C? Lalu berapa derajat dari 0 °C sampai ${e}?`);
+          tx(`Coba bagi jadi dua bagian. Berapa derajat dari ${s} sampai 0 °C? Lalu berapa derajat dari 0 °C sampai ${e}?`,
+            `Try it in two parts. How many degrees from ${s} to 0 °C? And how many from 0 °C to ${e}?`));
       }
       return out("HINT", "wrong:" + k,
-        `Hitung lompatannya, bukan angkanya. Dari ${s} ke 0 °C ada ${Math.abs(stage.start)} lompatan. ` +
-        `Sekarang hitung lompatan dari 0 °C ke ${e}, lalu jumlahkan keduanya.`);
+        tx(`Hitung lompatannya, bukan angkanya. Dari ${s} ke 0 °C ada ${Math.abs(stage.start)} lompatan. ` +
+          `Sekarang hitung lompatan dari 0 °C ke ${e}, lalu jumlahkan keduanya.`,
+          `Count the jumps, not the numbers. From ${s} to 0 °C there are ${Math.abs(stage.start)} jumps. ` +
+          `Now count the jumps from 0 °C to ${e}, then add the two.`));
     }
 
     // Answer is correct but the target reasoning is not there yet.
@@ -233,60 +263,98 @@
           const kind = stuck ? "stuck" : "counting";
           if (n === 0) {
             return out("L4", kind,
-              `Kamu menghitung satu per satu dan sampai di ${size}. Bisakah kamu menemukannya lebih cepat, tanpa menghitung satu per satu?`);
+              tx(`Kamu menghitung satu per satu dan sampai di ${size}. Bisakah kamu menemukannya lebih cepat, tanpa menghitung satu per satu?`,
+                `You counted one by one and got ${size}. Can you find it faster, without counting one by one?`));
           }
           if (n === 1) {
             return out("L2", kind,
-              `Perhatikan angka 0 di termometer. Kalau kamu berhenti sebentar di 0 °C, berapa derajat yang sudah ${verb} dari ${s}?`);
+              tx(`Perhatikan angka 0 di termometer. Kalau kamu berhenti sebentar di 0 °C, berapa derajat yang sudah ${verb} dari ${s}?`,
+                `Look at 0 on the thermometer. If you stop at 0 °C for a moment, how many degrees has it ${up ? "risen" : "fallen"} from ${s}?`));
           }
           return out("L3", kind,
-            `Berapa derajat dari ${s} sampai 0 °C, dan berapa derajat dari 0 °C sampai ${e}? Tuliskan keduanya.`);
+            tx(`Berapa derajat dari ${s} sampai 0 °C, dan berapa derajat dari 0 °C sampai ${e}? Tuliskan keduanya.`,
+              `How many degrees from ${s} to 0 °C, and how many from 0 °C to ${e}? Write both.`));
         }
         case "direction":
           return out("L4", "direction",
-            `Ya, suhunya ${verb}. Berapa derajat ${noun}nya, dan bagaimana kamu menghitungnya di termometer?`);
+            tx(`Ya, suhunya ${verb}. Berapa derajat ${noun}nya, dan bagaimana kamu menghitungnya di termometer?`,
+              `Yes, the temperature ${verb}. By how many degrees, and how did you count it on the thermometer?`));
         case "splitHalf":
           return out("L4", "splitHalf",
-            `Kamu sudah berhenti di 0. Bagian yang satunya lagi berapa derajat? Tulis kedua bagiannya.`);
+            tx(`Kamu sudah berhenti di 0. Bagian yang satunya lagi berapa derajat? Tulis kedua bagiannya.`,
+              `You stopped at 0. How many degrees is the other part? Write both parts.`));
         case "sumOnly":
           return out("L4", "sumOnly",
-            `Kamu menjumlahkan ${Math.abs(stage.start)} dan ${Math.abs(stage.end)}. Di termometer, angka-angka itu jarak dari mana ke mana?`);
+            tx(`Kamu menjumlahkan ${Math.abs(stage.start)} dan ${Math.abs(stage.end)}. Di termometer, angka-angka itu jarak dari mana ke mana?`,
+              `You added ${Math.abs(stage.start)} and ${Math.abs(stage.end)}. On the thermometer, each of those is the distance from where to where?`));
         case "formal":
           return out("L4", "formal",
-            `Hitunganmu cocok. Bisakah kamu menunjukkannya di termometer: dari ${s} ke mana dulu, lalu ke mana?`);
+            tx(`Hitunganmu cocok. Bisakah kamu menunjukkannya di termometer: dari ${s} ke mana dulu, lalu ke mana?`,
+              `Your calculation works. Can you show it on the thermometer: from ${s}, where to first, and then where?`));
         default:
           if (mem.lastKind === "answerOnly") {
             return out("L4", "answerOnly",
-              `Coba ceritakan langkahnya satu per satu: dari ${s}, penandanya kamu gerakkan ke mana, dan sampai mana?`);
+              tx(`Coba ceritakan langkahnya satu per satu: dari ${s}, penandanya kamu gerakkan ke mana, dan sampai mana?`,
+                `Tell me your steps: from ${s}, which way did you move the marker, and how far?`));
           }
           if (input.from === "applet") {
             return out("L4", "answerOnly",
-              `Kamu menulis ${fmt(claimed)} di applet. Bagaimana kamu mendapatkan ${fmt(claimed)}? Ceritakan langkahmu di termometer.`);
+              tx(`Kamu menulis ${fmt(claimed)} di applet. Bagaimana kamu mendapatkan ${fmt(claimed)}? Ceritakan langkahmu di termometer.`,
+                `You wrote ${fmt(claimed)} in the applet. How did you get ${fmt(claimed)}? Tell me your steps on the thermometer.`));
           }
           return out("L4", "answerOnly",
-            `Oke, coba jelaskan caramu memakai termometer. Bagaimana kamu bisa mendapatkan ${size}?`);
+            tx(`Oke, coba jelaskan caramu memakai termometer. Bagaimana kamu bisa mendapatkan ${size}?`,
+              `Okay, explain how you used the thermometer. How did you get ${size}?`));
       }
     }
 
     // No total yet.
     if (r.strategy === "counting") {
       return out("L1", "countingNoTotal",
-        `Kamu menggerakkan penanda derajat demi derajat. Jadi, berapa ${noun} suhunya dari ${s} sampai ${e}?`);
+        tx(`Kamu menggerakkan penanda derajat demi derajat. Jadi, berapa ${noun} suhunya dari ${s} sampai ${e}?`,
+          `You moved the marker degree by degree. So what is the ${noun} in temperature from ${s} to ${e}?`));
     }
     if (r.strategy === "direction") {
       return out("L1", "direction",
-        `Ya, coba gerakkan penanda ke arah itu dari ${s} sampai ${e}. Berapa derajat ${noun} yang kamu lihat?`);
+        tx(`Ya, coba gerakkan penanda ke arah itu dari ${s} sampai ${e}. Berapa derajat ${noun} yang kamu lihat?`,
+          `Yes, move the marker that way from ${s} to ${e}. How many degrees of ${noun} do you see?`));
     }
     return out("L1", "unclear",
-      `Coba kerjakan dengan termometer di applet. Berapa ${noun} suhunya, dan bagaimana kamu mendapatkannya?`);
+      tx(`Coba kerjakan dengan termometer di applet. Berapa ${noun} suhunya, dan bagaimana kamu mendapatkannya?`,
+        `Try it with the thermometer in the applet. What is the ${noun} in temperature, and how did you get it?`));
   }
 
   function opening(stage) {
     const { noun } = verbs(stage);
-    return `Coba kerjakan dengan termometer di applet. Berapa ${noun} suhunya, dan bagaimana kamu mendapatkannya? Tulis jawabanmu di kotak jawaban applet, lalu tekan Periksa.`;
+    return tx(`Coba kerjakan dengan termometer di applet. Berapa ${noun} suhunya, dan bagaimana kamu mendapatkannya? Tulis jawabanmu di kotak jawaban applet, lalu tekan Periksa.`,
+      `Try it with the thermometer in the applet. What is the ${noun} in temperature, and how did you get it? Type your answer in the applet's answer box, then press Check answer.`);
   }
 
-  const KIND_LABEL = {
+  const KIND_LABEL_EN = {
+    goal: "correct answer + split at 0 (target)",
+    splitNoTotal: "split at 0, no total yet",
+    counting: "correct, counting one by one",
+    countingNoTotal: "counting one by one, no total yet",
+    splitHalf: "stopped at 0, one part only",
+    sumOnly: "correct, sum without meaning",
+    formal: "correct, symbolic calculation",
+    answerOnly: "correct, no explanation yet",
+    direction: "direction only",
+    unclear: "unclear",
+    howTo: "asks how to use the applet",
+    offTopic: "off topic",
+    stuck: "stuck, no faster way yet",
+    splitIdea: "idea of stopping at 0, no numbers",
+    why: "asks why",
+    "wrong:noSign": "wrong: subtracted without signs",
+    "wrong:fencepost": "wrong: counted numbers, not jumps",
+    "wrong:signOfRise": "wrong: minus sign on a rise",
+    "wrong:dontKnow": "does not know yet",
+    "wrong:other": "wrong",
+    "wrong:none": "wrong",
+  };
+
+  const KIND_LABEL_ID = {
     goal: "jawaban benar + pecah di 0 (target)",
     splitNoTotal: "pecah di 0, total belum ada",
     counting: "benar, menghitung satu per satu",
@@ -309,6 +377,7 @@
     "wrong:other": "salah",
     "wrong:none": "salah",
   };
+  const KIND_LABEL = LANG === "en" ? KIND_LABEL_EN : KIND_LABEL_ID;
 
   /**
    * What the AI has to achieve with this turn, in words, plus the numbers it may use.
@@ -353,7 +422,7 @@
 
   const AI_STRATEGIES = ["split", "splitHalf", "splitIdea", "counting", "sumOnly", "formal", "answerOnly",
     "dontKnow", "direction", "howTo", "why", "offTopic", "unclear"];
-  const ZERO_WORDS = /(\b0\b|nol|titik beku|beku)/;
+  const ZERO_WORDS = /(\b0\b|nol|titik beku|beku|zero|freezing)/;
 
   /**
    * Checks an AI reading of the student's text against the text itself and the task.
@@ -392,7 +461,7 @@
       case "splitIdea":
         return zero ? { strategy: "splitIdea", total: null } : null;
       case "counting":
-        return ns.length >= 2 || /satu|per derajat|tiap derajat/.test(t) ? { strategy: "counting", total } : null;
+        return ns.length >= 2 || /satu|per derajat|tiap derajat|one by one|each degree|every degree/.test(t) ? { strategy: "counting", total } : null;
       case "answerOnly":
         return total !== null ? { strategy: "answerOnly", total } : null;
       case "sumOnly":
@@ -432,8 +501,8 @@
       `Jawaban akhir siswa: ${res.answerOK ? `sudah benar (${size})` : claimed !== null ? `belum benar (siswa menulis ${fmt(claimed)})` : "belum ada"}.`,
       `Cara siswa di pesan terakhir: ${KIND_LABEL[res.kind] || res.kind}.`,
       goal
-        ? "Pegorgaan target SUDAH muncul dari siswa sendiri. Saatnya konfirmasi akhir."
-        : "Pegorgaan target (memecah di 0) BELUM muncul dari siswa.",
+        ? "Penalaran target SUDAH muncul dari siswa sendiri. Saatnya konfirmasi akhir."
+        : "Penalaran target (memecah di 0) BELUM muncul dari siswa.",
       `Percobaan salah sejauh ini: ${mem.wrong}. Berapa kali siswa menghitung satu per satu atau macet: ${mem.counting}.`,
     ];
     return { goal, maxHelp, allowNumbers: [...allow], facts, size, zeroOK, splitOK: goal || maxHelp >= 3 || studentRaisedZero };
@@ -448,14 +517,14 @@
     const digits = (t.match(/-?\d+/g) || []).map(Number);
     const bad = digits.filter((n) => !lim.allowNumbers.includes(n));
     if (bad.length) return `angka ${bad.join(",")}`;
-    if (!lim.zeroOK && /(\b0\b|\bnol\b|titik beku)/.test(t)) return "menyebut 0";
+    if (!lim.zeroOK && /(\b0\b|\bnol\b|titik beku|\bzero\b|freezing)/.test(t)) return "menyebut 0";
     if (!lim.splitOK) {
-      if (/(dua bagian|pecah|dibagi dua|bagi (jadi|menjadi) dua|dua langkah)/.test(t)) return "memecah soal";
+      if (/(dua bagian|pecah|dibagi dua|bagi (jadi|menjadi) dua|dua langkah|two parts|two steps|split|break it)/.test(t)) return "memecah soal";
       const s = String(stage.start), e = String(stage.end);
-      if (new RegExp(`${s}\\s*(°c)?\\s*(ke|sampai|hingga)\\s*(0|nol)`).test(t) &&
-          new RegExp(`(0|nol)\\s*(°c)?\\s*(ke|sampai|hingga)\\s*${e}`).test(t)) return "memecah soal";
+      if (new RegExp(`${s}\\s*(°c)?\\s*(ke|sampai|hingga|to)\\s*(0|nol|zero)`).test(t) &&
+          new RegExp(`(0|nol|zero)\\s*(°c)?\\s*(ke|sampai|hingga|to)\\s*${e}`).test(t)) return "memecah soal";
     }
-    if (!lim.goal && /\b(benar|salah|betul|tepat|memang)\b/.test(t)) return "menilai";
+    if (!lim.goal && /\b(benar|salah|betul|tepat|memang|correct|wrong|right|exactly|well done)\b/.test(t)) return "menilai";
     if (!lim.goal && !t.includes("?")) return "tanpa pertanyaan";
     return null;
   }

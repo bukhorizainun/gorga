@@ -10,30 +10,34 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gloock&family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/gorga.css">
+  <script src="../assets/i18n.js"></script>
 </head>
 <body>
   <header class="bar">
     <div style="display:flex;align-items:center;gap:22px">
-      <a class="mark" href="../" aria-label="Gorga, beranda"><img src="../assets/logo.svg" alt=""><span>gorga</span></a>
-      <nav class="crumbs" aria-label="Lokasi"><a href="../#aktivitas">Aktivitas</a><span>/</span><span aria-current="page">Permukaan laut</span></nav>
+      <a class="mark" href="../" id="home-link" aria-label="Gorga"><img src="../assets/logo.svg" alt=""><span>gorga</span></a>
+      <nav class="crumbs" aria-label="Lokasi"><a href="../#aktivitas" id="acts-link" data-i18n="crumb">Aktivitas</a><span>/</span><span aria-current="page" data-i18n="crumbHere">Permukaan laut</span></nav>
     </div>
     <div class="bar-right">
       <span id="mode-badge" class="badge">Mode naskah</span>
       <label class="switch" title="Tampilkan label langkah dan log">
         <input type="checkbox" id="teacher-toggle">
-        <span>Mode guru</span>
+        <span data-i18n="teacher">Mode guru</span>
       </label>
+      <div class="langs" role="group" aria-label="Bahasa / Language">
+        <a href="?lang=id" data-set-lang="id">ID</a><a href="?lang=en" data-set-lang="en">EN</a>
+      </div>
     </div>
   </header>
 
   <div class="intro-band">
     <div>
-      <span class="eyebrow">Prototipe · Tugas 15 · Bilangan bulat</span>
-      <h1>Permukaan laut dan kedalaman laut</h1>
+      <span class="eyebrow" data-i18n="eyebrow">Prototipe · Tugas 15 · Bilangan bulat</span>
+      <h1 data-i18n="h1">Permukaan laut dan kedalaman laut</h1>
     </div>
     <div class="context">
-      <span class="label">Konteks</span>
-      <p>Bilangan positif menunjukkan posisi di atas permukaan laut, bilangan negatif menunjukkan kedalaman di bawahnya.
+      <span class="label" data-i18n="ctxLabel">Konteks</span>
+      <p data-i18n="ctx">Bilangan positif menunjukkan posisi di atas permukaan laut, bilangan negatif menunjukkan kedalaman di bawahnya.
         Geser kedua lumba-lumba, lalu jawab pertanyaan di panel tutor.</p>
     </div>
   </div>
@@ -47,23 +51,23 @@
       <div class="state-strip">
         <span class="item"><span class="dot dot-a"></span> Lumba-lumba A <b id="val-a">8</b></span>
         <span class="item"><span class="dot dot-b"></span> Lumba-lumba B <b id="val-b">-25</b></span>
-        <span class="state-note">dibaca langsung dari applet</span>
+        <span class="state-note" data-i18n="readLive">dibaca langsung dari applet</span>
       </div>
     </section>
 
     <section class="pane pane-chat" aria-label="Tutor Gorga">
       <div class="chat-head">
-        <div class="who"><img src="../assets/logo.svg" alt=""><div><b>Tutor Gorga</b><small>prototipe dengan naskah guru</small></div></div>
-        <button class="ghost" id="reset-btn" type="button">Ulangi</button>
+        <div class="who"><img src="../assets/logo.svg" alt=""><div><b>Tutor Gorga</b><small data-i18n="tutorSub">prototipe dengan naskah guru</small></div></div>
+        <button class="ghost" id="reset-btn" type="button" data-i18n="reset">Ulangi</button>
       </div>
       <div class="chat-log" id="chat-log" aria-live="polite"></div>
       <div class="chat-foot">
         <form class="chat-form" id="chat-form" autocomplete="off">
           <input id="chat-input" type="text" maxlength="400" placeholder="Tulis jawabanmu…" aria-label="Jawaban">
-          <button type="submit" id="send-btn">Kirim</button>
+          <button type="submit" id="send-btn" data-i18n="send">Kirim</button>
         </form>
         <details class="try">
-          <summary>Contoh jawaban untuk mencoba</summary>
+          <summary data-i18n="try">Contoh jawaban untuk mencoba</summary>
           <div class="quick" id="quick"></div>
         </details>
       </div>
@@ -85,9 +89,25 @@
 
   <footer class="foot">
     <div class="ipon thin"></div>
-    Prototipe riset, non-komersial. Applet dibangun ulang lewat GeoGebra Apps API sebagai contoh.
+    <span data-i18n="foot">Prototipe riset, non-komersial. Applet dibangun ulang lewat GeoGebra Apps API sebagai contoh.</span>
   </footer>
 
+  <script>
+    gorgaApplyI18n({
+      id: {},
+      en: {
+        _title: "Sea Level — Gorga",
+        crumb: "Activities", crumbHere: "Sea level", teacher: "Teacher mode",
+        eyebrow: "Prototype · Task 15 · Integers", h1: "Sea level and sea depth", ctxLabel: "Context",
+        ctx: "Positive numbers are positions above sea level, negative numbers are depths below it. Move both dolphins, then answer the tutor. <b>Note:</b> this early prototype's tutor still speaks Indonesian.",
+        tutorSub: "prototype with the teacher's script (Indonesian)", reset: "Restart", send: "Send", try: "Sample answers to try",
+        readLive: "read live from the applet",
+        foot: "Research prototype, non-commercial. The applet is rebuilt with the GeoGebra Apps API as an example.",
+      },
+    });
+    document.getElementById("home-link").href = window.GORGA_LANG === "en" ? "../en/" : "../";
+    document.getElementById("acts-link").href = window.GORGA_LANG === "en" ? "../en/#activities" : "../#aktivitas";
+  </script>
   <script src="https://www.geogebra.org/apps/deployggb.js"></script>
   <script src="task.js"></script>
   <script src="tutor.js"></script>
