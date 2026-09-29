@@ -1,11 +1,11 @@
-/* Nalar demo: GeoGebra applet + scaffolding chat. */
+/* Gorga demo: GeoGebra applet + scaffolding chat. */
 
 // Worker URL for AI mode. Empty = scripted mode (no AI, no network beyond GeoGebra).
-const NALAR_API = "https://nalar-demo.zainun.workers.dev";
+const GORGA_API = "https://nalar-demo.zainun.workers.dev";
 
 (function () {
-  const TASK = window.NALAR_TASK;
-  const T = window.NalarTutor;
+  const TASK = window.GORGA_TASK;
+  const T = window.GorgaTutor;
 
   const $ = (id) => document.getElementById(id);
   const chatLog = $("chat-log");
@@ -42,7 +42,7 @@ const NALAR_API = "https://nalar-demo.zainun.workers.dev";
   }
 
   let snapping = false;
-  window.nalarOnUpdate = function (name) {
+  window.gorgaOnUpdate = function (name) {
     if (!api || snapping || (name !== "A" && name !== "B")) return;
     const x = api.getXcoord(name);
     const y = api.getYcoord(name);
@@ -118,7 +118,7 @@ const NALAR_API = "https://nalar-demo.zainun.workers.dev";
     api.setColor("tL", 140, 74, 47);
     api.setFixed("tL", true, false);
 
-    api.registerUpdateListener("nalarOnUpdate");
+    api.registerUpdateListener("gorgaOnUpdate");
     $("applet-loading").remove();
     $("applet-wrap").classList.add("loaded");
     showState();
@@ -237,11 +237,11 @@ const NALAR_API = "https://nalar-demo.zainun.workers.dev";
   }
 
   async function askAI(payload) {
-    if (!NALAR_API) return null;
+    if (!GORGA_API) return null;
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), 15000);
     try {
-      const r = await fetch(`${NALAR_API.replace(/\/$/, "")}/chat`, {
+      const r = await fetch(`${GORGA_API.replace(/\/$/, "")}/chat`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(payload),
@@ -410,7 +410,7 @@ const NALAR_API = "https://nalar-demo.zainun.workers.dev";
     document.body.classList.toggle("teacher", e.target.checked);
     $("log-pane").hidden = !e.target.checked;
   });
-  $("mode-badge").textContent = NALAR_API ? "Mode AI · menyambung…" : "Mode naskah (tanpa AI)";
+  $("mode-badge").textContent = GORGA_API ? "Mode AI · menyambung…" : "Mode naskah (tanpa AI)";
 
   ask(TASK.stages[0]);
   renderQuick();

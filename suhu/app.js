@@ -1,8 +1,8 @@
-/* Nalar demo, temperature task: the question and the answer box live inside the applet;
+/* Gorga demo, temperature task: the question and the answer box live inside the applet;
    the chat only probes how the student got the answer. */
 
 // Worker URL for AI mode. Empty = scripted mode (no AI, no network beyond GeoGebra).
-const NALAR_API = "https://nalar-demo.zainun.workers.dev";
+const GORGA_API = "https://nalar-demo.zainun.workers.dev";
 
 (function () {
   const TASK = window.SUHU_TASK;
@@ -305,11 +305,11 @@ const NALAR_API = "https://nalar-demo.zainun.workers.dev";
   /* ---------------- AI call ---------------- */
 
   async function classify(payload) {
-    if (!NALAR_API) return null;
+    if (!GORGA_API) return null;
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), 12000);
     try {
-      const r = await fetch(`${NALAR_API.replace(/\/$/, "")}/classify`, {
+      const r = await fetch(`${GORGA_API.replace(/\/$/, "")}/classify`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(payload),
@@ -324,11 +324,11 @@ const NALAR_API = "https://nalar-demo.zainun.workers.dev";
   }
 
   async function askAI(payload) {
-    if (!NALAR_API) return null;
+    if (!GORGA_API) return null;
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), 15000);
     try {
-      const r = await fetch(`${NALAR_API.replace(/\/$/, "")}/chat`, {
+      const r = await fetch(`${GORGA_API.replace(/\/$/, "")}/chat`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(payload),
@@ -515,7 +515,7 @@ const NALAR_API = "https://nalar-demo.zainun.workers.dev";
     const url = URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" }));
     const a = document.createElement("a");
     a.href = url;
-    a.download = "nalar-skala-suhu-log.csv";
+    a.download = "gorga-skala-suhu-log.csv";
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
@@ -540,7 +540,7 @@ const NALAR_API = "https://nalar-demo.zainun.workers.dev";
     document.body.classList.toggle("teacher", e.target.checked);
     $("log-pane").hidden = !e.target.checked;
   });
-  $("mode-badge").textContent = NALAR_API ? "Mode AI · menyambung…" : "Mode naskah (tanpa AI)";
+  $("mode-badge").textContent = GORGA_API ? "Mode AI · menyambung…" : "Mode naskah (tanpa AI)";
 
   startStage({ ...TASK.stages[0] });
   injectApplet();

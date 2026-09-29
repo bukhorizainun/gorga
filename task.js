@@ -1,7 +1,7 @@
 /* Task card for Task 15. In the full product this comes from the teacher's
    spreadsheet; here it is a plain object so the demo runs without a server. */
 
-window.NALAR_TASK = {
+window.GORGA_TASK = {
   id: "bilangan/15",
   title: "Permukaan laut dan kedalaman laut",
   unit: "m",

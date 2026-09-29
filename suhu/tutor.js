@@ -432,8 +432,8 @@
       `Jawaban akhir siswa: ${res.answerOK ? `sudah benar (${size})` : claimed !== null ? `belum benar (siswa menulis ${fmt(claimed)})` : "belum ada"}.`,
       `Cara siswa di pesan terakhir: ${KIND_LABEL[res.kind] || res.kind}.`,
       goal
-        ? "Penalaran target SUDAH muncul dari siswa sendiri. Saatnya konfirmasi akhir."
-        : "Penalaran target (memecah di 0) BELUM muncul dari siswa.",
+        ? "Pegorgaan target SUDAH muncul dari siswa sendiri. Saatnya konfirmasi akhir."
+        : "Pegorgaan target (memecah di 0) BELUM muncul dari siswa.",
       `Percobaan salah sejauh ini: ${mem.wrong}. Berapa kali siswa menghitung satu per satu atau macet: ${mem.counting}.`,
     ];
     return { goal, maxHelp, allowNumbers: [...allow], facts, size, zeroOK, splitOK: goal || maxHelp >= 3 || studentRaisedZero };

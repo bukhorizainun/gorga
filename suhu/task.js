@@ -43,7 +43,7 @@ window.SUHU_TASK = {
     L2: "Point: mengarahkan perhatian ke satu hal di termometer (titik awal, arah gerak, angka 0).",
     L3: "Langkah terarah: memecah soal menjadi pertanyaan yang lebih kecil. (Definisi sementara, menunggu rumusan guru.)",
     L4: "Revoice: mengulang jawaban siswa lalu meminta penjelasan atau cara yang lebih ringkas.",
-    OK: "Konfirmasi akhir: jawaban benar dan penalaran target sudah muncul.",
+    OK: "Konfirmasi akhir: jawaban benar dan pegorgaan target sudah muncul.",
     HINT: "Petunjuk cadangan dari guru setelah beberapa percobaan belum berhasil.",
   },
 };

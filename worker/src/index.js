@@ -1,5 +1,5 @@
 /**
- * Nalar demo — AI layer.
+ * Gorga demo — AI layer.
  *
  * POST /chat { task, stage, state, analysis, scriptReply, history } → { reply, move, model }
  *
@@ -46,7 +46,7 @@ function systemPrompt(b) {
     .join("\n");
   const mis = (t.misconceptions || []).map((m) => `- ${clip(m, 200)}`).join("\n");
 
-  return `Kamu adalah "guru bayangan" dalam aplikasi Nalar. Siswa SMP sedang mengerjakan applet GeoGebra tentang bilangan bulat, lalu menjelaskan cara berpikirnya di chat.
+  return `Kamu adalah "guru bayangan" dalam aplikasi Gorga. Siswa SMP sedang mengerjakan applet GeoGebra tentang bilangan bulat, lalu menjelaskan cara berpikirnya di chat.
 
 TUGAS
 Judul: ${clip(t.title, 120)}
@@ -139,9 +139,9 @@ const PROTOCOL = `Protokol guru (wajib):
 - Pertanyaan pertama selalu L1: minta siswa mencoba dengan termometer.
 - Jika jawaban siswa benar, JANGAN langsung bilang benar; pakai L4 untuk meminta penjelasan.
 - Jika jawaban salah atau siswa tidak tahu: L2, lalu L3 bila perlu.
-- Untuk perubahan suhu yang melewati 0, penalaran target adalah memecah di 0.
+- Untuk perubahan suhu yang melewati 0, pegorgaan target adalah memecah di 0.
 - Menghitung satu per satu belum cukup untuk mengakhiri percakapan.
-- Percakapan selesai hanya jika jawaban benar DAN penalaran target muncul dari siswa sendiri; saat itu beri konfirmasi.
+- Percakapan selesai hanya jika jawaban benar DAN pegorgaan target muncul dari siswa sendiri; saat itu beri konfirmasi.
 - Jangan memberi jawaban terlalu cepat; pakai pertanyaan agar siswa menemukan dan menjelaskan sendiri.
 Arti langkah: L1 = bertanya terbuka / mengajak mencoba; L4 = mengulang ide siswa dengan kata lain lalu minta penjelasan; L2 = menunjuk satu hal spesifik di termometer; L3 = memecah soal menjadi pertanyaan kecil; OK = konfirmasi akhir.`;
 
@@ -164,7 +164,7 @@ function leadPrompt(b) {
   const L = b.lead || {};
   const facts = (Array.isArray(L.facts) ? L.facts : []).map((f) => `- ${clip(f, 200)}`).join("\n");
   const task = L.goal
-    ? `TUGAS: siswa sudah menemukan penalaran target sendiri. Tulis konfirmasi singkat yang hangat: sebut bahwa jawabannya benar, ulangi cara siswa memecah di 0 dengan angkanya, dan total ${L.size} derajat. Tanpa pertanyaan. Pakai "move":"OK".`
+    ? `TUGAS: siswa sudah menemukan pegorgaan target sendiri. Tulis konfirmasi singkat yang hangat: sebut bahwa jawabannya benar, ulangi cara siswa memecah di 0 dengan angkanya, dan total ${L.size} derajat. Tanpa pertanyaan. Pakai "move":"OK".`
     : `TUGAS: tulis balasan berikutnya sebagai guru. ${LEVEL_TEXT[L.maxHelp] || LEVEL_TEXT[1]}`;
   return `Kamu guru matematika yang sabar untuk siswa SMP di Indonesia. Siswa mengerjakan soal di applet termometer GeoGebra (termometer tegak: naik = ke atas, turun = ke bawah), lalu berdiskusi denganmu di chat.
 

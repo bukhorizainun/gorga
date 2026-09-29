@@ -1,4 +1,4 @@
-# Nalar demo
+# Gorga demo
 
 Prototype for discussion: a GeoGebra applet next to an AI "shadow teacher" that answers each
 student response with one scaffolding move (Probe, Point, Revoice, Reinforce) and never gives

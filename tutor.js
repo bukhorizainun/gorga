@@ -116,5 +116,5 @@
     unclear: "belum jelas",
   };
 
-  window.NalarTutor = { analyse, scripted, correctComparison, describe, KIND_LABEL, normalise };
+  window.GorgaTutor = { analyse, scripted, correctComparison, describe, KIND_LABEL, normalise };
 })();
