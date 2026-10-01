@@ -1,0 +1,116 @@
+{
+  "lang": "tr",
+  "title": "Gorga — soruyla karşılık veren öğretmen",
+  "description": "Gorga, bir GeoGebra uygulamasını cevabı söylemeyen bir yapay zekâ öğretmenle birleştirir. Soru sorar, ekranda bir noktayı gösterir ve öğrenci akıl yürütmesini kendisi bulana kadar bekler.",
+  "og_description": "GeoGebra uygulamaları ve öğretmenin destek (scaffolding) protokolünü izleyen bir yapay zekâ öğretmen.",
+  "home_label": "Gorga, ana sayfa",
+  "nav_label": "Bölümler",
+  "nav": ["Konuşma", "Protokol", "Öğretmenler için", "Etkinlikler"],
+  "ids": ["konusma", "protokol", "ogretmenler", "etkinlikler"],
+  "cta_small": "Etkinliği dene",
+  "app_lang": "en",
+  "app_note": "Etkinliklerin kendisi şimdilik İngilizce ve Endonezce olarak sunuluyor.",
+
+  "eyebrow": "GeoGebra · yapay zekâ öğretmen · matematiksel akıl yürütme",
+  "h1": "Soruyla <em>karşılık veren</em> öğretmen.",
+  "lead": "Öğrenciler bir GeoGebra uygulamasında soru çözer. Gorga cevabı vermez. Soru sorar, ekranda tek bir noktayı gösterir ve öğrenci akıl yürütmesini kendisi bulup açıklayana kadar bekler.",
+  "cta": "“Sıcaklık Ölçeği” etkinliğini dene",
+  "cta2": "Bir konuşmaya göz at",
+  "facts": [["L1–L4", "öğretmenin destek adımları"], ["Cevap sızmaz", "her yapay zekâ cümlesi önce denetlenir"], ["CSV", "araştırma için tur tur kayıt"]],
+  "art_label": "Gorga madalyonu: simeol-eol sarmalları ve ipon-ipon üçgenlerinden bir halka",
+  "caption": "<b>Simeol-eol</b> — biri 180° döndürülmüş iki Arşimet sarmalı <b>r = aθ</b>, çevresinde sekiz küçük sarmal: sekizinci dereceden dönme simetrisi.",
+
+  "c_eyebrow": "Bir konuşma",
+  "c_h2": "Öğrenci <em>sıfırı</em> kendisi bulur.",
+  "c_intro": "Soru: sıcaklık −6 °C; 4 °C’ye ulaşmak için ne kadar artmalı? Öğrenci birer birer sayarak 10 cevabını zaten verdi. Protokol, öğretmenin “sıfır” demesini yasaklar. Gorga’nın onu oraya nasıl yönlendirdiğine bakın.",
+  "who_st": "Öğrenci",
+  "who_ai": "Gorga",
+  "convo": [
+    ["st", "yani -6’dan -5’e, sonra -4’e, sonra -3, -2, -1, sonra 0’a çıktım. Sonra 1, 2, 3 ve en son 4’e."],
+    ["ai", "-6’dan -5, -4, -3, -2, -1 üzerinden 1, 2, 3 ve 4’e çıktın. 1’den önceki belli bir sıcaklığı geçerken ne oluyor?", "L4"],
+    ["st", "ha, önce sıfırda durmak"],
+    ["ai", "Önce sıfırda duruyorsun. -6’dan 0’a ve sonra 0’dan 4’e olan artışı nasıl sayıyorsun?", "L4"],
+    ["st", "-6’dan 0’a 6 artıyor"],
+    ["ai", "-6’dan 0’a 6 artıyor. Peki 0’dan 4’e ne kadar artıyor ve bu toplam artışı nasıl veriyor?", "L1"],
+    ["st", "sonra 4 daha, yani 10"],
+    ["win", "Cevabın doğru. Artışı iki parçaya ayırdın: -6’dan 0’a 6 derece, sonra 0’dan 4’e 4 derece, toplam 10 derece."]
+  ],
+  "aside_h": "“Doğru” kelimesi ancak sonda gelir.",
+  "aside_p": "Birer birer saymak da 10 verir ama yeterli değildir. Gorga, öğrenci değişimi kendisi 0’da ikiye ayırdıktan sonra onaylar; öğretmenin protokolü bunu ister.",
+  "aside_small": "Bu konuşma bir simülasyon testinde Endonezce yapıldı ve burada çevrildi. Gorga’nın yanıtlarını yapay zekâ yazdı; öğrenci cümlelerini ekip test cümlesi olarak hazırladı.",
+  "aside_cta": "Kendin dene",
+
+  "p_eyebrow": "Öğretmenin protokolü",
+  "p_h2": "Kademeli yardım, <em>hazır cevap değil.</em>",
+  "p_intro": "Yapay zekâ bir sonraki adımı kendisi seçer, ama yalnızca o anda geçerli olan sınıra kadar. Öğrenci ne kadar uzun takılırsa, o kadar fazla yardıma izin verilir. Cevap yine de öğrenciden gelmelidir.",
+  "rungs": [
+    ["L1 · Probe", "Sormak", "Öğrenciyi uygulamada denemeye davet eder ve açık uçlu bir soru sorar.", "“Termometreyle dene. Bunu nasıl buldun?”"],
+    ["L4 · Revoice", "Yeniden ifade", "Öğrencinin fikrini başka sözcüklerle tekrar eder, sonra açıklama ister.", "“10 kutu saydın. Nasıl saydın?”"],
+    ["L2 · Point", "Göstermek", "Dikkati termometredeki tek bir noktaya çeker.", "“0’a bak. −6’dan 0’a kaç derece var?”"],
+    ["L3 · Adım", "Parçalamak", "Soruyu sonucu söylemeden küçük sorulara böler.", "“−6’dan 0’a kaç? Peki 0’dan 4’e?”"],
+    ["Onay", "Bulundu", "Yalnızca doğru cevaptan sonra ve hedef akıl yürütme öğrenciden geldiğinde verilir.", "“0’da ayırdın: önce 6, sonra 4, yani 10.”"]
+  ],
+  "guards": [
+    ["Cevap sızmaz", "Her yapay zekâ cümlesi denetlenir: öğrencinin henüz bulmadığı sayılar geçemez."],
+    ["Etiket değil içerik", "Denetim cümlenin ne dediğini okur. Soruyu yine de parçalayan bir “L4” reddedilir."],
+    ["Her zaman yedek var", "Yapay zekâ bir kuralı çiğnerse öğrenci, öğretmenin onayladığı bir senaryo cümlesi alır."]
+  ],
+
+  "h_eyebrow": "Nasıl çalışır",
+  "h_h2": "Sınıfta <em>üç adım.</em>",
+  "h_intro": "Kurulacak bir şey yok. Öğrenciler dizüstü bilgisayarda ya da tablette bir bağlantı açar.",
+  "steps": [
+    ["Uygulamada çalış", "GeoGebra uygulamasında işaretçileri kaydır, cevabını yaz, Kontrol Et’e bas. Gorga cevabı ve işaretçilerin yerini doğrudan uygulamadan okur."],
+    ["Yolunu açıkla", "Gorga not vermez. Öğrencinin oraya nasıl vardığını, kendi gündelik sözcükleriyle sorar."],
+    ["Kendin bul", "Hedef akıl yürütme ortaya çıkana kadar adım adım. Yol, uygulamanın altında motif olarak çizilir."]
+  ],
+
+  "t_eyebrow": "Öğretmenler ve araştırmacılar için",
+  "t_h2": "Her tur <em>kaydedilir.</em>",
+  "feats": [
+    ["Öğretmen modu", "Her yanıtta L1–L4 etiketi ve yapay zekânın okumak zorunda kaldığı cevaplarda bir işaret.", ""],
+    ["Oturum özeti", "Tur sayısı, adımların dağılımı, senaryoya karşı yapay zekâ yanıtları ve akıl yürütmenin bulunmasına kadar geçen süre.", ""],
+    ["Kayıt ve döküm", "Analiz için tur tur CSV indir ya da konuşma dökümünü kopyala.", ""],
+    ["Sınıf bazında kayıt", "Sınıf kodları; veriler araştırma için otomatik kaydedilir.", "sonraki aşama"]
+  ],
+  "mock": {
+    "stats": [["Tur", "7", "soru 1"], ["YZ yanıtı", "%94", "kalanı senaryo"], ["Hedefe kadar", "2:41", "dakika"]],
+    "moves": "Adımlar",
+    "head": ["#", "öğrenci cevabı", "teşhis", "adım"],
+    "rows": [["3", "10 kutu saydım", "doğru, henüz açıklama yok", "L4"], ["4", "bilmiyorum", "takıldı", "L2"], ["5", "-6’dan 0’a 6, sonra 0’dan 4’e 4", "0’da ayırdı (hedef)", "Onay"]],
+    "note": "Öğretmen görünümünden örnek"
+  },
+
+  "a_eyebrow": "Etkinlikler",
+  "a_h2": "Her konu için <em>bir pencere.</em>",
+  "a_intro": "Etkinlikler pencerelerde toplanır. Tam Sayılar penceresi, öğretmenin yedi iklim eylemi etkinliğini içerir. Uygulama 1 görev kartıyla tam protokolü kullanır; diğerleri görev kartları hazır olana kadar genel protokolü kullanır.",
+  "wins_label": "Konu pencereleri",
+  "wins": [["Tam Sayılar", "7 etkinlik"], ["Geometri", "yakında"], ["Cebir", "yakında"], ["Veri ve İstatistik", "yakında"]],
+  "soon": "Bu pencere bir sonraki aşama için hazırlandı. Etkinlikler öğretmenle birlikte eklenecek.",
+  "next": "Sıradaki pencereler: <b>Geometri</b>, <b>Cebir</b> ve <b>Veri ve İstatistik</b>. Bir sonraki aşamada öğretmenle birlikte hazırlanacak.",
+  "applet": "Uygulama",
+  "q_one": "soru",
+  "q_many": "soru",
+  "full": "Tam protokol · YZ",
+  "general": "Genel protokol · YZ",
+  "open": "Aç",
+  "full_link": "Tam protokol",
+  "own_link": "Etkinliğin kendi soruları (9)",
+  "acts": [
+    ["Sıcaklık Ölçeği", "0 °C’yi geçen sıcaklık değişimlerini karşılaştırma ve hesaplama."],
+    ["Karbon Dengesi", "Balonlar (yukarı) ve kum torbalarıyla (aşağı) tam sayılarda toplama."],
+    ["Deniz Seviyesi", "Deniz seviyesinin üstündeki ve altındaki konumlar için pozitif ve negatif sayılar."],
+    ["Çevre Dostu Ulaşım", "Yön, hız ve yürüme süresi üzerinden tam sayılarda çarpma."],
+    ["Sürdürülebilir Kararlar İçin Örüntüler", "Pozitif ve negatif tam sayılarda çarpma ve bölme örüntüleri."],
+    ["Ağaçlandırma Planı", "Fidan planlamak için kesirlerde bölme."],
+    ["Karbon Salımını Tahmin Etme", "Ondalık çarpımları yuvarlayarak ve alan modeliyle tahmin etme."]
+  ],
+
+  "n_eyebrow": "Ad hakkında",
+  "n_h2": "Gorga: <em>hesaplanabilen</em> bir süsleme.",
+  "n_p1": "Gorga, Kuzey Sumatra’daki geleneksel Batak evlerinin oyma süslemesidir; üç rengi vardır: kırmızı, beyaz ve siyah. Desenleri simetri, yansıma ve tekrarla doludur. Matematik uzun zamandır onun içinde yaşıyor.",
+  "n_p2": "Bu sitenin renkleri ulos kumaşının koyu çivit mavisinden gelir, kırmızı ise az kullanılır. Gorga logosu bir simeol-eol sarmalıdır: bir r = aθ sarmalı ve onun noktaya göre yansıması.",
+  "logo_alt": "Gorga logosu",
+
+  "foot1": "Gorga · matematik eğitimi için ticari olmayan bir araştırma prototipi. “Sıcaklık Ölçeği” etkinliği: Dr. Rahmi Ramadhani Umar. Termometre uygulaması: A.M. Vuković (2013), GeoGebra üzerinden."
+}

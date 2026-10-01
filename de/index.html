@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gorga — der Tutor, der zurückfragt</title>
+  <meta name="description" content="Gorga verbindet ein GeoGebra-Applet mit einem KI-Tutor, der keine Lösung verrät. Er fragt, zeigt auf etwas und wartet, bis die Schülerin oder der Schüler den Gedankengang selbst findet.">
+  <meta property="og:title" content="Gorga — der Tutor, der zurückfragt">
+  <meta property="og:description" content="GeoGebra-Applets und ein KI-Tutor, der dem Scaffolding-Protokoll der Lehrkraft folgt.">
+  <meta property="og:image" content="https://rahmiumar.github.io/gorga/assets/covers/a1.jpg">
+  <meta name="theme-color" content="#f4f5fa">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="alternate" hreflang="id" href="https://rahmiumar.github.io/gorga/">
+  <link rel="alternate" hreflang="en" href="https://rahmiumar.github.io/gorga/en/">
+  <link rel="alternate" hreflang="de" href="https://rahmiumar.github.io/gorga/de/">
+  <link rel="alternate" hreflang="tr" href="https://rahmiumar.github.io/gorga/tr/">
+  <link rel="alternate" hreflang="x-default" href="https://rahmiumar.github.io/gorga/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/gorga.css">
+  <link rel="stylesheet" href="../assets/home.css">
+</head>
+<body class="landing">
+  <div class="sky" aria-hidden="true"><i></i><i></i><i></i></div>
+
+  <header class="top">
+    <a class="mark" href="../" aria-label="Gorga, Startseite"><img src="../assets/logo-nila.svg" alt="" width="34" height="34"><span>gorga</span></a>
+    <nav aria-label="Abschnitte">
+      <a href="#gespraech">Gespräch</a><a href="#protokoll">Protokoll</a><a href="#lehrkraefte">Für Lehrkräfte</a><a href="#aktivitaeten">Aktivitäten</a>
+    </nav>
+    <div class="end">
+      <div class="langs" role="group" aria-label="Language"><a href="../" hreflang="id" lang="id">ID</a><a href="../en/" hreflang="en" lang="en">EN</a><a href="../de/" hreflang="de" lang="de" aria-current="true">DE</a><a href="../tr/" hreflang="tr" lang="tr">TR</a></div>
+      <a class="pill" href="../suhu/?lang=en">Aktivität testen <span aria-hidden="true">→</span></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-text">
+        <p class="kicker">GeoGebra · KI-Tutor · mathematisches Denken</p>
+        <h1>Der Tutor, der <em>zurückfragt.</em></h1>
+        <p class="lead">Die Lernenden bearbeiten eine Aufgabe in einem GeoGebra-Applet. Gorga verrät nicht die Lösung. Es fragt, zeigt auf eine Stelle am Bildschirm und wartet, bis die Lernenden ihren Gedankengang selbst finden und erklären.</p>
+        <div class="cta">
+          <a class="btn" href="../suhu/?lang=en">Aktivität „Temperaturskala“ testen <span aria-hidden="true">→</span></a>
+          <a class="link" href="#gespraech">Ein Gespräch ansehen</a>
+        </div>
+        <p class="app-note">Die Aktivitäten selbst sind derzeit auf Englisch und Indonesisch verfügbar.</p>
+        <ul class="facts"><li><b>L1–L4</b><span>Scaffolding-Stufen der Lehrkraft</span></li><li><b>Nichts verraten</b><span>jeder KI-Satz wird vorher geprüft</span></li><li><b>CSV</b><span>Protokoll pro Zug für die Forschung</span></li></ul>
+      </div>
+      <figure class="art">
+        <svg data-gorga role="img" aria-label="Gorga-Medaillon: Simeol-eol-Spiralen und ein Ring aus Ipon-ipon-Dreiecken"></svg>
+        <figcaption><b>Simeol-eol</b> — zwei archimedische Spiralen <b>r = aθ</b>, eine um 180° gedreht, umgeben von acht kleinen Spiralen: Drehsymmetrie der Ordnung acht.</figcaption>
+      </figure>
+    </section>
+
+    <section class="chapter" id="gespraech">
+      <header class="ch-head" data-rv>
+        <p class="kicker"><span class="no">I</span>Ein Gespräch</p>
+        <h2>Die Schülerin findet <em>die Null</em> selbst.</h2>
+        <p class="intro">Aufgabe: Die Temperatur liegt bei −6 °C. Um wie viel muss sie steigen, um 4 °C zu erreichen? Die Schülerin hat schon 10 geantwortet, indem sie einzeln gezählt hat. Das Protokoll verbietet dem Tutor, die Null zu nennen. Achten Sie darauf, wie Gorga sie dorthin führt.</p>
+      </header>
+      <div class="dialogue">
+        <div class="lines" data-rv="seq"><p class="say st" style="--i:0"><span class="who">Schülerin</span><span class="txt">also von -6 hoch auf -5, dann -4, dann -3, -2, -1, dann 0. Dann weiter auf 1, 2, 3 und zum Schluss 4.</span></p><p class="say ai" style="--i:1"><span class="who">Gorga</span><span class="txt">Du bist von -6 über -5, -4, -3, -2, -1 bis 1, 2, 3 und 4 gegangen. Was passiert, wenn du eine bestimmte Temperatur vor der 1 überquerst?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:2"><span class="who">Schülerin</span><span class="txt">ach, erst bei null anhalten</span></p><p class="say ai" style="--i:3"><span class="who">Gorga</span><span class="txt">Du hältst zuerst bei null an. Wie zählst du den Anstieg von -6 bis 0 und dann von 0 bis 4?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:4"><span class="who">Schülerin</span><span class="txt">von -6 bis 0 steigt es um 6</span></p><p class="say ai" style="--i:5"><span class="who">Gorga</span><span class="txt">Von -6 bis 0 steigt es um 6. Um wie viel steigt es dann von 0 bis 4, und wie ergibt das den ganzen Anstieg?<sup class="lvl">L1</sup></span></p><p class="say st" style="--i:6"><span class="who">Schülerin</span><span class="txt">dann noch 4, also 10</span></p><p class="say win" style="--i:7"><span class="who">Gorga</span><span class="txt">Deine Antwort stimmt. Du hast den Anstieg in zwei Teile zerlegt: von -6 bis 0 steigt es um 6 Grad, dann von 0 bis 4 um 4 Grad, zusammen 10 Grad.</span></p></div>
+        <aside class="note" data-rv>
+          <h3>„Richtig“ kommt erst am Ende.</h3>
+          <p>Einzeln zählen ergibt schon 10, reicht aber nicht. Gorga bestätigt erst, wenn die Schülerin die Änderung selbst bei 0 zerlegt, so wie es das Protokoll der Lehrkraft verlangt.</p>
+          <p class="small">Dieses Gespräch lief in einem Simulationstest auf Indonesisch und ist hier übersetzt. Gorgas Antworten schrieb die KI; die Sätze der Schülerin schrieb das Team als Testsätze.</p>
+          <a class="link" href="../suhu/?lang=en">Selbst ausprobieren <span aria-hidden="true">→</span></a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="chapter" id="protokoll">
+      <header class="ch-head" data-rv>
+        <p class="kicker"><span class="no">II</span>Das Protokoll der Lehrkraft</p>
+        <h2>Hilfe in Stufen, <em>keine Lösungen.</em></h2>
+        <p class="intro">Die KI wählt ihren nächsten Schritt selbst, aber nur bis zur Grenze, die gerade gilt. Je länger jemand feststeckt, desto mehr Hilfe ist erlaubt. Die Lösung muss trotzdem von den Lernenden kommen.</p>
+      </header>
+      <div class="ascent" data-rv="seq">
+        <svg class="path" aria-hidden="true"><path pathLength="1"/></svg>
+        <ol><li class="rung r1" style="--i:0">
+            <span class="code" lang="en">L1 · Probe</span><h3>Fragen</h3><p>Lädt zum Ausprobieren im Applet ein und stellt eine offene Frage.</p><blockquote>„Probier es mit dem Thermometer. Wie bist du darauf gekommen?“</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></span>
+          </li><li class="rung r2" style="--i:1">
+            <span class="code" lang="en">L4 · Revoice</span><h3>Wiedergeben</h3><p>Gibt die Idee in anderen Worten wieder und bittet um eine Erklärung.</p><blockquote>„Du hast 10 Kästchen gezählt. Wie hast du gezählt?“</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></span>
+          </li><li class="rung r3" style="--i:2">
+            <span class="code" lang="en">L2 · Point</span><h3>Zeigen</h3><p>Lenkt den Blick auf eine Stelle am Thermometer.</p><blockquote>„Schau auf die 0. Wie viele Grad sind es von −6 bis 0?“</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span>
+          </li><li class="rung r4" style="--i:3">
+            <span class="code">L3 · Schritt</span><h3>Zerlegen</h3><p>Zerlegt die Aufgabe in kleine Fragen, ohne das Ergebnis zu nennen.</p><blockquote>„Von −6 bis 0, wie viele? Und von 0 bis 4?“</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span>
+          </li><li class="rung r5" style="--i:4">
+            <span class="code">Bestätigung</span><h3>Gefunden</h3><p>Kommt erst nach einer richtigen Antwort und wenn der Zielgedanke von den Lernenden selbst stammt.</p><blockquote>„Du hast bei 0 zerlegt: 6, dann 4, also 10.“</blockquote>
+          </li></ol>
+      </div>
+      <ul class="guards" data-rv><li><b>Nichts verraten</b><span>Jeder KI-Satz wird geprüft: Zahlen, die die Lernenden noch nicht gefunden haben, dürfen nicht vorkommen.</span></li><li><b>Inhalt statt Etikett</b><span>Die Prüfung liest, was der Satz sagt. Ein „L4“, das die Aufgabe doch zerlegt, wird abgelehnt.</span></li><li><b>Immer ein Ersatz</b><span>Bricht die KI eine Regel, erhalten die Lernenden einen Satz aus dem Skript, den die Lehrkraft freigegeben hat.</span></li></ul>
+    </section>
+
+    <section class="chapter" id="how">
+      <header class="ch-head" data-rv>
+        <p class="kicker"><span class="no">III</span>So funktioniert es</p>
+        <h2>Drei Schritte <em>im Unterricht.</em></h2>
+        <p class="intro">Nichts zu installieren. Die Lernenden öffnen einen Link auf dem Laptop oder Tablet.</p>
+      </header>
+      <ol class="steps" data-rv="seq"><li style="--i:0"><span class="n">1</span><h3>Im Applet arbeiten</h3><p>Markierungen im GeoGebra-Applet verschieben, eine Antwort eintippen, Prüfen drücken. Gorga liest Antwort und Markierungen direkt aus dem Applet.</p></li><li style="--i:1"><span class="n">2</span><h3>Den eigenen Weg erklären</h3><p>Gorga bewertet nicht. Es fragt, wie die Lernenden darauf gekommen sind, in ihren eigenen Alltagsworten.</p></li><li style="--i:2"><span class="n">3</span><h3>Selbst finden</h3><p>Schritt für Schritt, bis der Zielgedanke erscheint. Der Weg wird als Motiv unter dem Applet gezeichnet.</p></li></ol>
+    </section>
+
+    <section class="chapter teach" id="lehrkraefte">
+      <div class="teach-text" data-rv>
+        <p class="kicker"><span class="no">IV</span>Für Lehrkräfte und Forschende</p>
+        <h2>Jeder Zug <em>wird festgehalten.</em></h2>
+        <ul class="feats"><li><b>Lehrkraft-Modus</b><span>Die Stufe L1–L4 an jeder Antwort und eine Markierung bei Antworten, die die KI lesen musste.</span></li><li><b>Sitzungsübersicht</b><span>Anzahl der Züge, Verteilung der Stufen, KI-Antworten im Vergleich zum Skript und die Zeit bis zum Zielgedanken.</span></li><li><b>Protokoll und Transkript</b><span>CSV pro Zug für die Auswertung herunterladen oder das Gespräch als Transkript kopieren.</span></li><li><b>Speicherung pro Klasse <em class="soon">nächste Phase</em></b><span>Klassencodes, Daten werden für die Forschung automatisch gespeichert.</span></li></ul>
+      </div>
+      <div class="mock" aria-hidden="true" data-rv>
+        <div class="stats"><div class="stat"><span>Züge</span><b>7</b><small>Aufgabe 1</small></div><div class="stat"><span>KI-Antworten</span><b>94%</b><small>Rest aus dem Skript</small></div><div class="stat"><span>Bis zum Ziel</span><b>2:41</b><small>Minuten</small></div>
+          <div class="stat moves"><span>Stufen</span>
+            <div class="bars"><div>L1<i style="width:30%"></i>2</div><div>L2<i style="width:15%"></i>1</div><div>L3<i style="width:0"></i>0</div><div>L4<i style="width:60%"></i>4</div></div>
+          </div>
+        </div>
+        <table><thead><tr><th>#</th><th>Antwort</th><th>Diagnose</th><th>Stufe</th></tr></thead><tbody><tr><td>3</td><td>ich hab 10 Kästchen gezählt</td><td>richtig, noch ohne Erklärung</td><td>L4</td></tr><tr><td>4</td><td>weiß nicht</td><td>steckt fest</td><td>L2</td></tr><tr><td>5</td><td>von -6 bis 0 sind es 6, dann 0 bis 4 sind 4</td><td>bei 0 zerlegt (Ziel)</td><td>Bestätigung</td></tr></tbody></table>
+        <p class="mock-note">Beispiel der Lehrkraft-Ansicht</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="aktivitaeten">
+      <header class="ch-head" data-rv>
+        <p class="kicker"><span class="no">V</span>Aktivitäten</p>
+        <h2>Ein Fenster <em>pro Thema.</em></h2>
+        <p class="intro">Die Aktivitäten sind in Fenstern gruppiert. Das Fenster „Ganze Zahlen“ enthält sieben Klimaschutz-Aktivitäten der Lehrkraft. Applet 1 nutzt das volle Protokoll mit Aufgabenkarte, die anderen das allgemeine Protokoll, bis ihre Aufgabenkarten fertig sind.</p>
+      </header>
+      <div class="wins" role="group" aria-label="Themenfenster" data-rv><button type="button" class="win on" data-win="0" aria-pressed="true">Ganze Zahlen<small>7 Aktivitäten</small></button><button type="button" class="win" data-win="1" aria-pressed="false">Geometrie<small>folgt</small></button><button type="button" class="win" data-win="2" aria-pressed="false">Algebra<small>folgt</small></button><button type="button" class="win" data-win="3" aria-pressed="false">Daten & Statistik<small>folgt</small></button></div>
+      <div class="win-panel" data-panel="0">
+        <ul class="gallery" data-rv="seq"><li class="act lead-act" style="--i:0">
+            <a class="pic" href="../suhu/?lang=en"><img src="../assets/covers/a1.jpg" alt="" loading="lazy" width="1200" height="935"><span class="badge live">Volles Protokoll · KI</span></a>
+            <div class="cap"><span class="meta">Applet 1 · 9 Aufgaben</span><h3>Temperaturskala</h3><p>Temperaturänderungen über 0 °C hinweg vergleichen und berechnen.</p>
+              <a class="go" href="../suhu/?lang=en">Volles Protokoll <span aria-hidden="true">→</span></a>
+              <a class="go alt" href="../aktivitas/?a=1&amp;lang=en">Die Aufgaben der Aktivität (9) <span aria-hidden="true">→</span></a></div>
+          </li><li class="act" style="--i:1">
+            <a class="pic" href="../aktivitas/?a=2&amp;lang=en" aria-label="CO₂-Bilanz"><img src="../assets/covers/a2.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge">Allgemeines Protokoll · KI</span></a>
+            <div class="cap"><span class="meta">Applet 2 · 3 Aufgaben</span><h3><a href="../aktivitas/?a=2&amp;lang=en">CO₂-Bilanz</a></h3><p>Ganze Zahlen addieren mit Ballons (nach oben) und Sandsäcken (nach unten).</p></div>
+          </li><li class="act" style="--i:2">
+            <a class="pic" href="../aktivitas/?a=3&amp;lang=en" aria-label="Meeresspiegel"><img src="../assets/covers/a3.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge">Allgemeines Protokoll · KI</span></a>
+            <div class="cap"><span class="meta">Applet 3 · 7 Aufgaben</span><h3><a href="../aktivitas/?a=3&amp;lang=en">Meeresspiegel</a></h3><p>Positive und negative Zahlen für Lagen über und unter dem Meeresspiegel.</p></div>
+          </li><li class="act" style="--i:3">
+            <a class="pic" href="../aktivitas/?a=4&amp;lang=en" aria-label="Nachhaltige Mobilität"><img src="../assets/covers/a4.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge">Allgemeines Protokoll · KI</span></a>
+            <div class="cap"><span class="meta">Applet 4 · 5 Aufgaben</span><h3><a href="../aktivitas/?a=4&amp;lang=en">Nachhaltige Mobilität</a></h3><p>Ganze Zahlen multiplizieren über Richtung, Geschwindigkeit und Gehzeit.</p></div>
+          </li><li class="act" style="--i:4">
+            <a class="pic" href="../aktivitas/?a=5&amp;lang=en" aria-label="Muster für nachhaltige Entscheidungen"><img src="../assets/covers/a5.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge">Allgemeines Protokoll · KI</span></a>
+            <div class="cap"><span class="meta">Applet 5 · 5 Aufgaben</span><h3><a href="../aktivitas/?a=5&amp;lang=en">Muster für nachhaltige Entscheidungen</a></h3><p>Muster beim Multiplizieren und Dividieren positiver und negativer Zahlen.</p></div>
+          </li><li class="act" style="--i:5">
+            <a class="pic" href="../aktivitas/?a=6&amp;lang=en" aria-label="Aufforstung planen"><img src="../assets/covers/a6.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge">Allgemeines Protokoll · KI</span></a>
+            <div class="cap"><span class="meta">Applet 6 · 4 Aufgaben</span><h3><a href="../aktivitas/?a=6&amp;lang=en">Aufforstung planen</a></h3><p>Brüche dividieren, um Setzlinge zu planen.</p></div>
+          </li><li class="act" style="--i:6">
+            <a class="pic" href="../aktivitas/?a=7&amp;lang=en" aria-label="CO₂-Emissionen schätzen"><img src="../assets/covers/a7.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge">Allgemeines Protokoll · KI</span></a>
+            <div class="cap"><span class="meta">Applet 7 · 2 Aufgaben</span><h3><a href="../aktivitas/?a=7&amp;lang=en">CO₂-Emissionen schätzen</a></h3><p>Dezimalprodukte durch Runden und mit einem Flächenmodell schätzen.</p></div>
+          </li></ul>
+        <p class="next-note">Nächste Fenster: <b>Geometrie</b>, <b>Algebra</b> und <b>Daten &amp; Statistik</b>. Sie entstehen in der nächsten Phase gemeinsam mit der Lehrkraft.</p>
+      </div>
+      <div class="win-panel" data-panel="soon" hidden><p class="soon-note">Dieses Fenster ist für die nächste Phase vorbereitet. Die Aktivitäten entstehen gemeinsam mit der Lehrkraft.</p></div>
+    </section>
+
+    <section class="chapter name">
+      <img class="name-mark" src="../assets/logo-nila.svg" alt="Gorga-Logo" width="260" height="260" data-rv>
+      <div data-rv>
+        <p class="kicker">Über den Namen</p>
+        <h2>Gorga: ein Ornament, <em>das man berechnen kann.</em></h2>
+        <p>Gorga ist die Schnitzkunst an den traditionellen Häusern der Batak in Nordsumatra, in drei Farben: Rot, Weiß und Schwarz. Ihre Muster stecken voller Symmetrie, Spiegelung und Wiederholung. Die Mathematik wohnt dort schon lange.</p>
+        <p>Die Farben dieser Seite nehmen das dunkle Indigo der Ulos-Tücher auf, Rot nur sparsam. Das Gorga-Logo ist eine Simeol-eol-Spirale: eine Spirale r = aθ und ihre Punktspiegelung.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Gorga · ein nichtkommerzieller Forschungsprototyp für Mathematikdidaktik. Aktivität „Temperaturskala“: Dr. Rahmi Ramadhani Umar. Thermometer-Applet: A.M. Vuković (2013), über GeoGebra.</p>
+    <p>© 2026 Gorga · Dr. Rahmi Ramadhani Umar · <a href="https://github.com/rahmiumar" rel="noopener">github.com/rahmiumar</a></p>
+    <div class="langs foot-langs" role="group" aria-label="Language"><a href="../" hreflang="id" lang="id">ID</a><a href="../en/" hreflang="en" lang="en">EN</a><a href="../de/" hreflang="de" lang="de" aria-current="true">DE</a><a href="../tr/" hreflang="tr" lang="tr">TR</a></div>
+  </footer>
+
+  <script>
+    try { localStorage.setItem("gorga-lang", "en"); } catch (e) {}
+    document.querySelector(".wins").addEventListener("click", function (e) {
+      var b = e.target.closest(".win"); if (!b) return;
+      document.querySelectorAll(".win").forEach(function (x) { x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", x === b); });
+      var first = b.dataset.win === "0";
+      document.querySelector('[data-panel="0"]').hidden = !first;
+      document.querySelector('[data-panel="soon"]').hidden = first;
+    });
+  </script>
+  <script src="../assets/motif.js"></script>
+</body>
+</html>

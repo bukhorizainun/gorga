@@ -542,14 +542,14 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     };
     log.push(row);
     updateStats();
-    const tr = document.createElement("tr");
+    const rowEl = document.createElement("tr");
     const cells = [row.turn, row.time_utc.slice(11, 19), row.stage, row.marker_c, row.input_from, row.student_text, row.diagnosis, row.move, row.source];
     for (const v of cells) {
       const td = document.createElement("td");
       td.textContent = v;
-      tr.appendChild(td);
+      rowEl.appendChild(td);
     }
-    logBody.appendChild(tr);
+    logBody.appendChild(rowEl);
   }
 
   function logEvent(text) {
@@ -559,13 +559,13 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     };
     log.push(row);
     updateStats();
-    const tr = document.createElement("tr");
+    const rowEl = document.createElement("tr");
     for (const v of [row.turn, row.time_utc.slice(11, 19), row.stage, row.marker_c, "applet", "", text, "", ""]) {
       const td = document.createElement("td");
       td.textContent = v;
-      tr.appendChild(td);
+      rowEl.appendChild(td);
     }
-    logBody.appendChild(tr);
+    logBody.appendChild(rowEl);
   }
 
   /* ---------------- Teacher summary, transcript, reasoning card ---------------- */
@@ -649,7 +649,10 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     c.height = H;
     const g = c.getContext("2d");
     await document.fonts.ready;
-    g.fillStyle = "#17120e";
+    const bg = g.createLinearGradient(0, 0, W, H);
+    bg.addColorStop(0, "#24346a");
+    bg.addColorStop(1, "#141f42");
+    g.fillStyle = bg;
     g.fillRect(0, 0, W, H);
     // The mark is drawn as vector paths: an SVG image drawn at a new size on a canvas can
     // come out blank in Chrome the first time.
@@ -681,23 +684,23 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
       mark(84, 84, 120, 1);
     } catch { /* card works without the mark */ }
     g.fillStyle = "#fffcf7";
-    g.font = "72px 'Instrument Serif', Georgia, serif";
+    g.font = "500 72px 'Cormorant Garamond', Georgia, serif";
     g.fillText("gorga", 222, 168);
-    g.fillStyle = "#e0876f";
-    g.font = '500 26px "JetBrains Mono", monospace';
+    g.fillStyle = "#c39a52";
+    g.font = "600 24px Onest, system-ui, sans-serif";
     g.fillText(tr("KARTU PENALARAN", "REASONING CARD"), 90, 330);
     g.fillStyle = "#fffcf7";
-    g.font = "70px 'Instrument Serif', Georgia, serif";
+    g.font = "500 70px 'Cormorant Garamond', Georgia, serif";
     let y = 430;
     for (const ln of wrapLines(g, quote, W - 180).slice(0, 8)) { g.fillText(ln, 90, y); y += 80; }
-    g.fillStyle = "#bfb4a6";
+    g.fillStyle = "#b9c0dc";
     g.font = "30px Onest, system-ui, sans-serif";
     y += 36;
     for (const ln of wrapLines(g, question, W - 180).slice(0, 4)) { g.fillText(ln, 90, y); y += 44; }
-    g.fillStyle = "#8f8375";
-    g.font = '500 24px "JetBrains Mono", monospace';
+    g.fillStyle = "#8e97bf";
+    g.font = "600 22px Onest, system-ui, sans-serif";
     g.fillText(date.toUpperCase(), 90, H - 100);
-    g.fillStyle = "#a31d1a";
+    g.fillStyle = "#c39a52";
     for (let x = 0; x < W; x += 36) {
       g.beginPath(); g.moveTo(x, H); g.lineTo(x + 18, H - 26); g.lineTo(x + 36, H); g.fill();
     }

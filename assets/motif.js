@@ -42,7 +42,8 @@
     const N = 56;
     for (let i = 0; i < N; i++) {
       const ang = (360 * i) / N;
-      const t = el("path", { d: "M-7 -270 L7 -270 L0 -252 Z", class: "tri", transform: `rotate(${ang})` }, ring);
+      // every seventh triangle sits under a scroll and is red: red used sparingly, as in ulos
+      const t = el("path", { d: "M-7 -270 L7 -270 L0 -252 Z", class: i % 7 === 0 ? "tri red" : "tri", transform: `rotate(${ang + 22.5})` }, ring);
       t.style.animationDelay = `${0.6 + i * 0.018}s`;
     }
     el("circle", { r: 246, class: "hair faint" }, ring);
@@ -66,19 +67,52 @@
 
   document.querySelectorAll("svg[data-gorga]").forEach(medallion);
 
-  /* Gentle reveal of page sections as they scroll into view. Content stays visible
-     without JavaScript, and with reduced motion nothing moves. */
+  /* Gentle reveal of page parts as they scroll into view ([data-rv]; "seq" staggers the
+     children). Content stays visible without JavaScript, and with reduced motion nothing moves. */
   const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!reduce && "IntersectionObserver" in window) {
-    const items = document.querySelectorAll(".head2, .dialog, .ladder, .guards, .steps, .teach > *, .wins, .acts, .name .wrap > *");
+    const items = document.querySelectorAll("[data-rv]");
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
-    items.forEach((n) => { n.classList.add("rv"); io.observe(n); });
+    }, { rootMargin: "0px 0px -10% 0px", threshold: 0.06 });
+    document.documentElement.classList.add("rv-on");
+    items.forEach((n) => io.observe(n));
   }
 
-  /* Header gains a solid ground once the page scrolls past the hero top. */
-  const bar = document.querySelector("header.bar.dark");
+  /* The protocol ascent: one smooth gold curve through the five station dots, measured from
+     the laid-out page so it fits every width (Catmull-Rom spline turned into cubic Beziers). */
+  document.querySelectorAll(".ascent").forEach((box) => {
+    const svg = box.querySelector("svg.path");
+    const path = svg && svg.querySelector("path");
+    if (!path) return;
+    function trace() {
+      const r0 = box.getBoundingClientRect();
+      const pts = [...box.querySelectorAll(".rung")].map((li) => {
+        const r = li.getBoundingClientRect();
+        return [r.left - r0.left + 6.5, r.top - r0.top + 6.5];   // centre of the 13 px dot
+      });
+      if (pts.length < 2 || getComputedStyle(svg).display === "none") return;
+      svg.setAttribute("width", r0.width); svg.setAttribute("height", r0.height);
+      svg.setAttribute("viewBox", `0 0 ${r0.width} ${r0.height}`);
+      const P = [[pts[0][0] - 60, pts[0][1] + 4], ...pts, [pts[pts.length - 1][0] + 120, pts[pts.length - 1][1] - 40]];
+      let d = `M${P[0][0]} ${P[0][1]}`;
+      for (let i = 0; i < P.length - 1; i++) {
+        const p0 = P[Math.max(0, i - 1)], p1 = P[i], p2 = P[i + 1], p3 = P[Math.min(P.length - 1, i + 2)];
+        const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+        const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+        d += ` C${c1[0].toFixed(1)} ${c1[1].toFixed(1)} ${c2[0].toFixed(1)} ${c2[1].toFixed(1)} ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`;
+      }
+      path.setAttribute("d", d);
+    }
+    trace();
+    window.addEventListener("resize", trace);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(trace);
+    // rungs rise into place when revealed; trace again once they have settled
+    box.addEventListener("transitionend", trace);
+  });
+
+  /* Header gains a frosted ground once the page scrolls. */
+  const bar = document.querySelector("header.top, header.bar.dark");
   if (bar) {
     const on = () => bar.classList.toggle("scrolled", window.scrollY > 24);
     window.addEventListener("scroll", on, { passive: true }); on();

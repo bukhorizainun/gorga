@@ -4,240 +4,186 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gorga — the tutor that asks back</title>
-  <meta name="description" content="Gorga pairs a GeoGebra applet with an AI tutor that never gives the answer. It asks, points, and waits until the student finds and explains the reasoning.">
+  <meta name="description" content="Gorga pairs a GeoGebra applet with an AI tutor that does not give the answer. It asks, points, and waits until the student finds the reasoning.">
   <meta property="og:title" content="Gorga — the tutor that asks back">
-  <meta property="og:description" content="GeoGebra applets with an AI tutor that follows the teacher's scaffolding protocol.">
+  <meta property="og:description" content="GeoGebra applets and an AI tutor that follows a teacher&#x27;s scaffolding protocol.">
+  <meta property="og:image" content="https://rahmiumar.github.io/gorga/assets/covers/a1.jpg">
+  <meta name="theme-color" content="#f4f5fa">
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="alternate" hreflang="id" href="https://rahmiumar.github.io/gorga/">
   <link rel="alternate" hreflang="en" href="https://rahmiumar.github.io/gorga/en/">
+  <link rel="alternate" hreflang="de" href="https://rahmiumar.github.io/gorga/de/">
+  <link rel="alternate" hreflang="tr" href="https://rahmiumar.github.io/gorga/tr/">
+  <link rel="alternate" hreflang="x-default" href="https://rahmiumar.github.io/gorga/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/gorga.css">
   <link rel="stylesheet" href="../assets/home.css">
 </head>
-<body>
-  <header class="bar dark">
-    <a class="mark" href="./" aria-label="Gorga, home"><img src="../assets/logo.svg" alt=""><span>gorga</span></a>
+<body class="landing">
+  <div class="sky" aria-hidden="true"><i></i><i></i><i></i></div>
+
+  <header class="top">
+    <a class="mark" href="../" aria-label="Gorga, home"><img src="../assets/logo-nila.svg" alt="" width="34" height="34"><span>gorga</span></a>
     <nav aria-label="Sections">
-      <a href="#conversation">Conversation</a>
-      <a href="#protocol">Protocol</a>
-      <a href="#teachers">For teachers</a>
-      <a href="#activities">Activities</a>
+      <a href="#conversation">Conversation</a><a href="#protocol">Protocol</a><a href="#teachers">For teachers</a><a href="#activities">Activities</a>
     </nav>
-    <div class="bar-end">
-      <div class="langs" role="group" aria-label="Language / Bahasa">
-        <a href="../" onclick="try{localStorage.setItem('gorga-lang','id')}catch(e){}">ID</a><a href="./" aria-current="true">EN</a>
-      </div>
-      <a class="btn small" href="../suhu/?lang=en" style="background:#fffcf7;color:#17120e;border-color:#fffcf7">Try an activity <span class="arrow">→</span></a>
+    <div class="end">
+      <div class="langs" role="group" aria-label="Language"><a href="../" hreflang="id" lang="id">ID</a><a href="../en/" hreflang="en" lang="en" aria-current="true">EN</a><a href="../de/" hreflang="de" lang="de">DE</a><a href="../tr/" hreflang="tr" lang="tr">TR</a></div>
+      <a class="pill" href="../suhu/?lang=en">Try an activity <span aria-hidden="true">→</span></a>
     </div>
   </header>
 
-  <section class="hero">
-    <div class="wrap">
-      <div>
-        <span class="eyebrow">GeoGebra · AI tutor · mathematical reasoning</span>
-        <h1>The tutor that <em>asks</em> back.</h1>
-        <p class="lead">Students work on a question in a GeoGebra applet. Gorga does not give the answer. It asks,
-          points at one thing on the screen, and waits until the student finds and explains the reasoning.</p>
-        <div class="cta">
-          <a class="btn" href="../suhu/?lang=en">Try the Temperature Scale activity <span class="arrow">→</span></a>
-          <a class="btn ghost" href="#conversation">See a conversation</a>
-        </div>
-        <div class="facts">
-          <div><b>L1–L4</b><span>the teacher's scaffolding moves</span></div>
-          <div><b>No give-aways</b><span>every AI sentence is checked first</span></div>
-          <div><b>CSV</b><span>turn-by-turn log for research</span></div>
-        </div>
-      </div>
-      <figure class="art" style="margin:0">
-        <svg data-gorga role="img" aria-label="Gorga motif panel: simeol-eol scrolls and ipon-ipon bands"></svg>
-        <figcaption><b>Simeol-eol</b> — two Archimedean spirals <b>r = aθ</b>, one turned by 180°,
-          ringed by eight small scrolls: rotational symmetry of order eight. The Batak ornament is mathematics too.</figcaption>
-      </figure>
-    </div>
-    <div class="ipon"></div>
-  </section>
-
   <main>
-    <section class="block" id="conversation">
-      <div class="wrap">
-        <div class="head2">
-          <div><span class="eyebrow">A conversation</span><h2>The student finds zero alone.</h2></div>
-          <p>Question: the temperature is −6 °C; how much must it rise to reach 4 °C? The student already answered 10 by
-            counting one by one. The protocol does not let the tutor say “zero”. Watch how Gorga draws it out.</p>
+    <section class="hero">
+      <div class="hero-text">
+        <p class="kicker">GeoGebra · AI tutor · mathematical reasoning</p>
+        <h1>The tutor that <em>asks</em> back.</h1>
+        <p class="lead">Students work on a question in a GeoGebra applet. Gorga does not give the answer. It asks, points at one thing on the screen, and waits until the student finds and explains the reasoning.</p>
+        <div class="cta">
+          <a class="btn" href="../suhu/?lang=en">Try the Temperature Scale activity <span aria-hidden="true">→</span></a>
+          <a class="link" href="#conversation">See a conversation</a>
         </div>
-        <div class="dialog">
-          <div class="convo">
-            <div class="line st"><span class="who">Student</span><span class="txt">so from -6 up to -5, then -4, then -3, -2, -1, then 0. Then up to 1, 2, 3, and finally 4.</span></div>
-            <div class="line ai"><span class="who">Gorga</span><span class="txt">You went from -6 to -5, -4, -3, -2, -1, then to 1, 2, 3, up to 4. What happens as you pass a certain temperature before 1?<span class="tag">L4</span></span></div>
-            <div class="line st"><span class="who">Student</span><span class="txt">oh, stop at zero first</span></div>
-            <div class="line ai"><span class="who">Gorga</span><span class="txt">You stop at zero first. How do you count the rise from -6 to 0, and then from 0 to 4?<span class="tag">L4</span></span></div>
-            <div class="line st"><span class="who">Student</span><span class="txt">from -6 to 0 it goes up 6</span></div>
-            <div class="line ai"><span class="who">Gorga</span><span class="txt">From -6 to 0 it goes up 6. Then from 0 to 4 it goes up by how much, and how does that give the total rise?<span class="tag">L1</span></span></div>
-            <div class="line st"><span class="who">Student</span><span class="txt">then 4 more, so 10</span></div>
-            <div class="line ai win"><span class="who">Gorga</span><span class="txt">Your answer is correct. You split the rise into two parts: from -6 to 0 it rises 6 degrees, then from 0 to 4 it rises 4 degrees, 10 degrees in total.</span></div>
-            <div class="ipon"></div>
+        
+        <ul class="facts"><li><b>L1–L4</b><span>the teacher's scaffolding moves</span></li><li><b>No give-aways</b><span>every AI sentence is checked first</span></li><li><b>CSV</b><span>turn-by-turn log for research</span></li></ul>
+      </div>
+      <figure class="art">
+        <svg data-gorga role="img" aria-label="Gorga medallion: simeol-eol scrolls and a ring of ipon-ipon triangles"></svg>
+        <figcaption><b>Simeol-eol</b> — two Archimedean spirals <b>r = aθ</b>, one turned by 180°, ringed by eight small scrolls: rotational symmetry of order eight.</figcaption>
+      </figure>
+    </section>
+
+    <section class="chapter" id="conversation">
+      <header class="ch-head" data-rv>
+        <p class="kicker"><span class="no">I</span>A conversation</p>
+        <h2>The student finds <em>zero</em> alone.</h2>
+        <p class="intro">Question: the temperature is −6 °C; how much must it rise to reach 4 °C? The student already answered 10 by counting one by one. The protocol does not let the tutor say “zero”. Watch how Gorga draws it out.</p>
+      </header>
+      <div class="dialogue">
+        <div class="lines" data-rv="seq"><p class="say st" style="--i:0"><span class="who">Student</span><span class="txt">so from -6 up to -5, then -4, then -3, -2, -1, then 0. Then up to 1, 2, 3, and finally 4.</span></p><p class="say ai" style="--i:1"><span class="who">Gorga</span><span class="txt">You went from -6 to -5, -4, -3, -2, -1, then to 1, 2, 3, up to 4. What happens as you pass a certain temperature before 1?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:2"><span class="who">Student</span><span class="txt">oh, stop at zero first</span></p><p class="say ai" style="--i:3"><span class="who">Gorga</span><span class="txt">You stop at zero first. How do you count the rise from -6 to 0, and then from 0 to 4?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:4"><span class="who">Student</span><span class="txt">from -6 to 0 it goes up 6</span></p><p class="say ai" style="--i:5"><span class="who">Gorga</span><span class="txt">From -6 to 0 it goes up 6. Then from 0 to 4 it goes up by how much, and how does that give the total rise?<sup class="lvl">L1</sup></span></p><p class="say st" style="--i:6"><span class="who">Student</span><span class="txt">then 4 more, so 10</span></p><p class="say win" style="--i:7"><span class="who">Gorga</span><span class="txt">Your answer is correct. You split the rise into two parts: from -6 to 0 it rises 6 degrees, then from 0 to 4 it rises 4 degrees, 10 degrees in total.</span></p></div>
+        <aside class="note" data-rv>
+          <h3>“Correct” comes only at the end.</h3>
+          <p>Counting one by one already gives 10, but it is not enough. Gorga confirms only after the student splits the change at 0 on their own, as the teacher's protocol requires.</p>
+          <p class="small">This conversation ran in Indonesian in a simulation test and is translated here. Gorga's replies were written by the AI; the student lines were written by the team as test sentences.</p>
+          <a class="link" href="../suhu/?lang=en">Try it yourself <span aria-hidden="true">→</span></a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="chapter" id="protocol">
+      <header class="ch-head" data-rv>
+        <p class="kicker"><span class="no">II</span>The teacher's protocol</p>
+        <h2>Help in steps, <em>not answers.</em></h2>
+        <p class="intro">The AI chooses its next move itself, but only up to the limit that applies at that moment. The longer a student is stuck, the more help it may give. The answer still has to come from the student.</p>
+      </header>
+      <div class="ascent" data-rv="seq">
+        <svg class="path" aria-hidden="true"><path pathLength="1"/></svg>
+        <ol><li class="rung r1" style="--i:0">
+            <span class="code" lang="en">L1 · Probe</span><h3>Ask</h3><p>Invites the student to try the applet and asks an open question.</p><blockquote>“Try it with the thermometer. How did you get it?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></span>
+          </li><li class="rung r2" style="--i:1">
+            <span class="code" lang="en">L4 · Revoice</span><h3>Revoice</h3><p>Repeats the student's idea in other words, then asks for an explanation.</p><blockquote>“You counted 10 boxes. How did you count them?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></span>
+          </li><li class="rung r3" style="--i:2">
+            <span class="code" lang="en">L2 · Point</span><h3>Point</h3><p>Directs attention to one thing on the thermometer.</p><blockquote>“Look at 0. How many degrees from −6 to 0?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span>
+          </li><li class="rung r4" style="--i:3">
+            <span class="code">L3 · Guided step</span><h3>Break down</h3><p>Breaks the question into small questions, without giving the result.</p><blockquote>“From −6 to 0, how many? And from 0 to 4?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span>
+          </li><li class="rung r5" style="--i:4">
+            <span class="code">Confirmation</span><h3>Found</h3><p>Given only after a correct answer and after the target reasoning comes from the student.</p><blockquote>“You split at 0: 6, then 4, so 10.”</blockquote>
+          </li></ol>
+      </div>
+      <ul class="guards" data-rv><li><b>No give-aways</b><span>Every AI sentence is checked: numbers the student has not found yet may not appear.</span></li><li><b>Content, not labels</b><span>The check reads what the sentence says. An “L4” label that still splits the question is rejected.</span></li><li><b>Always a fallback</b><span>If the AI breaks a rule, the student gets a scripted sentence the teacher approved.</span></li></ul>
+    </section>
+
+    <section class="chapter" id="how">
+      <header class="ch-head" data-rv>
+        <p class="kicker"><span class="no">III</span>How it works</p>
+        <h2>Three steps <em>in class.</em></h2>
+        <p class="intro">Nothing to install. Students open a link on a laptop or tablet.</p>
+      </header>
+      <ol class="steps" data-rv="seq"><li style="--i:0"><span class="n">1</span><h3>Work in the applet</h3><p>Move the markers in the GeoGebra applet, type an answer, press Check. Gorga reads the answer and the marker positions straight from the applet.</p></li><li style="--i:1"><span class="n">2</span><h3>Explain your way</h3><p>Gorga does not grade. It asks how the student got there, in the student's own everyday words.</p></li><li style="--i:2"><span class="n">3</span><h3>Find it yourself</h3><p>Step by step until the target reasoning appears. The path is drawn as motifs under the applet.</p></li></ol>
+    </section>
+
+    <section class="chapter teach" id="teachers">
+      <div class="teach-text" data-rv>
+        <p class="kicker"><span class="no">IV</span>For teachers and researchers</p>
+        <h2>Every turn <em>is recorded.</em></h2>
+        <ul class="feats"><li><b>Teacher mode</b><span>The L1–L4 label on every reply, and a mark on answers the AI had to read.</span></li><li><b>Session summary</b><span>Number of turns, spread of moves, AI replies versus script, and time until the reasoning was found.</span></li><li><b>Log and transcript</b><span>Download a turn-by-turn CSV for analysis, or copy the conversation transcript.</span></li><li><b>Storage per class <em class="soon">next stage</em></b><span>Class codes, with data saved automatically for research.</span></li></ul>
+      </div>
+      <div class="mock" aria-hidden="true" data-rv>
+        <div class="stats"><div class="stat"><span>Turns</span><b>7</b><small>question 1</small></div><div class="stat"><span>AI replies</span><b>94%</b><small>the rest scripted</small></div><div class="stat"><span>To target</span><b>2:41</b><small>minutes</small></div>
+          <div class="stat moves"><span>Moves</span>
+            <div class="bars"><div>L1<i style="width:30%"></i>2</div><div>L2<i style="width:15%"></i>1</div><div>L3<i style="width:0"></i>0</div><div>L4<i style="width:60%"></i>4</div></div>
           </div>
-          <div class="aside-note">
-            <h3>“Correct” comes only at the end.</h3>
-            <p>Counting one by one already gives 10, but it is not enough. Gorga confirms only after the student splits
-              the change at 0 on their own, as the teacher's protocol requires.</p>
-            <p>This conversation ran in Indonesian in a simulation test and is translated here. Gorga's replies were
-              written by the AI; the student lines were written by the team as test sentences.</p>
-            <a class="btn ghost small" href="../suhu/?lang=en">Try it yourself <span class="arrow">→</span></a>
-          </div>
         </div>
+        <table><thead><tr><th>#</th><th>student answer</th><th>diagnosis</th><th>move</th></tr></thead><tbody><tr><td>3</td><td>I counted 10 boxes</td><td>correct, no explanation yet</td><td>L4</td></tr><tr><td>4</td><td>I don't know</td><td>stuck</td><td>L2</td></tr><tr><td>5</td><td>from -6 to 0 is 6, then 0 to 4 is 4</td><td>split at 0 (target)</td><td>Confirmation</td></tr></tbody></table>
+        <p class="mock-note">Sample of the teacher view</p>
       </div>
     </section>
 
-    <section class="block" id="protocol">
-      <div class="wrap">
-        <div class="head2">
-          <div><span class="eyebrow">The teacher's protocol</span><h2>Help in steps, not answers.</h2></div>
-          <p>The AI chooses its next move itself, but only up to the limit that applies at that moment. The longer a
-            student is stuck, the more help it may give. The answer still has to come from the student.</p>
-        </div>
-        <div class="ladder">
-          <div class="rung"><span class="code">L1 · Probe</span><h3>Ask</h3><p>Invites the student to try the applet and asks an open question.</p><blockquote>“Try it with the thermometer. How did you get it?”</blockquote><div class="meter"><i class="on"></i><i></i><i></i><i></i></div></div>
-          <div class="rung"><span class="code">L4 · Revoice</span><h3>Revoice</h3><p>Repeats the student's idea in other words, then asks for an explanation.</p><blockquote>“You counted 10 boxes. How did you count them?”</blockquote><div class="meter"><i class="on"></i><i></i><i></i><i></i></div></div>
-          <div class="rung"><span class="code">L2 · Point</span><h3>Point</h3><p>Directs attention to one thing on the thermometer.</p><blockquote>“Look at 0. How many degrees from −6 to 0?”</blockquote><div class="meter"><i class="on"></i><i class="on"></i><i></i><i></i></div></div>
-          <div class="rung"><span class="code">L3 · Guided step</span><h3>Break down</h3><p>Breaks the question into small questions, without giving the result.</p><blockquote>“From −6 to 0, how many? And from 0 to 4?”</blockquote><div class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div></div>
-          <div class="rung"><span class="code">Confirmation</span><h3>Found</h3><p>Given only after a correct answer and after the target reasoning comes from the student.</p><blockquote>“You split at 0: 6, then 4, so 10.”</blockquote></div>
-        </div>
-        <div class="guards">
-          <div class="guard"><b>No give-aways</b><p>Every AI sentence is checked: numbers the student has not found yet may not appear.</p></div>
-          <div class="guard"><b>Content, not labels</b><p>The check reads what the sentence says. An “L4” label that still splits the question is rejected.</p></div>
-          <div class="guard"><b>Always a fallback</b><p>If the AI breaks a rule, the student gets a scripted sentence the teacher approved.</p></div>
-        </div>
+    <section class="chapter" id="activities">
+      <header class="ch-head" data-rv>
+        <p class="kicker"><span class="no">V</span>Activities</p>
+        <h2>One window <em>per topic.</em></h2>
+        <p class="intro">Activities are grouped in windows. The Integers window holds the teacher's seven climate-action activities. Applet 1 runs the full protocol with a task card; the others use the general protocol until their task cards are ready.</p>
+      </header>
+      <div class="wins" role="group" aria-label="Topic windows" data-rv><button type="button" class="win on" data-win="0" aria-pressed="true">Integers<small>7 activities</small></button><button type="button" class="win" data-win="1" aria-pressed="false">Geometry<small>coming</small></button><button type="button" class="win" data-win="2" aria-pressed="false">Algebra<small>coming</small></button><button type="button" class="win" data-win="3" aria-pressed="false">Data & Statistics<small>coming</small></button></div>
+      <div class="win-panel" data-panel="0">
+        <ul class="gallery" data-rv="seq"><li class="act lead-act" style="--i:0">
+            <a class="pic" href="../suhu/?lang=en"><img src="../assets/covers/a1.jpg" alt="" loading="lazy" width="1200" height="935"><span class="badge live">Full protocol · AI</span></a>
+            <div class="cap"><span class="meta">Applet 1 · 9 questions</span><h3>Temperature Scale</h3><p>Comparing and computing temperature changes across 0 °C.</p>
+              <a class="go" href="../suhu/?lang=en">Full protocol <span aria-hidden="true">→</span></a>
+              <a class="go alt" href="../aktivitas/?a=1&amp;lang=en">The activity's own questions (9) <span aria-hidden="true">→</span></a></div>
+          </li><li class="act" style="--i:1">
+            <a class="pic" href="../aktivitas/?a=2&amp;lang=en" aria-label="Carbon Balance"><img src="../assets/covers/a2.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge">General protocol · AI</span></a>
+            <div class="cap"><span class="meta">Applet 2 · 3 questions</span><h3><a href="../aktivitas/?a=2&amp;lang=en">Carbon Balance</a></h3><p>Adding integers with balloons (up) and sandbags (down).</p></div>
+          </li><li class="act" style="--i:2">
+            <a class="pic" href="../aktivitas/?a=3&amp;lang=en" aria-label="Sea Level"><img src="../assets/covers/a3.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge">General protocol · AI</span></a>
+            <div class="cap"><span class="meta">Applet 3 · 7 questions</span><h3><a href="../aktivitas/?a=3&amp;lang=en">Sea Level</a></h3><p>Positive and negative integers for positions above and below sea level.</p></div>
+          </li><li class="act" style="--i:3">
+            <a class="pic" href="../aktivitas/?a=4&amp;lang=en" aria-label="Sustainable Transport"><img src="../assets/covers/a4.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge">General protocol · AI</span></a>
+            <div class="cap"><span class="meta">Applet 4 · 5 questions</span><h3><a href="../aktivitas/?a=4&amp;lang=en">Sustainable Transport</a></h3><p>Multiplying integers through direction, speed and walking time.</p></div>
+          </li><li class="act" style="--i:4">
+            <a class="pic" href="../aktivitas/?a=5&amp;lang=en" aria-label="Patterns for Sustainable Decisions"><img src="../assets/covers/a5.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge">General protocol · AI</span></a>
+            <div class="cap"><span class="meta">Applet 5 · 5 questions</span><h3><a href="../aktivitas/?a=5&amp;lang=en">Patterns for Sustainable Decisions</a></h3><p>Patterns in multiplying and dividing positive and negative integers.</p></div>
+          </li><li class="act" style="--i:5">
+            <a class="pic" href="../aktivitas/?a=6&amp;lang=en" aria-label="Reforestation Planning"><img src="../assets/covers/a6.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge">General protocol · AI</span></a>
+            <div class="cap"><span class="meta">Applet 6 · 4 questions</span><h3><a href="../aktivitas/?a=6&amp;lang=en">Reforestation Planning</a></h3><p>Dividing fractions to plan tree seedlings.</p></div>
+          </li><li class="act" style="--i:6">
+            <a class="pic" href="../aktivitas/?a=7&amp;lang=en" aria-label="Estimating Carbon Emissions"><img src="../assets/covers/a7.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge">General protocol · AI</span></a>
+            <div class="cap"><span class="meta">Applet 7 · 2 questions</span><h3><a href="../aktivitas/?a=7&amp;lang=en">Estimating Carbon Emissions</a></h3><p>Estimating decimal products by rounding and with an area model.</p></div>
+          </li></ul>
+        <p class="next-note">Next windows: <b>Geometry</b>, <b>Algebra</b> and <b>Data &amp; Statistics</b>. Built with the teacher in the next stage.</p>
       </div>
+      <div class="win-panel" data-panel="soon" hidden><p class="soon-note">This window is prepared for the next stage. Activities will be added with the teacher.</p></div>
     </section>
 
-    <section class="block" id="how">
-      <div class="wrap">
-        <div class="head2">
-          <div><span class="eyebrow">How it works</span><h2>Three steps in class.</h2></div>
-          <p>Nothing to install. Students open a link on a laptop or tablet.</p>
-        </div>
-        <div class="steps">
-          <div class="stepc"><div class="n">1</div><h3>Work in the applet</h3><p>Move the markers in the GeoGebra applet, type an answer, press Check. Gorga reads the answer and the marker positions straight from the applet.</p></div>
-          <div class="stepc"><div class="n">2</div><h3>Explain your way</h3><p>Gorga does not grade. It asks how the student got there, in the student's own everyday words.</p></div>
-          <div class="stepc"><div class="n">3</div><h3>Find it yourself</h3><p>Step by step until the target reasoning appears. The path is drawn as motifs under the applet.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="block" id="teachers">
-      <div class="wrap teach">
-        <div>
-          <span class="eyebrow">For teachers and researchers</span>
-          <h2 style="font:400 clamp(34px,4.2vw,56px)/1.02 var(--serif);margin:10px 0 24px;letter-spacing:-.015em">Every turn is recorded.</h2>
-          <ul class="feat">
-            <li><i></i><div><b>Teacher mode</b><span>The L1–L4 label on every reply, and a mark on answers the AI had to read.</span></div></li>
-            <li><i></i><div><b>Session summary</b><span>Number of turns, spread of moves, AI replies versus script, and time until the reasoning was found.</span></div></li>
-            <li><i></i><div><b>Log and transcript</b><span>Download a turn-by-turn CSV for analysis, or copy the conversation transcript.</span></div></li>
-            <li><i></i><div><b>Storage per class <span class="soon">next stage</span></b><span>Class codes, with data saved automatically for research.</span></div></li>
-          </ul>
-        </div>
-        <div class="mock" aria-hidden="true">
-          <div class="panel-grid">
-            <div class="stat"><span class="label">Turns</span><b>7</b><small>question 1</small></div>
-            <div class="stat"><span class="label">AI replies</span><b>94%</b><small>the rest scripted</small></div>
-            <div class="stat"><span class="label">To target</span><b>2:41</b><small>minutes</small></div>
-            <div class="stat"><span class="label">Moves</span>
-              <div class="bars"><div>L1<span class="b" style="width:30%"></span>2</div><div>L2<span class="b" style="width:15%"></span>1</div><div>L3<span class="b" style="width:0"></span>0</div><div>L4<span class="b" style="width:60%"></span>4</div></div></div>
-          </div>
-          <table><thead><tr><th>#</th><th>student answer</th><th>diagnosis</th><th>move</th></tr></thead>
-            <tbody><tr><td>3</td><td>I counted 10 boxes</td><td>correct, no explanation yet</td><td>L4</td></tr>
-            <tr><td>4</td><td>I don't know</td><td>stuck</td><td>L2</td></tr>
-            <tr><td>5</td><td>from -6 to 0 is 6, then 0 to 4 is 4</td><td>split at 0 (target)</td><td>Confirmation</td></tr></tbody></table>
-          <p class="label" style="margin:12px 0 0;color:var(--ink-3)">Sample of the teacher view</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="block" id="activities">
-      <div class="wrap">
-        <div class="head2">
-          <div><span class="eyebrow">Activities</span><h2>One window per topic.</h2></div>
-          <p>Activities are grouped in windows. The Integers window holds the teacher's seven climate-action activities. Applet 1 runs the full protocol with a task card; the others use the general protocol until their task cards are ready.</p>
-        </div>
-        <div class="wins" role="group" aria-label="Topic windows">
-          <button type="button" class="win on" data-win="0" aria-pressed="true">Integers <small>7 activities</small></button><button type="button" class="win" data-win="1">Geometry <small>coming</small></button><button type="button" class="win" data-win="2">Algebra <small>coming</small></button><button type="button" class="win" data-win="3">Data & Statistics <small>coming</small></button>
-        </div>
-        <div class="win-panel" data-panel="0">
-        <div class="acts seven">
-          <div class="act dual">
-            <a class="thumb" href="../suhu/?lang=en"><img src="../assets/covers/a1.jpg" alt="" loading="lazy"><span class="chip live">Full protocol · AI</span><span class="num">1</span></a>
-            <div class="body"><span class="label">Applet 1 · 9 questions</span><h3>Temperature Scale</h3><p>Comparing and computing temperature changes across 0 °C.</p>
-              <a class="go" href="../suhu/?lang=en">Full protocol →</a><a class="go alt" href="../aktivitas/?a=1&amp;lang=en">The activity's own questions (9) →</a></div>
-          </div>
-          <a class="act" href="../aktivitas/?a=2&lang=en">
-            <div class="thumb"><img src="../assets/covers/a2.jpg" alt="" loading="lazy"><span class="chip">General protocol · AI</span><span class="num">2</span></div>
-            <div class="body"><span class="label">Applet 2 · 3 questions</span><h3>Carbon Balance</h3><p>Adding integers with balloons (up) and sandbags (down).</p><span class="go">Open →</span></div>
-          </a>
-          <a class="act" href="../aktivitas/?a=3&lang=en">
-            <div class="thumb"><img src="../assets/covers/a3.jpg" alt="" loading="lazy"><span class="chip">General protocol · AI</span><span class="num">3</span></div>
-            <div class="body"><span class="label">Applet 3 · 7 questions</span><h3>Sea Level</h3><p>Positive and negative integers for positions above and below sea level.</p><span class="go">Open →</span></div>
-          </a>
-          <a class="act" href="../aktivitas/?a=4&lang=en">
-            <div class="thumb"><img src="../assets/covers/a4.jpg" alt="" loading="lazy"><span class="chip">General protocol · AI</span><span class="num">4</span></div>
-            <div class="body"><span class="label">Applet 4 · 5 questions</span><h3>Sustainable Transport</h3><p>Multiplying integers through direction, speed and walking time.</p><span class="go">Open →</span></div>
-          </a>
-          <a class="act" href="../aktivitas/?a=5&lang=en">
-            <div class="thumb"><img src="../assets/covers/a5.jpg" alt="" loading="lazy"><span class="chip">General protocol · AI</span><span class="num">5</span></div>
-            <div class="body"><span class="label">Applet 5 · 5 questions</span><h3>Patterns for Sustainable Decisions</h3><p>Patterns in multiplying and dividing positive and negative integers.</p><span class="go">Open →</span></div>
-          </a>
-          <a class="act" href="../aktivitas/?a=6&lang=en">
-            <div class="thumb"><img src="../assets/covers/a6.jpg" alt="" loading="lazy"><span class="chip">General protocol · AI</span><span class="num">6</span></div>
-            <div class="body"><span class="label">Applet 6 · 4 questions</span><h3>Reforestation Planning</h3><p>Dividing fractions to plan tree seedlings.</p><span class="go">Open →</span></div>
-          </a>
-          <a class="act" href="../aktivitas/?a=7&lang=en">
-            <div class="thumb"><img src="../assets/covers/a7.jpg" alt="" loading="lazy"><span class="chip">General protocol · AI</span><span class="num">7</span></div>
-            <div class="body"><span class="label">Applet 7 · 2 questions</span><h3>Estimating Carbon Emissions</h3><p>Estimating decimal products by rounding and with an area model.</p><span class="go">Open →</span></div>
-          </a>
-          <div class="act next"><img src="../assets/logo-white.svg" alt=""><p>Next windows: <b>Geometry</b>, <b>Algebra</b> and <b>Data &amp; Statistics</b>. Built with the teacher in the next stage.</p></div>
-        </div>
-        </div>
-        <div class="win-panel soon" data-panel="soon" hidden>
-          <div class="soon-box"><img src="../assets/logo-white.svg" alt=""><p>This window is prepared for the next stage. Activities will be added with the teacher.</p></div>
-        </div>
-        <script>
-          document.querySelector(".wins").addEventListener("click", function (e) {
-            var b = e.target.closest(".win"); if (!b) return;
-            document.querySelectorAll(".win").forEach(function (x) { x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", x === b); });
-            var first = b.dataset.win === "0";
-            document.querySelector('[data-panel="0"]').hidden = !first;
-            document.querySelector('[data-panel="soon"]').hidden = first;
-          });
-        </script>
-      </div>
-    </section>
-
-    <section class="name">
-      <div class="wrap">
-        <img src="../assets/logo.svg" alt="Gorga logo">
-        <div>
-          <span class="eyebrow">About the name</span>
-          <h2>Gorga: an ornament you can compute.</h2>
-          <p>Gorga is the carving on Batak traditional houses in North Sumatra, in three colours: red, white and black.
-            Its patterns are full of symmetry, reflection and repetition. Mathematics has lived in it for a long time.</p>
-          <p>The Gorga logo is a simeol-eol scroll: one spiral r = aθ and its point reflection, with a band of ipon-ipon
-            triangles below.</p>
-        </div>
+    <section class="chapter name">
+      <img class="name-mark" src="../assets/logo-nila.svg" alt="Gorga logo" width="260" height="260" data-rv>
+      <div data-rv>
+        <p class="kicker">About the name</p>
+        <h2>Gorga: an ornament <em>you can compute.</em></h2>
+        <p>Gorga is the carving on Batak traditional houses in North Sumatra, in three colours: red, white and black. Its patterns are full of symmetry, reflection and repetition. Mathematics has lived in it for a long time.</p>
+        <p>The colours of this site take the dark indigo of ulos cloth, with red used sparingly. The Gorga logo is a simeol-eol scroll: one spiral r = aθ and its point reflection.</p>
       </div>
     </section>
   </main>
 
-  <footer class="site-foot">
-    <div class="wrap">
-      <p>Gorga · a research prototype in mathematics education, non-commercial. Temperature Scale activity:
-        Dr. Rahmi Ramadhani Umar. Thermometer applet: A.M. Vuković (2013), via GeoGebra.</p>
-      <p>© 2026 Gorga · Dr. Rahmi Ramadhani Umar · <a class="gh" href="https://github.com/rahmiumar" rel="noopener">github.com/rahmiumar</a></p>
-    </div>
+  <footer class="foot">
+    <p>Gorga · a research prototype in mathematics education, non-commercial. Temperature Scale activity: Dr. Rahmi Ramadhani Umar. Thermometer applet: A.M. Vuković (2013), via GeoGebra.</p>
+    <p>© 2026 Gorga · Dr. Rahmi Ramadhani Umar · <a href="https://github.com/rahmiumar" rel="noopener">github.com/rahmiumar</a></p>
+    <div class="langs foot-langs" role="group" aria-label="Language"><a href="../" hreflang="id" lang="id">ID</a><a href="../en/" hreflang="en" lang="en" aria-current="true">EN</a><a href="../de/" hreflang="de" lang="de">DE</a><a href="../tr/" hreflang="tr" lang="tr">TR</a></div>
   </footer>
 
-  <script>try { localStorage.setItem("gorga-lang", "en"); } catch (e) {}</script>
+  <script>
+    try { localStorage.setItem("gorga-lang", "en"); } catch (e) {}
+    document.querySelector(".wins").addEventListener("click", function (e) {
+      var b = e.target.closest(".win"); if (!b) return;
+      document.querySelectorAll(".win").forEach(function (x) { x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", x === b); });
+      var first = b.dataset.win === "0";
+      document.querySelector('[data-panel="0"]').hidden = !first;
+      document.querySelector('[data-panel="soon"]').hidden = first;
+    });
+  </script>
   <script src="../assets/motif.js"></script>
 </body>
 </html>

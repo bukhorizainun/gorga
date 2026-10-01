@@ -1,0 +1,116 @@
+{
+  "lang": "en",
+  "title": "Gorga — the tutor that asks back",
+  "description": "Gorga pairs a GeoGebra applet with an AI tutor that does not give the answer. It asks, points, and waits until the student finds the reasoning.",
+  "og_description": "GeoGebra applets and an AI tutor that follows a teacher's scaffolding protocol.",
+  "home_label": "Gorga, home",
+  "nav_label": "Sections",
+  "nav": ["Conversation", "Protocol", "For teachers", "Activities"],
+  "ids": ["conversation", "protocol", "teachers", "activities"],
+  "cta_small": "Try an activity",
+  "app_lang": "en",
+  "app_note": "",
+
+  "eyebrow": "GeoGebra · AI tutor · mathematical reasoning",
+  "h1": "The tutor that <em>asks</em> back.",
+  "lead": "Students work on a question in a GeoGebra applet. Gorga does not give the answer. It asks, points at one thing on the screen, and waits until the student finds and explains the reasoning.",
+  "cta": "Try the Temperature Scale activity",
+  "cta2": "See a conversation",
+  "facts": [["L1–L4", "the teacher's scaffolding moves"], ["No give-aways", "every AI sentence is checked first"], ["CSV", "turn-by-turn log for research"]],
+  "art_label": "Gorga medallion: simeol-eol scrolls and a ring of ipon-ipon triangles",
+  "caption": "<b>Simeol-eol</b> — two Archimedean spirals <b>r = aθ</b>, one turned by 180°, ringed by eight small scrolls: rotational symmetry of order eight.",
+
+  "c_eyebrow": "A conversation",
+  "c_h2": "The student finds <em>zero</em> alone.",
+  "c_intro": "Question: the temperature is −6 °C; how much must it rise to reach 4 °C? The student already answered 10 by counting one by one. The protocol does not let the tutor say “zero”. Watch how Gorga draws it out.",
+  "who_st": "Student",
+  "who_ai": "Gorga",
+  "convo": [
+    ["st", "so from -6 up to -5, then -4, then -3, -2, -1, then 0. Then up to 1, 2, 3, and finally 4."],
+    ["ai", "You went from -6 to -5, -4, -3, -2, -1, then to 1, 2, 3, up to 4. What happens as you pass a certain temperature before 1?", "L4"],
+    ["st", "oh, stop at zero first"],
+    ["ai", "You stop at zero first. How do you count the rise from -6 to 0, and then from 0 to 4?", "L4"],
+    ["st", "from -6 to 0 it goes up 6"],
+    ["ai", "From -6 to 0 it goes up 6. Then from 0 to 4 it goes up by how much, and how does that give the total rise?", "L1"],
+    ["st", "then 4 more, so 10"],
+    ["win", "Your answer is correct. You split the rise into two parts: from -6 to 0 it rises 6 degrees, then from 0 to 4 it rises 4 degrees, 10 degrees in total."]
+  ],
+  "aside_h": "“Correct” comes only at the end.",
+  "aside_p": "Counting one by one already gives 10, but it is not enough. Gorga confirms only after the student splits the change at 0 on their own, as the teacher's protocol requires.",
+  "aside_small": "This conversation ran in Indonesian in a simulation test and is translated here. Gorga's replies were written by the AI; the student lines were written by the team as test sentences.",
+  "aside_cta": "Try it yourself",
+
+  "p_eyebrow": "The teacher's protocol",
+  "p_h2": "Help in steps, <em>not answers.</em>",
+  "p_intro": "The AI chooses its next move itself, but only up to the limit that applies at that moment. The longer a student is stuck, the more help it may give. The answer still has to come from the student.",
+  "rungs": [
+    ["L1 · Probe", "Ask", "Invites the student to try the applet and asks an open question.", "“Try it with the thermometer. How did you get it?”"],
+    ["L4 · Revoice", "Revoice", "Repeats the student's idea in other words, then asks for an explanation.", "“You counted 10 boxes. How did you count them?”"],
+    ["L2 · Point", "Point", "Directs attention to one thing on the thermometer.", "“Look at 0. How many degrees from −6 to 0?”"],
+    ["L3 · Guided step", "Break down", "Breaks the question into small questions, without giving the result.", "“From −6 to 0, how many? And from 0 to 4?”"],
+    ["Confirmation", "Found", "Given only after a correct answer and after the target reasoning comes from the student.", "“You split at 0: 6, then 4, so 10.”"]
+  ],
+  "guards": [
+    ["No give-aways", "Every AI sentence is checked: numbers the student has not found yet may not appear."],
+    ["Content, not labels", "The check reads what the sentence says. An “L4” label that still splits the question is rejected."],
+    ["Always a fallback", "If the AI breaks a rule, the student gets a scripted sentence the teacher approved."]
+  ],
+
+  "h_eyebrow": "How it works",
+  "h_h2": "Three steps <em>in class.</em>",
+  "h_intro": "Nothing to install. Students open a link on a laptop or tablet.",
+  "steps": [
+    ["Work in the applet", "Move the markers in the GeoGebra applet, type an answer, press Check. Gorga reads the answer and the marker positions straight from the applet."],
+    ["Explain your way", "Gorga does not grade. It asks how the student got there, in the student's own everyday words."],
+    ["Find it yourself", "Step by step until the target reasoning appears. The path is drawn as motifs under the applet."]
+  ],
+
+  "t_eyebrow": "For teachers and researchers",
+  "t_h2": "Every turn <em>is recorded.</em>",
+  "feats": [
+    ["Teacher mode", "The L1–L4 label on every reply, and a mark on answers the AI had to read.", ""],
+    ["Session summary", "Number of turns, spread of moves, AI replies versus script, and time until the reasoning was found.", ""],
+    ["Log and transcript", "Download a turn-by-turn CSV for analysis, or copy the conversation transcript.", ""],
+    ["Storage per class", "Class codes, with data saved automatically for research.", "next stage"]
+  ],
+  "mock": {
+    "stats": [["Turns", "7", "question 1"], ["AI replies", "94%", "the rest scripted"], ["To target", "2:41", "minutes"]],
+    "moves": "Moves",
+    "head": ["#", "student answer", "diagnosis", "move"],
+    "rows": [["3", "I counted 10 boxes", "correct, no explanation yet", "L4"], ["4", "I don't know", "stuck", "L2"], ["5", "from -6 to 0 is 6, then 0 to 4 is 4", "split at 0 (target)", "Confirmation"]],
+    "note": "Sample of the teacher view"
+  },
+
+  "a_eyebrow": "Activities",
+  "a_h2": "One window <em>per topic.</em>",
+  "a_intro": "Activities are grouped in windows. The Integers window holds the teacher's seven climate-action activities. Applet 1 runs the full protocol with a task card; the others use the general protocol until their task cards are ready.",
+  "wins_label": "Topic windows",
+  "wins": [["Integers", "7 activities"], ["Geometry", "coming"], ["Algebra", "coming"], ["Data & Statistics", "coming"]],
+  "soon": "This window is prepared for the next stage. Activities will be added with the teacher.",
+  "next": "Next windows: <b>Geometry</b>, <b>Algebra</b> and <b>Data &amp; Statistics</b>. Built with the teacher in the next stage.",
+  "applet": "Applet",
+  "q_one": "question",
+  "q_many": "questions",
+  "full": "Full protocol · AI",
+  "general": "General protocol · AI",
+  "open": "Open",
+  "full_link": "Full protocol",
+  "own_link": "The activity's own questions (9)",
+  "acts": [
+    ["Temperature Scale", "Comparing and computing temperature changes across 0 °C."],
+    ["Carbon Balance", "Adding integers with balloons (up) and sandbags (down)."],
+    ["Sea Level", "Positive and negative integers for positions above and below sea level."],
+    ["Sustainable Transport", "Multiplying integers through direction, speed and walking time."],
+    ["Patterns for Sustainable Decisions", "Patterns in multiplying and dividing positive and negative integers."],
+    ["Reforestation Planning", "Dividing fractions to plan tree seedlings."],
+    ["Estimating Carbon Emissions", "Estimating decimal products by rounding and with an area model."]
+  ],
+
+  "n_eyebrow": "About the name",
+  "n_h2": "Gorga: an ornament <em>you can compute.</em>",
+  "n_p1": "Gorga is the carving on Batak traditional houses in North Sumatra, in three colours: red, white and black. Its patterns are full of symmetry, reflection and repetition. Mathematics has lived in it for a long time.",
+  "n_p2": "The colours of this site take the dark indigo of ulos cloth, with red used sparingly. The Gorga logo is a simeol-eol scroll: one spiral r = aθ and its point reflection.",
+  "logo_alt": "Gorga logo",
+
+  "foot1": "Gorga · a research prototype in mathematics education, non-commercial. Temperature Scale activity: Dr. Rahmi Ramadhani Umar. Thermometer applet: A.M. Vuković (2013), via GeoGebra."
+}
