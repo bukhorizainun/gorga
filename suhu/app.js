@@ -2,7 +2,7 @@
    the chat only probes how the student got the answer. */
 
 // Worker URL for AI mode. Empty = scripted mode (no AI, no network beyond GeoGebra).
-const GORGA_API = "https://gorga.shelbot-plus.workers.dev";
+const GORGA_API = "https://gorga.rahmiumar.workers.dev";
 
 (function () {
   const TASK = window.SUHU_TASK;
