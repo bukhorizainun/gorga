@@ -5,3 +5,13 @@ compatibility_date = "2026-09-01"
 # Workers AI. No API key: the Worker uses the Cloudflare account's allowance.
 [ai]
 binding = "AI"
+
+# Per-IP limit. A whole class may share one school IP, so the limit is generous; it stops
+# a single script from draining the daily AI allowance in minutes. The Origin check alone
+# does not, because any non-browser client can send an allowed Origin header.
+[[ratelimits]]
+name = "LIMIT"
+namespace_id = "1001"
+  [ratelimits.simple]
+  limit = 90
+  period = 60

@@ -15,6 +15,7 @@ const MODEL_MAIN = "@cf/meta/llama-3.3-70b-instruct-fp8-fast";
 const MODEL_BACKUP = "@cf/meta/llama-3.1-8b-instruct-fast";
 const MAX_TURNS = 10;
 const MAX_CHARS = 500;
+const MAX_BODY = 24000; // bytes; a real request from the pages is a few kB
 const MOVES = ["L1", "L2", "L3", "L4", "R", "OK", "HINT"];
 
 const ALLOWED_ORIGINS = [
@@ -36,16 +37,21 @@ function cors(origin) {
 }
 
 const clip = (v, n) => String(v ?? "").slice(0, n);
+// Caller-supplied lists go into the prompt; cap their length so one request cannot inflate it.
+const list = (v, n) => (Array.isArray(v) ? v.slice(0, n) : []);
+const nums = (v) => list(v, 64).map(Number).filter(Number.isFinite);
+// Forbidden strings are matched literally, never as regular expressions.
+const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 function systemPrompt(b) {
   const t = b.task || {};
   const s = b.stage || {};
   const st = b.state || {};
   const an = b.analysis || {};
-  const moves = Object.entries(t.moves || {})
+  const moves = Object.entries(t.moves || {}).slice(0, 8)
     .map(([k, v]) => `- ${k}: ${clip(v, 200)}`)
     .join("\n");
-  const mis = (t.misconceptions || []).map((m) => `- ${clip(m, 200)}`).join("\n");
+  const mis = list(t.misconceptions, 6).map((m) => `- ${clip(m, 200)}`).join("\n");
 
   return `Kamu adalah "guru bayangan" dalam aplikasi Gorga. Siswa SMP sedang mengerjakan applet GeoGebra tentang bilangan bulat, lalu menjelaskan cara berpikirnya di chat.
 
@@ -116,7 +122,7 @@ IDE TARGET (rahasia, jangan diucapkan sebelum siswa menyatakannya): ${clip(s.tar
 TUGASMU UNTUK BALASAN INI
 ${clip(br.aim, 400)}
 ${br.avoid ? "LARANGAN: " + clip(br.avoid, 300) : ""}
-Angka yang boleh kamu pakai hanya: ${(br.allowNumbers || []).join(", ")}.
+Angka yang boleh kamu pakai hanya: ${nums(br.allowNumbers).join(", ")}.
 
 CARA MENULIS
 - Tanggapi kalimat terakhir siswa secara spesifik: pakai kembali kata atau angka yang ia tulis.
@@ -164,7 +170,7 @@ function leadPrompt(b) {
   const s = b.stage || {};
   const L = b.lead || {};
   const en = b.lang === "en";
-  const facts = (Array.isArray(L.facts) ? L.facts : []).map((f) => `- ${clip(f, 200)}`).join("\n");
+  const facts = list(L.facts, 8).map((f) => `- ${clip(f, 200)}`).join("\n");
   const task = L.goal
     ? `TUGAS: siswa sudah menemukan penalaran target sendiri. Tulis konfirmasi singkat yang hangat: sebut bahwa jawabannya benar, ulangi cara siswa memecah di 0 dengan angkanya, dan total ${L.size} derajat. Tanpa pertanyaan. Pakai "move":"OK".`
     : `TUGAS: tulis balasan berikutnya sebagai guru. ${LEVEL_TEXT[L.maxHelp] || LEVEL_TEXT[1]}`;
@@ -185,7 +191,7 @@ CARA MENANGGAPI
 - Bangun dari bagian yang sudah tepat. Kalau ada yang keliru, tanyakan sesuatu yang membuat siswa melihat sendiri kelirunya di termometer, misalnya dari posisi penanda atau angka yang ia sebut.
 - Jangan menanyakan hal yang sudah ia jawab. Jangan mengulang pertanyaanmu sebelumnya.
 - Kalau siswa bertanya, jawab singkat dulu, lalu kembalikan ke soal.
-- Angka yang boleh muncul hanya: ${(L.allowNumbers || []).join(", ")}.${L.zeroOK ? "" : `
+- Angka yang boleh muncul hanya: ${nums(L.allowNumbers).join(", ")}.${L.zeroOK ? "" : `
 - Jangan menyebut angka 0, "nol", atau ide berhenti di 0: itu kunci yang harus ditemukan siswa sendiri.`}${L.splitOK ? "" : `
 - Jangan menyarankan memecah soal menjadi dua bagian.`}
 - ${L.goal ? "" : en ? 'Jangan memakai kata "correct", "wrong", "right", atau "exactly". ' : 'Jangan memakai kata "benar", "salah", "tepat", atau "memang". '}Tepat satu pertanyaan di akhir${L.goal ? " (kecuali konfirmasi)" : ""}. Maksimal 2 kalimat, maksimal 45 kata. Bahasa sehari-hari yang hangat, sapa "kamu". Tanpa emoji dan markdown.
@@ -207,7 +213,7 @@ function openPrompt(b) {
   const s = b.stage || {};
   const L = b.lead || {};
   const en = b.lang === "en";
-  const facts = (Array.isArray(L.facts) ? L.facts : []).map((f) => `- ${clip(f, 200)}`).join("\n");
+  const facts = list(L.facts, 8).map((f) => `- ${clip(f, 200)}`).join("\n");
   return `Kamu guru matematika yang sabar untuk siswa SMP di Indonesia. Siswa mengerjakan aktivitas di applet GeoGebra, lalu menjawab pertanyaan esai dan berdiskusi denganmu di chat.
 
 ${PROTOCOL_OPEN}
@@ -315,13 +321,21 @@ export default {
     if (request.method === "OPTIONS") return new Response(null, { headers: h });
     if (request.method !== "POST") return send(405, { error: "POST only" });
     if (!ALLOWED_ORIGINS.includes(origin)) return send(403, { error: "origin not allowed" });
+    if (Number(request.headers.get("content-length") || 0) > MAX_BODY) return send(413, { error: "too large" });
+    if (env.LIMIT) {
+      const ip = request.headers.get("cf-connecting-ip") || "unknown";
+      const { success } = await env.LIMIT.limit({ key: ip });
+      if (!success) return send(429, { error: "too many requests, wait a minute" });
+    }
 
     const { pathname } = new URL(request.url);
     if (pathname !== "/chat" && pathname !== "/classify") return send(404, { error: "not found" });
 
     let b;
     try {
-      b = await request.json();
+      const raw = await request.text();
+      if (raw.length > MAX_BODY) return send(413, { error: "too large" });
+      b = JSON.parse(raw);
     } catch {
       return send(400, { error: "bad json" });
     }
@@ -365,7 +379,7 @@ export default {
 
     // Two page types: the dolphin task sends A/B, other tasks send a context text and
     // a list of strings the reply must not contain yet.
-    const forbid = Array.isArray(b.forbid) ? b.forbid.map((f) => normalise(f)).filter(Boolean).slice(0, 10) : null;
+    const forbid = Array.isArray(b.forbid) ? list(b.forbid, 10).map((f) => esc(normalise(clip(f, 40)))).filter(Boolean) : null;
     const a = Number(b?.state?.A);
     const bb = Number(b?.state?.B);
     if (!forbid && (!Number.isFinite(a) || !Number.isFinite(bb))) return send(400, { error: "missing state" });
@@ -382,7 +396,7 @@ export default {
     if (forbid && b.lead && Number.isFinite(Number(b.lead.maxHelp))) {
       const L = b.lead;
       const messages = [{ role: "system", content: b.open ? openPrompt(b) : leadPrompt(b) }, ...turns];
-      const allow = new Set((L.allowNumbers || []).map(Number));
+      const allow = new Set(nums(L.allowNumbers));
       const prev = turns.filter((m) => m.role === "assistant").map((m) => m.content);
       const signed = (x) => (String(x || "").replace(/[−–—]/g, "-").match(/-?\d+/g) || []).map(Number);
       const why = [];
@@ -422,7 +436,7 @@ export default {
 
     if (forbid && b.brief && b.brief.aim) {
       const messages = [{ role: "system", content: flexPrompt(b) }, ...turns];
-      const allow = new Set((b.brief.allowNumbers || []).map(Number));
+      const allow = new Set(nums(b.brief.allowNumbers));
       const prev = turns.filter((m) => m.role === "assistant").map((m) => m.content);
       const signed = (x) => (String(x || "").replace(/[−–—]/g, "-").match(/-?\d+/g) || []).map(Number);
       const tries = [[MODEL_MAIN, 0.8], [MODEL_MAIN, 0.95], [MODEL_BACKUP, 0.8]];
