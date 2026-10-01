@@ -681,13 +681,13 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
       mark(84, 84, 120, 1);
     } catch { /* card works without the mark */ }
     g.fillStyle = "#fffcf7";
-    g.font = "64px Gloock, Georgia, serif";
+    g.font = "72px 'Instrument Serif', Georgia, serif";
     g.fillText("gorga", 222, 168);
     g.fillStyle = "#e0876f";
     g.font = '500 26px "JetBrains Mono", monospace';
     g.fillText(tr("KARTU PENALARAN", "REASONING CARD"), 90, 330);
     g.fillStyle = "#fffcf7";
-    g.font = "62px Gloock, Georgia, serif";
+    g.font = "70px 'Instrument Serif', Georgia, serif";
     let y = 430;
     for (const ln of wrapLines(g, quote, W - 180).slice(0, 8)) { g.fillText(ln, 90, y); y += 80; }
     g.fillStyle = "#bfb4a6";
@@ -741,7 +741,7 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     $("log-pane").hidden = !e.target.checked;
     updateStats();
   });
-  $("mode-badge").textContent = GORGA_API ? tr("AI · menyambung", "AI · connecting") : tr("Mode naskah", "Script mode");
+  $("mode-badge").textContent = GORGA_API ? tr("Tutor AI", "AI tutor") : tr("Mode naskah", "Script mode");
 
   startStage({ ...TASK.stages[0] });
   injectApplet();

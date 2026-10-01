@@ -370,6 +370,6 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     document.body.classList.toggle("teacher", e.target.checked);
     $("log-pane").hidden = !e.target.checked;
   });
-  $("mode-badge").textContent = tr("AI · menyambung", "AI · connecting");
+  $("mode-badge").textContent = tr("Tutor AI", "AI tutor");
   load();
 })();
