@@ -147,6 +147,8 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
 
   function onLoad(a) {
     api = a;
+    // The applet's own pale green view clashes with the page; use the page's porcelain instead.
+    try { api.setGraphicsOptions(1, { bgColor: "#F3F5FB" }); } catch { /* older API: keep the applet colour */ }
     translate();
     api.registerUpdateListener("suhuOnUpdate");
     api.registerClickListener("suhuOnClick");
