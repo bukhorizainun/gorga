@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gorga — the tutor that asks back</title>
-  <meta name="description" content="Gorga pairs a GeoGebra applet with an AI tutor that does not give the answer. It asks, points, and waits until the student finds the reasoning.">
+  <meta name="description" content="Gorga pairs a GeoGebra applet with Poda, an AI tutor that does not give the answer. Poda asks, points, and waits until the student finds the reasoning.">
   <meta property="og:title" content="Gorga — the tutor that asks back">
   <meta property="og:description" content="GeoGebra applets and an AI tutor that follows a teacher&#x27;s scaffolding protocol.">
   <meta property="og:image" content="https://rahmiumar.github.io/gorga/assets/covers/a1.jpg">
@@ -40,7 +40,7 @@
       <div class="hero-text">
         <p class="kicker">GeoGebra · AI tutor · mathematical reasoning</p>
         <h1>The tutor that <em>asks</em> back.</h1>
-        <p class="lead">Students work on a question in a GeoGebra applet. Gorga does not give the answer. It asks, points at one thing on the screen, and waits until the student finds and explains the reasoning.</p>
+        <p class="lead">Students work on a question in a GeoGebra applet. Poda, the AI tutor in Gorga, does not give the answer. It asks, points at one thing on the screen, and waits until the student finds and explains the reasoning.</p>
         <div class="cta">
           <a class="btn" href="../suhu/?lang=en">Try the Temperature Scale activity <span aria-hidden="true">→</span></a>
           <a class="link" href="#conversation">See a conversation</a>
@@ -58,14 +58,14 @@
       <header class="ch-head" data-rv>
         <p class="kicker"><span class="no">I</span>A conversation</p>
         <h2>The student finds <em>zero</em> alone.</h2>
-        <p class="intro">Question: the temperature is −6 °C; how much must it rise to reach 4 °C? The student already answered 10 by counting one by one. The protocol does not let the tutor say “zero”. Watch how Gorga draws it out.</p>
+        <p class="intro">Question: the temperature is −6 °C; how much must it rise to reach 4 °C? The student already answered 10 by counting one by one. The protocol does not let the tutor say “zero”. Watch how Poda draws it out.</p>
       </header>
       <div class="dialogue">
-        <div class="lines" data-rv="seq"><p class="say st" style="--i:0"><span class="who">Student</span><span class="txt">so from -6 up to -5, then -4, then -3, -2, -1, then 0. Then up to 1, 2, 3, and finally 4.</span></p><p class="say ai" style="--i:1"><span class="who">Gorga</span><span class="txt">You went from -6 to -5, -4, -3, -2, -1, then to 1, 2, 3, up to 4. What happens as you pass a certain temperature before 1?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:2"><span class="who">Student</span><span class="txt">oh, stop at zero first</span></p><p class="say ai" style="--i:3"><span class="who">Gorga</span><span class="txt">You stop at zero first. How do you count the rise from -6 to 0, and then from 0 to 4?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:4"><span class="who">Student</span><span class="txt">from -6 to 0 it goes up 6</span></p><p class="say ai" style="--i:5"><span class="who">Gorga</span><span class="txt">From -6 to 0 it goes up 6. Then from 0 to 4 it goes up by how much, and how does that give the total rise?<sup class="lvl">L1</sup></span></p><p class="say st" style="--i:6"><span class="who">Student</span><span class="txt">then 4 more, so 10</span></p><p class="say win" style="--i:7"><span class="who">Gorga</span><span class="txt">Your answer is correct. You split the rise into two parts: from -6 to 0 it rises 6 degrees, then from 0 to 4 it rises 4 degrees, 10 degrees in total.</span></p></div>
+        <div class="lines" data-rv="seq"><p class="say st" style="--i:0"><span class="who">Student</span><span class="txt">so from -6 up to -5, then -4, then -3, -2, -1, then 0. Then up to 1, 2, 3, and finally 4.</span></p><p class="say ai" style="--i:1"><span class="who">Poda</span><span class="txt">You went from -6 to -5, -4, -3, -2, -1, then to 1, 2, 3, up to 4. What happens as you pass a certain temperature before 1?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:2"><span class="who">Student</span><span class="txt">oh, stop at zero first</span></p><p class="say ai" style="--i:3"><span class="who">Poda</span><span class="txt">You stop at zero first. How do you count the rise from -6 to 0, and then from 0 to 4?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:4"><span class="who">Student</span><span class="txt">from -6 to 0 it goes up 6</span></p><p class="say ai" style="--i:5"><span class="who">Poda</span><span class="txt">From -6 to 0 it goes up 6. Then from 0 to 4 it goes up by how much, and how does that give the total rise?<sup class="lvl">L1</sup></span></p><p class="say st" style="--i:6"><span class="who">Student</span><span class="txt">then 4 more, so 10</span></p><p class="say win" style="--i:7"><span class="who">Poda</span><span class="txt">Your answer is correct. You split the rise into two parts: from -6 to 0 it rises 6 degrees, then from 0 to 4 it rises 4 degrees, 10 degrees in total.</span></p></div>
         <aside class="note" data-rv>
           <h3>“Correct” comes only at the end.</h3>
-          <p>Counting one by one already gives 10, but it is not enough. Gorga confirms only after the student splits the change at 0 on their own, as the teacher's protocol requires.</p>
-          <p class="small">This conversation ran in Indonesian in a simulation test and is translated here. Gorga's replies were written by the AI; the student lines were written by the team as test sentences.</p>
+          <p>Counting one by one already gives 10, but it is not enough. Poda confirms only after the student splits the change at 0 on their own, as the teacher's protocol requires.</p>
+          <p class="small">This conversation ran in Indonesian in a simulation test and is translated here. Poda's replies were written by the AI; the student lines were written by the team as test sentences.</p>
           <a class="link" href="../suhu/?lang=en">Try it yourself <span aria-hidden="true">→</span></a>
         </aside>
       </div>
@@ -100,7 +100,7 @@
         <h2>Three steps <em>in class.</em></h2>
         <p class="intro">Nothing to install. Students open a link on a laptop or tablet.</p>
       </header>
-      <ol class="steps" data-rv="seq"><li style="--i:0"><span class="n">1</span><h3>Work in the applet</h3><p>Move the markers in the GeoGebra applet, type an answer, press Check. Gorga reads the answer and the marker positions straight from the applet.</p></li><li style="--i:1"><span class="n">2</span><h3>Explain your way</h3><p>Gorga does not grade. It asks how the student got there, in the student's own everyday words.</p></li><li style="--i:2"><span class="n">3</span><h3>Find it yourself</h3><p>Step by step until the target reasoning appears. The path is drawn as motifs under the applet.</p></li></ol>
+      <ol class="steps" data-rv="seq"><li style="--i:0"><span class="n">1</span><h3>Work in the applet</h3><p>Move the markers in the GeoGebra applet, type an answer, press Check. Poda reads the answer and the marker positions straight from the applet.</p></li><li style="--i:1"><span class="n">2</span><h3>Explain your way</h3><p>Poda does not grade. It asks how the student got there, in the student's own everyday words.</p></li><li style="--i:2"><span class="n">3</span><h3>Find it yourself</h3><p>Step by step until the target reasoning appears. The path is drawn as motifs under the applet.</p></li></ol>
     </section>
 
     <section class="chapter teach" id="teachers">
@@ -160,10 +160,11 @@
     <section class="chapter name">
       <img class="name-mark" src="../assets/logo-nila.svg" alt="Gorga logo" width="260" height="260" data-rv>
       <div data-rv>
-        <p class="kicker">About the name</p>
-        <h2>Gorga: an ornament <em>you can compute.</em></h2>
-        <p>Gorga is the carving on Batak traditional houses in North Sumatra, in three colours: red, white and black. Its patterns are full of symmetry, reflection and repetition. Mathematics has lived in it for a long time.</p>
-        <p>The colours of this site take the dark indigo of ulos cloth, with red used sparingly. The Gorga logo is a simeol-eol scroll: one spiral r = aθ and its point reflection.</p>
+        <p class="kicker">About Gorga</p>
+        <h2>A place to learn that <em>guides instead of answering.</em></h2>
+        <p class="name-what">Gorga is a research platform for mathematics education in lower secondary school. The teacher's GeoGebra activities are paired with Poda, an AI tutor that follows the teacher's scaffolding protocol: students work in the applet, explain their thinking, and find the reasoning themselves. Teachers and researchers get a record of every turn.</p>
+        <p>The name comes from <b>gorga</b>, the carving on Batak traditional houses in North Sumatra, in three colours: red, white and black. Its patterns are full of symmetry, reflection and repetition. Mathematics has lived in it for a long time.</p>
+        <p><b>Poda</b> is the Toba Batak word for advice given gently and indirectly. That is how the tutor works: it guides with questions instead of giving answers.</p>
       </div>
     </section>
   </main>

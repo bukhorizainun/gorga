@@ -485,7 +485,7 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
       if (!leaks(ai.reply, forbid) && !tooMuch && !why) {
         reply = ai.reply;
         source = ai.model || "AI";
-        $("mode-badge").textContent = tr("AI aktif", "AI on");
+        $("mode-badge").textContent = tr("Poda · AI aktif", "Poda · AI on");
         $("mode-badge").classList.add("on");
       } else source = tr("naskah (jaga)", "script (guard)");
     }
@@ -600,7 +600,7 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
       if (el.classList.contains("chat-note")) lines.push(`— ${el.firstChild.textContent} —`);
       else if (el.classList.contains("card-wrap")) lines.push(`[${tr("Kartu penalaran", "Reasoning card")}] ${el.querySelector("blockquote").textContent}`);
       else if (el.classList.contains("msg") && !el.classList.contains("typing")) {
-        const who = el.classList.contains("student") ? tr("Siswa", "Student") : "Tutor";
+        const who = el.classList.contains("student") ? tr("Siswa", "Student") : "Poda";
         const meta = el.querySelector(".meta");
         lines.push(`${who}: ${el.querySelector("p").textContent}${meta ? `  [${meta.textContent}]` : ""}`);
       }
@@ -744,7 +744,7 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     $("log-pane").hidden = !e.target.checked;
     updateStats();
   });
-  $("mode-badge").textContent = GORGA_API ? tr("Tutor AI", "AI tutor") : tr("Mode naskah", "Script mode");
+  $("mode-badge").textContent = GORGA_API ? "Poda · AI" : tr("Mode naskah", "Script mode");
 
   startStage({ ...TASK.stages[0] });
   injectApplet();

@@ -1,91 +1,251 @@
 {
   "lang": "id",
   "title": "Gorga — tutor yang bertanya balik",
-  "description": "Gorga menyandingkan applet GeoGebra dengan tutor AI yang tidak memberi jawaban. Ia bertanya, menunjuk, dan menunggu sampai siswa menemukan penalarannya sendiri.",
+  "description": "Gorga menyandingkan applet GeoGebra dengan Poda, tutor AI yang tidak memberi jawaban. Poda bertanya, menunjuk, dan menunggu sampai siswa menemukan penalarannya sendiri.",
   "og_description": "Applet GeoGebra dan tutor AI dengan protokol scaffolding guru.",
   "home_label": "Gorga, beranda",
   "nav_label": "Bagian",
-  "nav": ["Percakapan", "Protokol", "Untuk guru", "Aktivitas"],
-  "ids": ["percakapan", "protokol", "guru", "aktivitas"],
+  "nav": [
+    "Percakapan",
+    "Protokol",
+    "Untuk guru",
+    "Aktivitas"
+  ],
+  "ids": [
+    "percakapan",
+    "protokol",
+    "guru",
+    "aktivitas"
+  ],
   "cta_small": "Coba aktivitas",
   "app_lang": "id",
   "app_note": "",
-
   "eyebrow": "GeoGebra · tutor AI · penalaran matematis",
   "h1": "Tutor yang <em>bertanya</em> balik.",
-  "lead": "Siswa mengerjakan soal di applet GeoGebra. Gorga tidak memberi jawaban. Ia bertanya, menunjuk satu hal di layar, dan menunggu sampai siswa menemukan dan menjelaskan penalarannya sendiri.",
+  "lead": "Siswa mengerjakan soal di applet GeoGebra. Poda, tutor AI di Gorga, tidak memberi jawaban. Ia bertanya, menunjuk satu hal di layar, dan menunggu sampai siswa menemukan dan menjelaskan penalarannya sendiri.",
   "cta": "Coba aktivitas Skala Suhu",
   "cta2": "Lihat contoh percakapan",
-  "facts": [["L1–L4", "langkah scaffolding guru"], ["Tanpa bocoran", "setiap kalimat AI diperiksa dulu"], ["CSV", "log per giliran untuk riset"]],
+  "facts": [
+    [
+      "L1–L4",
+      "langkah scaffolding guru"
+    ],
+    [
+      "Tanpa bocoran",
+      "setiap kalimat AI diperiksa dulu"
+    ],
+    [
+      "CSV",
+      "log per giliran untuk riset"
+    ]
+  ],
   "art_label": "Medali gorga: gulungan simeol-eol dan cincin ipon-ipon",
   "caption": "<b>Simeol-eol</b> — dua spiral Archimedes <b>r = aθ</b>, yang satu diputar 180°, dikelilingi delapan gulungan kecil: simetri putar orde delapan.",
-
   "c_eyebrow": "Sebuah percakapan",
   "c_h2": "Siswa menemukan <em>nol</em> sendiri.",
-  "c_intro": "Soal: suhu awal −6 °C, berapa kenaikan untuk mencapai 4 °C? Siswa sudah menjawab 10 dengan menghitung satu per satu. Protokol melarang tutor menyebut angka 0. Perhatikan cara Gorga memancingnya.",
+  "c_intro": "Soal: suhu awal −6 °C, berapa kenaikan untuk mencapai 4 °C? Siswa sudah menjawab 10 dengan menghitung satu per satu. Protokol melarang tutor menyebut angka 0. Perhatikan cara Poda memancingnya.",
   "who_st": "Siswa",
-  "who_ai": "Gorga",
+  "who_ai": "Poda",
   "convo": [
-    ["st", "jadi, dari -6 naik ke -5 lalu ke -4, terus -3, ke -2, ke -1, lalu ke 0. Terus lanjut naik ke 1, ke 2, ke 3, sampai terakhir ke 4."],
-    ["ai", "Kamu naik dari -6 ke -5, -4, -3, -2, -1, lalu ke 1, 2, 3, sampai 4. Apa yang terjadi saat melewati suhu tertentu sebelum 1?", "L4"],
-    ["st", "oh berhenti di nol dulu ya"],
-    ["ai", "Kamu berhenti di nol dulu. Bagaimana kamu menghitung kenaikan suhu dari -6 ke 0, lalu dari 0 ke 4?", "L4"],
-    ["st", "dari -6 ke 0 naik 6"],
-    ["ai", "Dari -6 ke 0 naik 6, lalu dari 0 ke 4 naik berapa, dan bagaimana itu membuat total kenaikan suhu?", "L1"],
-    ["st", "terus 4 lagi jadi 10"],
-    ["win", "Jawabanmu benar. Kamu memecah kenaikan suhu menjadi dua bagian: dari -6 ke 0 naik 6 derajat, lalu dari 0 ke 4 naik 4 derajat, totalnya 10 derajat."]
+    [
+      "st",
+      "jadi, dari -6 naik ke -5 lalu ke -4, terus -3, ke -2, ke -1, lalu ke 0. Terus lanjut naik ke 1, ke 2, ke 3, sampai terakhir ke 4."
+    ],
+    [
+      "ai",
+      "Kamu naik dari -6 ke -5, -4, -3, -2, -1, lalu ke 1, 2, 3, sampai 4. Apa yang terjadi saat melewati suhu tertentu sebelum 1?",
+      "L4"
+    ],
+    [
+      "st",
+      "oh berhenti di nol dulu ya"
+    ],
+    [
+      "ai",
+      "Kamu berhenti di nol dulu. Bagaimana kamu menghitung kenaikan suhu dari -6 ke 0, lalu dari 0 ke 4?",
+      "L4"
+    ],
+    [
+      "st",
+      "dari -6 ke 0 naik 6"
+    ],
+    [
+      "ai",
+      "Dari -6 ke 0 naik 6, lalu dari 0 ke 4 naik berapa, dan bagaimana itu membuat total kenaikan suhu?",
+      "L1"
+    ],
+    [
+      "st",
+      "terus 4 lagi jadi 10"
+    ],
+    [
+      "win",
+      "Jawabanmu benar. Kamu memecah kenaikan suhu menjadi dua bagian: dari -6 ke 0 naik 6 derajat, lalu dari 0 ke 4 naik 4 derajat, totalnya 10 derajat."
+    ]
   ],
   "aside_h": "Kata “benar” baru muncul di akhir.",
-  "aside_p": "Menghitung satu per satu sudah menghasilkan 10, tapi belum cukup. Gorga baru memberi konfirmasi setelah siswa sendiri memecah perubahan di angka 0, sesuai protokol guru.",
-  "aside_small": "Balasan Gorga di contoh ini ditulis AI apa adanya, dari uji simulasi. Kalimat siswanya disusun tim sebagai kalimat uji.",
+  "aside_p": "Menghitung satu per satu sudah menghasilkan 10, tapi belum cukup. Poda baru memberi konfirmasi setelah siswa sendiri memecah perubahan di angka 0, sesuai protokol guru.",
+  "aside_small": "Balasan Poda di contoh ini ditulis AI apa adanya, dari uji simulasi. Kalimat siswanya disusun tim sebagai kalimat uji.",
   "aside_cta": "Coba sendiri",
-
   "p_eyebrow": "Protokol guru",
   "p_h2": "Bantuan bertingkat, <em>bukan jawaban.</em>",
   "p_intro": "AI memilih langkah berikutnya sendiri, tapi hanya sampai batas yang sedang berlaku. Makin lama siswa macet, makin besar bantuan yang boleh diberikan. Jawaban tetap harus datang dari siswa.",
   "rungs": [
-    ["L1 · Probe", "Bertanya", "Mengajak mencoba di applet dan bertanya terbuka.", "“Coba kerjakan dengan termometer. Bagaimana kamu mendapatkannya?”"],
-    ["L4 · Revoice", "Mengulang", "Mengulang ide siswa dengan kata lain, lalu meminta penjelasan.", "“Kamu hitung kotaknya ada 10. Bagaimana kamu menghitungnya?”"],
-    ["L2 · Point", "Menunjuk", "Mengarahkan perhatian ke satu hal di termometer.", "“Lihat angka 0. Berapa derajat dari −6 sampai 0?”"],
-    ["L3 · Langkah", "Memecah", "Memecah soal menjadi pertanyaan kecil, tanpa memberi hasil.", "“Dari −6 ke 0 berapa? Lalu dari 0 ke 4?”"],
-    ["Konfirmasi", "Ditemukan", "Baru diberikan setelah jawaban benar dan penalaran target muncul dari siswa.", "“Kamu memecah di 0: 6 lalu 4, jadi 10.”"]
+    [
+      "L1 · Probe",
+      "Bertanya",
+      "Mengajak mencoba di applet dan bertanya terbuka.",
+      "“Coba kerjakan dengan termometer. Bagaimana kamu mendapatkannya?”"
+    ],
+    [
+      "L4 · Revoice",
+      "Mengulang",
+      "Mengulang ide siswa dengan kata lain, lalu meminta penjelasan.",
+      "“Kamu hitung kotaknya ada 10. Bagaimana kamu menghitungnya?”"
+    ],
+    [
+      "L2 · Point",
+      "Menunjuk",
+      "Mengarahkan perhatian ke satu hal di termometer.",
+      "“Lihat angka 0. Berapa derajat dari −6 sampai 0?”"
+    ],
+    [
+      "L3 · Langkah",
+      "Memecah",
+      "Memecah soal menjadi pertanyaan kecil, tanpa memberi hasil.",
+      "“Dari −6 ke 0 berapa? Lalu dari 0 ke 4?”"
+    ],
+    [
+      "Konfirmasi",
+      "Ditemukan",
+      "Baru diberikan setelah jawaban benar dan penalaran target muncul dari siswa.",
+      "“Kamu memecah di 0: 6 lalu 4, jadi 10.”"
+    ]
   ],
   "guards": [
-    ["Tidak ada bocoran", "Setiap kalimat AI diperiksa: angka yang belum ditemukan siswa tidak boleh muncul."],
-    ["Isi, bukan label", "Pemeriksaan membaca isi kalimat. Label L4 yang ternyata memecah soal tetap ditolak."],
-    ["Selalu ada cadangan", "Kalau AI melanggar, siswa menerima kalimat naskah yang sudah disetujui guru."]
+    [
+      "Tidak ada bocoran",
+      "Setiap kalimat AI diperiksa: angka yang belum ditemukan siswa tidak boleh muncul."
+    ],
+    [
+      "Isi, bukan label",
+      "Pemeriksaan membaca isi kalimat. Label L4 yang ternyata memecah soal tetap ditolak."
+    ],
+    [
+      "Selalu ada cadangan",
+      "Kalau AI melanggar, siswa menerima kalimat naskah yang sudah disetujui guru."
+    ]
   ],
-
   "h_eyebrow": "Cara kerja",
   "h_h2": "Tiga langkah <em>di kelas.</em>",
   "h_intro": "Siswa tidak perlu memasang apa pun. Cukup buka tautan di laptop atau tablet.",
   "steps": [
-    ["Kerjakan di applet", "Geser penanda di applet GeoGebra, tulis jawaban, tekan Periksa. Gorga membaca jawaban dan posisi penanda langsung dari applet."],
-    ["Jelaskan caramu", "Gorga tidak menilai. Ia bertanya bagaimana siswa mendapatkannya, dengan bahasa sehari-hari siswa itu sendiri."],
-    ["Temukan sendiri", "Langkah demi langkah sampai penalaran target muncul. Jejaknya tergambar sebagai motif di bawah applet."]
+    [
+      "Kerjakan di applet",
+      "Geser penanda di applet GeoGebra, tulis jawaban, tekan Periksa. Poda membaca jawaban dan posisi penanda langsung dari applet."
+    ],
+    [
+      "Jelaskan caramu",
+      "Poda tidak menilai. Ia bertanya bagaimana siswa mendapatkannya, dengan bahasa sehari-hari siswa itu sendiri."
+    ],
+    [
+      "Temukan sendiri",
+      "Langkah demi langkah sampai penalaran target muncul. Jejaknya tergambar sebagai motif di bawah applet."
+    ]
   ],
-
   "t_eyebrow": "Untuk guru dan peneliti",
   "t_h2": "Setiap giliran <em>tercatat.</em>",
   "feats": [
-    ["Mode guru", "Label langkah L1–L4 di setiap balasan, dan tanda jawaban yang dibaca AI.", ""],
-    ["Ringkasan sesi", "Jumlah giliran, sebaran langkah, balasan AI dibanding naskah, dan waktu sampai penalaran ditemukan.", ""],
-    ["Log dan transkrip", "Unduh CSV per giliran untuk analisis, atau salin transkrip percakapan.", ""],
-    ["Penyimpanan per kelas", "Kode kelas dan data tersimpan otomatis untuk riset.", "tahap berikut"]
+    [
+      "Mode guru",
+      "Label langkah L1–L4 di setiap balasan, dan tanda jawaban yang dibaca AI.",
+      ""
+    ],
+    [
+      "Ringkasan sesi",
+      "Jumlah giliran, sebaran langkah, balasan AI dibanding naskah, dan waktu sampai penalaran ditemukan.",
+      ""
+    ],
+    [
+      "Log dan transkrip",
+      "Unduh CSV per giliran untuk analisis, atau salin transkrip percakapan.",
+      ""
+    ],
+    [
+      "Penyimpanan per kelas",
+      "Kode kelas dan data tersimpan otomatis untuk riset.",
+      "tahap berikut"
+    ]
   ],
   "mock": {
-    "stats": [["Giliran", "7", "soal 1"], ["Balasan AI", "94%", "sisanya naskah"], ["Sampai target", "2:41", "menit"]],
+    "stats": [
+      [
+        "Giliran",
+        "7",
+        "soal 1"
+      ],
+      [
+        "Balasan AI",
+        "94%",
+        "sisanya naskah"
+      ],
+      [
+        "Sampai target",
+        "2:41",
+        "menit"
+      ]
+    ],
     "moves": "Langkah",
-    "head": ["#", "jawaban siswa", "diagnosis", "langkah"],
-    "rows": [["3", "aku hitung kotaknya ada 10", "benar, belum ada penjelasan", "L4"], ["4", "gak tau", "macet", "L2"], ["5", "dari -6 ke 0 itu 6, terus 0 ke 4 itu 4", "pecah di 0 (target)", "Konfirmasi"]],
+    "head": [
+      "#",
+      "jawaban siswa",
+      "diagnosis",
+      "langkah"
+    ],
+    "rows": [
+      [
+        "3",
+        "aku hitung kotaknya ada 10",
+        "benar, belum ada penjelasan",
+        "L4"
+      ],
+      [
+        "4",
+        "gak tau",
+        "macet",
+        "L2"
+      ],
+      [
+        "5",
+        "dari -6 ke 0 itu 6, terus 0 ke 4 itu 4",
+        "pecah di 0 (target)",
+        "Konfirmasi"
+      ]
+    ],
     "note": "Contoh tampilan mode guru"
   },
-
   "a_eyebrow": "Aktivitas",
   "a_h2": "Satu jendela <em>untuk tiap topik.</em>",
   "a_intro": "Aktivitas dikelompokkan dalam jendela. Jendela Bilangan berisi tujuh aktivitas aksi iklim milik guru. Applet 1 memakai protokol penuh dengan kartu tugas; yang lain memakai protokol umum sampai kartu tugasnya siap.",
   "wins_label": "Jendela topik",
-  "wins": [["Bilangan", "7 aktivitas"], ["Geometri", "menyusul"], ["Aljabar", "menyusul"], ["Data & Statistik", "menyusul"]],
+  "wins": [
+    [
+      "Bilangan",
+      "7 aktivitas"
+    ],
+    [
+      "Geometri",
+      "menyusul"
+    ],
+    [
+      "Aljabar",
+      "menyusul"
+    ],
+    [
+      "Data & Statistik",
+      "menyusul"
+    ]
+  ],
   "soon": "Jendela ini sudah disiapkan untuk tahap berikutnya. Aktivitasnya disusun bersama guru.",
   "next": "Jendela berikutnya: <b>Geometri</b>, <b>Aljabar</b>, dan <b>Data &amp; Statistik</b>. Disusun bersama guru di tahap berikutnya.",
   "applet": "Applet",
@@ -97,20 +257,40 @@
   "full_link": "Protokol penuh",
   "own_link": "Soal asli aktivitas (9)",
   "acts": [
-    ["Skala Suhu", "Membandingkan dan menghitung perubahan suhu melewati 0 °C."],
-    ["Neraca Karbon", "Penjumlahan bilangan bulat dengan balon (naik) dan karung pasir (turun)."],
-    ["Permukaan Laut", "Bilangan positif dan negatif untuk posisi di atas dan di bawah permukaan laut."],
-    ["Transportasi Ramah Lingkungan", "Perkalian bilangan bulat lewat arah, kecepatan, dan waktu berjalan kaki."],
-    ["Pola untuk Keputusan Berkelanjutan", "Pola perkalian dan pembagian bilangan bulat positif dan negatif."],
-    ["Perencanaan Reboisasi", "Pembagian pecahan untuk merencanakan bibit pohon."],
-    ["Mengestimasi Emisi Karbon", "Estimasi perkalian desimal dengan pembulatan dan model luas."]
+    [
+      "Skala Suhu",
+      "Membandingkan dan menghitung perubahan suhu melewati 0 °C."
+    ],
+    [
+      "Neraca Karbon",
+      "Penjumlahan bilangan bulat dengan balon (naik) dan karung pasir (turun)."
+    ],
+    [
+      "Permukaan Laut",
+      "Bilangan positif dan negatif untuk posisi di atas dan di bawah permukaan laut."
+    ],
+    [
+      "Transportasi Ramah Lingkungan",
+      "Perkalian bilangan bulat lewat arah, kecepatan, dan waktu berjalan kaki."
+    ],
+    [
+      "Pola untuk Keputusan Berkelanjutan",
+      "Pola perkalian dan pembagian bilangan bulat positif dan negatif."
+    ],
+    [
+      "Perencanaan Reboisasi",
+      "Pembagian pecahan untuk merencanakan bibit pohon."
+    ],
+    [
+      "Mengestimasi Emisi Karbon",
+      "Estimasi perkalian desimal dengan pembulatan dan model luas."
+    ]
   ],
-
-  "n_eyebrow": "Tentang nama",
-  "n_h2": "Gorga: ornamen <em>yang dihitung.</em>",
-  "n_p1": "Gorga adalah ukiran pada rumah adat Batak, dengan tiga warna: merah, putih, dan hitam. Polanya penuh simetri, pencerminan, dan pengulangan. Matematika sudah lama tinggal di dalamnya.",
-  "n_p2": "Warna situs ini mengambil nila gelap kain ulos, dengan merah yang dipakai hemat. Logo Gorga adalah gulungan simeol-eol: satu spiral r = aθ dan pencerminan titiknya.",
+  "n_eyebrow": "Tentang Gorga",
+  "n_h2": "Ruang belajar yang <em>menuntun, bukan menjawab.</em>",
+  "n_p1": "Gorga adalah platform riset pendidikan matematika untuk SMP. Aktivitas GeoGebra milik guru dipasangkan dengan Poda, tutor AI yang mengikuti protokol scaffolding guru: siswa mengerjakan applet, menjelaskan cara berpikirnya, dan menemukan penalarannya sendiri. Guru dan peneliti mendapat jejak setiap giliran.",
   "logo_alt": "Logo Gorga",
-
-  "foot1": "Gorga · prototipe riset pendidikan matematika, non-komersial. Aktivitas Skala Suhu: Dr. Rahmi Ramadhani Umar. Applet termometer: A.M. Vuković (2013), lewat GeoGebra."
+  "foot1": "Gorga · prototipe riset pendidikan matematika, non-komersial. Aktivitas Skala Suhu: Dr. Rahmi Ramadhani Umar. Applet termometer: A.M. Vuković (2013), lewat GeoGebra.",
+  "n_p_gorga": "Namanya terinspirasi dari <b>gorga</b>, ukiran pada rumah adat Batak dengan tiga warna: merah, putih, dan hitam. Polanya penuh simetri, pencerminan, dan pengulangan. Matematika sudah lama tinggal di dalamnya.",
+  "n_p_poda": "<b>Poda</b> adalah kata Batak Toba untuk nasihat yang disampaikan dengan halus dan tidak langsung. Begitulah tutornya bekerja: menuntun lewat pertanyaan, bukan memberi jawaban."
 }

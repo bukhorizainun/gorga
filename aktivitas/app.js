@@ -276,7 +276,7 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
       reply = ai.reply;
       move = ai.move === "OK" && lim.mayConfirm ? "OK" : ai.move;
       source = ai.model || "AI";
-      $("mode-badge").textContent = tr("AI aktif", "AI on");
+      $("mode-badge").textContent = tr("Poda · AI aktif", "Poda · AI on");
       $("mode-badge").classList.add("on");
     } else {
       move = st.turns === 1 ? "L4" : lv === 1 ? "L4" : lv === 2 ? "L2" : lv === 3 ? "L3" : "HINT";
@@ -352,7 +352,7 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     questions.forEach((q, i) => {
       if (!state[i].history.length) return;
       lines.push(`— ${tr("Soal", "Question")} ${i + 1}: ${plain(L(q.body))} —`);
-      for (const h of state[i].history) lines.push(`${h.role === "user" ? tr("Siswa", "Student") : "Tutor"}: ${h.content}`);
+      for (const h of state[i].history) lines.push(`${h.role === "user" ? tr("Siswa", "Student") : "Poda"}: ${h.content}`);
     });
     const btn = $("copy-btn");
     const old = btn.textContent;
@@ -370,6 +370,6 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     document.body.classList.toggle("teacher", e.target.checked);
     $("log-pane").hidden = !e.target.checked;
   });
-  $("mode-badge").textContent = tr("Tutor AI", "AI tutor");
+  $("mode-badge").textContent = "Poda · AI";
   load();
 })();

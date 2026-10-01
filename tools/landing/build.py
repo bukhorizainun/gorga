@@ -219,8 +219,9 @@ def page(c, path):
       <div data-rv>
         <p class="kicker">{c["n_eyebrow"]}</p>
         <h2>{c["n_h2"]}</h2>
-        <p>{c["n_p1"]}</p>
-        <p>{c["n_p2"]}</p>
+        <p class="name-what">{c["n_p1"]}</p>
+        <p>{c["n_p_gorga"]}</p>
+        <p>{c["n_p_poda"]}</p>
       </div>
     </section>
   </main>

@@ -53,7 +53,7 @@ function systemPrompt(b) {
     .join("\n");
   const mis = list(t.misconceptions, 6).map((m) => `- ${clip(m, 200)}`).join("\n");
 
-  return `Kamu adalah "guru bayangan" dalam aplikasi Gorga. Siswa SMP sedang mengerjakan applet GeoGebra tentang bilangan bulat, lalu menjelaskan cara berpikirnya di chat.
+  return `Kamu adalah Poda, "guru bayangan" dalam aplikasi Gorga. Siswa SMP sedang mengerjakan applet GeoGebra tentang bilangan bulat, lalu menjelaskan cara berpikirnya di chat.
 
 TUGAS
 Judul: ${clip(t.title, 120)}
@@ -113,7 +113,7 @@ function flexPrompt(b) {
     .slice(-3)
     .map((m) => `- ${clip(m.content, 200)}`)
     .join("\n");
-  return `Kamu "guru bayangan" untuk siswa SMP di Indonesia. Siswa mengerjakan soal di applet termometer GeoGebra, lalu menjelaskan cara berpikirnya kepadamu di chat. Kamu tidak memberi jawaban; kamu bertanya supaya siswa menemukan dan menjelaskan sendiri.
+  return `Kamu Poda, "guru bayangan" di aplikasi Gorga, untuk siswa SMP di Indonesia. Siswa mengerjakan soal di applet termometer GeoGebra, lalu menjelaskan cara berpikirnya kepadamu di chat. Kamu tidak memberi jawaban; kamu bertanya supaya siswa menemukan dan menjelaskan sendiri.
 
 SOAL: ${clip(s.question, 300)}
 KEADAAN APPLET: ${clip(b.context, 500)}
@@ -174,7 +174,7 @@ function leadPrompt(b) {
   const task = L.goal
     ? `TUGAS: siswa sudah menemukan penalaran target sendiri. Tulis konfirmasi singkat yang hangat: sebut bahwa jawabannya benar, ulangi cara siswa memecah di 0 dengan angkanya, dan total ${L.size} derajat. Tanpa pertanyaan. Pakai "move":"OK".`
     : `TUGAS: tulis balasan berikutnya sebagai guru. ${LEVEL_TEXT[L.maxHelp] || LEVEL_TEXT[1]}`;
-  return `Kamu guru matematika yang sabar untuk siswa SMP di Indonesia. Siswa mengerjakan soal di applet termometer GeoGebra (termometer tegak: naik = ke atas, turun = ke bawah), lalu berdiskusi denganmu di chat.
+  return `Kamu Poda, tutor matematika yang sabar di aplikasi Gorga, untuk siswa SMP di Indonesia. Kalau siswa menanyakan namamu, namamu Poda. Siswa mengerjakan soal di applet termometer GeoGebra (termometer tegak: naik = ke atas, turun = ke bawah), lalu berdiskusi denganmu di chat.
 
 ${PROTOCOL}
 
@@ -214,7 +214,7 @@ function openPrompt(b) {
   const L = b.lead || {};
   const en = b.lang === "en";
   const facts = list(L.facts, 8).map((f) => `- ${clip(f, 200)}`).join("\n");
-  return `Kamu guru matematika yang sabar untuk siswa SMP di Indonesia. Siswa mengerjakan aktivitas di applet GeoGebra, lalu menjawab pertanyaan esai dan berdiskusi denganmu di chat.
+  return `Kamu Poda, tutor matematika yang sabar di aplikasi Gorga, untuk siswa SMP di Indonesia. Kalau siswa menanyakan namamu, namamu Poda. Siswa mengerjakan aktivitas di applet GeoGebra, lalu menjawab pertanyaan esai dan berdiskusi denganmu di chat.
 
 ${PROTOCOL_OPEN}
 

@@ -291,3 +291,5 @@ html:not(.rv-on) .ascent .path path { stroke-dashoffset: 0; }
   .hero-text > *, .art { animation: none; }
   .ascent .path path { stroke-dashoffset: 0; }
 }
+.name p.name-what { font: 400 clamp(21px, 1.7vw, 25px)/1.5 var(--serif); color: var(--nila); margin-bottom: 26px; }
+.name p b { font-weight: 600; color: var(--nila); }
