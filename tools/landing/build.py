@@ -14,6 +14,7 @@ ROOT = os.path.dirname(os.path.dirname(HERE))
 SITE = "https://rahmiumar.github.io/gorga/"
 LANGS = [("id", "ID", ""), ("en", "EN", "en/"), ("de", "DE", "de/"), ("tr", "TR", "tr/")]
 QUESTIONS = [9, 3, 7, 5, 5, 4, 2]
+FULL = {1, 2}   # activities with a task card (full protocol)
 
 
 def load(lang):
@@ -85,7 +86,7 @@ def page(c, path):
           </li>''')
         else:
             acts.append(f'''<li class="act" style="--i:{i}">
-            <a class="pic" href="{up}aktivitas/?a={n}&amp;lang={al}" aria-label="{e(title)}"><img src="{A}covers/a{n}.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge">{c["general"]}</span></a>
+            <a class="pic" href="{up}aktivitas/?a={n}&amp;lang={al}" aria-label="{e(title)}"><img src="{A}covers/a{n}.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge{' live' if n in FULL else ''}">{c["full"] if n in FULL else c["general"]}</span></a>
             <div class="cap"><span class="meta">{meta}</span><h3><a href="{up}aktivitas/?a={n}&amp;lang={al}">{title}</a></h3><p>{desc}</p></div>
           </li>''')
 

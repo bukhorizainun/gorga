@@ -220,12 +220,13 @@ ${PROTOCOL_OPEN}
 
 AKTIVITAS: ${clip(b.context, 900)}
 PERTANYAAN YANG SEDANG DIJAWAB: ${clip(s.question, 700)}
-
+${L.target ? `PENALARAN TARGET DARI GURU (rahasia; jangan diucapkan, jangan dipancing terlalu jelas sebelum siswa menyatakannya sendiri): ${clip(L.target, 400)}
+` : ""}
 FAKTA DARI SISTEM:
 ${facts}
 
-TUGAS: tulis balasan berikutnya sebagai guru. ${LEVEL_TEXT[L.maxHelp] || LEVEL_TEXT[1]}
-${L.mayConfirm ? `Jika jawaban DAN alasan siswa untuk pertanyaan ini sudah lengkap dan masuk akal, beri konfirmasi singkat yang hangat dengan "move":"OK": sebut apa yang sudah tepat dari penjelasannya, tanpa pertanyaan. Jika belum lengkap atau masih keliru, JANGAN konfirmasi; lanjutkan dengan pertanyaan.` : "Jangan memberi konfirmasi dulu."}
+${L.goal ? `TUGAS: siswa sudah memberi jawaban benar DAN penalaran target dari dirinya sendiri. Tulis konfirmasi singkat yang hangat: sebut bahwa jawabannya benar, lalu ulangi cara atau alasan siswa dengan angkanya. Tanpa pertanyaan. Pakai "move":"OK".` : `TUGAS: tulis balasan berikutnya sebagai guru. ${LEVEL_TEXT[L.maxHelp] || LEVEL_TEXT[1]}`}
+${L.goal ? "" : L.mayConfirm ? `Jika jawaban DAN alasan siswa untuk pertanyaan ini sudah lengkap dan masuk akal, beri konfirmasi singkat yang hangat dengan "move":"OK": sebut apa yang sudah tepat dari penjelasannya, tanpa pertanyaan. Jika belum lengkap atau masih keliru, JANGAN konfirmasi; lanjutkan dengan pertanyaan.` : "Jangan memberi konfirmasi dulu."}
 
 CARA MENANGGAPI
 - Baca jawaban terakhir siswa dengan teliti. Mulai dari yang ia tulis: sebut kembali kata, angka, atau caranya secara spesifik.

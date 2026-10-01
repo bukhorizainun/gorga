@@ -1,4 +1,5 @@
-/* Gorga activity page for the teacher's activities without a task card yet.
+/* Gorga activity page for the teacher's activities. With a task card (assets/cards/a<n>.js) the
+   page runs the full protocol from the card; without one it runs the general protocol below.
    The applet and the questions come from assets/activities.json (fetched from GeoGebra).
    General protocol: help rises one level every two turns (sooner when the student is stuck),
    the tutor never gives the answer, and the AI may confirm only from the second turn on,
@@ -18,6 +19,7 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
   const SCRIPT = tr("naskah", "script");
 
   const n = Math.max(1, Math.min(7, parseInt(new URLSearchParams(location.search).get("a"), 10) || 2));
+  const CARD = (window.GorgaCards || {})[n] || null;
   $("lang-id").href = `?a=${n}&lang=id`;
   $("lang-en").href = `?a=${n}&lang=en`;
 
@@ -97,7 +99,14 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
       `<div class="note-card">${L(t.title) ? `<span class="label">${L(t.title)}</span>` : ""}<div>${L(t.body).replace(/\n/g, "<br>")}</div></div>`).join("");
 
     questions = act.items.filter((i) => i.type === "question");
-    state = questions.map(() => ({ turns: 0, stuck: 0, done: false, history: [], nodes: [], path: [] }));
+    state = questions.map(() => ({ turns: 0, stuck: 0, done: false, history: [], nodes: [], path: [],
+      mem: { answerOK: false, wrong: 0, weak: 0, lastKind: null } }));
+    if (CARD) {
+      const tag = document.createElement("span");
+      tag.className = "sibling card-tag";
+      tag.textContent = tr("Protokol penuh · kartu tugas (draf, menunggu persetujuan guru)", "Full protocol · task card (draft, awaiting the teacher's approval)");
+      $("act-title").after(tag);
+    }
     $("q-dots").innerHTML = questions.map((_, i) => `<button type="button" data-q="${i}" aria-label="${tr("Soal", "Question")} ${i + 1}"></button>`).join("");
     $("q-dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.q)); });
     $("st-done-note").textContent = tr(`dari ${questions.length}`, `of ${questions.length}`);
@@ -121,6 +130,7 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
           try {
             if (/<bgColor r="226" g="244" b="217"/.test(api.getXML())) api.setGraphicsOptions(1, { bgColor: "#F3F5FB" });
           } catch { /* keep the applet colour */ }
+          if (CARD) { try { CARD.setup(api); } catch { /* the card still works without its setup */ } }
           // Keep the frame in the applet's own proportions so it scales on any screen.
           const m = String(api.getXML()).match(/<size width="(\d+)" height="(\d+)"/);
           if (m) $("applet-wrap").style.aspectRatio = `${m[1]} / ${m[2]}`;
@@ -136,6 +146,8 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
   /* ---------------- questions ---------------- */
 
   function show(i) {
+    // each card question starts from an empty basket
+    if (CARD && api && i !== qi) { try { CARD.setup(api); } catch { /* keep the applet as it is */ } }
     qi = i;
     const q = questions[i];
     const st = state[i];
@@ -150,7 +162,7 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     });
     chatLog.innerHTML = "";
     if (!st.nodes.length) {
-      const open = FALLBACK.L1;
+      const open = CARD ? CARD.opening(i) : FALLBACK.L1;
       st.nodes.push(msgNode("ai", open, `${MOVE_NAME.L1} · ${SCRIPT}`));
       st.history.push({ role: "assistant", content: open });
       st.path.push("L1");
@@ -234,11 +246,87 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     return true;
   }
 
+  /* A turn with a task card: the card decides the move and its limits; the AI may phrase it,
+     and its reply is checked twice (worker guards, then the card's content check). */
+  async function cardTurn(text, st) {
+    input.value = "";
+    busy = true;
+    sendBtn.disabled = true;
+    add(msgNode("student", text));
+    st.history.push({ role: "user", content: text });
+    st.turns += 1;
+    const app = api ? CARD.appState(api) : { balloons: 0, bags: 0, basket: null, pending: false, used: false };
+    const res = CARD.step({ qi, text, app, mem: st.mem });
+    const texts = st.history.filter((h) => h.role === "user").map((h) => h.content);
+    const lim = CARD.limits(res, qi, st.mem, texts, app);
+    const q = questions[qi];
+    const context = [L(act.title), ...act.items.filter((i) => i.type === "text").map((t) => plain(L(t.body)))].join(" — ");
+
+    const typingEl = msgNode("ai typing", "");
+    typingEl.querySelector("p").innerHTML = "<span></span><span></span><span></span>";
+    chatLog.appendChild(typingEl);
+    chatLog.scrollTop = chatLog.scrollHeight;
+    const ai = await ask({
+      open: true, lang: EN ? "en" : "id", lead: lim, forbid: [],
+      stage: { id: `a${n}q${qi + 1}`, question: plain(L(q.body)) },
+      context, analysis: { suggestedMove: res.move }, history: st.history.slice(-10),
+    });
+    typingEl.remove();
+
+    let reply = res.reply, move = res.move, source = SCRIPT;
+    const why = ai && ai.reply ? CARD.overreach(ai.reply, lim, qi) : "no reply";
+    const helpOK = ai && (lim.goal || (CARD.HELP[ai.move] ?? 9) <= lim.maxHelp);
+    if (!why && helpOK) {
+      reply = ai.reply;
+      move = lim.goal ? "OK" : ai.move;
+      source = ai.model || "AI";
+      $("mode-badge").textContent = tr("Poda · AI aktif", "Poda · AI on");
+      $("mode-badge").classList.add("on");
+    }
+    // the protocol's memory, as in the temperature task
+    st.mem.answerOK = res.answerOK;
+    if (res.kind.startsWith("wrong")) st.mem.wrong += 1;
+    if (["subtraction", "answerOnly", "stuck"].includes(res.kind) && res.answerOK) st.mem.weak += 1;
+    if (res.kind === "wrong:dontKnow") st.stuck += 1;
+    st.mem.lastKind = res.kind;
+
+    add(msgNode(move === "OK" ? "ai confirm" : "ai", reply, `${MOVE_NAME[move] || move} · ${source} · ${CARD.KIND_LABEL[res.kind] || res.kind}`));
+    st.history.push({ role: "assistant", content: reply });
+    st.path.push(move);
+    renderPath(st.path);
+    renderLevel(Math.max(1, CARD.HELP[res.move] || 1));
+    addLog(text, move, source, reply);
+    if (res.done) finish();
+    busy = false;
+    sendBtn.disabled = st.done;
+    if (!st.done) input.focus();
+  }
+
+  function finish() {
+    const st = state[qi];
+    st.done = true;
+    [...$("q-dots").children][qi].classList.add("done");
+    if (qi < questions.length - 1) {
+      const next = document.createElement("div");
+      next.className = "chat-note next-q";
+      next.innerHTML = `<button type="button" class="btn small">${tr("Soal berikutnya", "Next question")} <span class="arrow">→</span></button>`;
+      next.querySelector("button").addEventListener("click", () => show(qi + 1));
+      add(next);
+    } else {
+      add(Object.assign(document.createElement("div"), {
+        className: "chat-note",
+        textContent: tr("Semua soal di aktivitas ini sudah tuntas.", "All questions in this activity are done."),
+      }));
+    }
+    input.disabled = true;
+  }
+
   async function onSubmit(e) {
     e.preventDefault();
     const text = input.value.trim();
     const st = state[qi];
     if (!text || busy || st.done) return;
+    if (CARD) return cardTurn(text, st);
     input.value = "";
     busy = true;
     sendBtn.disabled = true;
