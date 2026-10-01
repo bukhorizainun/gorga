@@ -23,6 +23,7 @@
 </head>
 <body class="landing">
   <div class="sky" aria-hidden="true"><i></i><i></i><i></i></div>
+  <canvas class="mathfield" aria-hidden="true"></canvas>
 
   <header class="top">
     <a class="mark" href="./" aria-label="Gorga, beranda"><img src="assets/logo-nila.svg" alt="" width="34" height="34"><span>gorga</span></a>
@@ -61,7 +62,7 @@
         <p class="intro">Soal: suhu awal −6 °C, berapa kenaikan untuk mencapai 4 °C? Siswa sudah menjawab 10 dengan menghitung satu per satu. Protokol melarang tutor menyebut angka 0. Perhatikan cara Poda memancingnya.</p>
       </header>
       <div class="dialogue">
-        <div class="lines" data-rv="seq"><p class="say st" style="--i:0"><span class="who">Siswa</span><span class="txt">jadi, dari -6 naik ke -5 lalu ke -4, terus -3, ke -2, ke -1, lalu ke 0. Terus lanjut naik ke 1, ke 2, ke 3, sampai terakhir ke 4.</span></p><p class="say ai" style="--i:1"><span class="who">Poda</span><span class="txt">Kamu naik dari -6 ke -5, -4, -3, -2, -1, lalu ke 1, 2, 3, sampai 4. Apa yang terjadi saat melewati suhu tertentu sebelum 1?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:2"><span class="who">Siswa</span><span class="txt">oh berhenti di nol dulu ya</span></p><p class="say ai" style="--i:3"><span class="who">Poda</span><span class="txt">Kamu berhenti di nol dulu. Bagaimana kamu menghitung kenaikan suhu dari -6 ke 0, lalu dari 0 ke 4?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:4"><span class="who">Siswa</span><span class="txt">dari -6 ke 0 naik 6</span></p><p class="say ai" style="--i:5"><span class="who">Poda</span><span class="txt">Dari -6 ke 0 naik 6, lalu dari 0 ke 4 naik berapa, dan bagaimana itu membuat total kenaikan suhu?<sup class="lvl">L1</sup></span></p><p class="say st" style="--i:6"><span class="who">Siswa</span><span class="txt">terus 4 lagi jadi 10</span></p><p class="say win" style="--i:7"><span class="who">Poda</span><span class="txt">Jawabanmu benar. Kamu memecah kenaikan suhu menjadi dua bagian: dari -6 ke 0 naik 6 derajat, lalu dari 0 ke 4 naik 4 derajat, totalnya 10 derajat.</span></p></div>
+        <div class="lines" data-rv="seq"><p class="say st" style="--i:0"><span class="who">Siswa</span><span class="txt">jadi, dari -6 naik ke -5 lalu ke -4, terus -3, ke -2, ke -1, lalu ke 0. Terus lanjut naik ke 1, ke 2, ke 3, sampai terakhir ke 4.</span></p><p class="say ai" style="--i:1"><span class="who">Poda</span><span class="txt">Kamu naik dari -6 ke -5, -4, -3, -2, -1, lalu ke 1, 2, 3, sampai 4. Apa yang terjadi saat melewati suhu tertentu sebelum 1?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:2"><span class="who">Siswa</span><span class="txt">oh berhenti di nol dulu ya</span></p><p class="say ai" style="--i:3"><span class="who">Poda</span><span class="txt">Kamu berhenti di nol dulu. Bagaimana kamu menghitung kenaikan suhu dari -6 ke 0, lalu dari 0 ke 4?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:4"><span class="who">Siswa</span><span class="txt">dari -6 ke 0 naik 6</span></p><p class="say ai" style="--i:5"><span class="who">Poda</span><span class="txt">Dari -6 ke 0 naik 6, lalu dari 0 ke 4 naik berapa, dan bagaimana itu membuat total kenaikan suhu?<sup class="lvl">L1</sup></span></p><p class="say st" style="--i:6"><span class="who">Siswa</span><span class="txt">terus 4 lagi jadi 10</span></p><p class="say found" style="--i:7"><span class="who">Poda</span><span class="txt">Jawabanmu benar. Kamu memecah kenaikan suhu menjadi dua bagian: dari -6 ke 0 naik 6 derajat, lalu dari 0 ke 4 naik 4 derajat, totalnya 10 derajat.</span></p></div>
         <aside class="note" data-rv>
           <h3>Kata “benar” baru muncul di akhir.</h3>
           <p>Menghitung satu per satu sudah menghasilkan 10, tapi belum cukup. Poda baru memberi konfirmasi setelah siswa sendiri memecah perubahan di angka 0, sesuai protokol guru.</p>
@@ -186,5 +187,6 @@
     });
   </script>
   <script src="assets/motif.js"></script>
+  <script src="assets/mathfield.js"></script>
 </body>
 </html>

@@ -45,7 +45,8 @@ def page(c, path):
         kind, text = line[0], line[1]
         who = c["who_st"] if kind == "st" else c["who_ai"]
         tag = f'<sup class="lvl">{line[2]}</sup>' if len(line) > 2 else ""
-        convo.append(f'<p class="say {kind}" style="--i:{i}"><span class="who">{who}</span><span class="txt">{text}{tag}</span></p>')
+        cls = "found" if kind == "win" else kind   # not "win": that class belongs to the topic buttons
+        convo.append(f'<p class="say {cls}" style="--i:{i}"><span class="who">{who}</span><span class="txt">{text}{tag}</span></p>')
 
     rungs = []
     for i, (code, h, p, q) in enumerate(c["rungs"]):
@@ -113,6 +114,7 @@ def page(c, path):
 </head>
 <body class="landing">
   <div class="sky" aria-hidden="true"><i></i><i></i><i></i></div>
+  <canvas class="mathfield" aria-hidden="true"></canvas>
 
   <header class="top">
     <a class="mark" href="{up or './'}" aria-label="{e(c["home_label"])}"><img src="{A}logo-nila.svg" alt="" width="34" height="34"><span>gorga</span></a>
@@ -243,6 +245,7 @@ def page(c, path):
     }});
   </script>
   <script src="{A}motif.js"></script>
+  <script src="{A}mathfield.js"></script>
 </body>
 </html>
 '''

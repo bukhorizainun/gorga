@@ -23,6 +23,7 @@
 </head>
 <body class="landing">
   <div class="sky" aria-hidden="true"><i></i><i></i><i></i></div>
+  <canvas class="mathfield" aria-hidden="true"></canvas>
 
   <header class="top">
     <a class="mark" href="../" aria-label="Gorga, Startseite"><img src="../assets/logo-nila.svg" alt="" width="34" height="34"><span>gorga</span></a>
@@ -61,7 +62,7 @@
         <p class="intro">Aufgabe: Die Temperatur liegt bei −6 °C. Um wie viel muss sie steigen, um 4 °C zu erreichen? Die Schülerin hat schon 10 geantwortet, indem sie einzeln gezählt hat. Das Protokoll verbietet dem Tutor, die Null zu nennen. Achten Sie darauf, wie Poda sie dorthin führt.</p>
       </header>
       <div class="dialogue">
-        <div class="lines" data-rv="seq"><p class="say st" style="--i:0"><span class="who">Schülerin</span><span class="txt">also von -6 hoch auf -5, dann -4, dann -3, -2, -1, dann 0. Dann weiter auf 1, 2, 3 und zum Schluss 4.</span></p><p class="say ai" style="--i:1"><span class="who">Poda</span><span class="txt">Du bist von -6 über -5, -4, -3, -2, -1 bis 1, 2, 3 und 4 gegangen. Was passiert, wenn du eine bestimmte Temperatur vor der 1 überquerst?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:2"><span class="who">Schülerin</span><span class="txt">ach, erst bei null anhalten</span></p><p class="say ai" style="--i:3"><span class="who">Poda</span><span class="txt">Du hältst zuerst bei null an. Wie zählst du den Anstieg von -6 bis 0 und dann von 0 bis 4?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:4"><span class="who">Schülerin</span><span class="txt">von -6 bis 0 steigt es um 6</span></p><p class="say ai" style="--i:5"><span class="who">Poda</span><span class="txt">Von -6 bis 0 steigt es um 6. Um wie viel steigt es dann von 0 bis 4, und wie ergibt das den ganzen Anstieg?<sup class="lvl">L1</sup></span></p><p class="say st" style="--i:6"><span class="who">Schülerin</span><span class="txt">dann noch 4, also 10</span></p><p class="say win" style="--i:7"><span class="who">Poda</span><span class="txt">Deine Antwort stimmt. Du hast den Anstieg in zwei Teile zerlegt: von -6 bis 0 steigt es um 6 Grad, dann von 0 bis 4 um 4 Grad, zusammen 10 Grad.</span></p></div>
+        <div class="lines" data-rv="seq"><p class="say st" style="--i:0"><span class="who">Schülerin</span><span class="txt">also von -6 hoch auf -5, dann -4, dann -3, -2, -1, dann 0. Dann weiter auf 1, 2, 3 und zum Schluss 4.</span></p><p class="say ai" style="--i:1"><span class="who">Poda</span><span class="txt">Du bist von -6 über -5, -4, -3, -2, -1 bis 1, 2, 3 und 4 gegangen. Was passiert, wenn du eine bestimmte Temperatur vor der 1 überquerst?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:2"><span class="who">Schülerin</span><span class="txt">ach, erst bei null anhalten</span></p><p class="say ai" style="--i:3"><span class="who">Poda</span><span class="txt">Du hältst zuerst bei null an. Wie zählst du den Anstieg von -6 bis 0 und dann von 0 bis 4?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:4"><span class="who">Schülerin</span><span class="txt">von -6 bis 0 steigt es um 6</span></p><p class="say ai" style="--i:5"><span class="who">Poda</span><span class="txt">Von -6 bis 0 steigt es um 6. Um wie viel steigt es dann von 0 bis 4, und wie ergibt das den ganzen Anstieg?<sup class="lvl">L1</sup></span></p><p class="say st" style="--i:6"><span class="who">Schülerin</span><span class="txt">dann noch 4, also 10</span></p><p class="say found" style="--i:7"><span class="who">Poda</span><span class="txt">Deine Antwort stimmt. Du hast den Anstieg in zwei Teile zerlegt: von -6 bis 0 steigt es um 6 Grad, dann von 0 bis 4 um 4 Grad, zusammen 10 Grad.</span></p></div>
         <aside class="note" data-rv>
           <h3>„Richtig“ kommt erst am Ende.</h3>
           <p>Einzeln zählen ergibt schon 10, reicht aber nicht. Poda bestätigt erst, wenn die Schülerin die Änderung selbst bei 0 zerlegt, so wie es das Protokoll der Lehrkraft verlangt.</p>
@@ -186,5 +187,6 @@
     });
   </script>
   <script src="../assets/motif.js"></script>
+  <script src="../assets/mathfield.js"></script>
 </body>
 </html>

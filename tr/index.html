@@ -23,6 +23,7 @@
 </head>
 <body class="landing">
   <div class="sky" aria-hidden="true"><i></i><i></i><i></i></div>
+  <canvas class="mathfield" aria-hidden="true"></canvas>
 
   <header class="top">
     <a class="mark" href="../" aria-label="Gorga, ana sayfa"><img src="../assets/logo-nila.svg" alt="" width="34" height="34"><span>gorga</span></a>
@@ -61,7 +62,7 @@
         <p class="intro">Soru: sıcaklık −6 °C; 4 °C’ye ulaşmak için ne kadar artmalı? Öğrenci birer birer sayarak 10 cevabını zaten verdi. Protokol, öğretmenin “sıfır” demesini yasaklar. Poda’nın onu oraya nasıl yönlendirdiğine bakın.</p>
       </header>
       <div class="dialogue">
-        <div class="lines" data-rv="seq"><p class="say st" style="--i:0"><span class="who">Öğrenci</span><span class="txt">yani -6’dan -5’e, sonra -4’e, sonra -3, -2, -1, sonra 0’a çıktım. Sonra 1, 2, 3 ve en son 4’e.</span></p><p class="say ai" style="--i:1"><span class="who">Poda</span><span class="txt">-6’dan -5, -4, -3, -2, -1 üzerinden 1, 2, 3 ve 4’e çıktın. 1’den önceki belli bir sıcaklığı geçerken ne oluyor?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:2"><span class="who">Öğrenci</span><span class="txt">ha, önce sıfırda durmak</span></p><p class="say ai" style="--i:3"><span class="who">Poda</span><span class="txt">Önce sıfırda duruyorsun. -6’dan 0’a ve sonra 0’dan 4’e olan artışı nasıl sayıyorsun?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:4"><span class="who">Öğrenci</span><span class="txt">-6’dan 0’a 6 artıyor</span></p><p class="say ai" style="--i:5"><span class="who">Poda</span><span class="txt">-6’dan 0’a 6 artıyor. Peki 0’dan 4’e ne kadar artıyor ve bu toplam artışı nasıl veriyor?<sup class="lvl">L1</sup></span></p><p class="say st" style="--i:6"><span class="who">Öğrenci</span><span class="txt">sonra 4 daha, yani 10</span></p><p class="say win" style="--i:7"><span class="who">Poda</span><span class="txt">Cevabın doğru. Artışı iki parçaya ayırdın: -6’dan 0’a 6 derece, sonra 0’dan 4’e 4 derece, toplam 10 derece.</span></p></div>
+        <div class="lines" data-rv="seq"><p class="say st" style="--i:0"><span class="who">Öğrenci</span><span class="txt">yani -6’dan -5’e, sonra -4’e, sonra -3, -2, -1, sonra 0’a çıktım. Sonra 1, 2, 3 ve en son 4’e.</span></p><p class="say ai" style="--i:1"><span class="who">Poda</span><span class="txt">-6’dan -5, -4, -3, -2, -1 üzerinden 1, 2, 3 ve 4’e çıktın. 1’den önceki belli bir sıcaklığı geçerken ne oluyor?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:2"><span class="who">Öğrenci</span><span class="txt">ha, önce sıfırda durmak</span></p><p class="say ai" style="--i:3"><span class="who">Poda</span><span class="txt">Önce sıfırda duruyorsun. -6’dan 0’a ve sonra 0’dan 4’e olan artışı nasıl sayıyorsun?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:4"><span class="who">Öğrenci</span><span class="txt">-6’dan 0’a 6 artıyor</span></p><p class="say ai" style="--i:5"><span class="who">Poda</span><span class="txt">-6’dan 0’a 6 artıyor. Peki 0’dan 4’e ne kadar artıyor ve bu toplam artışı nasıl veriyor?<sup class="lvl">L1</sup></span></p><p class="say st" style="--i:6"><span class="who">Öğrenci</span><span class="txt">sonra 4 daha, yani 10</span></p><p class="say found" style="--i:7"><span class="who">Poda</span><span class="txt">Cevabın doğru. Artışı iki parçaya ayırdın: -6’dan 0’a 6 derece, sonra 0’dan 4’e 4 derece, toplam 10 derece.</span></p></div>
         <aside class="note" data-rv>
           <h3>“Doğru” kelimesi ancak sonda gelir.</h3>
           <p>Birer birer saymak da 10 verir ama yeterli değildir. Poda, öğrenci değişimi kendisi 0’da ikiye ayırdıktan sonra onaylar; öğretmenin protokolü bunu ister.</p>
@@ -186,5 +187,6 @@
     });
   </script>
   <script src="../assets/motif.js"></script>
+  <script src="../assets/mathfield.js"></script>
 </body>
 </html>
