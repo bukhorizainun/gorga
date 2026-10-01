@@ -4,7 +4,7 @@
    the tutor never gives the answer, and the AI may confirm only from the second turn on,
    when the student's answer and reason are complete. */
 
-const GORGA_API = "https://gorga.zainun.workers.dev";
+const GORGA_API = "https://gorga.shelbot-plus.workers.dev";
 
 (function () {
   const EN = window.GORGA_LANG === "en";

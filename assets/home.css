@@ -113,6 +113,7 @@ section.block + section.block { border-top: 1px solid var(--garis); }
 .site-foot { padding: 34px 0 44px; font-size: 13px; color: var(--ink-3); }
 .site-foot .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
 .site-foot p { margin: 0; max-width: 60em; }
+.site-foot a.gh { color: inherit; text-underline-offset: 3px; }
 
 @media (max-width: 980px) {
   .hero .wrap, .head2, .dialog, .teach, .name .wrap { grid-template-columns: 1fr; }
