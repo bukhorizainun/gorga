@@ -109,7 +109,7 @@ def page(c, path):
         n = sum(len(tp["items"]) for tp in lv["topics"])
         topics = " · ".join(tx(tp["name"]) for tp in lv["topics"]) or " · ".join(tx(lv["plan"]))
         levels.append(f'''<li style="--i:{i}"><a class="level{"" if n else " later"}" href="{up}jenjang/?j={lv["id"]}&amp;lang={al}">
-            <span class="lv-name">{tx(lv["name"]) if lang != "id" else lv["name"]["id"]}</span>
+            <span class="lv-name{" long" if len(tx(lv["name"]) if lang != "id" else lv["name"]["id"]) > 6 else ""}" lang="{lang}">{tx(lv["name"]) if lang != "id" else lv["name"]["id"]}</span>
             <span class="lv-phase">{tx(lv["phase"])}</span>
             <span class="lv-topics">{topics}</span>
             <span class="lv-count">{f"{n} {c['lv_items']}" if n else c["lv_prep"]} <span aria-hidden="true">→</span></span></a></li>''')

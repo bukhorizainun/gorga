@@ -79,6 +79,8 @@ function play() {
 
 function rebuild(animate) {
   strokes = pic.build(F, p).map((s) => Object.assign(s, { pts: strokePoints(s) }));
+  // equations written with Indonesian decimal commas read as decimal points in English
+  if (EN) for (const s of strokes) { s.eq = s.eq.replace(/(\d),(\d)/g, "$1.$2"); s.dom = s.dom.replace(/(\d),(\d)/g, "$1.$2"); }
   const nr = strokes.filter((s) => s.region).length, ne = strokes.length - nr;
   $("pic-count").innerHTML = L(`Gambar ini tersusun dari <b>${ne}</b> persamaan dan <b>${nr}</b> pertidaksamaan untuk warnanya.`,
     `This picture is made of <b>${ne}</b> equations and <b>${nr}</b> inequalities for its colours.`);

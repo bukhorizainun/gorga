@@ -33,7 +33,7 @@
     document.title = `${t(lv.name)} — Gorga`;
     $("tabs").innerHTML = cat.levels.map((x) => {
       const n = count(x);
-      return `<button type="button" role="tab" data-j="${x.id}" aria-selected="${x.id === level}">${t(x.name)}<small>${n ? `${n} ${L("materi", n === 1 ? "item" : "items")}` : L("disiapkan", "in preparation")}</small></button>`;
+      return `<button type="button" role="tab" data-j="${x.id}" aria-selected="${x.id === level}"${t(x.name).length > 6 ? ' class="long"' : ""}>${t(x.name)}<small>${n ? `${n} ${L("materi", n === 1 ? "item" : "items")}` : L("disiapkan", "in preparation")}</small></button>`;
     }).join("");
     $("phase").textContent = t(lv.phase);
     $("intro").textContent = t(lv.intro);
