@@ -200,9 +200,9 @@
       const b = Math.abs(stage.end);
       return out("OK", "goal",
         tx(`Benar. Dari ${s} ke 0 °C ${verb} ${a} derajat, lalu dari 0 °C ke ${e} ${verb} ${b} derajat, ` +
-          `jadi total ${verb} ${size} °C. Memecah di 0 membuat hitungannya cepat.`,
+          `jadi total ${verb} ${size} °C.`,
           `Correct. From ${s} to 0 °C it ${verb} ${a} degrees, then from 0 °C to ${e} it ${verb} ${b} degrees, ` +
-          `so in total it ${verb} ${size} °C. Splitting at 0 makes the counting quick.`), true);
+          `so in total it ${verb} ${size} °C.`), true);
     }
 
     // Wrong total, or "tidak tahu": L2, then L3, then the teacher's hint.
@@ -247,11 +247,10 @@
           tx(`Coba bagi jadi dua bagian. Berapa derajat dari ${s} sampai 0 °C? Lalu berapa derajat dari 0 °C sampai ${e}?`,
             `Try it in two parts. How many degrees from ${s} to 0 °C? And how many from 0 °C to ${e}?`));
       }
-      return out("HINT", "wrong:" + k,
-        tx(`Hitung lompatannya, bukan angkanya. Dari ${s} ke 0 °C ada ${Math.abs(stage.start)} lompatan. ` +
-          `Sekarang hitung lompatan dari 0 °C ke ${e}, lalu jumlahkan keduanya.`,
-          `Count the jumps, not the numbers. From ${s} to 0 °C there are ${Math.abs(stage.start)} jumps. ` +
-          `Now count the jumps from 0 °C to ${e}, then add the two.`));
+      // The framework has no level above L3 Focus: a second, smaller sub-question instead of a hint.
+      return out("L3", "wrong:" + k,
+        tx(`Kita mulai dari bagian pertama saja: dari ${s} sampai 0 °C, berapa kali penandanya melompat?`,
+          `Let's take the first part only: from ${s} to 0 °C, how many times does the marker jump?`));
     }
 
     // Answer is correct but the target reasoning is not there yet.

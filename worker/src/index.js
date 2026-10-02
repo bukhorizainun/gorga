@@ -172,7 +172,7 @@ function leadPrompt(b) {
   const en = b.lang === "en";
   const facts = list(L.facts, 8).map((f) => `- ${clip(f, 200)}`).join("\n");
   const task = L.goal
-    ? `TUGAS: siswa sudah menemukan penalaran target sendiri. Tulis konfirmasi singkat yang hangat: sebut bahwa jawabannya benar, ulangi cara siswa memecah di 0 dengan angkanya, dan total ${L.size} derajat. Tanpa pertanyaan. Pakai "move":"OK".`
+    ? `TUGAS: siswa sudah menemukan penalaran target sendiri. Tulis konfirmasi singkat yang hangat: sebut bahwa jawabannya benar, ulangi cara siswa memecah di 0 dengan angkanya, dan total ${L.size} derajat. Jangan menambah penjelasan baru. Tanpa pertanyaan. Pakai "move":"OK".`
     : `TUGAS: tulis balasan berikutnya sebagai guru. ${LEVEL_TEXT[L.maxHelp] || LEVEL_TEXT[1]}`;
   return `Kamu Poda, tutor matematika yang sabar di aplikasi Gorga, untuk siswa SMP di Indonesia. Kalau siswa menanyakan namamu, namamu Poda. Siswa mengerjakan soal di applet termometer GeoGebra (termometer tegak: naik = ke atas, turun = ke bawah), lalu berdiskusi denganmu di chat.
 
@@ -225,7 +225,7 @@ ${L.target ? `PENALARAN TARGET DARI GURU (rahasia; jangan diucapkan, jangan dipa
 FAKTA DARI SISTEM:
 ${facts}
 
-${L.goal ? `TUGAS: siswa sudah memberi jawaban benar DAN penalaran target dari dirinya sendiri. Tulis konfirmasi singkat yang hangat: sebut bahwa jawabannya benar, lalu ulangi cara atau alasan siswa dengan angkanya. Tanpa pertanyaan. Pakai "move":"OK".` : `TUGAS: tulis balasan berikutnya sebagai guru. ${LEVEL_TEXT[L.maxHelp] || LEVEL_TEXT[1]}`}
+${L.goal ? `TUGAS: siswa sudah memberi jawaban benar DAN penalaran target dari dirinya sendiri. Tulis konfirmasi singkat yang hangat: sebut bahwa jawabannya benar, lalu ulangi cara atau alasan siswa dengan angkanya. JANGAN menambah penjelasan baru di luar yang dikatakan siswa (kerangka guru: confirm without adding a new explanation). Tanpa pertanyaan. Pakai "move":"OK".` : `TUGAS: tulis balasan berikutnya sebagai guru. ${LEVEL_TEXT[L.maxHelp] || LEVEL_TEXT[1]}`}
 ${L.goal ? "" : L.mayConfirm ? `Jika jawaban DAN alasan siswa untuk pertanyaan ini sudah lengkap dan masuk akal, beri konfirmasi singkat yang hangat dengan "move":"OK": sebut apa yang sudah tepat dari penjelasannya, tanpa pertanyaan. Jika belum lengkap atau masih keliru, JANGAN konfirmasi; lanjutkan dengan pertanyaan.` : "Jangan memberi konfirmasi dulu."}
 
 CARA MENANGGAPI

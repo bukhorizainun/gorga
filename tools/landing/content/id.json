@@ -88,38 +88,32 @@
   "aside_small": "Balasan Poda di contoh ini ditulis AI apa adanya, dari uji simulasi. Kalimat siswanya disusun tim sebagai kalimat uji.",
   "aside_cta": "Coba sendiri",
   "p_eyebrow": "Protokol guru",
-  "p_h2": "Bantuan bertingkat, <em>bukan jawaban.</em>",
-  "p_intro": "AI memilih langkah berikutnya sendiri, tapi hanya sampai batas yang sedang berlaku. Makin lama siswa macet, makin besar bantuan yang boleh diberikan. Jawaban tetap harus datang dari siswa.",
+  "p_h2": "Bantuan naik saat macet, <em>turun saat berhasil.</em>",
+  "p_intro": "Poda mengikuti kerangka scaffolding guru. Mulai dari diagnosis, bantuan baru naik kalau siswa belum bisa, dan dilepas lagi begitu siswa berhasil menjelaskan. Jawaban tetap harus datang dari siswa.",
   "rungs": [
     [
       "L1 · Probe",
       "Bertanya",
-      "Mengajak mencoba di applet dan bertanya terbuka.",
-      "“Coba kerjakan dengan termometer. Bagaimana kamu mendapatkannya?”"
-    ],
-    [
-      "L4 · Revoice",
-      "Mengulang",
-      "Mengulang ide siswa dengan kata lain, lalu meminta penjelasan.",
-      "“Kamu hitung kotaknya ada 10. Bagaimana kamu menghitungnya?”"
+      "Pertanyaan terbuka untuk melihat apa yang siswa perhatikan, lakukan, atau pikirkan. Belum menunjuk apa pun.",
+      "“Apa yang kamu perhatikan dari posisi −6 dan 4 di termometer?”"
     ],
     [
       "L2 · Point",
       "Menunjuk",
-      "Mengarahkan perhatian ke satu hal di termometer.",
-      "“Lihat angka 0. Berapa derajat dari −6 sampai 0?”"
+      "Mengarahkan perhatian ke satu fitur penting di applet, tanpa memberi tahu artinya.",
+      "“Lihat −6 dan 0 di termometer. Di mana −6 dibanding 0?”"
     ],
     [
-      "L3 · Langkah",
-      "Memecah",
-      "Memecah soal menjadi pertanyaan kecil, tanpa memberi hasil.",
-      "“Dari −6 ke 0 berapa? Lalu dari 0 ke 4?”"
+      "L3 · Focus",
+      "Memfokuskan",
+      "Mengecilkan soal menjadi satu sub-pertanyaan yang bisa dijawab, tanpa memberi prosedurnya.",
+      "“Pertama, dari −6 °C ke 0 °C, naik berapa derajat?”"
     ],
     [
-      "Konfirmasi",
-      "Ditemukan",
-      "Baru diberikan setelah jawaban benar dan penalaran target muncul dari siswa.",
-      "“Kamu memecah di 0: 6 lalu 4, jadi 10.”"
+      "L4 · Revoice & fade",
+      "Menjelaskan, lalu dilepas",
+      "Setelah berhasil, siswa menjelaskan penalarannya dengan applet. Poda mengonfirmasi tanpa penjelasan baru, lalu bantuan dicabut.",
+      "“Sekarang jelaskan dengan termometer, kenapa totalnya naik 10 °C.”"
     ]
   ],
   "guards": [
@@ -292,5 +286,6 @@
   "logo_alt": "Logo Gorga",
   "foot1": "Gorga · prototipe riset pendidikan matematika, non-komersial. Aktivitas Skala Suhu: Dr. Rahmi Ramadhani Umar. Applet termometer: A.M. Vuković (2013), lewat GeoGebra.",
   "n_p_gorga": "Namanya terinspirasi dari <b>gorga</b>, ukiran pada rumah adat Batak dengan tiga warna: merah, putih, dan hitam. Polanya penuh simetri, pencerminan, dan pengulangan. Matematika sudah lama tinggal di dalamnya.",
-  "n_p_poda": "<b>Poda</b> adalah kata Batak Toba untuk nasihat yang disampaikan dengan halus dan tidak langsung. Begitulah tutornya bekerja: menuntun lewat pertanyaan, bukan memberi jawaban."
+  "n_p_poda": "<b>Poda</b> adalah kata Batak Toba untuk nasihat yang disampaikan dengan halus dan tidak langsung. Begitulah tutornya bekerja: menuntun lewat pertanyaan, bukan memberi jawaban.",
+  "ladder_note": "Kerangka: van de Pol, Volman & Beishuizen (2010); van de Pol & Elbers (2013); Wood, Bruner & Ross (1976)."
 }

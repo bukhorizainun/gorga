@@ -249,8 +249,8 @@
     if (qi === 0) {
       if (r.strategy === "bothSigned") {
         return out("OK", "goal", tx(
-          "Benar. Balon membawa karbon naik, jadi keranjang bergerak ke atas dan ditulis sebagai bilangan positif. Karung pasir menurunkan keranjang, jadi ditulis sebagai bilangan negatif.",
-          "Correct. Balloons carry carbon up, so the basket moves up and we write a positive number. Sandbags pull the basket down, so we write a negative number."), true);
+          "Benar, seperti katamu: balon membuat keranjang naik dan ditulis positif, karung pasir membuatnya turun dan ditulis negatif.",
+          "Correct, as you said: balloons move the basket up and are written as positive, sandbags move it down and are written as negative."), true);
       }
       if (r.strategy === "both") {
         return out("L4", "bothNoSign", tx(
@@ -276,9 +276,10 @@
             "Kita coba satu per satu. Tambah 1 balon, SUBMIT, lihat angkanya. Lalu tambah 1 karung pasir, SUBMIT, lihat lagi. Mana yang membuat angkanya bertambah, dan mana yang membuatnya berkurang?",
             "One at a time. Add 1 balloon, SUBMIT, read the number. Then add 1 sandbag, SUBMIT, read it again. Which one makes the number bigger, and which makes it smaller?"));
         }
-        return out("HINT", "wrong:" + k, tx(
-          "Petunjuk: angka di samping keranjang bertambah kalau keranjang naik, dan berkurang kalau keranjang turun. Setelah kamu menambah balon, angkanya bertambah atau berkurang?",
-          "Hint: the number beside the basket gets bigger when the basket goes up, and smaller when it goes down. After you add a balloon, does the number get bigger or smaller?"));
+        // No level above L3 Focus in the framework: one smaller sub-question.
+        return out("L3", "wrong:" + k, tx(
+          "Kita lihat balonnya saja dulu. Tambah satu balon, tekan SUBMIT: angka di samping keranjang jadi lebih besar atau lebih kecil?",
+          "Just the balloons first. Add one balloon and press SUBMIT: does the number beside the basket get bigger or smaller?"));
       }
       if (!app.used) return out("L1", "notTried", opening(0));
       return out("L1", "unclear", tx(
@@ -302,10 +303,10 @@
             "Your reason is there. So how much carbon must the trees absorb?"));
       }
       return out("OK", "goal", qi === 1
-        ? tx("Benar. Asap menambah 8 karbon dan pohon menyerap 5, jadi 8 + (−5) = 3. Karung pasir ditulis negatif karena karbonnya diserap, dan tersisa 3 karbon di udara.",
-          "Correct. Smoke adds 8 carbon and the trees absorb 5, so 8 + (−5) = 3. The sandbags are negative because that carbon is absorbed, and 3 carbon stays in the air.")
-        : tx("Benar. Pohon harus menyerap 6 karbon: 6 + (−6) = 0. Setiap karung pasir membatalkan satu balon, jadi 6 balon perlu 6 karung pasir supaya karbon yang tersisa nol.",
-          "Correct. The trees must absorb 6 carbon: 6 + (−6) = 0. Each sandbag cancels one balloon, so 6 balloons need 6 sandbags for the carbon left to be zero."), true);
+        ? tx("Benar, seperti yang kamu tulis: 8 + (−5) = 3, jadi tersisa 3 karbon di udara.",
+          "Correct, as you wrote: 8 + (−5) = 3, so 3 carbon stays in the air.")
+        : tx("Benar, seperti alasanmu: pohon harus menyerap 6 karbon, karena 6 + (−6) = 0.",
+          "Correct, as you reasoned: the trees must absorb 6 carbon, because 6 + (−6) = 0."), true);
     }
 
     const stuck = answerOK && r.total === null && r.strategy === "dontKnow";
@@ -345,11 +346,12 @@
           : tx("Kita pecah. Setelah 6 balon, keranjang di angka berapa? Setiap karung pasir menurunkannya satu. Berapa kali harus turun supaya sampai di 0?",
             "Let's break it down. After 6 balloons, where is the basket? Each sandbag takes it down one. How many steps down to reach 0?"));
       }
-      return out("HINT", "wrong:" + k, qi === 1
-        ? tx("Petunjuk: setiap karung pasir membatalkan satu balon. Ada 8 balon dan 5 karung pasir. Berapa balon yang tidak punya pasangan karung?",
-          "Hint: each sandbag cancels one balloon. There are 8 balloons and 5 sandbags. How many balloons have no sandbag to pair with?")
-        : tx("Petunjuk: satu balon dan satu karung pasir saling membatalkan. Supaya semua 6 balon batal, berapa karung pasir yang dibutuhkan?",
-          "Hint: one balloon and one sandbag cancel each other. For all 6 balloons to be cancelled, how many sandbags are needed?"));
+      // No level above L3 Focus in the framework: one smaller sub-question.
+      return out("L3", "wrong:" + k, qi === 1
+        ? tx("Satu langkah dulu: pasang 8 balon saja dan tekan SUBMIT. Keranjangnya di angka berapa?",
+          "One step first: put on the 8 balloons only and press SUBMIT. Where is the basket?")
+        : tx("Satu langkah dulu: pasang 6 balon, lalu tambah satu karung pasir dan SUBMIT. Keranjangnya turun ke angka berapa?",
+          "One step first: put on 6 balloons, then add one sandbag and press SUBMIT. Where does the basket go down to?"));
     }
 
     if (answerOK) {

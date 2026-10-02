@@ -51,10 +51,10 @@ def page(c, path):
 
     rungs = []
     for i, (code, h, p, q) in enumerate(c["rungs"]):
-        level = [1, 1, 2, 3, 4][i]
-        dots = "".join(f'<i class="{"on" if k < level else ""}"></i>' for k in range(4)) if i < 4 else ""
+        level = [1, 2, 3, 1][i]          # instructional control: rises L1 -> L3, falls again at L4 (fade)
+        dots = "".join(f'<i class="{"on" if k < level else ""}"></i>' for k in range(3))
         rungs.append(f'''<li class="rung r{i + 1}" style="--i:{i}">
-            <span class="code"{' lang="en"' if any(w in code for w in ("Probe", "Revoice", "Point")) else ""}>{code}</span><h3>{h}</h3><p>{p}</p><blockquote>{q}</blockquote>{f'<span class="lv" aria-hidden="true">{dots}</span>' if dots else ''}
+            <span class="code"{' lang="en"' if any(w in code for w in ("Probe", "Revoice", "Point", "Focus")) else ""}>{code}</span><h3>{h}</h3><p>{p}</p><blockquote>{q}</blockquote>{f'<span class="lv" aria-hidden="true">{dots}</span>' if dots else ''}
           </li>''')
 
     guards = "".join(f'<li><b>{g}</b><span>{t}</span></li>' for g, t in c["guards"])
@@ -174,6 +174,7 @@ def page(c, path):
         <svg class="path" aria-hidden="true"><path pathLength="1"/></svg>
         <ol>{''.join(rungs)}</ol>
       </div>
+      <p class="ladder-note" data-rv>{c["ladder_note"]}</p>
       <ul class="guards" data-rv>{guards}</ul>
     </section>
 

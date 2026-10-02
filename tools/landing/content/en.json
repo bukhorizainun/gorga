@@ -88,38 +88,32 @@
   "aside_small": "This conversation ran in Indonesian in a simulation test and is translated here. Poda's replies were written by the AI; the student lines were written by the team as test sentences.",
   "aside_cta": "Try it yourself",
   "p_eyebrow": "The teacher's protocol",
-  "p_h2": "Help in steps, <em>not answers.</em>",
-  "p_intro": "The AI chooses its next move itself, but only up to the limit that applies at that moment. The longer a student is stuck, the more help it may give. The answer still has to come from the student.",
+  "p_h2": "Help rises when stuck, <em>fades on success.</em>",
+  "p_intro": "Poda follows the teacher's scaffolding framework. It starts with diagnosis, adds support only when the student cannot yet proceed, and withdraws it once the student explains the reasoning. The answer still has to come from the student.",
   "rungs": [
     [
       "L1 · Probe",
-      "Ask",
-      "Invites the student to try the applet and asks an open question.",
-      "“Try it with the thermometer. How did you get it?”"
-    ],
-    [
-      "L4 · Revoice",
-      "Revoice",
-      "Repeats the student's idea in other words, then asks for an explanation.",
-      "“You counted 10 boxes. How did you count them?”"
+      "Probe",
+      "An open question to see what the student notices, does or thinks. Nothing is pointed out yet.",
+      "“What do you notice about the positions of −6 and 4 on the thermometer?”"
     ],
     [
       "L2 · Point",
       "Point",
-      "Directs attention to one thing on the thermometer.",
-      "“Look at 0. How many degrees from −6 to 0?”"
+      "Directs attention to one relevant feature of the applet, without saying what it means.",
+      "“Look at −6 and 0 on the thermometer. Where is −6 relative to 0?”"
     ],
     [
-      "L3 · Guided step",
-      "Break down",
-      "Breaks the question into small questions, without giving the result.",
-      "“From −6 to 0, how many? And from 0 to 4?”"
+      "L3 · Focus",
+      "Focus",
+      "Reduces the task to one smaller, answerable sub-question, without giving the procedure.",
+      "“First, from −6 °C to 0 °C, how many degrees does it increase?”"
     ],
     [
-      "Confirmation",
-      "Found",
-      "Given only after a correct answer and after the target reasoning comes from the student.",
-      "“You split at 0: 6, then 4, so 10.”"
+      "L4 · Revoice & fade",
+      "Revoice, then fade",
+      "After success, the student explains the reasoning with the applet. Poda confirms without a new explanation, then support is withdrawn.",
+      "“Now explain using the thermometer why the total increase is 10 °C.”"
     ]
   ],
   "guards": [
@@ -292,5 +286,6 @@
   "logo_alt": "Gorga logo",
   "foot1": "Gorga · a research prototype in mathematics education, non-commercial. Temperature Scale activity: Dr. Rahmi Ramadhani Umar. Thermometer applet: A.M. Vuković (2013), via GeoGebra.",
   "n_p_gorga": "The name comes from <b>gorga</b>, the carving on Batak traditional houses in North Sumatra, in three colours: red, white and black. Its patterns are full of symmetry, reflection and repetition. Mathematics has lived in it for a long time.",
-  "n_p_poda": "<b>Poda</b> is the Toba Batak word for advice given gently and indirectly. That is how the tutor works: it guides with questions instead of giving answers."
+  "n_p_poda": "<b>Poda</b> is the Toba Batak word for advice given gently and indirectly. That is how the tutor works: it guides with questions instead of giving answers.",
+  "ladder_note": "Framework: van de Pol, Volman & Beishuizen (2010); van de Pol & Elbers (2013); Wood, Bruner & Ross (1976)."
 }

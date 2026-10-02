@@ -75,23 +75,22 @@
     <section class="chapter" id="protocol">
       <header class="ch-head" data-rv>
         <p class="kicker"><span class="no">II</span>The teacher's protocol</p>
-        <h2>Help in steps, <em>not answers.</em></h2>
-        <p class="intro">The AI chooses its next move itself, but only up to the limit that applies at that moment. The longer a student is stuck, the more help it may give. The answer still has to come from the student.</p>
+        <h2>Help rises when stuck, <em>fades on success.</em></h2>
+        <p class="intro">Poda follows the teacher's scaffolding framework. It starts with diagnosis, adds support only when the student cannot yet proceed, and withdraws it once the student explains the reasoning. The answer still has to come from the student.</p>
       </header>
       <div class="ascent" data-rv="seq">
         <svg class="path" aria-hidden="true"><path pathLength="1"/></svg>
         <ol><li class="rung r1" style="--i:0">
-            <span class="code" lang="en">L1 · Probe</span><h3>Ask</h3><p>Invites the student to try the applet and asks an open question.</p><blockquote>“Try it with the thermometer. How did you get it?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></span>
+            <span class="code" lang="en">L1 · Probe</span><h3>Probe</h3><p>An open question to see what the student notices, does or thinks. Nothing is pointed out yet.</p><blockquote>“What do you notice about the positions of −6 and 4 on the thermometer?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class=""></i><i class=""></i></span>
           </li><li class="rung r2" style="--i:1">
-            <span class="code" lang="en">L4 · Revoice</span><h3>Revoice</h3><p>Repeats the student's idea in other words, then asks for an explanation.</p><blockquote>“You counted 10 boxes. How did you count them?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></span>
+            <span class="code" lang="en">L2 · Point</span><h3>Point</h3><p>Directs attention to one relevant feature of the applet, without saying what it means.</p><blockquote>“Look at −6 and 0 on the thermometer. Where is −6 relative to 0?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class="on"></i><i class=""></i></span>
           </li><li class="rung r3" style="--i:2">
-            <span class="code" lang="en">L2 · Point</span><h3>Point</h3><p>Directs attention to one thing on the thermometer.</p><blockquote>“Look at 0. How many degrees from −6 to 0?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span>
+            <span class="code" lang="en">L3 · Focus</span><h3>Focus</h3><p>Reduces the task to one smaller, answerable sub-question, without giving the procedure.</p><blockquote>“First, from −6 °C to 0 °C, how many degrees does it increase?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i></span>
           </li><li class="rung r4" style="--i:3">
-            <span class="code">L3 · Guided step</span><h3>Break down</h3><p>Breaks the question into small questions, without giving the result.</p><blockquote>“From −6 to 0, how many? And from 0 to 4?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span>
-          </li><li class="rung r5" style="--i:4">
-            <span class="code">Confirmation</span><h3>Found</h3><p>Given only after a correct answer and after the target reasoning comes from the student.</p><blockquote>“You split at 0: 6, then 4, so 10.”</blockquote>
+            <span class="code" lang="en">L4 · Revoice & fade</span><h3>Revoice, then fade</h3><p>After success, the student explains the reasoning with the applet. Poda confirms without a new explanation, then support is withdrawn.</p><blockquote>“Now explain using the thermometer why the total increase is 10 °C.”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class=""></i><i class=""></i></span>
           </li></ol>
       </div>
+      <p class="ladder-note" data-rv>Framework: van de Pol, Volman & Beishuizen (2010); van de Pol & Elbers (2013); Wood, Bruner & Ross (1976).</p>
       <ul class="guards" data-rv><li><b>No give-aways</b><span>Every AI sentence is checked: numbers the student has not found yet may not appear.</span></li><li><b>Content, not labels</b><span>The check reads what the sentence says. An “L4” label that still splits the question is rejected.</span></li><li><b>Always a fallback</b><span>If the AI breaks a rule, the student gets a scripted sentence the teacher approved.</span></li></ul>
     </section>
 

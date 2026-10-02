@@ -88,38 +88,32 @@
   "aside_small": "Dieses Gespräch lief in einem Simulationstest auf Indonesisch und ist hier übersetzt. Podas Antworten schrieb die KI; die Sätze der Schülerin schrieb das Team als Testsätze.",
   "aside_cta": "Selbst ausprobieren",
   "p_eyebrow": "Das Protokoll der Lehrkraft",
-  "p_h2": "Hilfe in Stufen, <em>keine Lösungen.</em>",
-  "p_intro": "Die KI wählt ihren nächsten Schritt selbst, aber nur bis zur Grenze, die gerade gilt. Je länger jemand feststeckt, desto mehr Hilfe ist erlaubt. Die Lösung muss trotzdem von den Lernenden kommen.",
+  "p_h2": "Hilfe steigt beim Feststecken, <em>sinkt beim Erfolg.</em>",
+  "p_intro": "Poda folgt dem Scaffolding-Rahmen der Lehrkraft. Es beginnt mit einer Diagnose, gibt erst dann mehr Unterstützung, wenn die Lernenden nicht weiterkommen, und zieht sie wieder zurück, sobald sie ihren Gedankengang erklären. Die Lösung muss trotzdem von den Lernenden kommen.",
   "rungs": [
     [
       "L1 · Probe",
-      "Fragen",
-      "Lädt zum Ausprobieren im Applet ein und stellt eine offene Frage.",
-      "„Probier es mit dem Thermometer. Wie bist du darauf gekommen?“"
-    ],
-    [
-      "L4 · Revoice",
-      "Wiedergeben",
-      "Gibt die Idee in anderen Worten wieder und bittet um eine Erklärung.",
-      "„Du hast 10 Kästchen gezählt. Wie hast du gezählt?“"
+      "Erkunden",
+      "Eine offene Frage, um zu sehen, was die Lernenden bemerken, tun oder denken. Noch wird nichts gezeigt.",
+      "„Was fällt dir an der Lage von −6 und 4 auf dem Thermometer auf?“"
     ],
     [
       "L2 · Point",
       "Zeigen",
-      "Lenkt den Blick auf eine Stelle am Thermometer.",
-      "„Schau auf die 0. Wie viele Grad sind es von −6 bis 0?“"
+      "Lenkt den Blick auf ein wichtiges Merkmal im Applet, ohne zu sagen, was es bedeutet.",
+      "„Schau auf −6 und 0 am Thermometer. Wo liegt −6 im Vergleich zu 0?“"
     ],
     [
-      "L3 · Schritt",
-      "Zerlegen",
-      "Zerlegt die Aufgabe in kleine Fragen, ohne das Ergebnis zu nennen.",
-      "„Von −6 bis 0, wie viele? Und von 0 bis 4?“"
+      "L3 · Focus",
+      "Fokussieren",
+      "Verkleinert die Aufgabe auf eine einzige beantwortbare Teilfrage, ohne das Verfahren zu verraten.",
+      "„Zuerst: Von −6 °C bis 0 °C, um wie viel Grad steigt es?“"
     ],
     [
-      "Bestätigung",
-      "Gefunden",
-      "Kommt erst nach einer richtigen Antwort und wenn der Zielgedanke von den Lernenden selbst stammt.",
-      "„Du hast bei 0 zerlegt: 6, dann 4, also 10.“"
+      "L4 · Revoice & fade",
+      "Erklären, dann loslassen",
+      "Nach dem Erfolg erklären die Lernenden ihren Gedankengang am Applet. Poda bestätigt ohne neue Erklärung, dann wird die Hilfe zurückgenommen.",
+      "„Erkläre jetzt am Thermometer, warum es insgesamt um 10 °C steigt.“"
     ]
   ],
   "guards": [
@@ -292,5 +286,6 @@
   "logo_alt": "Gorga-Logo",
   "foot1": "Gorga · ein nichtkommerzieller Forschungsprototyp für Mathematikdidaktik. Aktivität „Temperaturskala“: Dr. Rahmi Ramadhani Umar. Thermometer-Applet: A.M. Vuković (2013), über GeoGebra.",
   "n_p_gorga": "Der Name stammt von <b>Gorga</b>, der Schnitzkunst an den traditionellen Häusern der Batak in Nordsumatra, in drei Farben: Rot, Weiß und Schwarz. Ihre Muster stecken voller Symmetrie, Spiegelung und Wiederholung. Die Mathematik wohnt dort schon lange.",
-  "n_p_poda": "<b>Poda</b> ist das Toba-Batak-Wort für einen Rat, der sanft und indirekt gegeben wird. So arbeitet auch der Tutor: Er führt mit Fragen, statt Antworten zu geben."
+  "n_p_poda": "<b>Poda</b> ist das Toba-Batak-Wort für einen Rat, der sanft und indirekt gegeben wird. So arbeitet auch der Tutor: Er führt mit Fragen, statt Antworten zu geben.",
+  "ladder_note": "Rahmen: van de Pol, Volman & Beishuizen (2010); van de Pol & Elbers (2013); Wood, Bruner & Ross (1976)."
 }

@@ -75,23 +75,22 @@
     <section class="chapter" id="protokol">
       <header class="ch-head" data-rv>
         <p class="kicker"><span class="no">II</span>Protokol guru</p>
-        <h2>Bantuan bertingkat, <em>bukan jawaban.</em></h2>
-        <p class="intro">AI memilih langkah berikutnya sendiri, tapi hanya sampai batas yang sedang berlaku. Makin lama siswa macet, makin besar bantuan yang boleh diberikan. Jawaban tetap harus datang dari siswa.</p>
+        <h2>Bantuan naik saat macet, <em>turun saat berhasil.</em></h2>
+        <p class="intro">Poda mengikuti kerangka scaffolding guru. Mulai dari diagnosis, bantuan baru naik kalau siswa belum bisa, dan dilepas lagi begitu siswa berhasil menjelaskan. Jawaban tetap harus datang dari siswa.</p>
       </header>
       <div class="ascent" data-rv="seq">
         <svg class="path" aria-hidden="true"><path pathLength="1"/></svg>
         <ol><li class="rung r1" style="--i:0">
-            <span class="code" lang="en">L1 · Probe</span><h3>Bertanya</h3><p>Mengajak mencoba di applet dan bertanya terbuka.</p><blockquote>“Coba kerjakan dengan termometer. Bagaimana kamu mendapatkannya?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></span>
+            <span class="code" lang="en">L1 · Probe</span><h3>Bertanya</h3><p>Pertanyaan terbuka untuk melihat apa yang siswa perhatikan, lakukan, atau pikirkan. Belum menunjuk apa pun.</p><blockquote>“Apa yang kamu perhatikan dari posisi −6 dan 4 di termometer?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class=""></i><i class=""></i></span>
           </li><li class="rung r2" style="--i:1">
-            <span class="code" lang="en">L4 · Revoice</span><h3>Mengulang</h3><p>Mengulang ide siswa dengan kata lain, lalu meminta penjelasan.</p><blockquote>“Kamu hitung kotaknya ada 10. Bagaimana kamu menghitungnya?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></span>
+            <span class="code" lang="en">L2 · Point</span><h3>Menunjuk</h3><p>Mengarahkan perhatian ke satu fitur penting di applet, tanpa memberi tahu artinya.</p><blockquote>“Lihat −6 dan 0 di termometer. Di mana −6 dibanding 0?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class="on"></i><i class=""></i></span>
           </li><li class="rung r3" style="--i:2">
-            <span class="code" lang="en">L2 · Point</span><h3>Menunjuk</h3><p>Mengarahkan perhatian ke satu hal di termometer.</p><blockquote>“Lihat angka 0. Berapa derajat dari −6 sampai 0?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span>
+            <span class="code" lang="en">L3 · Focus</span><h3>Memfokuskan</h3><p>Mengecilkan soal menjadi satu sub-pertanyaan yang bisa dijawab, tanpa memberi prosedurnya.</p><blockquote>“Pertama, dari −6 °C ke 0 °C, naik berapa derajat?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i></span>
           </li><li class="rung r4" style="--i:3">
-            <span class="code">L3 · Langkah</span><h3>Memecah</h3><p>Memecah soal menjadi pertanyaan kecil, tanpa memberi hasil.</p><blockquote>“Dari −6 ke 0 berapa? Lalu dari 0 ke 4?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span>
-          </li><li class="rung r5" style="--i:4">
-            <span class="code">Konfirmasi</span><h3>Ditemukan</h3><p>Baru diberikan setelah jawaban benar dan penalaran target muncul dari siswa.</p><blockquote>“Kamu memecah di 0: 6 lalu 4, jadi 10.”</blockquote>
+            <span class="code" lang="en">L4 · Revoice & fade</span><h3>Menjelaskan, lalu dilepas</h3><p>Setelah berhasil, siswa menjelaskan penalarannya dengan applet. Poda mengonfirmasi tanpa penjelasan baru, lalu bantuan dicabut.</p><blockquote>“Sekarang jelaskan dengan termometer, kenapa totalnya naik 10 °C.”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class=""></i><i class=""></i></span>
           </li></ol>
       </div>
+      <p class="ladder-note" data-rv>Kerangka: van de Pol, Volman & Beishuizen (2010); van de Pol & Elbers (2013); Wood, Bruner & Ross (1976).</p>
       <ul class="guards" data-rv><li><b>Tidak ada bocoran</b><span>Setiap kalimat AI diperiksa: angka yang belum ditemukan siswa tidak boleh muncul.</span></li><li><b>Isi, bukan label</b><span>Pemeriksaan membaca isi kalimat. Label L4 yang ternyata memecah soal tetap ditolak.</span></li><li><b>Selalu ada cadangan</b><span>Kalau AI melanggar, siswa menerima kalimat naskah yang sudah disetujui guru.</span></li></ul>
     </section>
 

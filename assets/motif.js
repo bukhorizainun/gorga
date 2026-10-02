@@ -94,13 +94,14 @@
       if (pts.length < 2 || getComputedStyle(svg).display === "none") return;
       svg.setAttribute("width", r0.width); svg.setAttribute("height", r0.height);
       svg.setAttribute("viewBox", `0 0 ${r0.width} ${r0.height}`);
-      const P = [[pts[0][0] - 60, pts[0][1] + 4], ...pts, [pts[pts.length - 1][0] + 120, pts[pts.length - 1][1] - 40]];
+      // Horizontal ends; rising segments as soft steps; a falling segment stays high over the
+      // previous station's text and drops just before the next station (L3 -> L4, the fade).
+      const P = [[pts[0][0] - 70, pts[0][1]], ...pts, [pts[pts.length - 1][0] + 130, pts[pts.length - 1][1]]];
       let d = `M${P[0][0]} ${P[0][1]}`;
       for (let i = 0; i < P.length - 1; i++) {
-        const p0 = P[Math.max(0, i - 1)], p1 = P[i], p2 = P[i + 1], p3 = P[Math.min(P.length - 1, i + 2)];
-        const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
-        const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
-        d += ` C${c1[0].toFixed(1)} ${c1[1].toFixed(1)} ${c2[0].toFixed(1)} ${c2[1].toFixed(1)} ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`;
+        const [x1, y1] = P[i], [x2, y2] = P[i + 1], dx = x2 - x1;
+        const [k1, k2] = y2 > y1 + 1 ? [0.97, 0.02] : [0.5, 0.5];
+        d += ` C${(x1 + dx * k1).toFixed(1)} ${y1.toFixed(1)} ${(x2 - dx * k2).toFixed(1)} ${y2.toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`;
       }
       path.setAttribute("d", d);
     }

@@ -185,14 +185,14 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
   /* ---------------- Chat UI ---------------- */
 
   const MOVE_NAME = {
-    L1: "L1 Probe", L2: "L2 Point", L3: tr("L3 Langkah terarah", "L3 Guided step"), L4: "L4 Revoice",
+    L1: "L1 Probe", L2: "L2 Point", L3: "L3 Focus", L4: "L4 Revoice & fade",
     OK: tr("Konfirmasi akhir", "Final confirmation"), HINT: tr("Petunjuk guru", "Teacher hint"), END: tr("Penutup", "Closing"),
   };
 
   // Reasoning path under the applet: one motif per tutor move, in student words.
   const STEP_WORD = EN
-    ? { L1: "Asking", L4: "Revoicing", L2: "Pointing", L3: "Breaking down", HINT: "Hint", OK: "Found" }
-    : { L1: "Bertanya", L4: "Mengulang", L2: "Menunjuk", L3: "Memecah", HINT: "Petunjuk", OK: "Ditemukan" };
+    ? { L1: "Probing", L4: "Revoicing", L2: "Pointing", L3: "Focusing", HINT: "Focusing", OK: "Found" }
+    : { L1: "Bertanya", L4: "Menjelaskan ulang", L2: "Menunjuk", L3: "Memfokuskan", HINT: "Memfokuskan", OK: "Ditemukan" };
   const journey = $("journey");
   function journeyReset() {
     journey.innerHTML = `<li class="empty">${tr("Belum ada langkah.", "No steps yet.")}</li>`;

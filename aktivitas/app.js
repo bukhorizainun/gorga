@@ -25,15 +25,15 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
 
   const HELP = { L1: 1, L4: 1, L2: 2, L3: 3, HINT: 4, OK: 0 };
   const MOVE_NAME = {
-    L1: "L1 Probe", L2: "L2 Point", L3: tr("L3 Langkah terarah", "L3 Guided step"), L4: "L4 Revoice",
+    L1: "L1 Probe", L2: "L2 Point", L3: "L3 Focus", L4: "L4 Revoice & fade",
     OK: tr("Konfirmasi", "Confirmation"), HINT: tr("Petunjuk", "Hint"),
   };
   const STEP_WORD = EN
-    ? { L1: "Asking", L4: "Revoicing", L2: "Pointing", L3: "Breaking down", HINT: "Hint", OK: "Found" }
-    : { L1: "Bertanya", L4: "Mengulang", L2: "Menunjuk", L3: "Memecah", HINT: "Petunjuk", OK: "Ditemukan" };
+    ? { L1: "Probing", L4: "Revoicing", L2: "Pointing", L3: "Focusing", HINT: "Focusing", OK: "Found" }
+    : { L1: "Bertanya", L4: "Menjelaskan ulang", L2: "Menunjuk", L3: "Memfokuskan", HINT: "Memfokuskan", OK: "Ditemukan" };
   const LEVEL_NAME = EN
-    ? { 1: "L1 · L4 · asking and revoicing", 2: "L2 · pointing at one thing", 3: "L3 · breaking the question down", 4: "Hint · clearer help" }
-    : { 1: "L1 · L4 · bertanya dan mengulang", 2: "L2 · menunjuk satu hal", 3: "L3 · memecah soal", 4: "Petunjuk · bantuan lebih jelas" };
+    ? { 1: "L1 Probe · an open question", 2: "L2 Point · one feature of the applet", 3: "L3 Focus · one smaller question" }
+    : { 1: "L1 Probe · pertanyaan terbuka", 2: "L2 Point · satu fitur di applet", 3: "L3 Focus · satu sub-pertanyaan" };
   const DONTKNOW = /(tidak tahu|gak tau|ga tau|gatau|nggak tahu|belum tahu|bingung|ga ngerti|gak ngerti|tidak mengerti|don'?t know|not sure|no idea|idk|confused)/i;
 
   // Scripted fallbacks, one per level of help.
@@ -179,7 +179,8 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
 
   function level(st) {
     // Two turns per level; each "I don't know" moves one level up. First reply stays at level 1.
-    return Math.min(4, 1 + Math.floor(Math.max(0, st.turns - 1) / 2) + st.stuck);
+    // The teacher's framework stops at L3 Focus: no level above it.
+    return Math.min(3, 1 + Math.floor(Math.max(0, st.turns - 1) / 2) + st.stuck);
   }
 
   function renderLevel(lv) {
@@ -358,7 +359,7 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     const ai = await ask({
       open: true, lang: EN ? "en" : "id", lead: lim, forbid: [],
       stage: { id: `a${n}q${qi + 1}`, question: plain(L(q.body)) },
-      context, analysis: { suggestedMove: lv === 1 ? "L4" : lv === 2 ? "L2" : lv === 3 ? "L3" : "HINT" },
+      context, analysis: { suggestedMove: lv === 1 ? "L4" : lv === 2 ? "L2" : "L3" },
       history: st.history.slice(-10),
     });
     typingEl.remove();
@@ -371,7 +372,7 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
       $("mode-badge").textContent = tr("Poda · AI aktif", "Poda · AI on");
       $("mode-badge").classList.add("on");
     } else {
-      move = st.turns === 1 ? "L4" : lv === 1 ? "L4" : lv === 2 ? "L2" : lv === 3 ? "L3" : "HINT";
+      move = st.turns === 1 ? "L4" : lv === 1 ? "L4" : lv === 2 ? "L2" : "L3";
       const f = FALLBACK[move];
       reply = typeof f === "function" ? f(text.length > 90 ? `${text.slice(0, 87)}…` : text) : f;
       source = SCRIPT;

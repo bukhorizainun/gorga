@@ -43,9 +43,8 @@ window.SUHU_TASK = {
   moves: {
     L1: "Probe: meminta siswa mencoba dengan termometer dan menjelaskan caranya.",
     L2: "Point: mengarahkan perhatian ke satu hal di termometer (titik awal, arah gerak, angka 0).",
-    L3: "Langkah terarah: memecah soal menjadi pertanyaan yang lebih kecil. (Definisi sementara, menunggu rumusan guru.)",
-    L4: "Revoice: mengulang jawaban siswa lalu meminta penjelasan atau cara yang lebih ringkas.",
-    OK: "Konfirmasi akhir: jawaban benar dan penalaran target sudah muncul.",
-    HINT: "Petunjuk cadangan dari guru setelah beberapa percobaan belum berhasil.",
+    L3: "Focus: mengecilkan soal menjadi satu sub-pertanyaan yang bisa dijawab, tanpa memberi prosedurnya (kerangka guru).",
+    L4: "Revoice and fade: setelah berhasil, siswa menjelaskan penalarannya dengan termometer; lalu bantuan dicabut.",
+    OK: "Konfirmasi akhir (bagian dari L4): jawaban benar dan penalaran target sudah muncul; tanpa penjelasan baru.",
   },
 };

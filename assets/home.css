@@ -156,15 +156,17 @@ header.top .end { display: flex; align-items: center; gap: 14px; }
 .ascent .path path { fill: none; stroke: var(--gold-2); stroke-width: 1.5; stroke-dasharray: 1; stroke-dashoffset: 1; vector-effect: non-scaling-stroke; }
 .ascent.in .path path { transition: stroke-dashoffset 2.4s var(--e-io) .1s; stroke-dashoffset: 0; }
 html:not(.rv-on) .ascent .path path { stroke-dashoffset: 0; }
-.ascent ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 36px); position: relative; }
+.ascent ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 36px); position: relative; }
 .rung { position: relative; padding-top: 34px; }
 .rung::before { content: ""; position: absolute; left: 0; top: 0; width: 13px; height: 13px; border-radius: 50%; background: var(--porcelain);
   border: 1.5px solid var(--gold-2); box-shadow: 0 0 0 6px rgba(195, 154, 82, .12); }
-.rung.r1 { margin-top: 270px; } .rung.r2 { margin-top: 222px; } .rung.r3 { margin-top: 165px; } .rung.r4 { margin-top: 95px; } .rung.r5 { margin-top: 0; }
-.rung.r5::before { background: var(--nila); border-color: var(--nila); box-shadow: 0 0 0 8px rgba(28, 42, 85, .1), 0 0 30px 6px rgba(195, 154, 82, .45); }
+/* control rises from L1 to L3 and falls again at L4 (fade) */
+.rung.r1 { margin-top: 250px; } .rung.r2 { margin-top: 140px; } .rung.r3 { margin-top: 20px; } .rung.r4 { margin-top: 190px; }
+.rung.r4::before { background: var(--nila); border-color: var(--nila); box-shadow: 0 0 0 8px rgba(28, 42, 85, .1), 0 0 30px 6px rgba(195, 154, 82, .45); }
 .rung .code { font: 600 10.5px/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
 .rung h3 { font-size: clamp(30px, 2.6vw, 40px); line-height: 1; margin: 12px 0 12px; font-weight: 400; }
-.rung.r5 h3 { font-style: italic; }
+.rung.r4 h3 { font-style: italic; }
+.ladder-note { margin: 56px 0 0; font: italic 400 15px/1.5 var(--serif); color: var(--nila-3); }
 .rung p { font-size: 14.5px; line-height: 1.6; color: var(--nila-2); margin: 0 0 14px; }
 .rung blockquote { margin: 0; font: italic 400 18.5px/1.4 var(--serif); color: var(--nila); }
 .rung .lv { display: flex; gap: 5px; margin-top: 16px; }
@@ -271,7 +273,7 @@ html:not(.rv-on) .ascent .path path { stroke-dashoffset: 0; }
   .note { position: static; }
   .ascent .path { display: none; }
   .ascent ol { grid-template-columns: 1fr; gap: 0; border-left: 1.5px solid rgba(195, 154, 82, .5); padding-left: 30px; }
-  .rung.r1, .rung.r2, .rung.r3, .rung.r4, .rung.r5 { margin-top: 0; padding: 0 0 44px; }
+  .rung.r1, .rung.r2, .rung.r3, .rung.r4 { margin-top: 0; padding: 0 0 44px; }
   .rung::before { left: -38px; top: 4px; }
   .guards, .steps { grid-template-columns: 1fr; }
   .steps li:nth-child(n) { margin-top: 0; }

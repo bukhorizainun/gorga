@@ -88,38 +88,32 @@
   "aside_small": "Bu konuşma bir simülasyon testinde Endonezce yapıldı ve burada çevrildi. Poda’nın yanıtlarını yapay zekâ yazdı; öğrenci cümlelerini ekip test cümlesi olarak hazırladı.",
   "aside_cta": "Kendin dene",
   "p_eyebrow": "Öğretmenin protokolü",
-  "p_h2": "Kademeli yardım, <em>hazır cevap değil.</em>",
-  "p_intro": "Yapay zekâ bir sonraki adımı kendisi seçer, ama yalnızca o anda geçerli olan sınıra kadar. Öğrenci ne kadar uzun takılırsa, o kadar fazla yardıma izin verilir. Cevap yine de öğrenciden gelmelidir.",
+  "p_h2": "Takılınca artan, <em>başarınca azalan yardım.</em>",
+  "p_intro": "Poda, öğretmenin destek (scaffolding) çerçevesini izler. Teşhisle başlar, öğrenci ilerleyemediğinde desteği artırır ve öğrenci akıl yürütmesini açıkladığı anda desteği geri çeker. Cevap yine de öğrenciden gelmelidir.",
   "rungs": [
     [
       "L1 · Probe",
       "Sormak",
-      "Öğrenciyi uygulamada denemeye davet eder ve açık uçlu bir soru sorar.",
-      "“Termometreyle dene. Bunu nasıl buldun?”"
-    ],
-    [
-      "L4 · Revoice",
-      "Yeniden ifade",
-      "Öğrencinin fikrini başka sözcüklerle tekrar eder, sonra açıklama ister.",
-      "“10 kutu saydın. Nasıl saydın?”"
+      "Öğrencinin neyi fark ettiğini, ne yaptığını ya da ne düşündüğünü görmek için açık bir soru. Henüz hiçbir şey gösterilmez.",
+      "“Termometrede −6 ile 4’ün konumlarıyla ilgili neyi fark ediyorsun?”"
     ],
     [
       "L2 · Point",
       "Göstermek",
-      "Dikkati termometredeki tek bir noktaya çeker.",
-      "“0’a bak. −6’dan 0’a kaç derece var?”"
+      "Dikkati uygulamadaki önemli tek bir özelliğe çeker, ne anlama geldiğini söylemeden.",
+      "“Termometrede −6’ya ve 0’a bak. −6, 0’a göre nerede?”"
     ],
     [
-      "L3 · Adım",
-      "Parçalamak",
-      "Soruyu sonucu söylemeden küçük sorulara böler.",
-      "“−6’dan 0’a kaç? Peki 0’dan 4’e?”"
+      "L3 · Focus",
+      "Odaklamak",
+      "Görevi, cevaplanabilir tek bir küçük alt soruya indirir; yöntemi vermez.",
+      "“Önce, −6 °C’den 0 °C’ye kaç derece artıyor?”"
     ],
     [
-      "Onay",
-      "Bulundu",
-      "Yalnızca doğru cevaptan sonra ve hedef akıl yürütme öğrenciden geldiğinde verilir.",
-      "“0’da ayırdın: önce 6, sonra 4, yani 10.”"
+      "L4 · Revoice & fade",
+      "Açıklamak, sonra bırakmak",
+      "Başarıdan sonra öğrenci akıl yürütmesini uygulamayla açıklar. Poda yeni bir açıklama eklemeden onaylar, sonra destek geri çekilir.",
+      "“Şimdi termometreyle, toplam artışın neden 10 °C olduğunu açıkla.”"
     ]
   ],
   "guards": [
@@ -292,5 +286,6 @@
   "logo_alt": "Gorga logosu",
   "foot1": "Gorga · matematik eğitimi için ticari olmayan bir araştırma prototipi. “Sıcaklık Ölçeği” etkinliği: Dr. Rahmi Ramadhani Umar. Termometre uygulaması: A.M. Vuković (2013), GeoGebra üzerinden.",
   "n_p_gorga": "Ad, Kuzey Sumatra’daki geleneksel Batak evlerinin oyma süslemesi <b>gorga</b>dan gelir; üç rengi vardır: kırmızı, beyaz ve siyah. Desenleri simetri, yansıma ve tekrarla doludur. Matematik uzun zamandır onun içinde yaşıyor.",
-  "n_p_poda": "<b>Poda</b>, Toba Batak dilinde nazik ve dolaylı biçimde verilen öğüt demektir. Öğretmen de böyle çalışır: cevap vermek yerine sorularla yol gösterir."
+  "n_p_poda": "<b>Poda</b>, Toba Batak dilinde nazik ve dolaylı biçimde verilen öğüt demektir. Öğretmen de böyle çalışır: cevap vermek yerine sorularla yol gösterir.",
+  "ladder_note": "Çerçeve: van de Pol, Volman & Beishuizen (2010); van de Pol & Elbers (2013); Wood, Bruner & Ross (1976)."
 }
