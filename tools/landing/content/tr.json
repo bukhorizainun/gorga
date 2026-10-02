@@ -220,7 +220,7 @@
   },
   "a_eyebrow": "Etkinlikler",
   "a_h2": "Her konu için <em>bir pencere.</em>",
-  "a_intro": "Etkinlikler pencerelerde toplanır. Tam Sayılar penceresi, öğretmenin yedi iklim eylemi etkinliğini içerir. Uygulama 1 ve 2 görev kartlarıyla tam protokolü kullanır; diğerleri görev kartları hazır olana kadar genel protokolü kullanır.",
+  "a_intro": "Etkinlikler pencerelerde toplanır. Tam Sayılar penceresi, öğretmenin yedi iklim eylemi etkinliğini içerir. Her uygulama, öğretmenin destek çerçevesini izleyerek her soru için bir görev kartıyla tam protokolü kullanır.",
   "wins_label": "Konu pencereleri",
   "wins": [
     [

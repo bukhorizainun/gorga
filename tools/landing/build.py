@@ -14,7 +14,7 @@ ROOT = os.path.dirname(os.path.dirname(HERE))
 SITE = "https://rahmiumar.github.io/gorga/"
 LANGS = [("id", "ID", ""), ("en", "EN", "en/"), ("de", "DE", "de/"), ("tr", "TR", "tr/")]
 QUESTIONS = [9, 3, 7, 5, 5, 4, 2]
-FULL = {1, 2}   # activities with a task card (full protocol)
+FULL = {1, 2, 3, 4, 5, 6, 7}   # activities with a task card (full protocol)
 
 
 def load(lang):

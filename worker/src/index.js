@@ -159,11 +159,13 @@ Guru: Sekarang, di applet, coba gerakkan dari -6 °C ke atas sampai 4 °C. Berap
 Siswa: jadi -6 naik ke 4 itu naik 10 kali.
 Guru: Oke, coba jelaskan caramu menggunakan termometer. Bagaimana kamu bisa mendapatkan 10 kali kenaikan?`;
 
+// The teacher's Scaffold Ladder framework (L1 Probe, L2 Point, L3 Focus, L4 Revoice and fade).
+// There is no level above L3; 4 is kept only so an old page cannot get more help than L3.
 const LEVEL_TEXT = {
-  1: "Bantuan paling jauh saat ini: L1 atau L4 saja. Bertanya dan merefleksikan; jangan menunjuk angka atau titik tertentu.",
-  2: "Bantuan paling jauh saat ini: L2. Boleh menunjuk satu hal di termometer (misalnya angka 0 atau posisi penanda). Jangan memecah soal untuk siswa.",
-  3: "Bantuan paling jauh saat ini: L3. Boleh memecah soal menjadi dua pertanyaan kecil, tapi jangan memberi hasilnya.",
-  4: "Siswa sudah beberapa kali macet. Boleh memberi petunjuk yang lebih jelas, tapi biarkan siswa yang menghitung hasil akhirnya.",
+  1: "Bantuan paling jauh saat ini: L1 Probe atau L4 Revoice. L1: satu pertanyaan diagnosis terbuka tentang apa yang siswa perhatikan, lakukan, atau pikirkan; JANGAN menunjuk fitur tertentu, jangan memecah soal, jangan memberi prosedur. L4: minta siswa menjelaskan atau membenarkan caranya dengan applet.",
+  2: "Bantuan paling jauh saat ini: L2 Point. Arahkan perhatian ke SATU fitur di applet (misalnya angka 0, garis, penanda, arah). JANGAN katakan apa arti fitur itu atau kesimpulan apa yang harus diambil; jangan memecah soal; jangan memberi jawaban.",
+  3: "Bantuan paling jauh saat ini: L3 Focus. Ubah soal menjadi SATU sub-pertanyaan kecil yang bisa dijawab siswa dan tetap menjaga konsepnya. Jangan memberi prosedur lengkap atau hasilnya.",
+  4: "Bantuan paling jauh saat ini: L3 Focus (kerangka guru tidak punya tingkat di atasnya). Satu sub-pertanyaan kecil; jangan memberi prosedur lengkap atau hasilnya.",
 };
 
 function leadPrompt(b) {
