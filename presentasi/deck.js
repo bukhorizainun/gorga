@@ -30,6 +30,7 @@ function go(n) {
   cur = n;
   slides[n].classList.add("active");
   startScene(slides[n].dataset.scene);
+  loadTry(slides[n]);
   $("count").textContent = `${n + 1} / ${slides.length}`;
   $("bar").style.width = `${((n + 1) / slides.length) * 100}%`;
   document.title = `${slides[n].dataset.title} — Gorga`;
@@ -49,7 +50,7 @@ $("prev").addEventListener("click", prev);
 $("fs").addEventListener("click", toggleFs);
 function toggleFs() { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen?.(); }
 document.addEventListener("click", (e) => {
-  if (e.target.closest("button, a, .hud")) return;
+  if (e.target.closest("button, a, .hud, .frame") || slides[cur].hasAttribute("data-try")) return;
   (e.clientX > window.innerWidth * 0.3 ? next : prev)();
 });
 let tx = null;
@@ -57,8 +58,26 @@ document.addEventListener("touchstart", (e) => { tx = e.touches[0].clientX; }, {
 document.addEventListener("touchend", (e) => {
   if (tx === null) return;
   const dx = e.changedTouches[0].clientX - tx; tx = null;
-  if (Math.abs(dx) > 40) (dx < 0 ? next : prev)();
+  if (Math.abs(dx) > 40 && !slides[cur].hasAttribute("data-try")) (dx < 0 ? next : prev)();
 });
+
+/* ---------------- live demos ---------------- */
+// the real pages load only when their slide is first shown, and stay loaded afterwards
+function loadTry(slide) {
+  if (!slide.hasAttribute("data-try")) return;
+  const frame = slide.querySelector(".frame"), ifr = frame.querySelector("iframe");
+  if (!ifr.src) openDemo(slide, slide.querySelector(".try-tabs button").dataset.src);
+}
+function openDemo(slide, src) {
+  const frame = slide.querySelector(".frame"), ifr = frame.querySelector("iframe");
+  frame.classList.remove("loaded");
+  ifr.onload = () => frame.classList.add("loaded");
+  ifr.src = src;
+  slide.querySelectorAll(".try-tabs button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.src === src)));
+}
+document.querySelectorAll(".try-tabs").forEach((tabs) => tabs.addEventListener("click", (e) => {
+  const b = e.target.closest("button"); if (b) openDemo(tabs.closest(".slide"), b.dataset.src);
+}));
 
 /* ---------------- scenes ---------------- */
 const scenes = {};
@@ -283,6 +302,7 @@ scenes.rose = (() => {
   };
 })();
 
+window.addEventListener("hashchange", () => { const h = parseInt(location.hash.slice(1), 10); if (Number.isFinite(h)) go(h - 1); });
 /* start at the slide in the address, if any */
 const fromHash = parseInt(location.hash.slice(1), 10);
 go(Number.isFinite(fromHash) ? fromHash - 1 : 0);

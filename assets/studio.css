@@ -168,3 +168,11 @@
 .eqs li.ineq .dot { border-radius: 2px; transform: rotate(45deg); box-shadow: 0 0 0 1px rgba(28,42,85,.2); }
 .level-tabs button.long { font-size: clamp(36px, 4.4vw, 72px); line-height: 1; }
 .level-tabs { gap: 0 clamp(22px, 3.4vw, 54px); }
+
+/* embedded in the presentation deck: only the working studio remains */
+.embed header.top, .embed .studio-head, .embed .explain, .embed .foot, .embed .sky, .embed .crumbs-row { display: none !important; }
+.embed body { background: transparent; }
+.embed .studio main { padding-top: 26px; }
+.embed .bench { padding-bottom: 40px; }
+.embed .studio-section { padding-top: 10px; }
+.only-curves .pic-bench, .only-curves .studio-section { display: none !important; }

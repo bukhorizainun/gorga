@@ -244,6 +244,8 @@ document.querySelectorAll("#own .eg").forEach((b) => b.addEventListener("click",
 /* start: ?k= picks a curve; ?j= the school level */
 famList();
 const start = params.get("k");
+// inside the deck, a link to one curve shows only the curve studio
+if (start && document.documentElement.classList.contains("embed")) document.documentElement.classList.add("only-curves");
 if (start === "own") choose("own");
 else if (start && FAMILIES.some((f) => f.id === start)) {
   level = FAMILIES.find((f) => f.id === start).j; famList(); choose(start);

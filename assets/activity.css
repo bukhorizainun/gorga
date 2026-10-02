@@ -101,3 +101,10 @@ td { border-bottom-color: rgba(28, 42, 85, .05); }
   .applet-wrap { border-radius: 20px; }
   .pane { padding: 0; }
 }
+
+/* embedded in the presentation deck */
+.embed .bar, .embed .foot, .embed .sky, .embed .intro-band { display: none !important; }
+.embed body { background: transparent; }
+.embed .intro-band { padding-top: 18px; padding-bottom: 6px; grid-template-columns: 1fr; }
+.embed .intro-band h1, .embed .intro-band h1.long { font-size: 34px; }
+.embed .layout { margin-top: 10px; margin-bottom: 20px; }

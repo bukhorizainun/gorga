@@ -3,13 +3,17 @@
    data-i18n="key" get their content from the page's dictionary via gorgaApplyI18n(). */
 (function () {
   const KEY = "gorga-lang";
-  const fromUrl = new URLSearchParams(location.search).get("lang");
+  const params = new URLSearchParams(location.search);
+  const fromUrl = params.get("lang");
+  // ?embed=1: the page runs inside the presentation deck, without its header, title band and footer
+  const embed = params.get("embed") === "1";
+  if (embed) document.documentElement.classList.add("embed");
   let lang = fromUrl;
   if (!lang) {
     try { lang = localStorage.getItem(KEY); } catch { /* storage may be blocked */ }
   }
   lang = lang === "en" ? "en" : "id";
-  try { localStorage.setItem(KEY, lang); } catch { /* not needed to work */ }
+  if (!embed) try { localStorage.setItem(KEY, lang); } catch { /* not needed to work */ }
   window.GORGA_LANG = lang;
   document.documentElement.lang = lang;
 

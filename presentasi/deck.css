@@ -199,3 +199,19 @@ svg[data-gorga] .ring { transform-origin: 0 0; animation: turn 160s linear infin
 .end h1 { font-size: 124px; }
 .numbers { margin-top: 90px; }
 .road { margin-top: 80px; }
+
+/* "try it yourself" slides: the real pages, live, inside the deck */
+.slide.try { display: flex; flex-direction: column; justify-content: flex-start; padding: 80px 80px 70px; gap: 18px; }
+.try-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; }
+.try-head .kicker { margin-bottom: 14px; color: var(--gold); }
+.try-head h2 { font-size: 62px; }
+.try-tabs { display: inline-flex; gap: 4px; padding: 5px; border-radius: 999px; background: rgba(28,42,85,.06); }
+.try-tabs button { border: 0; background: none; padding: 11px 20px; border-radius: 999px; cursor: pointer; font: 500 16px/1 var(--sans); color: var(--nila-3); transition: background .25s ease, color .25s ease; }
+.try-tabs button[aria-pressed="true"] { background: #fff; color: var(--nila); box-shadow: 0 6px 16px -10px rgba(28,42,85,.6); }
+.try-tabs button:active { transform: scale(.97); }
+.frame { position: relative; flex: 1; border-radius: 26px; overflow: hidden; background: #f4f5fa;
+  box-shadow: 0 50px 100px -60px rgba(28,42,85,.7), 0 0 0 1px rgba(28,42,85,.05); }
+.frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: transparent; }
+.frame-wait { position: absolute; inset: 0; display: grid; place-items: center; font: italic 400 26px/1 var(--serif); color: var(--nila-3); pointer-events: none; transition: opacity .5s ease; }
+.frame.loaded .frame-wait { opacity: 0; }
+.try-note { margin: 0; font-size: 16px; color: var(--nila-3); }
