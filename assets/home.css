@@ -306,3 +306,22 @@ html:not(.rv-on) .ascent .path path { stroke-dashoffset: 0; }
 .gallery.gallery-two .act:nth-child(n) { margin-top: 0; }
 .gallery.gallery-two .act:nth-child(2) { margin-top: 60px; }
 @media (max-width: 640px) { .gallery.gallery-two { grid-template-columns: 1fr; } .gallery.gallery-two .act:nth-child(2) { margin-top: 0; } }
+
+/* level index (section V): three large entries, no boxes; a gold rule draws in on hover */
+.levels { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(28px, 4vw, 72px); }
+.level { position: relative; display: grid; gap: 10px; padding: 0 0 30px; text-decoration: none; color: var(--nila); }
+.level::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px; background: linear-gradient(90deg, var(--gold-2), rgba(195,154,82,0)); transform: scaleX(.18); transform-origin: left; transition: transform .7s var(--e-out); }
+.level:hover::after, .level:focus-visible::after { transform: scaleX(1); }
+.lv-name { font: 300 clamp(64px, 8vw, 128px)/.9 var(--serif); letter-spacing: -.02em; transition: color .3s ease; }
+.level:hover .lv-name { color: var(--gold); }
+.level.later .lv-name { color: rgba(28,42,85,.28); }
+.lv-phase { font: italic 400 22px/1.2 var(--serif); color: var(--gold); }
+.lv-topics { color: var(--nila-2); font-size: 15.5px; min-height: 3em; }
+.lv-count { font: 600 10.5px/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--nila-3); }
+.lv-count span { display: inline-block; transition: transform .3s var(--e-out); }
+.level:hover .lv-count span { transform: translateX(6px); }
+.level:focus-visible { outline: 2px solid var(--gold-2); outline-offset: 8px; border-radius: 8px; }
+.extra-links { margin: 70px 0 0; font: italic 400 clamp(20px, 1.8vw, 26px)/1.4 var(--serif); color: var(--nila-2); }
+.extra-links a { color: var(--nila); text-decoration: none; background: linear-gradient(var(--gold-2), var(--gold-2)) 0 100% / 100% 1px no-repeat; padding-bottom: 2px; }
+.extra-links a:hover { color: var(--gold); }
+@media (max-width: 860px) { .levels { grid-template-columns: 1fr; } .lv-topics { min-height: 0; } }

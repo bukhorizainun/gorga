@@ -138,7 +138,7 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
           api = a || window.ggbApplet;
           // Replace only the thermometer applet's pale green view, which clashes with the page.
           try {
-            if (/<bgColor r="226" g="244" b="217"/.test(api.getXML())) api.setGraphicsOptions(1, { bgColor: "#F3F5FB" });
+            if (/<bgColor r="226" g="244" b="217"/.test(api.getXML())) api.setGraphicsOptions(1, { bgColor: "#FFFFFF" });
           } catch { /* keep the applet colour */ }
           if (CARD) { try { CARD.setup(api); } catch { /* the card still works without its setup */ } }
           // Keep the frame in the applet's own proportions so it scales on any screen.

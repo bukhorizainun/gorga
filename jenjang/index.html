@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jenjang — Gorga</title>
+  <meta name="description" content="Materi Gorga per jenjang: SD, SMP, dan SMA. Setiap jenjang berisi topik dan aktivitasnya.">
+  <meta name="theme-color" content="#f4f5fa">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/gorga.css">
+  <link rel="stylesheet" href="../assets/home.css">
+  <link rel="stylesheet" href="../assets/studio.css">
+  <script src="../assets/i18n.js"></script>
+</head>
+<body class="landing studio levels-page">
+  <div class="sky" aria-hidden="true"><i></i><i></i><i></i></div>
+  <header class="top">
+    <a class="mark" href="../" aria-label="Gorga"><img src="../assets/logo-nila.svg" alt="" width="30" height="30"><span>gorga</span></a>
+    <nav aria-label="Materi"><a href="./" aria-current="page" data-i18n="navLevels">Jenjang</a><a href="../geometri/" data-i18n="navGeo">Geometri 3D</a><a href="../seni/" data-i18n="navArt">Seni Matematika</a></nav>
+    <div class="end"><div class="langs" role="group" aria-label="Language"><a href="?lang=id" data-set-lang="id">ID</a><a href="?lang=en" data-set-lang="en">EN</a></div></div>
+  </header>
+
+  <main>
+    <section class="studio-head level-head">
+      <div class="crumbs-row"><a href="../" data-i18n="home">Beranda</a><span>·</span><span data-i18n="crumb">Pilih jenjang</span></div>
+      <div class="level-tabs" id="tabs" role="tablist" aria-label="Jenjang"></div>
+      <p class="phase" id="phase"></p>
+      <p class="lead" id="intro"></p>
+      <nav class="topic-index" id="index" aria-label="Topik"></nav>
+    </section>
+    <div id="topics" aria-live="polite"></div>
+  </main>
+
+  <footer class="foot"><p data-i18n="foot">Gorga · materi per jenjang. Applet aksi iklim milik guru dan materi tambahan di luar GeoGebra.</p></footer>
+
+  <script>
+    gorgaApplyI18n({ id: {}, en: {
+      _title: "Levels — Gorga", navLevels: "Levels", navGeo: "3D Geometry", navArt: "Math Art", home: "Home", crumb: "Choose a level",
+      foot: "Gorga · material by school level. The teacher's climate-action applets and extra material outside GeoGebra." } });
+  </script>
+  <script src="app.js"></script>
+  <script src="../assets/motif.js"></script>
+</body>
+</html>

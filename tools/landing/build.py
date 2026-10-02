@@ -100,6 +100,20 @@ def page(c, path):
             <div class="cap"><span class="meta">{meta}</span><h3><a href="{up}aktivitas/?a={n}&amp;lang={al}">{title}</a></h3><p>{desc}</p></div>
           </li>''')
 
+    # Level index: one large entry per school level, read from the catalog; each opens its own page.
+    with open(os.path.join(ROOT, "assets", "catalog.json"), encoding="utf-8") as f:
+        catalog = json.load(f)
+    tx = lambda o: o.get(lang) or o["en"]
+    levels = []
+    for i, lv in enumerate(catalog["levels"]):
+        n = sum(len(tp["items"]) for tp in lv["topics"])
+        topics = " · ".join(tx(tp["name"]) for tp in lv["topics"]) or " · ".join(tx(lv["plan"]))
+        levels.append(f'''<li style="--i:{i}"><a class="level{"" if n else " later"}" href="{up}jenjang/?j={lv["id"]}&amp;lang={al}">
+            <span class="lv-name">{tx(lv["name"]) if lang != "id" else lv["name"]["id"]}</span>
+            <span class="lv-phase">{tx(lv["phase"])}</span>
+            <span class="lv-topics">{topics}</span>
+            <span class="lv-count">{f"{n} {c['lv_items']}" if n else c["lv_prep"]} <span aria-hidden="true">→</span></span></a></li>''')
+
     note = f'<p class="app-note">{c["app_note"]}</p>' if c["app_note"] else ""
     facts = "".join(f'<li><b>{b}</b><span>{s}</span></li>' for b, s in c["facts"])
 
@@ -220,16 +234,8 @@ def page(c, path):
         <h2>{c["a_h2"]}</h2>
         <p class="intro">{c["a_intro"]}</p>
       </header>
-      <div class="wins" role="group" aria-label="{e(c["wins_label"])}" data-rv>{wins}</div>
-      <div class="win-panel" data-panel="0">
-        <ul class="gallery" data-rv="seq">{''.join(acts)}</ul>
-        <p class="next-note">{c["next"]}</p>
-      </div>
-      <div class="win-panel" data-panel="2" hidden>
-        <ul class="gallery gallery-two" data-rv="seq">{''.join(alg)}</ul>
-        <p class="next-note">{c["next_alg"]}</p>
-      </div>
-      <div class="win-panel" data-panel="soon" hidden><p class="soon-note">{c["soon"]}</p></div>
+      <ol class="levels" data-rv="seq">{''.join(levels)}</ol>
+      <p class="extra-links" data-rv>{c["lv_extra"]} <a href="{up}geometri/?lang={al}">{c["lv_geo"]}</a> · <a href="{up}seni/?lang={al}">{c["lv_art"]}</a></p>
     </section>
 
     <section class="chapter name">
@@ -252,12 +258,6 @@ def page(c, path):
 
   <script>
     try {{ localStorage.setItem("gorga-lang", "{al}"); }} catch (e) {{}}
-    document.querySelector(".wins").addEventListener("click", function (e) {{
-      var b = e.target.closest(".win"); if (!b) return;
-      document.querySelectorAll(".win").forEach(function (x) {{ x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", x === b); }});
-      var w = b.dataset.win, has = !!document.querySelector('[data-panel="' + w + '"]');
-      document.querySelectorAll(".win-panel").forEach(function (p) {{ p.hidden = has ? p.dataset.panel !== w : p.dataset.panel !== "soon"; }});
-    }});
   </script>
   <script src="{A}motif.js"></script>
   <script src="{A}mathfield.js"></script>

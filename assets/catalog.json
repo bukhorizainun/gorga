@@ -1,0 +1,334 @@
+{
+ "_note": "Catalog of levels, topics and activities. Add an applet or a level here; the level pages and the landing read this file.",
+ "levels": [
+  {
+   "id": "sd",
+   "name": {
+    "id": "SD",
+    "en": "Primary",
+    "de": "Grundschule",
+    "tr": "İlkokul"
+   },
+   "phase": {
+    "id": "Fase A–C · kelas 1–6",
+    "en": "Phases A–C · grades 1–6",
+    "de": "Phasen A–C · Klassen 1–6",
+    "tr": "A–C evreleri · 1–6. sınıflar"
+   },
+   "intro": {
+    "id": "Materi SD sedang disiapkan bersama guru.",
+    "en": "Primary material is being prepared with teachers."
+   },
+   "plan": {
+    "id": [
+     "Bilangan cacah dan pecahan",
+     "Bangun datar",
+     "Pengukuran"
+    ],
+    "en": [
+     "Whole numbers and fractions",
+     "Plane shapes",
+     "Measurement"
+    ]
+   },
+   "topics": []
+  },
+  {
+   "id": "smp",
+   "name": {
+    "id": "SMP",
+    "en": "Lower secondary",
+    "de": "Sekundarstufe I",
+    "tr": "Ortaokul"
+   },
+   "phase": {
+    "id": "Fase D · kelas 7–9",
+    "en": "Phase D · grades 7–9",
+    "de": "Phase D · Klassen 7–9",
+    "tr": "D evresi · 7–9. sınıflar"
+   },
+   "intro": {
+    "id": "Bilangan bulat dan aljabar lewat applet aksi iklim milik guru, ditambah bangun ruang 3D dan kurva dari persamaan.",
+    "en": "Integers and algebra through the teacher's climate-action applets, plus 3D solids and curves from equations."
+   },
+   "topics": [
+    {
+     "id": "bilangan",
+     "name": {
+      "id": "Bilangan",
+      "en": "Numbers",
+      "de": "Zahlen",
+      "tr": "Sayılar"
+     },
+     "intro": {
+      "id": "Tujuh applet aksi iklim. Setiap applet memakai protokol penuh dengan kartu tugas per soal.",
+      "en": "Seven climate-action applets. Every applet runs the full protocol with a task card for each question."
+     },
+     "items": [
+      {
+       "type": "applet",
+       "n": 1,
+       "q": 9,
+       "title": {
+        "id": "Skala Suhu",
+        "en": "Temperature Scale"
+       },
+       "desc": {
+        "id": "Membandingkan dan menghitung perubahan suhu melewati 0 °C.",
+        "en": "Comparing and computing temperature changes across 0 °C."
+       },
+       "cover": "covers/a1.jpg",
+       "href": "suhu/"
+      },
+      {
+       "type": "applet",
+       "n": 2,
+       "q": 3,
+       "title": {
+        "id": "Neraca Karbon",
+        "en": "Carbon Balance"
+       },
+       "desc": {
+        "id": "Penjumlahan bilangan bulat dengan balon (naik) dan karung pasir (turun).",
+        "en": "Adding integers with balloons (up) and sandbags (down)."
+       },
+       "cover": "covers/a2.jpg"
+      },
+      {
+       "type": "applet",
+       "n": 3,
+       "q": 7,
+       "title": {
+        "id": "Permukaan Laut",
+        "en": "Sea Level"
+       },
+       "desc": {
+        "id": "Bilangan positif dan negatif untuk posisi di atas dan di bawah permukaan laut.",
+        "en": "Positive and negative integers for positions above and below sea level."
+       },
+       "cover": "covers/a3.jpg"
+      },
+      {
+       "type": "applet",
+       "n": 4,
+       "q": 5,
+       "title": {
+        "id": "Transportasi Ramah Lingkungan",
+        "en": "Sustainable Transport"
+       },
+       "desc": {
+        "id": "Perkalian bilangan bulat lewat arah, kecepatan, dan waktu berjalan kaki.",
+        "en": "Multiplying integers through direction, speed and walking time."
+       },
+       "cover": "covers/a4.jpg"
+      },
+      {
+       "type": "applet",
+       "n": 5,
+       "q": 5,
+       "title": {
+        "id": "Pola untuk Keputusan Berkelanjutan",
+        "en": "Patterns for Sustainable Decisions"
+       },
+       "desc": {
+        "id": "Pola perkalian dan pembagian bilangan bulat positif dan negatif.",
+        "en": "Patterns in multiplying and dividing positive and negative integers."
+       },
+       "cover": "covers/a5.jpg"
+      },
+      {
+       "type": "applet",
+       "n": 6,
+       "q": 4,
+       "title": {
+        "id": "Perencanaan Reboisasi",
+        "en": "Reforestation Planning"
+       },
+       "desc": {
+        "id": "Pembagian pecahan untuk merencanakan bibit pohon.",
+        "en": "Dividing fractions to plan tree seedlings."
+       },
+       "cover": "covers/a6.jpg"
+      },
+      {
+       "type": "applet",
+       "n": 7,
+       "q": 2,
+       "title": {
+        "id": "Mengestimasi Emisi Karbon",
+        "en": "Estimating Carbon Emissions"
+       },
+       "desc": {
+        "id": "Estimasi perkalian desimal dengan pembulatan dan model luas.",
+        "en": "Estimating decimal products by rounding and with an area model."
+       },
+       "cover": "covers/a7.jpg"
+      }
+     ]
+    },
+    {
+     "id": "aljabar",
+     "name": {
+      "id": "Aljabar",
+      "en": "Algebra",
+      "de": "Algebra",
+      "tr": "Cebir"
+     },
+     "intro": {
+      "id": "Dua misi dari pola menuju ekspresi aljabar. Setiap misi punya versi laptop dan versi HP.",
+      "en": "Two missions from patterns to algebraic expressions. Each mission has a laptop and a phone version."
+     },
+     "items": [
+      {
+       "type": "applet",
+       "n": 8,
+       "q": 4,
+       "mission": 1,
+       "title": {
+        "id": "Temukan Pola, Kenali Ekspresi!",
+        "en": "Find the Pattern, Discover the Expression!"
+       },
+       "desc": {
+        "id": "Air cuci tangan per siswa: dari pola di tabel menuju ekspresi 3x.",
+        "en": "Handwashing water per student: from the pattern in the table to the expression 3x."
+       },
+       "cover": "covers/a8.jpg"
+      },
+      {
+       "type": "applet",
+       "n": 9,
+       "q": 6,
+       "mission": 2,
+       "title": {
+        "id": "Menjaga Bumi",
+        "en": "Protecting Our Planet"
+       },
+       "desc": {
+        "id": "Ekspresi W = 3x + 5y + 20 dalam tiga misi SDGs: air, energi, dan iklim.",
+        "en": "The expression W = 3x + 5y + 20 in three SDG missions: water, energy and climate."
+       },
+       "cover": "covers/a9.jpg"
+      }
+     ]
+    },
+    {
+     "id": "geometri",
+     "name": {
+      "id": "Geometri",
+      "en": "Geometry",
+      "de": "Geometrie",
+      "tr": "Geometri"
+     },
+     "intro": {
+      "id": "Bangun ruang yang bisa diputar dan dibuka jaringnya, di luar GeoGebra.",
+      "en": "Solids you can turn and unfold, outside GeoGebra."
+     },
+     "items": [
+      {
+       "type": "studio",
+       "href": "geometri/",
+       "cover": "covers/geo.jpg",
+       "kicker": {
+        "id": "Studio 3D",
+        "en": "3D studio"
+       },
+       "title": {
+        "id": "Bangun Ruang 3D",
+        "en": "3D Solids"
+       },
+       "desc": {
+        "id": "Kubus, balok, prisma, limas, tabung, kerucut, dan bola: volume, luas permukaan, jaring-jaring, dan rumus Euler.",
+        "en": "Cube, cuboid, prism, pyramid, cylinder, cone and sphere: volume, surface area, nets and Euler's formula."
+       }
+      }
+     ]
+    },
+    {
+     "id": "seni",
+     "name": {
+      "id": "Seni Matematika",
+      "en": "Math Art",
+      "de": "Mathe-Kunst",
+      "tr": "Matematik Sanatı"
+     },
+     "intro": {
+      "id": "Wajah ninja, robot, dan rumah bolon yang tersusun hanya dari persamaan, lalu kurva garis, parabola, dan lingkaran yang bisa kamu bentuk sendiri.",
+      "en": "A ninja face, a robot and a rumah bolon made only of equations, then lines, parabolas and circles you can shape yourself."
+     },
+     "items": [
+      {
+       "type": "studio",
+       "href": "seni/?j=smp",
+       "cover": "covers/kurva-smp.jpg",
+       "kicker": {
+        "id": "Seni matematika",
+        "en": "Math art"
+       },
+       "title": {
+        "id": "Gambar dari Persamaan",
+        "en": "Pictures from Equations"
+       },
+       "desc": {
+        "id": "Setiap garis adalah satu persamaan dan setiap warna satu pertidaksamaan. Bongkar gambarnya, ubah angkanya, lalu buat kurvamu sendiri.",
+        "en": "Every line is one equation and every colour one inequality. Take the picture apart, change its numbers, then make your own curves."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sma",
+   "name": {
+    "id": "SMA",
+    "en": "Upper secondary",
+    "de": "Sekundarstufe II",
+    "tr": "Lise"
+   },
+   "phase": {
+    "id": "Fase E–F · kelas 10–12",
+    "en": "Phases E–F · grades 10–12",
+    "de": "Phasen E–F · Klassen 10–12",
+    "tr": "E–F evreleri · 10–12. sınıflar"
+   },
+   "intro": {
+    "id": "Trigonometri dan koordinat kutub lewat seni matematika. Applet SMA berikutnya menyusul bersama guru.",
+    "en": "Trigonometry and polar coordinates through math art. More upper-secondary applets will follow with teachers."
+   },
+   "topics": [
+    {
+     "id": "seni",
+     "name": {
+      "id": "Seni Matematika",
+      "en": "Math Art",
+      "de": "Mathe-Kunst",
+      "tr": "Matematik Sanatı"
+     },
+     "intro": {
+      "id": "Gelombang sinus, mawar, spiral, kardioid, Lissajous, dan kurva kupu-kupu, semuanya dari persamaan.",
+      "en": "Sine waves, roses, spirals, cardioids, Lissajous figures and the butterfly curve, all from equations."
+     },
+     "items": [
+      {
+       "type": "studio",
+       "href": "seni/?j=sma&k=mawar",
+       "cover": "covers/kurva-sma.jpg",
+       "kicker": {
+        "id": "Studio kurva",
+        "en": "Curve studio"
+       },
+       "title": {
+        "id": "Kurva Kutub & Parametrik",
+        "en": "Polar & Parametric Curves"
+       },
+       "desc": {
+        "id": "r = cos(kθ), r = aθ, r = b + a cos θ, dan lainnya. Tumpuk beberapa kurva menjadi satu karya.",
+        "en": "r = cos(kθ), r = aθ, r = b + a cos θ and more. Layer several curves into one piece."
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

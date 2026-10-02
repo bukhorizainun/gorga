@@ -9,7 +9,7 @@
     "Conversation",
     "Protocol",
     "For teachers",
-    "Activities"
+    "Levels"
   ],
   "ids": [
     "conversation",
@@ -218,9 +218,9 @@
     ],
     "note": "Sample of the teacher view"
   },
-  "a_eyebrow": "Activities",
-  "a_h2": "One window <em>per topic.</em>",
-  "a_intro": "Activities are grouped in windows. The Integers window holds the teacher's seven climate-action activities. Every applet runs the full protocol with a task card per question, following the teacher's scaffolding framework.",
+  "a_eyebrow": "Levels",
+  "a_h2": "Choose a level, <em>then a topic.</em>",
+  "a_intro": "Each school level has its own page with topics and activities: the teacher's GeoGebra applets with the full protocol, plus a 3D geometry studio and math art outside GeoGebra.",
   "wins_label": "Topic windows",
   "wins": [
     [
@@ -299,5 +299,10 @@
     ]
   ],
   "mission": "Mission",
-  "next_alg": "Each mission has a laptop and a phone version; the page picks the one that fits your screen."
+  "next_alg": "Each mission has a laptop and a phone version; the page picks the one that fits your screen.",
+  "lv_items": "items",
+  "lv_prep": "in preparation",
+  "lv_extra": "Extra material:",
+  "lv_geo": "3D Geometry",
+  "lv_art": "Math Art"
 }

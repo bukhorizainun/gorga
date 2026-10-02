@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Geometri 3D — Gorga</title>
+  <meta name="description" content="Bangun ruang yang bisa diputar, diubah ukurannya, dan dibuka jaringnya: volume, luas permukaan, dan rumus Euler.">
+  <meta name="theme-color" content="#f4f5fa">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/gorga.css">
+  <link rel="stylesheet" href="../assets/home.css">
+  <link rel="stylesheet" href="../assets/studio.css">
+  <script src="../assets/i18n.js"></script>
+  <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/" } }</script>
+</head>
+<body class="landing studio">
+  <div class="sky" aria-hidden="true"><i></i><i></i><i></i></div>
+  <header class="top">
+    <a class="mark" href="../" aria-label="Gorga"><img src="../assets/logo-nila.svg" alt="" width="30" height="30"><span>gorga</span></a>
+    <nav aria-label="Materi"><a href="../#aktivitas" data-i18n="navActs">Aktivitas</a><a href="./" aria-current="page" data-i18n="navGeo">Geometri 3D</a><a href="../seni/" data-i18n="navArt">Seni Matematika</a></nav>
+    <div class="end"><div class="langs" role="group" aria-label="Language"><a href="?lang=id" data-set-lang="id">ID</a><a href="?lang=en" data-set-lang="en">EN</a></div></div>
+  </header>
+
+  <main>
+    <section class="studio-head">
+      <div class="crumbs-row"><a href="../#aktivitas" data-i18n="crumb">Geometri</a><span>·</span><span data-i18n="extra">Materi tambahan, di luar GeoGebra</span></div>
+      <h1 data-i18n="h1">Bangun ruang yang bisa kamu <em>putar dan buka.</em></h1>
+      <p class="lead" data-i18n="lead">Pilih bangun, seret untuk memutarnya, ubah ukurannya, lalu buka jaringnya pelan-pelan. Perhatikan bagaimana volume dan luas permukaan ikut berubah.</p>
+    </section>
+
+    <section class="bench">
+      <div class="stage" id="stage" aria-label="Bangun ruang tiga dimensi yang bisa diputar">
+        <span class="stage-name" id="solid-name"></span>
+        <span class="hint" data-i18n="hint">seret untuk memutar · gulir untuk memperbesar</span>
+      </div>
+      <div class="controls">
+        <div><span class="ctl-label" data-i18n="lblSolid">Bangun ruang</span><div class="choices" id="solids" role="group"></div></div>
+        <div><span class="ctl-label" data-i18n="lblSize">Ukuran</span><div id="sliders"></div></div>
+        <div>
+          <span class="ctl-label" data-i18n="lblNet">Jaring-jaring</span>
+          <div class="unfold"><span data-i18n="flat">datar</span><input type="range" id="net" min="0" max="1" step="0.01" value="1" aria-label="Lipat jaring"><span data-i18n="closed">tertutup</span></div>
+          <p class="note-small" id="net-note"></p>
+          <button type="button" class="ghost-btn" id="open" data-i18n="openBtn">Buka / tutup jaring</button>
+        </div>
+        <div class="readouts">
+          <div><span class="num" id="vol"></span><span class="unit" data-i18n="vol">volume · satuan³</span><span class="formula" id="f-vol"></span></div>
+          <div><span class="num" id="area"></span><span class="unit" data-i18n="area">luas permukaan · satuan²</span><span class="formula" id="f-area"></span></div>
+        </div>
+        <p class="euler" id="euler"><span data-i18n="eF">sisi</span> <b id="eF"></b> · <span data-i18n="eE">rusuk</span> <b id="eE"></b> · <span data-i18n="eV">titik sudut</span> <b id="eV"></b></p>
+        <p class="think" id="q"></p>
+      </div>
+    </section>
+
+    <section class="explain" data-rv>
+      <div><h3 data-i18n="x1h">Jaring-jaring</h3><p data-i18n="x1p">Setiap bangun bersisi datar bisa dibuka menjadi bangun datar. Luas permukaan adalah jumlah luas semua sisi di jaringnya.</p></div>
+      <div><h3 data-i18n="x2h">Rumus Euler</h3><p data-i18n="x2p">Untuk kubus, balok, prisma, dan limas: banyak sisi + titik sudut − rusuk = 2. Coba periksa di setiap bangun.</p></div>
+      <div><h3 data-i18n="x3h">Skala</h3><p data-i18n="x3p">Panjang dikali 2 membuat luas dikali 4 dan volume dikali 8. Geser slider dan perhatikan angkanya.</p>
+        <span class="src" data-i18n="src">Ide jaring yang bisa dibuka: <a href="https://sg.iwant2study.org/ospsg/index.php/1268" rel="noopener">iwant2study (MOE Singapura)</a>.</span></div>
+    </section>
+  </main>
+
+  <footer class="foot"><p data-i18n="foot">Gorga · materi tambahan geometri ruang, di luar GeoGebra.</p></footer>
+
+  <script>
+    gorgaApplyI18n({ id: {}, en: {
+      _title: "3D Geometry — Gorga", navActs: "Activities", navGeo: "3D Geometry", navArt: "Math Art", crumb: "Geometry", extra: "Extra material, outside GeoGebra",
+      h1: "Solids you can <em>turn and unfold.</em>", lead: "Choose a solid, drag to turn it, change its size, then unfold its net slowly. Watch how the volume and the surface area change with it.",
+      hint: "drag to turn · scroll to zoom", lblSolid: "Solid", lblSize: "Size", lblNet: "Net", flat: "flat", closed: "closed", openBtn: "Open / close the net",
+      vol: "volume · units³", area: "surface area · units²", eF: "faces", eE: "edges", eV: "vertices",
+      x1h: "Nets", x1p: "Every flat-faced solid unfolds into a flat shape. The surface area is the sum of the areas of all faces in its net.",
+      x2h: "Euler's formula", x2p: "For cubes, cuboids, prisms and pyramids: faces + vertices − edges = 2. Check it on every solid.",
+      x3h: "Scale", x3p: "Doubling every length makes the area 4 times and the volume 8 times bigger. Move a slider and watch the numbers.",
+      src: "Idea of unfolding nets: <a href=\"https://sg.iwant2study.org/ospsg/index.php/1268\" rel=\"noopener\">iwant2study (MOE Singapore)</a>.",
+      foot: "Gorga · extra material on solid geometry, outside GeoGebra." } });
+  </script>
+  <script type="module" src="app.js"></script>
+  <script src="../assets/motif.js"></script>
+</body>
+</html>

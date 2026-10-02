@@ -1,0 +1,103 @@
+/* Activity pages in the landing's "Nila" language: no framed cards. The applet floats as one sheet,
+   Poda's conversation sits on the page itself, and lines give way to space and soft shadow.
+   Loaded after gorga.css on aktivitas/ and suhu/. */
+
+:root {
+  --nila: #1c2a55; --nila-2: #34437a; --nila-3: #56628f;
+  --gold: #8a5f1c; --gold-2: #c39a52;
+  --e-out: cubic-bezier(.23, 1, .32, 1);
+  --lift: 0 40px 90px -52px rgba(28, 42, 85, .55), 0 10px 30px -22px rgba(28, 42, 85, .35);
+}
+body { background: #f4f5fa; }
+.sky { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+.sky i { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .55; }
+.sky i:nth-child(1) { width: 62vw; height: 62vw; right: -18vw; top: -22vw; background: radial-gradient(circle, rgba(64, 86, 170, .2), transparent 65%); }
+.sky i:nth-child(2) { width: 54vw; height: 54vw; left: -20vw; top: 40vh; background: radial-gradient(circle, rgba(195, 154, 82, .18), transparent 65%); }
+.sky i:nth-child(3) { width: 46vw; height: 46vw; right: 6vw; bottom: -18vw; background: radial-gradient(circle, rgba(120, 140, 210, .14), transparent 65%); }
+
+/* top bar: the landing's floating glass pill */
+.bar { top: 14px; width: min(1472px, calc(100% - 28px)); margin: 14px auto 0; border: 0; border-radius: 999px; padding: 10px 14px 10px 22px;
+  background: rgba(255, 255, 255, .62); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: 0 18px 40px -30px rgba(28, 42, 85, .5); }
+.mark img { width: 30px; height: 30px; }
+.crumbs { letter-spacing: .2em; }
+.badge { border: 0; background: rgba(28, 42, 85, .06); color: var(--nila-3); }
+.langs { border: 0; background: rgba(28, 42, 85, .06); padding: 3px; gap: 2px; }
+.langs a { border-radius: 999px; padding: 6px 10px; }
+.langs a[aria-current] { background: var(--nila); }
+
+/* title band */
+.intro-band { padding-top: clamp(40px, 7vh, 72px); padding-bottom: clamp(20px, 4vh, 36px); gap: clamp(28px, 5vw, 80px); }
+.intro-band h1 { font-weight: 300; font-size: clamp(40px, 5vw, 70px); line-height: .98; letter-spacing: -.02em; }
+.intro-band h1.long { font-size: clamp(32px, 3.4vw, 50px); line-height: 1.02; }
+.eyebrow { color: var(--gold); letter-spacing: .22em; }
+.context { border-left: 0; padding-left: 0; }
+.context .label, details.intro-more summary .label { position: relative; padding-left: 18px; color: var(--nila-3); }
+.context .label::before, details.intro-more summary .label::before { content: ""; position: absolute; left: 0; top: .35em; width: 7px; height: 7px; background: var(--gold-2); transform: rotate(45deg); }
+.context p, details.intro-more summary, #intro-rest p { font-size: 15.5px; color: var(--nila-2); }
+.act-steps a { border: 0; background: rgba(28, 42, 85, .06); transition: background .25s ease, color .25s ease; }
+.act-steps a:hover { background: rgba(28, 42, 85, .12); }
+.act-steps a[aria-current] { background: var(--nila); }
+
+/* the two columns lose their cards */
+.layout { gap: clamp(28px, 4vw, 64px); margin-top: clamp(16px, 3vh, 30px); align-items: start; }
+.pane { background: transparent; border: 0; box-shadow: none; padding: 0; border-radius: 0; }
+.applet-wrap { border: 0; border-radius: 28px; background: #fff; box-shadow: var(--lift); }
+
+.state-strip { margin-top: 18px; padding: 0 6px; }
+.sep { background: rgba(28, 42, 85, .12); }
+.note-card { margin-top: 22px; padding: 0 6px 0 24px; background: none; border: 0; border-radius: 0; position: relative; font-size: 15px; }
+.note-card::before { content: ""; position: absolute; left: 6px; top: .45em; width: 7px; height: 7px; background: var(--gold-2); transform: rotate(45deg); }
+.note-card .label { color: var(--gold); }
+.journey { margin-top: 26px; padding: 0 6px; border-top: 0; }
+.level-meter { gap: 6px; }
+.level-meter i { height: 4px; border-radius: 4px; background: rgba(28, 42, 85, .1); }
+.level-meter i.on { background: var(--gold-2); }
+.level-meter i.on:first-child { background: var(--nila); }
+.step { border: 0; background: rgba(255, 255, 255, .75); box-shadow: 0 6px 16px -12px rgba(28, 42, 85, .6); }
+.path li + li::before { background: rgba(195, 154, 82, .6); }
+
+/* Poda: the conversation lives on the page, with a glass input at its foot */
+.pane-chat { min-height: 640px; max-height: 860px; overflow: visible; }
+.chat-head { border-bottom: 0; padding: 4px 4px 14px; }
+.chat-head .who b { font-size: 24px; }
+.qbox { background: none; border-bottom: 0; padding: 0 4px 10px; }
+.qbox-head .label { color: var(--gold); }
+.qtext { font: 400 clamp(20px, 1.6vw, 24px)/1.35 var(--serif); color: var(--nila); max-height: 230px; }
+.qnav .ghost { border: 0; background: rgba(28, 42, 85, .06); }
+.ghost { border-color: transparent; background: rgba(28, 42, 85, .06); }
+.ghost:hover { border-color: transparent; background: rgba(28, 42, 85, .12); }
+.chat-log { background: none; padding: 14px 4px 18px; gap: 14px;
+  -webkit-mask-image: linear-gradient(transparent, #000 22px, #000 calc(100% - 14px), transparent); mask-image: linear-gradient(transparent, #000 22px, #000 calc(100% - 14px), transparent); }
+.msg p { border-radius: 20px; font-size: 15.5px; padding: 12px 16px; }
+.msg.ai p { background: rgba(255, 255, 255, .86); border-top-left-radius: 6px; box-shadow: 0 14px 30px -24px rgba(28, 42, 85, .55); }
+.msg.ai.question p { border: 0; box-shadow: inset 3px 0 0 var(--gold-2), 0 14px 30px -24px rgba(28, 42, 85, .55); }
+.msg.ai.confirm p { border: 0; background: #fff; box-shadow: 0 0 0 1.5px rgba(28, 42, 85, .9), 0 14px 30px -24px rgba(28, 42, 85, .55); }
+.msg.student p { background: var(--nila); border-top-right-radius: 6px; box-shadow: 0 14px 30px -20px rgba(28, 42, 85, .8); }
+.msg.student.applet p { border: 0; background: rgba(255, 255, 255, .7); box-shadow: inset 0 0 0 1px rgba(28, 42, 85, .15); }
+.chat-foot { border-top: 0; background: none; padding: 8px 0 0; }
+.chat-form { padding: 6px; border-radius: 999px; background: rgba(255, 255, 255, .7); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: var(--lift); }
+.chat-form input { border: 0; background: transparent; padding: 12px 14px; }
+.chat-form input:focus { box-shadow: none; background: transparent; }
+.chat-form button { padding: 0 22px; min-height: 44px; transition: background .2s ease, transform .16s ease-out; }
+.chat-form button:hover { background: var(--nila-2); }
+.chat-form button:active { transform: scale(.97); }
+.open-note, .quick { padding: 0 8px; }
+.reason-card { border-radius: 22px; box-shadow: var(--lift); }
+
+/* teacher mode */
+.pane-log { padding: 0; }
+.stat { border: 0; border-radius: 20px; background: rgba(255, 255, 255, .7); box-shadow: 0 18px 40px -32px rgba(28, 42, 85, .6); }
+th { border-bottom-color: rgba(28, 42, 85, .1); }
+td { border-bottom-color: rgba(28, 42, 85, .05); }
+
+.foot { padding-top: clamp(40px, 8vh, 80px); }
+
+@media (max-width: 980px) {
+  .pane-chat { min-height: 560px; }
+}
+@media (max-width: 560px) {
+  .bar { top: 8px; width: calc(100% - 16px); margin-top: 8px; padding: 8px 10px 8px 14px; }
+  .applet-wrap { border-radius: 20px; }
+  .pane { padding: 0; }
+}

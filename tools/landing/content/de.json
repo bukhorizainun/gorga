@@ -9,7 +9,7 @@
     "Gespräch",
     "Protokoll",
     "Für Lehrkräfte",
-    "Aktivitäten"
+    "Stufen"
   ],
   "ids": [
     "gespraech",
@@ -218,9 +218,9 @@
     ],
     "note": "Beispiel der Lehrkraft-Ansicht"
   },
-  "a_eyebrow": "Aktivitäten",
-  "a_h2": "Ein Fenster <em>pro Thema.</em>",
-  "a_intro": "Die Aktivitäten sind in Fenstern gruppiert. Das Fenster „Ganze Zahlen“ enthält sieben Klimaschutz-Aktivitäten der Lehrkraft. Jedes Applet nutzt das volle Protokoll mit einer Aufgabenkarte pro Frage, nach dem Scaffolding-Rahmen der Lehrkraft.",
+  "a_eyebrow": "Schulstufen",
+  "a_h2": "Wähle die Stufe, <em>dann das Thema.</em>",
+  "a_intro": "Jede Schulstufe hat eine eigene Seite mit Themen und Aktivitäten: die GeoGebra-Applets der Lehrerin mit dem vollen Protokoll, dazu ein 3D-Geometrie-Studio und Mathe-Kunst außerhalb von GeoGebra.",
   "wins_label": "Themenfenster",
   "wins": [
     [
@@ -299,5 +299,10 @@
     ]
   ],
   "mission": "Mission",
-  "next_alg": "Jede Mission gibt es für Laptop und Handy; die Seite wählt die passende Version für deinen Bildschirm."
+  "next_alg": "Jede Mission gibt es für Laptop und Handy; die Seite wählt die passende Version für deinen Bildschirm.",
+  "lv_items": "Inhalte",
+  "lv_prep": "in Vorbereitung",
+  "lv_extra": "Zusatzmaterial:",
+  "lv_geo": "3D-Geometrie",
+  "lv_art": "Mathe-Kunst"
 }

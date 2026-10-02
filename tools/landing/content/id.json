@@ -9,7 +9,7 @@
     "Percakapan",
     "Protokol",
     "Untuk guru",
-    "Aktivitas"
+    "Jenjang"
   ],
   "ids": [
     "percakapan",
@@ -218,9 +218,9 @@
     ],
     "note": "Contoh tampilan mode guru"
   },
-  "a_eyebrow": "Aktivitas",
-  "a_h2": "Satu jendela <em>untuk tiap topik.</em>",
-  "a_intro": "Aktivitas dikelompokkan dalam jendela. Jendela Bilangan berisi tujuh aktivitas aksi iklim milik guru. Setiap applet memakai protokol penuh dengan kartu tugas per soal, mengikuti kerangka scaffolding guru.",
+  "a_eyebrow": "Jenjang",
+  "a_h2": "Pilih jenjang, <em>lalu topiknya.</em>",
+  "a_intro": "Setiap jenjang punya halaman sendiri berisi topik dan aktivitasnya: applet GeoGebra guru dengan protokol penuh, ditambah studio geometri 3D dan seni matematika di luar GeoGebra.",
   "wins_label": "Jendela topik",
   "wins": [
     [
@@ -299,5 +299,10 @@
     ]
   ],
   "mission": "Misi",
-  "next_alg": "Setiap misi punya versi laptop dan versi HP; halaman memilih yang cocok dengan layarmu."
+  "next_alg": "Setiap misi punya versi laptop dan versi HP; halaman memilih yang cocok dengan layarmu.",
+  "lv_items": "materi",
+  "lv_prep": "sedang disiapkan",
+  "lv_extra": "Materi tambahan:",
+  "lv_geo": "Geometri 3D",
+  "lv_art": "Seni Matematika"
 }

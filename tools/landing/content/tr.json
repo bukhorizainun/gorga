@@ -9,7 +9,7 @@
     "Konuşma",
     "Protokol",
     "Öğretmenler için",
-    "Etkinlikler"
+    "Kademeler"
   ],
   "ids": [
     "konusma",
@@ -218,9 +218,9 @@
     ],
     "note": "Öğretmen görünümünden örnek"
   },
-  "a_eyebrow": "Etkinlikler",
-  "a_h2": "Her konu için <em>bir pencere.</em>",
-  "a_intro": "Etkinlikler pencerelerde toplanır. Tam Sayılar penceresi, öğretmenin yedi iklim eylemi etkinliğini içerir. Her uygulama, öğretmenin destek çerçevesini izleyerek her soru için bir görev kartıyla tam protokolü kullanır.",
+  "a_eyebrow": "Kademeler",
+  "a_h2": "Önce kademeyi, <em>sonra konuyu seç.</em>",
+  "a_intro": "Her kademenin konu ve etkinliklerini içeren kendi sayfası var: öğretmenin tam protokollü GeoGebra uygulamaları, ayrıca GeoGebra dışında 3B geometri stüdyosu ve matematik sanatı.",
   "wins_label": "Konu pencereleri",
   "wins": [
     [
@@ -299,5 +299,10 @@
     ]
   ],
   "mission": "Görev",
-  "next_alg": "Her görevin dizüstü ve telefon sürümü var; sayfa ekranına uyanı seçer."
+  "next_alg": "Her görevin dizüstü ve telefon sürümü var; sayfa ekranına uyanı seçer.",
+  "lv_items": "içerik",
+  "lv_prep": "hazırlanıyor",
+  "lv_extra": "Ek materyal:",
+  "lv_geo": "3B Geometri",
+  "lv_art": "Matematik Sanatı"
 }
