@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gorga — Presentation</title>
+  <meta name="description" content="Gorga: an AI tutor beside the teacher's GeoGebra applets, plus 3D geometry and math art. Presentation deck with live demos.">
+  <meta name="theme-color" content="#eef0f7">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="deck.css">
+  <script>window.GORGA_LANG = "en";</script>
+  <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/" } }</script>
+</head>
+<body>
+  <div class="sky" aria-hidden="true"><i></i><i></i></div>
+  <canvas class="mathfield" aria-hidden="true"></canvas>
+  <div class="brand"><img src="../assets/logo-nila.svg" alt=""><span>gorga</span></div>
+
+  <main class="deck" id="deck">
+
+    <!-- 1 -->
+    <section class="slide title" data-title="Gorga">
+      <div>
+        <p class="kicker" data-a style="--d:0">Mathematics education · research prototype</p>
+        <h1 data-a style="--d:1">A patient tutor beside every <em>GeoGebra</em> applet.</h1>
+        <p class="lead" data-a style="--d:2">Students work in the teacher's applet. <b>Poda</b>, the AI tutor, asks the next question at the right level, and never gives the answer away.</p>
+        <p class="meta" data-a style="--d:3">Dr. Rahmi Ramadhani Umar · Gorga · 2026</p>
+      </div>
+      <svg data-gorga role="img" aria-label="Gorga medallion: spirals and triangles with rotational symmetry" data-a style="--d:2"></svg>
+    </section>
+
+    <!-- 2 -->
+    <section class="slide" data-title="The problem">
+      <p class="kicker" data-a style="--d:0"><span class="no">I</span>The moment that matters</p>
+      <h2 data-a style="--d:1">A right number is not yet <em>right thinking.</em></h2>
+      <div class="versus">
+        <div class="col" data-a style="--d:2">
+          <h3>A general chatbot</h3>
+          <div class="bubble st"><small>Student</small>−6, −5, −4, −3, −2, −1, 0, 1, 2, 3, 4 … so it rises 10.</div>
+          <div class="bubble ai bad"><small>Chatbot</small>Correct ✅</div>
+        </div>
+        <div class="col" data-a style="--d:3">
+          <h3>The teacher's protocol</h3>
+          <div class="bubble ai good"><small>Poda · L4</small>You counted every step up to 4. What happens as you pass a certain temperature before 1?</div>
+          <div class="bubble st"><small>Student</small>oh, stop at zero first: 6 up to 0, then 4 more. So 10.</div>
+        </div>
+      </div>
+      <p class="src" data-a style="--d:4">From the teacher's own ChatGPT sessions (anonymised): the chatbot confirmed one-by-one counting; her protocol asks for the split at zero.</p>
+    </section>
+
+    <!-- 3 -->
+    <section class="slide" data-title="How it works">
+      <p class="kicker" data-a style="--d:0"><span class="no">II</span>How Gorga works</p>
+      <h2 data-a style="--d:1">The applet, the student, <em>and a good question.</em></h2>
+      <div class="flow">
+        <svg class="link" viewBox="0 0 1360 60" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M 90 30 C 300 -10 380 70 560 30 S 820 -10 1000 30"/></svg>
+        <div class="step" data-a style="--d:2"><div class="num">1</div><h3>Work in the applet</h3><p>The teacher's GeoGebra activity, unchanged. Gorga reads the markers and the answer boxes directly from the applet.</p></div>
+        <div class="step" data-a style="--d:3"><div class="num">2</div><h3>Explain in your words</h3><p>Students write short, informal answers with words and numbers. Poda reads which strategy they used.</p></div>
+        <div class="step" data-a style="--d:4"><div class="num">3</div><h3>One question back</h3><p>Poda picks the teacher's scaffold level and asks one question, until the student finds the reasoning alone.</p></div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="slide chat-slide" data-title="Poda live" data-scene="chat">
+      <div>
+        <p class="kicker" data-a style="--d:0"><span class="no">III</span>A real conversation</p>
+        <h2 data-a style="--d:1">The student finds <em>zero</em> alone.</h2>
+        <p class="lead" data-a style="--d:2">Temperature from −6 °C to 4 °C. Poda never says “zero”: it asks about the temperature the student skipped over.</p>
+      </div>
+      <div class="replay" id="replay" aria-live="polite"></div>
+    </section>
+
+    <!-- 5 -->
+    <section class="slide" data-title="Scaffold ladder">
+      <p class="kicker" data-a style="--d:0"><span class="no">IV</span>The teacher's framework</p>
+      <h2 data-a style="--d:1">Help rises when stuck, <em>fades on success.</em></h2>
+      <div class="ladder">
+        <svg viewBox="0 0 1360 520" aria-hidden="true"><path pathLength="1" d="M -60 330 L 0 330 C 170 330 190 190 350 190 C 520 190 540 40 700 40 C 880 40 960 40 1000 160 C 1030 250 1040 300 1050 300 L 1330 300"/></svg>
+        <div class="rung" style="left:0;top:330px;--d:2" data-a><span class="code">L1 · Probe</span><h3>Probe</h3><p>An open question. Nothing is pointed out yet.</p></div>
+        <div class="rung" style="left:350px;top:190px;--d:3" data-a><span class="code">L2 · Point</span><h3>Point</h3><p>One feature of the applet, without saying what it means.</p></div>
+        <div class="rung" style="left:700px;top:40px;--d:4" data-a><span class="code">L3 · Focus</span><h3>Focus</h3><p>One smaller sub-question, without the procedure.</p></div>
+        <div class="rung" style="left:1050px;top:300px;--d:5" data-a><span class="code">L4 · Revoice &amp; fade</span><h3>Revoice, then fade</h3><p>The student explains; Poda confirms with no new explanation.</p></div>
+      </div>
+      <p class="src">Framework: van de Pol, Volman &amp; Beishuizen (2010); van de Pol &amp; Elbers (2013); Wood, Bruner &amp; Ross (1976).</p>
+    </section>
+
+    <!-- 6 -->
+    <section class="slide" data-title="Guards">
+      <p class="kicker" data-a style="--d:0"><span class="no">V</span>Safe by design</p>
+      <h2 data-a style="--d:1">Every AI sentence is <em>checked first.</em></h2>
+      <div class="guards">
+        <div data-a style="--d:2"><h3>No give-aways</h3><p>Numbers the student has not found yet may not appear in a reply.</p></div>
+        <div data-a style="--d:3"><h3>Content, not labels</h3><p>A reply labelled “L4” that still splits the question is rejected.</p></div>
+        <div data-a style="--d:4"><h3>Always a fallback</h3><p>If the AI breaks a rule, the student gets a sentence the teacher approved.</p></div>
+      </div>
+      <div class="offtopic" data-a style="--d:5">
+        <span class="label">Stays on topic</span>
+        <div>
+          <div class="bubble st" style="margin-left:0;display:inline-block">do you like playing Free Fire?</div>
+          <div class="bubble ai good">Let's focus on the task first: have you tried moving Sada in the applet to see where she is after 2 seconds?</div>
+        </div>
+      </div>
+      <p class="src">Off-topic test on 2 Oct 2026, translated from Indonesian.</p>
+    </section>
+
+    <!-- 7 -->
+    <section class="slide" data-title="In numbers" data-scene="count">
+      <p class="kicker" data-a style="--d:0"><span class="no">VI</span>Today</p>
+      <h2 data-a style="--d:1">The teacher's activities, <em>all with Poda.</em></h2>
+      <div class="numbers">
+        <div data-a style="--d:2"><b data-count="9">0</b><span>GeoGebra activities with a task card per question</span></div>
+        <div data-a style="--d:3"><b data-count="45">0</b><span>questions: 35 on integers, 10 on algebra</span></div>
+        <div data-a style="--d:4"><b data-count="4">0</b><span>scaffold levels, from the teacher's framework</span></div>
+        <div data-a style="--d:5"><b data-count="4">0</b><span>languages on the site: Indonesian, English, German, Turkish</span></div>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="slide divider" data-title="Beyond GeoGebra">
+      <p class="kicker" data-a style="--d:0"><span class="no">VII</span>Extra material</p>
+      <h1 data-a style="--d:1">Beyond <em>GeoGebra.</em></h1>
+      <p class="lead" data-a style="--d:2">Two studios written for Gorga: solids you can turn and unfold, and pictures that are nothing but equations.</p>
+    </section>
+
+    <!-- 9 -->
+    <section class="slide live" data-title="3D geometry" data-scene="solid">
+      <div class="scene" id="solid-scene" data-a style="--d:1"><span class="name" id="solid-name">Cuboid</span></div>
+      <div>
+        <p class="kicker" data-a style="--d:0">3D geometry studio</p>
+        <h2 data-a style="--d:1">Turn it. <em>Unfold it.</em></h2>
+        <div class="readout" data-a style="--d:2">
+          <div><span>volume</span><b id="s-vol">–</b><span class="f" id="s-fv"></span></div>
+          <div><span>surface area</span><b id="s-area">–</b><span class="f" id="s-fa"></span></div>
+        </div>
+        <p class="big-count" data-a style="--d:3" id="s-euler"></p>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section class="slide live" data-title="Math art" data-scene="art">
+      <div class="scene" id="art-scene" data-a style="--d:1"><canvas id="art-cv"></canvas></div>
+      <div>
+        <p class="kicker" data-a style="--d:0">Math art</p>
+        <h2 data-a style="--d:1">Every line is <em>an equation.</em></h2>
+        <p class="big-count" id="art-count" data-a style="--d:2"></p>
+        <div class="eqticker" id="ticker"></div>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section class="slide live" data-title="Curves" data-scene="rose">
+      <div class="scene" data-a style="--d:1"><canvas id="rose-cv"></canvas></div>
+      <div>
+        <p class="kicker" data-a style="--d:0">Curve studio</p>
+        <h2 data-a style="--d:1">Watch a curve <em>being computed.</em></h2>
+        <p class="eq" id="rose-eq" data-a style="--d:2"></p>
+        <p class="calc" id="rose-calc"></p>
+        <p class="small" data-a style="--d:3">Students can also type their own y = f(x) or r = f(θ), layer curves and download their piece.</p>
+      </div>
+    </section>
+
+    <!-- 12 -->
+    <section class="slide" data-title="Teacher view">
+      <p class="kicker" data-a style="--d:0"><span class="no">VIII</span>For teachers and researchers</p>
+      <h2 data-a style="--d:1">Every turn is <em>on the record.</em></h2>
+      <div class="teacher">
+        <div>
+          <div class="feat" data-a style="--d:2"><h3>Teacher mode</h3><p>The L1–L4 label on every reply.</p></div>
+          <div class="feat" data-a style="--d:3"><h3>Session summary</h3><p>Turns, spread of moves, AI versus script, time to the reasoning.</p></div>
+          <div class="feat" data-a style="--d:4"><h3>Log and transcript</h3><p>A turn-by-turn CSV for analysis.</p></div>
+        </div>
+        <div data-a style="--d:3">
+          <div class="stats">
+            <div class="stat"><span>Turns</span><b>7</b><small>question 1</small></div>
+            <div class="stat"><span>AI replies</span><b>94%</b><small>the rest scripted</small></div>
+            <div class="stat"><span>To target</span><b>2:41</b><small>minutes</small></div>
+          </div>
+          <table class="log"><thead><tr><th>#</th><th>student answer</th><th>diagnosis</th><th>move</th></tr></thead>
+            <tbody><tr><td>3</td><td>I counted 10 boxes</td><td>correct, no explanation yet</td><td>L4</td></tr>
+              <tr><td>4</td><td>I don't know</td><td>stuck</td><td>L2</td></tr>
+              <tr><td>5</td><td>from −6 to 0 is 6, then 0 to 4 is 4</td><td>split at 0 (target)</td><td>Confirm</td></tr></tbody></table>
+          <p class="small">Sample of the teacher view.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13 -->
+    <section class="slide" data-title="Next">
+      <p class="kicker" data-a style="--d:0"><span class="no">IX</span>What comes next</p>
+      <h2 data-a style="--d:1">From one classroom <em>to every level.</em></h2>
+      <div class="road">
+        <div class="done" data-a style="--d:2"><b>Now</b><h3>Lower secondary</h3><p>Integers and algebra: nine activities with full protocol.</p></div>
+        <div data-a style="--d:3"><b>Next</b><h3>Class data</h3><p>Class codes, with every session saved automatically for research.</p></div>
+        <div data-a style="--d:4"><b>Then</b><h3>More windows</h3><p>Geometry and data &amp; statistics, built with teachers.</p></div>
+        <div data-a style="--d:5"><b>Later</b><h3>Primary &amp; upper secondary</h3><p>Same catalogue, new levels; Poda in more languages.</p></div>
+      </div>
+    </section>
+
+    <!-- 14 -->
+    <section class="slide end" data-title="Thank you">
+      <p class="kicker" data-a style="--d:0">Gorga · Poda</p>
+      <h1 data-a style="--d:1">Terima kasih. <em>Thank you.</em></h1>
+      <div class="links" data-a style="--d:2">
+        <div><span>Try it</span>rahmiumar.github.io/gorga</div>
+        <div><span>Code</span>github.com/rahmiumar/gorga</div>
+      </div>
+    </section>
+  </main>
+
+  <div class="bar" id="bar"></div>
+  <p class="hint" id="hint">→ or click to advance · F for full screen</p>
+  <div class="hud"><button type="button" id="prev" aria-label="Previous slide">←</button><span id="count">1 / 14</span><button type="button" id="next" aria-label="Next slide">→</button><button type="button" id="fs" aria-label="Full screen">⤢</button></div>
+
+  <script src="../assets/motif.js"></script>
+  <script src="../assets/mathfield.js"></script>
+  <script type="module" src="deck.js"></script>
+</body>
+</html>
