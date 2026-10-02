@@ -126,7 +126,7 @@
         <h2>Her konu için <em>bir pencere.</em></h2>
         <p class="intro">Etkinlikler pencerelerde toplanır. Tam Sayılar penceresi, öğretmenin yedi iklim eylemi etkinliğini içerir. Her uygulama, öğretmenin destek çerçevesini izleyerek her soru için bir görev kartıyla tam protokolü kullanır.</p>
       </header>
-      <div class="wins" role="group" aria-label="Konu pencereleri" data-rv><button type="button" class="win on" data-win="0" aria-pressed="true">Tam Sayılar<small>7 etkinlik</small></button><button type="button" class="win" data-win="1" aria-pressed="false">Geometri<small>yakında</small></button><button type="button" class="win" data-win="2" aria-pressed="false">Cebir<small>yakında</small></button><button type="button" class="win" data-win="3" aria-pressed="false">Veri ve İstatistik<small>yakında</small></button></div>
+      <div class="wins" role="group" aria-label="Konu pencereleri" data-rv><button type="button" class="win on" data-win="0" aria-pressed="true">Tam Sayılar<small>7 etkinlik</small></button><button type="button" class="win" data-win="1" aria-pressed="false">Geometri<small>yakında</small></button><button type="button" class="win" data-win="2" aria-pressed="false">Cebir<small>2 görev</small></button><button type="button" class="win" data-win="3" aria-pressed="false">Veri ve İstatistik<small>yakında</small></button></div>
       <div class="win-panel" data-panel="0">
         <ul class="gallery" data-rv="seq"><li class="act lead-act" style="--i:0">
             <a class="pic" href="../suhu/?lang=en"><img src="../assets/covers/a1.jpg" alt="" loading="lazy" width="1200" height="935"><span class="badge live">Tam protokol · YZ</span></a>
@@ -152,7 +152,17 @@
             <a class="pic" href="../aktivitas/?a=7&amp;lang=en" aria-label="Karbon Salımını Tahmin Etme"><img src="../assets/covers/a7.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge live">Tam protokol · YZ</span></a>
             <div class="cap"><span class="meta">Uygulama 7 · 2 soru</span><h3><a href="../aktivitas/?a=7&amp;lang=en">Karbon Salımını Tahmin Etme</a></h3><p>Ondalık çarpımları yuvarlayarak ve alan modeliyle tahmin etme.</p></div>
           </li></ul>
-        <p class="next-note">Sıradaki pencereler: <b>Geometri</b>, <b>Cebir</b> ve <b>Veri ve İstatistik</b>. Bir sonraki aşamada öğretmenle birlikte hazırlanacak.</p>
+        <p class="next-note">Sıradaki pencereler: <b>Geometri</b> ve <b>Veri ve İstatistik</b>. Bir sonraki aşamada öğretmenle birlikte hazırlanacak.</p>
+      </div>
+      <div class="win-panel" data-panel="2" hidden>
+        <ul class="gallery gallery-two" data-rv="seq"><li class="act" style="--i:0">
+            <a class="pic" href="../aktivitas/?a=8&amp;lang=en" aria-label="Örüntüyü Bul, İfadeyi Keşfet!"><img src="../assets/covers/a8.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge live">Tam protokol · YZ</span></a>
+            <div class="cap"><span class="meta">Görev 1 · 4 soru</span><h3><a href="../aktivitas/?a=8&amp;lang=en">Örüntüyü Bul, İfadeyi Keşfet!</a></h3><p>Öğrenci başına el yıkama suyu: tablodaki örüntüden 3x ifadesine.</p></div>
+          </li><li class="act" style="--i:1">
+            <a class="pic" href="../aktivitas/?a=9&amp;lang=en" aria-label="Gezegenimizi Koruyalım"><img src="../assets/covers/a9.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge live">Tam protokol · YZ</span></a>
+            <div class="cap"><span class="meta">Görev 2 · 6 soru</span><h3><a href="../aktivitas/?a=9&amp;lang=en">Gezegenimizi Koruyalım</a></h3><p>W = 3x + 5y + 20 ifadesi üç SDG görevinde: su, enerji ve iklim.</p></div>
+          </li></ul>
+        <p class="next-note">Her görevin dizüstü ve telefon sürümü var; sayfa ekranına uyanı seçer.</p>
       </div>
       <div class="win-panel" data-panel="soon" hidden><p class="soon-note">Bu pencere bir sonraki aşama için hazırlandı. Etkinlikler öğretmenle birlikte eklenecek.</p></div>
     </section>
@@ -180,9 +190,8 @@
     document.querySelector(".wins").addEventListener("click", function (e) {
       var b = e.target.closest(".win"); if (!b) return;
       document.querySelectorAll(".win").forEach(function (x) { x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", x === b); });
-      var first = b.dataset.win === "0";
-      document.querySelector('[data-panel="0"]').hidden = !first;
-      document.querySelector('[data-panel="soon"]').hidden = first;
+      var w = b.dataset.win, has = !!document.querySelector('[data-panel="' + w + '"]');
+      document.querySelectorAll(".win-panel").forEach(function (p) { p.hidden = has ? p.dataset.panel !== w : p.dataset.panel !== "soon"; });
     });
   </script>
   <script src="../assets/motif.js"></script>

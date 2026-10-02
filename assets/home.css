@@ -300,3 +300,9 @@ html:not(.rv-on) .ascent .path path { stroke-dashoffset: 0; }
 }
 .name p.name-what { font: 400 clamp(21px, 1.7vw, 25px)/1.5 var(--serif); color: var(--nila); margin-bottom: 26px; }
 .name p b { font-weight: 600; color: var(--nila); }
+
+/* the Algebra window has two missions: two wide pictures side by side */
+.gallery.gallery-two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.gallery.gallery-two .act:nth-child(n) { margin-top: 0; }
+.gallery.gallery-two .act:nth-child(2) { margin-top: 60px; }
+@media (max-width: 640px) { .gallery.gallery-two { grid-template-columns: 1fr; } .gallery.gallery-two .act:nth-child(2) { margin-top: 0; } }

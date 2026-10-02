@@ -18,7 +18,8 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
   const sendBtn = $("send-btn");
   const SCRIPT = tr("naskah", "script");
 
-  const n = Math.max(1, Math.min(7, parseInt(new URLSearchParams(location.search).get("a"), 10) || 2));
+  const n = Math.max(1, Math.min(9, parseInt(new URLSearchParams(location.search).get("a"), 10) || 2));
+  const WINDOW_NAME = { bilangan: tr("Bilangan", "Integers"), aljabar: tr("Aljabar", "Algebra") };
   const CARD = (window.GorgaCards || {})[n] || null;
   $("lang-id").href = `?a=${n}&lang=id`;
   $("lang-en").href = `?a=${n}&lang=en`;
@@ -77,13 +78,20 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
       a.textContent = tr("Versi protokol penuh dengan kartu tugas: Skala Suhu →", "Full-protocol version with a task card: Temperature Scale →");
       $("act-title").after(a);
     }
-    $("crumb-here").textContent = `${tr("Applet", "Applet")} ${n}`;
-    $("act-no").textContent = tr(`Applet ${n} dari 7`, `Applet ${n} of 7`);
+    // Activities are numbered within their topic window (Aljabar: Misi 1, Misi 2).
+    const win = act.window || "bilangan";
+    const same = all.filter((a) => (a.window || "bilangan") === win);
+    const k = same.indexOf(act) + 1;
+    const unit = win === "aljabar" ? tr("Misi", "Mission") : tr("Applet", "Applet");
+    $("crumb-here").textContent = `${unit} ${k}`;
+    $("act-no").textContent = tr(`${unit} ${k} dari ${same.length}`, `${unit} ${k} of ${same.length}`);
+    document.querySelectorAll('[data-i18n="window"]').forEach((el) => { el.textContent = tr(`Jendela ${WINDOW_NAME[win]}`, `${WINDOW_NAME[win]} window`); });
+    document.querySelectorAll('[data-i18n="crumb"]').forEach((el) => { el.textContent = WINDOW_NAME[win]; });
 
     // Links to the other six activities.
-    $("act-steps").innerHTML = all.map((a) => {
+    $("act-steps").innerHTML = same.map((a, i) => {
       const href = a.n === 1 ? `../suhu/?lang=${EN ? "en" : "id"}` : `?a=${a.n}&lang=${EN ? "en" : "id"}`;
-      return `<a href="${href}"${a.n === n ? ' aria-current="page"' : ""} title="${plain(L(a.title))}">${a.n}</a>`;
+      return `<a href="${href}"${a.n === n ? ' aria-current="page"' : ""} title="${plain(L(a.title))}">${i + 1}</a>`;
     }).join("");
 
     const texts = act.items.filter((i) => i.type === "text");
@@ -112,7 +120,9 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     $("st-done-note").textContent = tr(`dari ${questions.length}`, `of ${questions.length}`);
 
     const applet = act.items.find((i) => i.type === "applet");
-    injectApplet(applet ? applet.material : act.activity);
+    // Phones get the teacher's mobile version of the applet when there is one.
+    const phone = window.matchMedia && window.matchMedia("(max-width: 760px)").matches;
+    injectApplet(phone && act.mobile && act.mobile.material ? act.mobile.material : applet ? applet.material : act.activity);
     show(0);
   }
 

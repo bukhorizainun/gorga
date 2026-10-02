@@ -2,6 +2,7 @@
  {
   "n": 1,
   "activity": "yx7ubuvn",
+  "window": "bilangan",
   "title": {
    "id": "Menjelajahi Bilangan Bulat pada Skala Suhu",
    "en": "Exploring integers on a temperature scale"
@@ -127,6 +128,7 @@
  {
   "n": 2,
   "activity": "pdujyyp8",
+  "window": "bilangan",
   "title": {
    "id": "Karbon di Udara: Belajar Bilangan Bulat Melalui Neraca Karbon-Balon dan Karung Pasir",
    "en": "Carbon in the Air: Learning Whole Numbers Through the Carbon Balance-Balloons and Sandbags"
@@ -197,6 +199,7 @@
  {
   "n": 3,
   "activity": "zjjfsxst",
+  "window": "bilangan",
   "title": {
    "id": "Menjelajahi Permukaan Laut dan Kedalaman Laut Menggunakan Bilangan Bulat",
    "en": "Exploring Sea Level and Ocean Depth with Integers"
@@ -311,6 +314,7 @@
  {
   "n": 4,
   "activity": "wbamqk9r",
+  "window": "bilangan",
   "title": {
    "id": "Memilih Transportasi Ramah Lingkungan",
    "en": "Climate Action: Choosing Sustainable Transportation"
@@ -392,6 +396,7 @@
  {
   "n": 5,
   "activity": "qhyyqxbm",
+  "window": "bilangan",
   "title": {
    "id": "Memahami Pola Matematika untuk Mendukung Keputusan Berkelanjutan",
    "en": "Climate Action: Understanding Mathematical Patterns for Sustainable Decisions"
@@ -473,6 +478,7 @@
  {
   "n": 6,
   "activity": "umkeqpct",
+  "window": "bilangan",
   "title": {
    "id": "Perencanaan Reboisasi",
    "en": "Reforestation Planning"
@@ -554,6 +560,7 @@
  {
   "n": 7,
   "activity": "kkund5uy",
+  "window": "bilangan",
   "title": {
    "id": "Mengestimasi Emisi Karbon",
    "en": "Estimating Carbon Emissions"
@@ -609,5 +616,177 @@
     }
    }
   ]
+ },
+ {
+  "n": 8,
+  "activity": "ja4mwarv",
+  "window": "aljabar",
+  "title": {
+   "id": "Misi Aljabar 1: Temukan Pola, Kenali Ekspresi!",
+   "en": "Algebra Mission 2: Find the Pattern, Discover the Expression!"
+  },
+  "thumb": "https://www.geogebra.org/resource/berwysnz/IMZg4KinOHkFDmaY/material-berwysnz-thumb.png",
+  "items": [
+   {
+    "type": "text",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "<b>Selamat datang di Misi Aljabar!\n</b>\nDalam misi ini, kamu akan membantu sebuah kelas memahami penggunaan air untuk mencuci tangan. Apa yang terjadi pada jumlah air ketika jumlah siswa bertambah? \nAmati perubahan pada <b>meteran dan tabel</b>, temukan polanya, lalu gunakan pola tersebut untuk mulai mengenal <b>ekspresi aljabar</b>. \n\n<b>Siap? Mulai dengan menambahkan siswa!\n\n</b>",
+     "en": "<b>Welcome to the Algebra Mission!\n</b>In this mission, you will help a class understand how much water is used for handwashing. What happens to the amount of water when the number of students increases?\nObserve the changes in the water meter and table, discover the pattern, and use it to begin exploring algebraic expressions.\n\nReady? Start by adding students!"
+    }
+   },
+   {
+    "type": "applet",
+    "material": "berwysnz"
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "1. Amati Polanya (Observe the Pattern)",
+     "en": ""
+    },
+    "body": {
+     "id": "Ubah jumlah siswa beberapa kali. Apa yang terjadi pada jumlah air ketika jumlah siswa bertambah satu?",
+     "en": "Change the number of students several times. What happens to the amount of water when one more student is added?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "2. Temukan Hubungannya (Find the Relationship)",
+     "en": ""
+    },
+    "body": {
+     "id": "Jika ada x siswa dan setiap siswa menggunakan 3 liter air, bagaimana kamu dapat menentukan jumlah air yang digunakan tanpa menghitung satu per satu?",
+     "en": "If there are x students and each student uses 3 litres of water, how can you determine the total amount of water without counting one by one?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "3. Jelaskan 3x (Explain 3x)",
+     "en": ""
+    },
+    "body": {
+     "id": "Dalam ekspresi 3x, apa arti <b>3</b> dan apa arti <b>x </b>dalam konteks penggunaan air?",
+     "en": "In the expression 3x, what do <b>3</b> and <b>x </b>represent in the context of water use?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "4. Tantangan Misi (Mission Challenge)",
+     "en": ""
+    },
+    "body": {
+     "id": "Tanpa mengubah applet terlebih dahulu, prediksikan berapa liter air yang digunakan oleh 12 siswa. Jelaskan bagaimana kamu memperoleh jawabanmu. Setelah itu, gunakan applet untuk memeriksa prediksimu.",
+     "en": "Without changing the applet first, predict how many litres of water would be used by 12 students. Explain how you obtained your answer. Then use the applet to check your prediction."
+    }
+   }
+  ],
+  "mobile": {
+   "activity": "tct8mx4k",
+   "material": "bnftydwt"
+  }
+ },
+ {
+  "n": 9,
+  "activity": "qwfaey5b",
+  "window": "aljabar",
+  "title": {
+   "id": "Misi Aljabar 2: Menjaga Bumi",
+   "en": "Algebra Mission: Protecting Our Planet"
+  },
+  "thumb": "https://www.geogebra.org/resource/yjsudqyc/kdSkOSn3XTffd8xu/material-yjsudqyc-thumb.png",
+  "items": [
+   {
+    "type": "text",
+    "title": {
+     "id": "Selamat datang di Misi Aljabar: Menjaga Bumi! (Welcome to Algebra Mission: Protecting Our Planet!)",
+     "en": ""
+    },
+    "body": {
+     "id": "Dalam aktivitas ini, kamu akan menjelajahi bagaimana <b>ekspresi aljabar</b> dapat digunakan untuk memahami berbagai masalah dalam kehidupan sehari-hari yang berkaitan dengan Sustainable Development Goals (SDGs). Selesaikan tiga misi: <b>Hemat Air (SDG 6)</b>, <b>Energi Cerdas (SDG 7)</b>, dan <b>Aksi Iklim (SDG 13)</b>. Pada setiap misi, kamu akan mengubah nilai, mengamati pola, membuat prediksi, menyusun ekspresi aljabar, dan menyelesaikan tantangan. Ikuti empat tahap pada setiap misi: <b>Jelajahi → Tebak → Susun → Tantangan</b>. Bisakah kamu menemukan bagaimana variabel, koefisien, dan konstanta membantu kita memahami perubahan di sekitar kita? <b>Ayo mulai misinya! \n\n</b>",
+     "en": "In this activity, you will explore how <b>algebraic expressions</b> can be used to understand real-world problems related to the Sustainable Development Goals (SDGs). Complete three missions: <b>Save Water (SDG 6)</b>, <b>Smart Energy (SDG 7)</b>, and <b>Climate Action (SDG 13)</b>. In each mission, you will change values, observe patterns, make predictions, construct algebraic expressions, and solve challenges. Follow four stages in each mission: <b>Explore → Predict → Construct → Challenge</b>. Can you discover how variables, coefficients, and constants help us understand changes in the world around us? <b>Let the mission begin!)</b>"
+    }
+   },
+   {
+    "type": "applet",
+    "material": "yjsudqyc"
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "Jawablah pertanyaan pemantik berikut (Answer the following guiding questions)",
+     "en": ""
+    },
+    "body": {
+     "id": "Saat x naik 1, lapisan mana yang berubah? Berapa?",
+     "en": "When x increases by 1, which layer changes? By how much?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "Saat y naik 1, lapisan mana yang berubah?",
+     "en": "When y increases by 1, which layer changes? By how much?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "Lapisan mana yang tidak pernah berubah?",
+     "en": "Which layer never changes?"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "<b>Pertanyaan 1 – Generalisasi\n</b>Berdasarkan perubahan yang kamu amati pada meteran, tuliskan ekspresi aljabar untuk total penggunaan air W. Jelaskan arti setiap bagian dari ekspresi tersebut.",
+     "en": "Based on the changes you observed on the meter, write an algebraic expression for the total water usage, W. Explain what each part of the expression represents.)\n<b>\n</b>"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "<b>Pertanyaan 2 – Penalaran\n</b>Jika jumlah siswa yang mencuci tangan bertambah 4 orang, sedangkan jumlah pohon tetap, bagaimana perubahan total penggunaan air? Jelaskan tanpa menghitung ulang seluruh penggunaan air.",
+     "en": "If the number of students washing their hands increases by 4 while the number of trees remains the same, how does the total water usage change? Explain your reasoning without recalculating the total water usage.)<b>\n</b>"
+    }
+   },
+   {
+    "type": "question",
+    "title": {
+     "id": "",
+     "en": ""
+    },
+    "body": {
+     "id": "<b>Pertanyaan 3 – Interpretasi\n</b>Dalam ekspresi W = 3x + 5y + 20, mengapa bilangan 20 tidak berubah ketika nilai x atau y berubah?",
+     "en": "In the expression W = 3x + 5y + 20, why does the number 20 remain unchanged when the value of x or y changes?)<b>\n</b>"
+    }
+   }
+  ],
+  "mobile": {
+   "activity": "jkfeggjn",
+   "material": "drwwegzc"
+  }
  }
 ]

@@ -233,7 +233,7 @@
     ],
     [
       "Algebra",
-      "folgt"
+      "2 Missionen"
     ],
     [
       "Daten & Statistik",
@@ -241,7 +241,7 @@
     ]
   ],
   "soon": "Dieses Fenster ist für die nächste Phase vorbereitet. Die Aktivitäten entstehen gemeinsam mit der Lehrkraft.",
-  "next": "Nächste Fenster: <b>Geometrie</b>, <b>Algebra</b> und <b>Daten &amp; Statistik</b>. Sie entstehen in der nächsten Phase gemeinsam mit der Lehrkraft.",
+  "next": "Nächste Fenster: <b>Geometrie</b> und <b>Daten &amp; Statistik</b>. Sie entstehen in der nächsten Phase gemeinsam mit der Lehrkraft.",
   "applet": "Applet",
   "q_one": "Aufgabe",
   "q_many": "Aufgaben",
@@ -287,5 +287,17 @@
   "foot1": "Gorga · ein nichtkommerzieller Forschungsprototyp für Mathematikdidaktik. Aktivität „Temperaturskala“: Dr. Rahmi Ramadhani Umar. Thermometer-Applet: A.M. Vuković (2013), über GeoGebra.",
   "n_p_gorga": "Der Name stammt von <b>Gorga</b>, der Schnitzkunst an den traditionellen Häusern der Batak in Nordsumatra, in drei Farben: Rot, Weiß und Schwarz. Ihre Muster stecken voller Symmetrie, Spiegelung und Wiederholung. Die Mathematik wohnt dort schon lange.",
   "n_p_poda": "<b>Poda</b> ist das Toba-Batak-Wort für einen Rat, der sanft und indirekt gegeben wird. So arbeitet auch der Tutor: Er führt mit Fragen, statt Antworten zu geben.",
-  "ladder_note": "Rahmen: van de Pol, Volman & Beishuizen (2010); van de Pol & Elbers (2013); Wood, Bruner & Ross (1976)."
+  "ladder_note": "Rahmen: van de Pol, Volman & Beishuizen (2010); van de Pol & Elbers (2013); Wood, Bruner & Ross (1976).",
+  "acts_alg": [
+    [
+      "Muster finden, Ausdruck entdecken!",
+      "Händewaschwasser pro Person: vom Muster in der Tabelle zum Ausdruck 3x."
+    ],
+    [
+      "Unseren Planeten schützen",
+      "Der Ausdruck W = 3x + 5y + 20 in drei SDG-Missionen: Wasser, Energie und Klima."
+    ]
+  ],
+  "mission": "Mission",
+  "next_alg": "Jede Mission gibt es für Laptop und Handy; die Seite wählt die passende Version für deinen Bildschirm."
 }

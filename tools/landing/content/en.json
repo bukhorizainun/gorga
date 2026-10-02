@@ -233,7 +233,7 @@
     ],
     [
       "Algebra",
-      "coming"
+      "2 missions"
     ],
     [
       "Data & Statistics",
@@ -241,7 +241,7 @@
     ]
   ],
   "soon": "This window is prepared for the next stage. Activities will be added with the teacher.",
-  "next": "Next windows: <b>Geometry</b>, <b>Algebra</b> and <b>Data &amp; Statistics</b>. Built with the teacher in the next stage.",
+  "next": "Next windows: <b>Geometry</b> and <b>Data &amp; Statistics</b>. Built with the teacher in the next stage.",
   "applet": "Applet",
   "q_one": "question",
   "q_many": "questions",
@@ -287,5 +287,17 @@
   "foot1": "Gorga · a research prototype in mathematics education, non-commercial. Temperature Scale activity: Dr. Rahmi Ramadhani Umar. Thermometer applet: A.M. Vuković (2013), via GeoGebra.",
   "n_p_gorga": "The name comes from <b>gorga</b>, the carving on Batak traditional houses in North Sumatra, in three colours: red, white and black. Its patterns are full of symmetry, reflection and repetition. Mathematics has lived in it for a long time.",
   "n_p_poda": "<b>Poda</b> is the Toba Batak word for advice given gently and indirectly. That is how the tutor works: it guides with questions instead of giving answers.",
-  "ladder_note": "Framework: van de Pol, Volman & Beishuizen (2010); van de Pol & Elbers (2013); Wood, Bruner & Ross (1976)."
+  "ladder_note": "Framework: van de Pol, Volman & Beishuizen (2010); van de Pol & Elbers (2013); Wood, Bruner & Ross (1976).",
+  "acts_alg": [
+    [
+      "Find the Pattern, Discover the Expression!",
+      "Handwashing water per student: from the pattern in the table to the expression 3x."
+    ],
+    [
+      "Protecting Our Planet",
+      "The expression W = 3x + 5y + 20 in three SDG missions: water, energy and climate."
+    ]
+  ],
+  "mission": "Mission",
+  "next_alg": "Each mission has a laptop and a phone version; the page picks the one that fits your screen."
 }

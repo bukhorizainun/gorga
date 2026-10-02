@@ -90,6 +90,16 @@ def page(c, path):
             <div class="cap"><span class="meta">{meta}</span><h3><a href="{up}aktivitas/?a={n}&amp;lang={al}">{title}</a></h3><p>{desc}</p></div>
           </li>''')
 
+    # Algebra window: the teacher's two missions (activities 8 and 9), each with a mobile version.
+    alg = []
+    for i, (title, desc) in enumerate(c["acts_alg"]):
+        n, q = 8 + i, [4, 6][i]
+        meta = f'{c["mission"]} {i + 1} · {q} {c["q_one"] if q == 1 else c["q_many"]}'
+        alg.append(f'''<li class="act" style="--i:{i}">
+            <a class="pic" href="{up}aktivitas/?a={n}&amp;lang={al}" aria-label="{e(title)}"><img src="{A}covers/a{n}.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge live">{c["full"]}</span></a>
+            <div class="cap"><span class="meta">{meta}</span><h3><a href="{up}aktivitas/?a={n}&amp;lang={al}">{title}</a></h3><p>{desc}</p></div>
+          </li>''')
+
     note = f'<p class="app-note">{c["app_note"]}</p>' if c["app_note"] else ""
     facts = "".join(f'<li><b>{b}</b><span>{s}</span></li>' for b, s in c["facts"])
 
@@ -215,6 +225,10 @@ def page(c, path):
         <ul class="gallery" data-rv="seq">{''.join(acts)}</ul>
         <p class="next-note">{c["next"]}</p>
       </div>
+      <div class="win-panel" data-panel="2" hidden>
+        <ul class="gallery gallery-two" data-rv="seq">{''.join(alg)}</ul>
+        <p class="next-note">{c["next_alg"]}</p>
+      </div>
       <div class="win-panel" data-panel="soon" hidden><p class="soon-note">{c["soon"]}</p></div>
     </section>
 
@@ -241,9 +255,8 @@ def page(c, path):
     document.querySelector(".wins").addEventListener("click", function (e) {{
       var b = e.target.closest(".win"); if (!b) return;
       document.querySelectorAll(".win").forEach(function (x) {{ x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", x === b); }});
-      var first = b.dataset.win === "0";
-      document.querySelector('[data-panel="0"]').hidden = !first;
-      document.querySelector('[data-panel="soon"]').hidden = first;
+      var w = b.dataset.win, has = !!document.querySelector('[data-panel="' + w + '"]');
+      document.querySelectorAll(".win-panel").forEach(function (p) {{ p.hidden = has ? p.dataset.panel !== w : p.dataset.panel !== "soon"; }});
     }});
   </script>
   <script src="{A}motif.js"></script>

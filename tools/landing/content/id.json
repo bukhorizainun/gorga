@@ -233,7 +233,7 @@
     ],
     [
       "Aljabar",
-      "menyusul"
+      "2 misi"
     ],
     [
       "Data & Statistik",
@@ -241,7 +241,7 @@
     ]
   ],
   "soon": "Jendela ini sudah disiapkan untuk tahap berikutnya. Aktivitasnya disusun bersama guru.",
-  "next": "Jendela berikutnya: <b>Geometri</b>, <b>Aljabar</b>, dan <b>Data &amp; Statistik</b>. Disusun bersama guru di tahap berikutnya.",
+  "next": "Jendela berikutnya: <b>Geometri</b> dan <b>Data &amp; Statistik</b>. Disusun bersama guru di tahap berikutnya.",
   "applet": "Applet",
   "q_one": "soal",
   "q_many": "soal",
@@ -287,5 +287,17 @@
   "foot1": "Gorga · prototipe riset pendidikan matematika, non-komersial. Aktivitas Skala Suhu: Dr. Rahmi Ramadhani Umar. Applet termometer: A.M. Vuković (2013), lewat GeoGebra.",
   "n_p_gorga": "Namanya terinspirasi dari <b>gorga</b>, ukiran pada rumah adat Batak dengan tiga warna: merah, putih, dan hitam. Polanya penuh simetri, pencerminan, dan pengulangan. Matematika sudah lama tinggal di dalamnya.",
   "n_p_poda": "<b>Poda</b> adalah kata Batak Toba untuk nasihat yang disampaikan dengan halus dan tidak langsung. Begitulah tutornya bekerja: menuntun lewat pertanyaan, bukan memberi jawaban.",
-  "ladder_note": "Kerangka: van de Pol, Volman & Beishuizen (2010); van de Pol & Elbers (2013); Wood, Bruner & Ross (1976)."
+  "ladder_note": "Kerangka: van de Pol, Volman & Beishuizen (2010); van de Pol & Elbers (2013); Wood, Bruner & Ross (1976).",
+  "acts_alg": [
+    [
+      "Temukan Pola, Kenali Ekspresi!",
+      "Air cuci tangan per siswa: dari pola di tabel menuju ekspresi 3x."
+    ],
+    [
+      "Menjaga Bumi",
+      "Ekspresi W = 3x + 5y + 20 dalam tiga misi SDGs: air, energi, dan iklim."
+    ]
+  ],
+  "mission": "Misi",
+  "next_alg": "Setiap misi punya versi laptop dan versi HP; halaman memilih yang cocok dengan layarmu."
 }

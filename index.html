@@ -126,7 +126,7 @@
         <h2>Satu jendela <em>untuk tiap topik.</em></h2>
         <p class="intro">Aktivitas dikelompokkan dalam jendela. Jendela Bilangan berisi tujuh aktivitas aksi iklim milik guru. Setiap applet memakai protokol penuh dengan kartu tugas per soal, mengikuti kerangka scaffolding guru.</p>
       </header>
-      <div class="wins" role="group" aria-label="Jendela topik" data-rv><button type="button" class="win on" data-win="0" aria-pressed="true">Bilangan<small>7 aktivitas</small></button><button type="button" class="win" data-win="1" aria-pressed="false">Geometri<small>menyusul</small></button><button type="button" class="win" data-win="2" aria-pressed="false">Aljabar<small>menyusul</small></button><button type="button" class="win" data-win="3" aria-pressed="false">Data & Statistik<small>menyusul</small></button></div>
+      <div class="wins" role="group" aria-label="Jendela topik" data-rv><button type="button" class="win on" data-win="0" aria-pressed="true">Bilangan<small>7 aktivitas</small></button><button type="button" class="win" data-win="1" aria-pressed="false">Geometri<small>menyusul</small></button><button type="button" class="win" data-win="2" aria-pressed="false">Aljabar<small>2 misi</small></button><button type="button" class="win" data-win="3" aria-pressed="false">Data & Statistik<small>menyusul</small></button></div>
       <div class="win-panel" data-panel="0">
         <ul class="gallery" data-rv="seq"><li class="act lead-act" style="--i:0">
             <a class="pic" href="suhu/?lang=id"><img src="assets/covers/a1.jpg" alt="" loading="lazy" width="1200" height="935"><span class="badge live">Protokol penuh · AI</span></a>
@@ -152,7 +152,17 @@
             <a class="pic" href="aktivitas/?a=7&amp;lang=id" aria-label="Mengestimasi Emisi Karbon"><img src="assets/covers/a7.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge live">Protokol penuh · AI</span></a>
             <div class="cap"><span class="meta">Applet 7 · 2 soal</span><h3><a href="aktivitas/?a=7&amp;lang=id">Mengestimasi Emisi Karbon</a></h3><p>Estimasi perkalian desimal dengan pembulatan dan model luas.</p></div>
           </li></ul>
-        <p class="next-note">Jendela berikutnya: <b>Geometri</b>, <b>Aljabar</b>, dan <b>Data &amp; Statistik</b>. Disusun bersama guru di tahap berikutnya.</p>
+        <p class="next-note">Jendela berikutnya: <b>Geometri</b> dan <b>Data &amp; Statistik</b>. Disusun bersama guru di tahap berikutnya.</p>
+      </div>
+      <div class="win-panel" data-panel="2" hidden>
+        <ul class="gallery gallery-two" data-rv="seq"><li class="act" style="--i:0">
+            <a class="pic" href="aktivitas/?a=8&amp;lang=id" aria-label="Temukan Pola, Kenali Ekspresi!"><img src="assets/covers/a8.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge live">Protokol penuh · AI</span></a>
+            <div class="cap"><span class="meta">Misi 1 · 4 soal</span><h3><a href="aktivitas/?a=8&amp;lang=id">Temukan Pola, Kenali Ekspresi!</a></h3><p>Air cuci tangan per siswa: dari pola di tabel menuju ekspresi 3x.</p></div>
+          </li><li class="act" style="--i:1">
+            <a class="pic" href="aktivitas/?a=9&amp;lang=id" aria-label="Menjaga Bumi"><img src="assets/covers/a9.jpg" alt="" loading="lazy" width="1200" height="750"><span class="badge live">Protokol penuh · AI</span></a>
+            <div class="cap"><span class="meta">Misi 2 · 6 soal</span><h3><a href="aktivitas/?a=9&amp;lang=id">Menjaga Bumi</a></h3><p>Ekspresi W = 3x + 5y + 20 dalam tiga misi SDGs: air, energi, dan iklim.</p></div>
+          </li></ul>
+        <p class="next-note">Setiap misi punya versi laptop dan versi HP; halaman memilih yang cocok dengan layarmu.</p>
       </div>
       <div class="win-panel" data-panel="soon" hidden><p class="soon-note">Jendela ini sudah disiapkan untuk tahap berikutnya. Aktivitasnya disusun bersama guru.</p></div>
     </section>
@@ -180,9 +190,8 @@
     document.querySelector(".wins").addEventListener("click", function (e) {
       var b = e.target.closest(".win"); if (!b) return;
       document.querySelectorAll(".win").forEach(function (x) { x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", x === b); });
-      var first = b.dataset.win === "0";
-      document.querySelector('[data-panel="0"]').hidden = !first;
-      document.querySelector('[data-panel="soon"]').hidden = first;
+      var w = b.dataset.win, has = !!document.querySelector('[data-panel="' + w + '"]');
+      document.querySelectorAll(".win-panel").forEach(function (p) { p.hidden = has ? p.dataset.panel !== w : p.dataset.panel !== "soon"; });
     });
   </script>
   <script src="assets/motif.js"></script>

@@ -233,7 +233,7 @@
     ],
     [
       "Cebir",
-      "yakında"
+      "2 görev"
     ],
     [
       "Veri ve İstatistik",
@@ -241,7 +241,7 @@
     ]
   ],
   "soon": "Bu pencere bir sonraki aşama için hazırlandı. Etkinlikler öğretmenle birlikte eklenecek.",
-  "next": "Sıradaki pencereler: <b>Geometri</b>, <b>Cebir</b> ve <b>Veri ve İstatistik</b>. Bir sonraki aşamada öğretmenle birlikte hazırlanacak.",
+  "next": "Sıradaki pencereler: <b>Geometri</b> ve <b>Veri ve İstatistik</b>. Bir sonraki aşamada öğretmenle birlikte hazırlanacak.",
   "applet": "Uygulama",
   "q_one": "soru",
   "q_many": "soru",
@@ -287,5 +287,17 @@
   "foot1": "Gorga · matematik eğitimi için ticari olmayan bir araştırma prototipi. “Sıcaklık Ölçeği” etkinliği: Dr. Rahmi Ramadhani Umar. Termometre uygulaması: A.M. Vuković (2013), GeoGebra üzerinden.",
   "n_p_gorga": "Ad, Kuzey Sumatra’daki geleneksel Batak evlerinin oyma süslemesi <b>gorga</b>dan gelir; üç rengi vardır: kırmızı, beyaz ve siyah. Desenleri simetri, yansıma ve tekrarla doludur. Matematik uzun zamandır onun içinde yaşıyor.",
   "n_p_poda": "<b>Poda</b>, Toba Batak dilinde nazik ve dolaylı biçimde verilen öğüt demektir. Öğretmen de böyle çalışır: cevap vermek yerine sorularla yol gösterir.",
-  "ladder_note": "Çerçeve: van de Pol, Volman & Beishuizen (2010); van de Pol & Elbers (2013); Wood, Bruner & Ross (1976)."
+  "ladder_note": "Çerçeve: van de Pol, Volman & Beishuizen (2010); van de Pol & Elbers (2013); Wood, Bruner & Ross (1976).",
+  "acts_alg": [
+    [
+      "Örüntüyü Bul, İfadeyi Keşfet!",
+      "Öğrenci başına el yıkama suyu: tablodaki örüntüden 3x ifadesine."
+    ],
+    [
+      "Gezegenimizi Koruyalım",
+      "W = 3x + 5y + 20 ifadesi üç SDG görevinde: su, enerji ve iklim."
+    ]
+  ],
+  "mission": "Görev",
+  "next_alg": "Her görevin dizüstü ve telefon sürümü var; sayfa ekranına uyanı seçer."
 }
