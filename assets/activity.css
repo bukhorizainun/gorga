@@ -54,6 +54,7 @@ body { background: #f4f5fa; }
 .level-meter i { height: 4px; border-radius: 4px; background: rgba(28, 42, 85, .1); }
 .level-meter i.on { background: var(--gold-2); }
 .level-meter i.on:first-child { background: var(--nila); }
+.level-meter i.skip { background: transparent; box-shadow: inset 0 0 0 1px rgba(28, 42, 85, .14); }
 .step { border: 0; background: rgba(255, 255, 255, .75); box-shadow: 0 6px 16px -12px rgba(28, 42, 85, .6); }
 .path li + li::before { background: rgba(195, 154, 82, .6); }
 

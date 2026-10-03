@@ -147,6 +147,7 @@
         tx(`Ide kunci yang sudah muncul dari siswa: ${(res.reading.reasons || []).join(", ") || "belum ada"}.`, `Key ideas the student has given: ${(res.reading.reasons || []).join(", ") || "none yet"}.`),
         tx(`Cara siswa di pesan terakhir: ${KIND_LABEL[res.kind] || res.kind}.`, `The student's way in the last message: ${KIND_LABEL[res.kind] || res.kind}.`),
         goal ? tx("Penalaran target SUDAH muncul dari siswa sendiri. Saatnya konfirmasi singkat tanpa penjelasan baru.", "The target reasoning HAS come from the student. Time for a short confirmation with no new explanation.")
+          : res.goalSeen ? tx("Penalaran target SUDAH muncul dari siswa, tetapi tangga guru belum sampai L4: belum saatnya konfirmasi.", "The target reasoning HAS come from the student, but the teacher's ladder has not reached L4 yet: no confirmation yet.")
           : tx("Penalaran target BELUM muncul dari siswa.", "The target reasoning has NOT come from the student yet."),
         tx("Langkah yang dipilih aturan: ", "The move the rules chose: ") + res.move + " — " + res.reply,
       ];
@@ -169,8 +170,25 @@
       return null;
     }
 
+    /* The line for a rung the ladder asks for when the card itself would have chosen another
+       move (the teacher's order: L1 -> L2 -> L3 -> L4, even after a correct answer). Once the
+       answer is right, L2 and L3 ask the student to check or deepen it in the applet. */
+    function say(move, qi, c) {
+      const q = Q[qi];
+      const ok = c.answerOK || c.goal;
+      if (move === "L1") return L(q.opening);
+      if (move === "OK") return L(q.confirm);
+      if (move === "L2") return pick(ok ? q.l2w || q.l2 : q.l2, c.k);
+      if (move === "L3") return pick(ok ? q.l3w || q.l3 : q.l3, c.k);
+      if (typeof q.correct === "function" && c.answerOK && q.l4) return L(q.l4);
+      if (!c.goal && q.more) return L(q.more);
+      return tx("Coba jelaskan lagi dengan kata-katamu sendiri, sambil melihat aplet: bagaimana kamu sampai pada jawaban itu?",
+        "Explain it once more in your own words, looking at the applet: how did you get there?");
+    }
+    const pick = (list, i) => L(list[Math.min(i, list.length - 1)]);
+
     const card = {
-      Q, read, step, limits, overreach, KIND_LABEL, HELP, normalise,
+      Q, read, step, say, limits, overreach, KIND_LABEL, HELP, normalise,
       opening: (qi) => L(Q[qi].opening),
       setup: spec.setup || (() => {}),
       appState: spec.appState || (() => ({ used: true })),

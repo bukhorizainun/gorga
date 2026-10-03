@@ -27,6 +27,8 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
   let stageIdx = 0;
   let cur = null; // current stage: {id, type, start, end, question, origin}
   let mem = null;
+  let ladder = null; // the teacher's ladder for the current question (assets/ladder.js)
+  const LADDER = window.GorgaLadder;
   let history = [];
   let log = [];
   let busy = false;
@@ -258,6 +260,7 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     stageStartedAt = Date.now();
     journeyReset();
     mem = { answerOK: false, wrong: 0, counting: 0, halfText: null, help: false };
+    ladder = LADDER.create(1);
     lastApplet = { v: "", t: 0 };
     const fixed = stageIdx < TASK.stages.length;
     $("stage-no").textContent = fixed
@@ -267,9 +270,10 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
       ? tr(`Soal ${stageIdx + 1} dari ${TASK.stages.length} ada di applet`, `Question ${stageIdx + 1} of ${TASK.stages.length} is in the applet`)
       : tr("Soal baru ada di applet", "A new question is in the applet"), (EN && st.origin_en) || st.origin);
     if (api) applyStage(st);
-    const open = T.opening(st);
-    bubble("ai", open, `${MOVE_NAME.L1} · ${SCRIPT}`);
-    journeyAdd("L1");
+    const first = ladder.move;
+    const open = first === "L1" ? T.opening(st) : T.say(first, st, { answerOK: false, goal: false, k: 0 });
+    bubble("ai", open, `${MOVE_NAME[first]} · ${SCRIPT}`);
+    journeyAdd(first);
     history.push({ role: "assistant", content: open });
     renderQuick();
   }
@@ -448,10 +452,23 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
       override = T.verify(aiReading, inp.text, s);
     }
     const res = T.step({ stage: s, input: inp, marker: m, mem, override });
+    // The tutor reads the answer; the ladder decides the move: the next rung, never skipping one,
+    // so a correct answer still goes L1 -> L2 -> L3 -> L4 before the confirmation.
+    const move = LADDER.next(ladder, res, mem.halfText ? `${mem.halfText} … ${inp.text}` : inp.text);
+    // The card's own line fits when it chose the same rung; once the goal is reached, the
+    // rung's line comes from say(), and no line is repeated word for word.
+    const own = (res.kind === "howTo" && move !== "OK") || (move === res.move && (!ladder.goal || move === "OK"));
+    const sayAt = (k) => T.say(move, s, { answerOK: !!res.answerOK, goal: ladder.goal, k });
+    const lastTutor = ([...history].reverse().find((h) => h.role === "assistant") || {}).content;
+    let script = own ? res.reply : sayAt(ladder.count[move] - 1);
+    if (script === lastTutor) script = sayAt(ladder.count[move]);
+    const rung = { ...res, move, reply: script, done: move === "OK", goalSeen: ladder.goal && move !== "OK" };
     const size = Math.abs(s.end - s.start);
-    const forbid = res.answerOK ? [] : [String(size)];
+    const forbid = res.answerOK || ladder.goal ? [] : [String(size)];
     stageTexts.push(inp.text);
-    const lim = T.limits(res, s, mem, stageTexts);
+    const lim = T.limits(rung, s, mem, stageTexts);
+    lim.move = move;
+    lim.facts.push(LADDER.fact(ladder, move, EN));
     const ai = await askAI({
       lang: EN ? "en" : "id",
       lead: lim,
@@ -465,19 +482,19 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
       analysis: {
         kind: res.kind,
         label: T.KIND_LABEL[res.kind],
-        suggestedMove: res.move,
+        suggestedMove: move,
         answerCorrect: res.answerOK,
         wrongAttempts: mem.wrong,
       },
       forbid,
-      scriptReply: res.reply,
+      scriptReply: script,
       history: history.slice(-10),
     });
     const ms = Math.round(performance.now() - t0);
     if (!ai && ms < 450) await new Promise((r) => setTimeout(r, 450 - ms));
     typing(false);
 
-    let reply = res.reply;
+    let reply = script;
     let source = SCRIPT;
     if (ai) {
       // The AI leads, within the limits: no more help than the protocol allows now, no
@@ -492,13 +509,13 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
       } else source = tr("naskah (jaga)", "script (guard)");
     }
 
-    const shownMove = ai && source === (ai.model || "AI") && MOVE_NAME[ai.move] ? ai.move : res.move;
-    bubble(res.move === "OK" ? "ai confirm" : "ai", reply, `${MOVE_NAME[shownMove]} · ${source}`);
-    journeyAdd(res.move === "OK" ? "OK" : shownMove);
+    // The AI may phrase the rung, never change it.
+    bubble(move === "OK" ? "ai confirm" : "ai", reply, `${MOVE_NAME[move]} · ${source}`);
+    journeyAdd(move);
     history.push({ role: "assistant", content: reply });
-    if (res.done) {
+    if (rung.done) {
       lastTarget = (Date.now() - stageStartedAt) / 1000;
-      reasonCard(s, mem.halfText ? `${mem.halfText} … ${inp.text}` : inp.text);
+      reasonCard(s, ladder.goalText || inp.text);
     }
 
     mem.answerOK = res.answerOK;
@@ -506,9 +523,9 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     if (res.kind === "counting" || res.kind === "stuck") mem.counting += 1;
     if (res.kind === "splitHalf") mem.halfText = inp.text;
     mem.lastKind = res.kind;
-    addLog({ stage: s.id, m, inp, res: { ...res, move: shownMove }, source, reply });
+    addLog({ stage: s.id, m, inp, res: rung, source, reply });
 
-    if (res.done) {
+    if (rung.done) {
       await new Promise((r) => setTimeout(r, 1400));
       stageIdx += 1;
       if (stageIdx < TASK.stages.length) startStage({ ...TASK.stages[stageIdx] });

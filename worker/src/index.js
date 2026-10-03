@@ -179,6 +179,19 @@ const LEVEL_TEXT = {
   4: "Bantuan paling jauh saat ini: L3 Focus (kerangka guru tidak punya tingkat di atasnya). Satu sub-pertanyaan kecil; jangan memberi prosedur lengkap atau hasilnya.",
 };
 
+// The teacher's ladder order (3 Oct 2026): the page fixes the rung for every turn (lead.move);
+// the AI phrases that rung and does not choose another one.
+const LADDER_PROTOCOL = `Protokol guru (wajib): tangga bantuan selalu berurutan L1 Probe → L2 Point → L3 Focus → L4 Revoice, satu langkah per balasan siswa, WALAUPUN jawaban siswa sudah benar. Konfirmasi hanya sesudah L4. Langkah untuk giliran ini sudah ditentukan sistem (lihat TUGAS); jangan memilih langkah lain.
+Jangan memberi jawaban. Pakai pertanyaan agar siswa menemukan dan menjelaskan sendiri, dengan melihat applet.`;
+
+const MOVE_TEXT = {
+  L1: "Langkah WAJIB giliran ini: L1 Probe. Satu pertanyaan diagnosis terbuka tentang apa yang siswa perhatikan, lakukan, atau pikirkan; JANGAN menunjuk fitur tertentu, jangan memecah soal, jangan memberi prosedur.",
+  L2: "Langkah WAJIB giliran ini: L2 Point. Arahkan perhatian ke SATU fitur di applet (misalnya angka 0, garis, penanda, arah). JANGAN katakan arti fitur itu atau kesimpulan yang harus diambil; jangan memecah soal; jangan memberi jawaban. Kalau jawaban siswa sudah benar, tetap tunjuk satu fitur supaya ia memeriksa jawabannya sendiri di applet, tanpa bilang benar.",
+  L3: "Langkah WAJIB giliran ini: L3 Focus. Ubah soal menjadi SATU sub-pertanyaan kecil yang bisa dijawab siswa dan tetap menjaga konsepnya. Jangan memberi prosedur lengkap atau hasilnya. Kalau jawaban siswa sudah benar, pakai sub-pertanyaan itu untuk menguji atau memperdalam alasannya, tanpa bilang benar.",
+  L4: "Langkah WAJIB giliran ini: L4 Revoice. Ulangi ide siswa dengan kata lain tanpa menilai, lalu minta ia menjelaskan atau membenarkan caranya dengan kata-katanya sendiri. Jangan menambah informasi baru.",
+};
+const fixedMove = (L) => (L && !L.goal && MOVE_TEXT[L.move] ? L.move : null);
+
 function leadPrompt(b) {
   const s = b.stage || {};
   const L = b.lead || {};
@@ -186,10 +199,11 @@ function leadPrompt(b) {
   const facts = list(L.facts, 8).map((f) => `- ${clip(f, 200)}`).join("\n");
   const task = L.goal
     ? `TUGAS: siswa sudah menemukan penalaran target sendiri. Tulis konfirmasi singkat yang hangat: sebut bahwa jawabannya benar, ulangi cara siswa memecah di 0 dengan angkanya, dan total ${L.size} derajat. Jangan menambah penjelasan baru. Tanpa pertanyaan. Pakai "move":"OK".`
-    : `TUGAS: tulis balasan berikutnya sebagai guru. ${LEVEL_TEXT[L.maxHelp] || LEVEL_TEXT[1]}`;
+    : `TUGAS: tulis balasan berikutnya sebagai guru. ${fixedMove(L) ? MOVE_TEXT[L.move] : LEVEL_TEXT[L.maxHelp] || LEVEL_TEXT[1]}`;
   return `Kamu Poda, tutor matematika yang sabar di aplikasi Gorga, untuk siswa SMP di Indonesia. Kalau siswa menanyakan namamu, namamu Poda. Siswa mengerjakan soal di applet termometer GeoGebra (termometer tegak: naik = ke atas, turun = ke bawah), lalu berdiskusi denganmu di chat.
 
-${PROTOCOL}
+${fixedMove(L) ? `${LADDER_PROTOCOL}
+- Untuk perubahan suhu yang melewati 0, penalaran target adalah memecah di 0; menghitung satu per satu belum cukup.` : PROTOCOL}
 
 SOAL: ${clip(s.question, 300)}
 KEADAAN APPLET: ${clip(b.context, 500)}
@@ -231,7 +245,7 @@ function openPrompt(b) {
   const facts = list(L.facts, 8).map((f) => `- ${clip(f, 200)}`).join("\n");
   return `Kamu Poda, tutor matematika yang sabar di aplikasi Gorga, untuk siswa SMP di Indonesia. Kalau siswa menanyakan namamu, namamu Poda. Siswa mengerjakan aktivitas di applet GeoGebra, lalu menjawab pertanyaan esai dan berdiskusi denganmu di chat.
 
-${PROTOCOL_OPEN}
+${fixedMove(L) ? LADDER_PROTOCOL : PROTOCOL_OPEN}
 
 AKTIVITAS: ${clip(b.context, 900)}
 PERTANYAAN YANG SEDANG DIJAWAB: ${clip(s.question, 700)}
@@ -240,7 +254,7 @@ ${L.target ? `PENALARAN TARGET DARI GURU (rahasia; jangan diucapkan, jangan dipa
 FAKTA DARI SISTEM:
 ${facts}
 
-${L.goal ? `TUGAS: siswa sudah memberi jawaban benar DAN penalaran target dari dirinya sendiri. Tulis konfirmasi singkat yang hangat: sebut bahwa jawabannya benar, lalu ulangi cara atau alasan siswa dengan angkanya. JANGAN menambah penjelasan baru di luar yang dikatakan siswa (kerangka guru: confirm without adding a new explanation). Tanpa pertanyaan. Pakai "move":"OK".` : `TUGAS: tulis balasan berikutnya sebagai guru. ${LEVEL_TEXT[L.maxHelp] || LEVEL_TEXT[1]}`}
+${L.goal ? `TUGAS: siswa sudah memberi jawaban benar DAN penalaran target dari dirinya sendiri. Tulis konfirmasi singkat yang hangat: sebut bahwa jawabannya benar, lalu ulangi cara atau alasan siswa dengan angkanya. JANGAN menambah penjelasan baru di luar yang dikatakan siswa (kerangka guru: confirm without adding a new explanation). Tanpa pertanyaan. Pakai "move":"OK".` : `TUGAS: tulis balasan berikutnya sebagai guru. ${fixedMove(L) ? MOVE_TEXT[L.move] : LEVEL_TEXT[L.maxHelp] || LEVEL_TEXT[1]}`}
 ${L.goal ? "" : L.mayConfirm ? `Jika jawaban DAN alasan siswa untuk pertanyaan ini sudah lengkap dan masuk akal, beri konfirmasi singkat yang hangat dengan "move":"OK": sebut apa yang sudah tepat dari penjelasannya, tanpa pertanyaan. Jika belum lengkap atau masih keliru, JANGAN konfirmasi; lanjutkan dengan pertanyaan.` : "Jangan memberi konfirmasi dulu."}
 
 ${ON_TOPIC}
@@ -431,6 +445,8 @@ export default {
           if (!L.goal && HELP_RANK[move] > L.maxHelp) { r(`too much help ${move}`); continue; }
           if (L.goal && move !== "OK") move = "OK";
           if (!L.goal && move === "OK" && !L.mayConfirm) move = "L4";
+          // A rung fixed by the page keeps its name, unless the page allows a confirmation here.
+          if (fixedMove(L) && !(move === "OK" && L.mayConfirm)) move = L.move;
           // A confirmation: set by the page (goal), or chosen by the AI where the page allows it.
           const confirming = L.goal || move === "OK";
           if (!confirming && !reply.includes("?")) { r("no question"); continue; }

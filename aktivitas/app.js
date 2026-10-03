@@ -1,9 +1,10 @@
 /* Gorga activity page for the teacher's activities. With a task card (assets/cards/a<n>.js) the
    page runs the full protocol from the card; without one it runs the general protocol below.
    The applet and the questions come from assets/activities.json (fetched from GeoGebra).
-   General protocol: help rises one level every two turns (sooner when the student is stuck),
-   the tutor never gives the answer, and the AI may confirm only from the second turn on,
-   when the student's answer and reason are complete. */
+   Both follow the teacher's ladder (assets/ladder.js): one rung per reply, always in order
+   (L1 -> L2 -> L3 -> L4, starting higher in later applets), and the confirmation only after L4.
+   General protocol: the tutor never gives the answer, and the AI may confirm only when the
+   student replies to L4 with a complete answer and reason. */
 
 const GORGA_API = "https://gorga.rahmiumar.workers.dev";
 
@@ -33,8 +34,11 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     ? { L1: "Probing", L4: "Revoicing", L2: "Pointing", L3: "Focusing", HINT: "Focusing", OK: "Found" }
     : { L1: "Bertanya", L4: "Menjelaskan ulang", L2: "Menunjuk", L3: "Memfokuskan", HINT: "Memfokuskan", OK: "Ditemukan" };
   const LEVEL_NAME = EN
-    ? { 1: "L1 Probe · an open question", 2: "L2 Point · one feature of the applet", 3: "L3 Focus · one smaller question" }
-    : { 1: "L1 Probe · pertanyaan terbuka", 2: "L2 Point · satu fitur di applet", 3: "L3 Focus · satu sub-pertanyaan" };
+    ? { L1: "L1 Probe · an open question", L2: "L2 Point · one feature of the applet", L3: "L3 Focus · one smaller question",
+      L4: "L4 Revoice · explain it yourself", OK: "Found · confirmation" }
+    : { L1: "L1 Probe · pertanyaan terbuka", L2: "L2 Point · satu fitur di applet", L3: "L3 Focus · satu sub-pertanyaan",
+      L4: "L4 Revoice · jelaskan sendiri", OK: "Ditemukan · konfirmasi" };
+  const LADDER = window.GorgaLadder;
   const DONTKNOW = /(tidak tahu|gak tau|ga tau|gatau|nggak tahu|belum tahu|bingung|ga ngerti|gak ngerti|tidak mengerti|don'?t know|not sure|no idea|idk|confused)/i;
 
   // Scripted fallbacks, one per level of help.
@@ -108,7 +112,7 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
 
     questions = act.items.filter((i) => i.type === "question");
     state = questions.map(() => ({ turns: 0, stuck: 0, done: false, history: [], nodes: [], path: [],
-      mem: { answerOK: false, wrong: 0, weak: 0, lastKind: null } }));
+      ladder: LADDER.create(n), mem: { answerOK: false, wrong: 0, weak: 0, lastKind: null } }));
     if (CARD) {
       const tag = document.createElement("span");
       tag.className = "sibling card-tag";
@@ -172,30 +176,35 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     });
     chatLog.innerHTML = "";
     if (!st.nodes.length) {
-      const open = CARD ? CARD.opening(i) : FALLBACK.L1;
-      st.nodes.push(msgNode("ai", open, `${MOVE_NAME.L1} · ${SCRIPT}`));
+      // The opening is the first rung of this applet's ladder (L1, or higher in later applets).
+      const first = st.ladder.move;
+      const open = first === "L1" ? (CARD ? CARD.opening(i) : FALLBACK.L1)
+        : CARD ? CARD.say(first, i, { answerOK: false, goal: false, k: 0 }) : FALLBACK[first];
+      st.nodes.push(msgNode("ai", open, `${MOVE_NAME[first]} · ${SCRIPT}`));
       st.history.push({ role: "assistant", content: open });
-      st.path.push("L1");
+      st.path.push(first);
     }
     st.nodes.forEach((el) => chatLog.appendChild(el));
     chatLog.scrollTop = chatLog.scrollHeight;
     renderPath(st.path);
-    renderLevel(level(st));
+    renderLevel(st.ladder);
     input.disabled = st.done;
     sendBtn.disabled = st.done;
     input.placeholder = st.done ? tr("Soal ini sudah tuntas. Lanjut ke soal berikutnya →", "This question is done. Go to the next one →")
       : tr("Tulis jawaban dan alasanmu…", "Write your answer and your reason…");
   }
 
-  function level(st) {
-    // Two turns per level; each "I don't know" moves one level up. First reply stays at level 1.
-    // The teacher's framework stops at L3 Focus: no level above it.
-    return Math.min(3, 1 + Math.floor(Math.max(0, st.turns - 1) / 2) + st.stuck);
-  }
-
-  function renderLevel(lv) {
-    [...$("level-meter").children].forEach((el, k) => el.classList.toggle("on", k < lv));
-    $("level-name").textContent = LEVEL_NAME[lv];
+  /* The meter shows the four rungs: the ones this applet leaves out are faded, the rungs
+     climbed so far are filled. */
+  function renderLevel(g) {
+    const at = g.move === "OK" ? 4 : LADDER.ORDER.indexOf(g.move);
+    [...$("level-meter").children].forEach((el, k) => {
+      const skip = !g.rungs.includes(LADDER.ORDER[k]);
+      el.classList.toggle("skip", skip);
+      el.classList.toggle("on", !skip && k <= at);
+    });
+    $("level-name").textContent = LEVEL_NAME[g.move];
+    $("level-meter").title = tr(`Tangga applet ini: ${g.rungs.join(" → ")}`, `This applet's ladder: ${g.rungs.join(" → ")}`);
   }
 
   function renderPath(path) {
@@ -268,8 +277,21 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     st.turns += 1;
     const app = api ? CARD.appState(api) : { balloons: 0, bags: 0, basket: null, pending: false, used: false };
     const res = CARD.step({ qi, text, app, mem: st.mem });
+    // The card reads the answer; the ladder decides the move: the next rung, never skipping one.
+    const g = st.ladder;
+    const ladderMove = LADDER.next(g, res, text);
+    // The card's own line fits when it chose the same rung; once the goal is reached, the
+    // rung's line comes from say(), and no line is repeated word for word.
+    const own = (res.kind === "howTo" && ladderMove !== "OK") || (ladderMove === res.move && (!g.goal || ladderMove === "OK"));
+    const sayAt = (k) => CARD.say(ladderMove, qi, { answerOK: !!res.answerOK, goal: g.goal, k });
+    const lastTutor = ([...st.history].reverse().find((h) => h.role === "assistant") || {}).content;
+    let script = own ? res.reply : sayAt(g.count[ladderMove] - 1);
+    if (script === lastTutor) script = sayAt(g.count[ladderMove]);
+    const rung = { ...res, move: ladderMove, reply: script, done: ladderMove === "OK", goalSeen: g.goal && ladderMove !== "OK" };
     const texts = st.history.filter((h) => h.role === "user").map((h) => h.content);
-    const lim = CARD.limits(res, qi, st.mem, texts, app);
+    const lim = CARD.limits(rung, qi, st.mem, texts, app);
+    lim.move = ladderMove;
+    lim.facts.push(LADDER.fact(g, ladderMove, EN));
     const q = questions[qi];
     const context = [L(act.title), ...act.items.filter((i) => i.type === "text").map((t) => plain(L(t.body)))].join(" — ");
 
@@ -280,16 +302,17 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     const ai = await ask({
       open: true, lang: EN ? "en" : "id", lead: lim, forbid: [],
       stage: { id: `a${n}q${qi + 1}`, question: plain(L(q.body)) },
-      context, analysis: { suggestedMove: res.move }, history: st.history.slice(-10),
+      context, analysis: { suggestedMove: ladderMove }, history: st.history.slice(-10),
     });
     typingEl.remove();
 
-    let reply = res.reply, move = res.move, source = SCRIPT;
+    // The AI may phrase the rung, never change it.
+    let reply = script, source = SCRIPT;
+    const move = ladderMove;
     const why = ai && ai.reply ? CARD.overreach(ai.reply, lim, qi) : "no reply";
     const helpOK = ai && (lim.goal || (CARD.HELP[ai.move] ?? 9) <= lim.maxHelp);
     if (!why && helpOK) {
       reply = ai.reply;
-      move = lim.goal ? "OK" : ai.move;
       source = ai.model || "AI";
       $("mode-badge").textContent = tr("Poda · AI aktif", "Poda · AI on");
       $("mode-badge").classList.add("on");
@@ -305,9 +328,9 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     st.history.push({ role: "assistant", content: reply });
     st.path.push(move);
     renderPath(st.path);
-    renderLevel(Math.max(1, CARD.HELP[res.move] || 1));
+    renderLevel(g);
     addLog(text, move, source, reply);
-    if (res.done) finish();
+    if (move === "OK") finish();
     busy = false;
     sendBtn.disabled = st.done;
     if (!st.done) input.focus();
@@ -344,14 +367,21 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     add(msgNode("student", text));
     st.history.push({ role: "user", content: text });
     st.turns += 1;
-    if (DONTKNOW.test(text)) st.stuck += 1;
-    const lv = level(st);
+    const stuck = DONTKNOW.test(text);
+    if (stuck) st.stuck += 1;
+    // Without a card nothing reads the answer: the ladder climbs one rung per reply, and once
+    // the student answers an L4 question the AI may confirm a complete answer (or ask again).
+    const g = st.ladder;
+    const atL4 = g.move === "L4";
+    const rungMove = LADDER.next(g, { move: "L4", kind: stuck ? "wrong:dontKnow" : "unclear", answerOK: !stuck, done: false }, text);
+    const lv = HELP[rungMove] || 1;
     const q = questions[qi];
     const context = [L(act.title), ...act.items.filter((i) => i.type === "text").map((t) => plain(L(t.body)))].join(" — ");
     const studentNums = st.history.filter((h) => h.role === "user").flatMap((h) => numbersIn(h.content));
     const lim = {
       goal: false,
-      mayConfirm: st.turns >= 2,
+      move: rungMove,
+      mayConfirm: atL4 && rungMove === "L4",
       maxHelp: lv,
       allowNumbers: [...new Set([...numbersIn(plain(L(q.body))), ...numbersIn(context), ...studentNums])],
       zeroOK: true,
@@ -359,6 +389,7 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
       facts: [
         `Giliran siswa untuk soal ini: ${st.turns}. Siswa bilang tidak tahu: ${st.stuck} kali.`,
         "Belum ada kartu tugas dari guru untuk soal ini; nilai dari pertanyaan dan konteks aktivitas.",
+        LADDER.fact(g, rungMove, EN),
       ],
     };
 
@@ -369,7 +400,7 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     const ai = await ask({
       open: true, lang: EN ? "en" : "id", lead: lim, forbid: [],
       stage: { id: `a${n}q${qi + 1}`, question: plain(L(q.body)) },
-      context, analysis: { suggestedMove: lv === 1 ? "L4" : lv === 2 ? "L2" : "L3" },
+      context, analysis: { suggestedMove: rungMove },
       history: st.history.slice(-10),
     });
     typingEl.remove();
@@ -377,21 +408,22 @@ const GORGA_API = "https://gorga.rahmiumar.workers.dev";
     let reply, move, source;
     if (guardOK(ai, lim)) {
       reply = ai.reply;
-      move = ai.move === "OK" && lim.mayConfirm ? "OK" : ai.move;
+      move = ai.move === "OK" && lim.mayConfirm ? "OK" : rungMove;
       source = ai.model || "AI";
       $("mode-badge").textContent = tr("Poda · AI aktif", "Poda · AI on");
       $("mode-badge").classList.add("on");
     } else {
-      move = st.turns === 1 ? "L4" : lv === 1 ? "L4" : lv === 2 ? "L2" : "L3";
+      move = rungMove;
       const f = FALLBACK[move];
       reply = typeof f === "function" ? f(text.length > 90 ? `${text.slice(0, 87)}…` : text) : f;
       source = SCRIPT;
     }
     add(msgNode(move === "OK" ? "ai confirm" : "ai", reply, `${MOVE_NAME[move] || move} · ${source}`));
     st.history.push({ role: "assistant", content: reply });
+    if (move === "OK") g.move = "OK";
     st.path.push(move);
     renderPath(st.path);
-    renderLevel(level(st));
+    renderLevel(g);
     addLog(text, move, source, reply);
 
     if (move === "OK") {

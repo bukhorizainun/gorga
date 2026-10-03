@@ -404,6 +404,87 @@
         "You tried it in the applet. How much carbon must the trees absorb, and how did you find it?"));
   }
 
+  /* ---------------- a rung the ladder asks for ---------------- */
+
+  /** The line for a rung when the card itself would have chosen another move (the teacher's
+      order L1 -> L2 -> L3 -> L4 holds even after a correct answer). c: {answerOK, goal, k}. */
+  function say(move, qi, c) {
+    const ok = c.answerOK || c.goal;
+    if (move === "L1") return opening(qi);
+    if (move === "OK") {
+      return [
+        tx("Benar, seperti katamu: balon membuat keranjang naik dan ditulis positif, karung pasir membuatnya turun dan ditulis negatif.",
+          "Correct, as you said: balloons move the basket up and are written as positive, sandbags move it down and are written as negative."),
+        tx("Benar, seperti yang kamu tulis: 8 + (−5) = 3, jadi tersisa 3 karbon di udara.",
+          "Correct, as you wrote: 8 + (−5) = 3, so 3 carbon stays in the air."),
+        tx("Benar, seperti alasanmu: pohon harus menyerap 6 karbon, karena 6 + (−6) = 0.",
+          "Correct, as you reasoned: the trees must absorb 6 carbon, because 6 + (−6) = 0."),
+      ][qi];
+    }
+    if (move === "L2") {
+      if (ok) {
+        return [
+          tx("Perhatikan angka di samping keranjang. Tambah satu balon lalu SUBMIT, kemudian satu karung pasir lalu SUBMIT: angkanya berubah bagaimana?",
+            "Look at the number beside the basket. Add one balloon and SUBMIT, then one sandbag and SUBMIT: how does the number change?"),
+          tx("Perhatikan tulisan “My expression” di aplet setelah kamu memasang balon dan karung pasirnya. Karung pasir ditulis dengan tanda apa di sana, dan kenapa?",
+            "Look at “My expression” in the applet after you set the balloons and sandbags. Which sign do the sandbags get there, and why?"),
+          tx("Perhatikan keranjang saat kamu menambah satu balon lalu satu karung pasir. Apa yang terjadi pada keranjangnya?",
+            "Watch the basket when you add one balloon and then one sandbag. What happens to it?"),
+        ][qi];
+      }
+      return [
+        tx("Coba tekan + di samping balon satu kali, lalu SUBMIT. Angka di samping keranjang berubah dari berapa ke berapa, dan keranjangnya ke atas atau ke bawah?",
+          "Press + beside the balloons once, then SUBMIT. The number beside the basket changes from what to what, and does the basket go up or down?"),
+        tx("Mulai dari asapnya: tambahkan balon sebanyak karbon dari asap, lalu SUBMIT. Keranjangnya di angka berapa?",
+          "Start with the smoke: add as many balloons as the smoke adds carbon, then SUBMIT. Where is the basket?"),
+        tx("Tambahkan 6 balon di aplet dan SUBMIT. Lalu tambah karung pasir satu per satu: apa yang terjadi pada keranjangnya?",
+          "Add 6 balloons and SUBMIT. Then add sandbags one at a time: what happens to the basket?"),
+      ][qi];
+    }
+    if (move === "L3") {
+      if (ok) {
+        return [
+          tx("Satu balon membuat angka di samping keranjang bertambah atau berkurang? Jadi satu balon ditulis dengan tanda apa?",
+            "Does one balloon make the number beside the basket bigger or smaller? So which sign does one balloon get?"),
+          tx("Balon ditulis +8. Karung pasir ditulis berapa? Lengkapi: 8 + (…) = 3.",
+            "The balloons are +8. What are the sandbags? Complete it: 8 + (…) = 3."),
+          tx("Satu balon dan satu karung pasir: keranjangnya naik, turun, atau tetap? Jadi kenapa 6 balon perlu 6 karung pasir?",
+            "One balloon and one sandbag: does the basket go up, down, or stay? So why do 6 balloons need 6 sandbags?"),
+        ][qi];
+      }
+      if (c.k === 0) {
+        return [
+          tx("Kita coba satu per satu. Tambah 1 balon, SUBMIT, lihat angkanya. Lalu tambah 1 karung pasir, SUBMIT, lihat lagi. Mana yang membuat angkanya bertambah, dan mana yang membuatnya berkurang?",
+            "One at a time. Add 1 balloon, SUBMIT, read the number. Then add 1 sandbag, SUBMIT, read it again. Which one makes the number bigger, and which makes it smaller?"),
+          tx("Kita pecah jadi dua langkah. Setelah 8 balon, keranjang di angka berapa? Lalu setiap karung pasir menurunkannya satu. Dari sana turun berapa, dan sampai di mana?",
+            "Two steps. After 8 balloons, where is the basket? Each sandbag then takes it down one. How far down from there, and where does it end?"),
+          tx("Kita pecah. Setelah 6 balon, keranjang di angka berapa? Setiap karung pasir menurunkannya satu. Berapa kali harus turun supaya sampai di 0?",
+            "Let's break it down. After 6 balloons, where is the basket? Each sandbag takes it down one. How many steps down to reach 0?"),
+        ][qi];
+      }
+      return [
+        tx("Kita lihat balonnya saja dulu. Tambah satu balon, tekan SUBMIT: angka di samping keranjang jadi lebih besar atau lebih kecil?",
+          "Just the balloons first. Add one balloon and press SUBMIT: does the number beside the basket get bigger or smaller?"),
+        tx("Satu langkah dulu: pasang 8 balon saja dan tekan SUBMIT. Keranjangnya di angka berapa?",
+          "One step first: put on the 8 balloons only and press SUBMIT. Where is the basket?"),
+        tx("Satu langkah dulu: pasang 6 balon, lalu tambah satu karung pasir dan SUBMIT. Keranjangnya turun ke angka berapa?",
+          "One step first: put on 6 balloons, then add one sandbag and press SUBMIT. Where does the basket go down to?"),
+      ][qi];
+    }
+    // L4: the student explains in their own words
+    return [
+      c.goal
+        ? tx("Coba jelaskan lagi dengan kata-katamu sendiri: kenapa balon ditulis positif dan karung pasir negatif?",
+          "Explain it once more in your own words: why are balloons written as positive and sandbags as negative?")
+        : tx("Kamu melihat ke mana keranjang bergerak. Kalau ditulis sebagai bilangan, satu balon itu bilangan apa, dan satu karung pasir bilangan apa?",
+          "You saw which way the basket moves. Written as numbers, what is one balloon, and what is one sandbag?"),
+      tx("Bagaimana kamu mendapatkan 3? Ceritakan dengan balon dan karung pasir di aplet, lalu tulis sebagai penjumlahan bilangan bulat.",
+        "How did you get 3? Tell me with the balloons and sandbags in the applet, then write it as an integer addition."),
+      tx("Kenapa harus 6 karung pasir, bukan 5 atau 7? Jelaskan dengan kata-katamu sendiri.",
+        "Why 6 sandbags, and not 5 or 7? Explain it in your own words."),
+    ][qi];
+  }
+
   /* ---------------- limits for the AI ---------------- */
 
   const HELP = { L1: 1, L4: 1, L2: 2, L3: 3, HINT: 4, OK: 0 };
@@ -445,6 +526,7 @@
           `The student's final answer: ${res.answerOK ? "correct" : res.reading.total !== null ? `not correct yet (wrote ${fmt(res.reading.total)})` : "none yet"}.`),
       tx(`Cara siswa di pesan terakhir: ${KIND_LABEL[res.kind] || res.kind}.`, `The student's way in the last message: ${KIND_LABEL[res.kind] || res.kind}.`),
       goal ? tx("Penalaran target SUDAH muncul dari siswa sendiri. Saatnya konfirmasi akhir.", "The target reasoning HAS come from the student. Time for the final confirmation.")
+        : res.goalSeen ? tx("Penalaran target SUDAH muncul dari siswa, tetapi tangga guru belum sampai L4: belum saatnya konfirmasi.", "The target reasoning HAS come from the student, but the teacher's ladder has not reached L4 yet: no confirmation yet.")
         : tx("Penalaran target BELUM muncul dari siswa.", "The target reasoning has NOT come from the student yet."),
       tx(`Percobaan salah sejauh ini: ${mem.wrong}.`, `Wrong attempts so far: ${mem.wrong}.`),
       app ? appletFact(app) : "",
@@ -477,5 +559,5 @@
   }
 
   window.GorgaCards = window.GorgaCards || {};
-  window.GorgaCards[2] = { Q, read, step, opening, setup, appState, limits, overreach, KIND_LABEL, HELP, normalise };
+  window.GorgaCards[2] = { Q, read, step, say, opening, setup, appState, limits, overreach, KIND_LABEL, HELP, normalise };
 })();

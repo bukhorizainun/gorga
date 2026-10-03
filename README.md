@@ -19,9 +19,10 @@ Turn on "Mode guru" to see the move labels and the per-turn log (CSV export).
 
 Second demo, closer to the teacher's own sessions: the question and the answer box are inside
 the applet (a thermometer). The chat does not re-grade the answer; it probes how the student got
-it, following the teacher's protocol: L1 first, a correct answer gets L4 (not "benar" yet), a
-wrong answer gets L2 then L3, counting one by one is not enough, and the session ends with a
-confirmation once the answer and the split at 0 are both there. `suhu/tutor.js` reads the numbers
+it, following the teacher's protocol: the ladder L1 -> L2 -> L3 -> L4 is climbed in order, one
+rung per reply, even after a correct answer (assets/ladder.js; later applets start higher, e.g.
+L2-L4); counting one by one is not enough, and the session ends with a confirmation after L4
+once the answer and the split at 0 are both there. `suhu/tutor.js` reads the numbers
 in the student's text and decides the move; the optional worker only rephrases it.
 
 The applet is the teacher's GeoGebra material `yx7ubuvn` (original by A.M. Vuković, 2013). The page

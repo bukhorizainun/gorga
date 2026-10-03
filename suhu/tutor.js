@@ -323,6 +323,55 @@
         `Try it with the thermometer in the applet. What is the ${noun} in temperature, and how did you get it?`));
   }
 
+  /**
+   * The line for a rung the ladder asks for when step() would have chosen another move (the
+   * teacher's order L1 -> L2 -> L3 -> L4 holds even after a correct answer).
+   * @param c {answerOK, goal, k}  k = how often this rung was used before in this question
+   */
+  function say(move, stage, c) {
+    const { verb, noun, up } = verbs(stage);
+    const size = Math.abs(stage.end - stage.start);
+    const s = deg(stage.start);
+    const e = deg(stage.end);
+    const a = Math.abs(stage.start);
+    const b = Math.abs(stage.end);
+    if (move === "L1") return opening(stage);
+    if (move === "OK") {
+      return tx(`Benar. Dari ${s} ke 0 °C ${verb} ${a} derajat, lalu dari 0 °C ke ${e} ${verb} ${b} derajat, jadi total ${verb} ${size} °C.`,
+        `Correct. From ${s} to 0 °C it ${verb} ${a} degrees, then from 0 °C to ${e} it ${verb} ${b} degrees, so in total it ${verb} ${size} °C.`);
+    }
+    if (move === "L2") {
+      if (c.goal) {
+        return tx(`Coba tunjukkan di termometer: letakkan penanda biru di ${s} dan penanda merah di ${e}. Di angka mana kamu berhenti dulu di tengah jalan?`,
+          `Show it on the thermometer: put the blue marker at ${s} and the red marker at ${e}. Where do you stop first on the way?`);
+      }
+      if (c.answerOK) {
+        return tx(`Perhatikan angka 0 di termometer. Kalau kamu berhenti sebentar di 0 °C, berapa derajat yang sudah ${verb} dari ${s}?`,
+          `Look at 0 on the thermometer. If you stop at 0 °C for a moment, how many degrees has it ${up ? "risen" : "fallen"} from ${s}?`);
+      }
+      return tx(`Gerakkan penanda dari ${s} sampai ${e}. Ke arah mana penandanya bergerak, dan angka apa saja yang dilewatinya?`,
+        `Move the marker from ${s} to ${e}. Which way does it move, and which numbers does it pass?`);
+    }
+    if (move === "L3") {
+      if (c.goal) {
+        return tx(`Coba cek satu bagian di termometer: dari ${s} sampai 0 °C, berapa kali penandanya melompat?`,
+          `Check one part on the thermometer: from ${s} to 0 °C, how many times does the marker jump?`);
+      }
+      if (c.answerOK || c.k === 0) {
+        return tx(`Coba bagi jadi dua bagian. Berapa derajat dari ${s} sampai 0 °C? Lalu berapa derajat dari 0 °C sampai ${e}?`,
+          `Try it in two parts. How many degrees from ${s} to 0 °C? And how many from 0 °C to ${e}?`);
+      }
+      return tx(`Kita mulai dari bagian pertama saja: dari ${s} sampai 0 °C, berapa kali penandanya melompat?`,
+        `Let's take the first part only: from ${s} to 0 °C, how many times does the marker jump?`);
+    }
+    if (c.goal) {
+      return tx(`Coba jelaskan lagi dengan kata-katamu sendiri: kenapa berhenti di 0 °C membantu menghitung ${noun} suhunya?`,
+        `Explain it once more in your own words: why does stopping at 0 °C help you work out the ${noun} in temperature?`);
+    }
+    return tx(`Oke, coba jelaskan caramu memakai termometer. Bagaimana kamu bisa mendapatkan ${size}?`,
+      `Okay, explain how you used the thermometer. How did you get ${size}?`);
+  }
+
   function opening(stage) {
     const { noun } = verbs(stage);
     return tx(`Coba kerjakan dengan termometer di applet. Berapa ${noun} suhunya, dan bagaimana kamu mendapatkannya? Tulis jawabanmu di kotak jawaban applet, lalu tekan Periksa.`,
@@ -488,8 +537,10 @@
     const maxHelp = goal ? 4 : HELP[res.move] || 1;
     const allow = new Set([stage.start, stage.end]);
     for (const t of texts) for (const n of numbers(normalise(t))) allow.add(n);
+    for (const n of numbers(normalise(res.reply))) allow.add(n);   // the rung's own line may be paraphrased
     if (res.answerOK || goal) allow.add(size);
-    const studentRaisedZero = ["splitIdea", "splitHalf", "splitNoTotal", "why"].includes(res.kind);
+    // res.goalSeen: the student gave the split earlier and the ladder is still climbing to L4
+    const studentRaisedZero = res.goalSeen || ["splitIdea", "splitHalf", "splitNoTotal", "why"].includes(res.kind);
     const zeroOK = goal || maxHelp >= 2 || studentRaisedZero;
     if (zeroOK) allow.add(0);
     else allow.delete(0);
@@ -501,6 +552,7 @@
       `Cara siswa di pesan terakhir: ${KIND_LABEL[res.kind] || res.kind}.`,
       goal
         ? "Penalaran target SUDAH muncul dari siswa sendiri. Saatnya konfirmasi akhir."
+        : res.goalSeen ? "Penalaran target (memecah di 0) SUDAH muncul dari siswa, tetapi tangga guru belum sampai L4: belum saatnya konfirmasi."
         : "Penalaran target (memecah di 0) BELUM muncul dari siswa.",
       `Percobaan salah sejauh ini: ${mem.wrong}. Berapa kali siswa menghitung satu per satu atau macet: ${mem.counting}.`,
     ];
@@ -528,7 +580,7 @@
     return null;
   }
 
-  const api = { normalise, numbers, read, step, opening, isCorrect, fmt, deg, KIND_LABEL, brief, verify, limits, HELP, overreach };
+  const api = { normalise, numbers, read, step, say, opening, isCorrect, fmt, deg, KIND_LABEL, brief, verify, limits, HELP, overreach };
   if (typeof module !== "undefined") module.exports = api;
   else window.SuhuTutor = api;
 })();

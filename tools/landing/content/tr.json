@@ -88,8 +88,8 @@
   "aside_small": "Bu konuşma bir simülasyon testinde Endonezce yapıldı ve burada çevrildi. Poda’nın yanıtlarını yapay zekâ yazdı; öğrenci cümlelerini ekip test cümlesi olarak hazırladı.",
   "aside_cta": "Kendin dene",
   "p_eyebrow": "Öğretmenin protokolü",
-  "p_h2": "Takılınca artan, <em>başarınca azalan yardım.</em>",
-  "p_intro": "Poda, öğretmenin destek (scaffolding) çerçevesini izler. Teşhisle başlar, öğrenci ilerleyemediğinde desteği artırır ve öğrenci akıl yürütmesini açıkladığı anda desteği geri çeker. Cevap yine de öğrenciden gelmelidir.",
+  "p_h2": "Merdiven her zaman sırayla ilerler, <em>sonra adım adım azalır.</em>",
+  "p_intro": "Poda, öğretmenin destek (scaffolding) çerçevesini izler. Her soru L1 → L2 → L3 → L4 merdivenini sırayla çıkar; cevap doğru olsa bile öğrencinin her cevabı için bir basamak. Uygulamadan uygulamaya merdiven daha yukarıdan başlar (L1–L4, sonra L2–L4, sonra L3–L4); böylece öğrenci destekten yavaş yavaş ayrılır. Cevap yine de öğrenciden gelmelidir.",
   "rungs": [
     [
       "L1 · Probe",

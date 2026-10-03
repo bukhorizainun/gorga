@@ -88,8 +88,8 @@
   "aside_small": "This conversation ran in Indonesian in a simulation test and is translated here. Poda's replies were written by the AI; the student lines were written by the team as test sentences.",
   "aside_cta": "Try it yourself",
   "p_eyebrow": "The teacher's protocol",
-  "p_h2": "Help rises when stuck, <em>fades on success.</em>",
-  "p_intro": "Poda follows the teacher's scaffolding framework. It starts with diagnosis, adds support only when the student cannot yet proceed, and withdraws it once the student explains the reasoning. The answer still has to come from the student.",
+  "p_h2": "The ladder always goes in order, <em>then fades step by step.</em>",
+  "p_intro": "Poda follows the teacher's scaffolding framework. Every question climbs the ladder L1 → L2 → L3 → L4 in order, one rung for each student reply, even when the answer is already right. From applet to applet the ladder starts higher (L1–L4, then L2–L4, then L3–L4), so students slowly let go of the scaffold. The answer still has to come from the student.",
   "rungs": [
     [
       "L1 · Probe",
