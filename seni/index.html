@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Seni Matematika — Gorga</title>
+  <meta name="description" content="Pilih persamaan, geser parameternya, dan lihat titik demi titik bagaimana kurva terbentuk dari persamaan matematika.">
+  <meta name="theme-color" content="#f4f5fa">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/gorga.css">
+  <link rel="stylesheet" href="../assets/home.css">
+  <link rel="stylesheet" href="../assets/studio.css">
+  <script src="../assets/i18n.js"></script>
+</head>
+<body class="landing studio">
+  <div class="sky" aria-hidden="true"><i></i><i></i><i></i></div>
+  <header class="top">
+    <a class="mark" href="../" aria-label="Gorga"><img src="../assets/logo-nila.svg" alt="" width="30" height="30"><span>gorga</span></a>
+    <nav aria-label="Materi"><a href="../jenjang/" data-i18n="navLevels">Jenjang</a><a href="../geometri/" data-i18n="navGeo">Geometri 3D</a><a href="./" aria-current="page" data-i18n="navArt">Seni Matematika</a></nav>
+    <div class="end"><div class="langs" role="group" aria-label="Language"><a href="?lang=id" data-set-lang="id">ID</a><a href="?lang=en" data-set-lang="en">EN</a></div></div>
+  </header>
+
+  <main>
+    <section class="studio-head">
+      <div class="crumbs-row"><a href="../jenjang/" data-i18n="crumb">Jenjang</a><span>·</span><span data-i18n="extra">Seni Matematika · di luar GeoGebra</span></div>
+      <h1 data-i18n="h1">Gambar yang lahir dari <em>persamaan.</em></h1>
+      <p class="lead" data-i18n="lead">Wajah ninja, robot, dan rumah bolon di bawah ini tidak digambar dengan tangan. Setiap garisnya adalah satu persamaan. Bongkar gambarnya, ubah angkanya, lalu buat kurvamu sendiri di studio.</p>
+    </section>
+
+    <section class="bench pic-bench">
+      <div class="stage curve-stage pic-stage" id="pic-stage" aria-label="Gambar yang tersusun dari persamaan"><canvas id="pic-cv"></canvas></div>
+      <div class="controls">
+        <div><span class="ctl-label" data-i18n="lblPic">Gambar</span><div class="choices" id="pics" role="group"></div></div>
+        <div><span class="ctl-label" data-i18n="lblPicParams">Ubah angkanya</span><div id="pic-sliders"></div></div>
+        <div class="pic-row"><button type="button" class="play" id="pic-replay" aria-label="Gambar ulang"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 4.5v11l9-5.5z"/></svg></button><p class="pic-count" id="pic-count"></p></div>
+        <p class="note-small" data-i18n="eqHint">Arahkan ke sebuah persamaan untuk melihat garisnya.</p>
+        <ol class="eqs" id="eqs"></ol>
+      </div>
+    </section>
+
+    <section class="studio-section">
+      <header class="ch-head" data-rv><p class="kicker"><span class="no">II</span><span data-i18n="k2">Studio kurva</span></p>
+        <h2 data-i18n="h2">Kurva yang lahir dari <em>persamaan.</em></h2>
+        <p class="intro" data-i18n="intro2">Pilih sebuah persamaan dan geser angkanya. Titik emas menghitung satu nilai demi satu nilai, dan jejaknya menjadi kurva. Simpan beberapa kurva di kanvas, lalu jadikan satu karya.</p></header>
+    </section>
+
+    <section class="bench">
+      <div>
+        <div class="stage curve-stage" id="stage" aria-label="Bidang koordinat tempat kurva digambar">
+          <canvas id="cv"></canvas>
+          <span class="stage-name" id="fam-name"></span>
+        </div>
+        <div class="under-stage">
+          <p class="eq" id="eq" aria-live="polite"></p>
+          <p class="calc" id="calc" aria-live="off"></p>
+          <div class="scrub"><button type="button" class="play" id="replay" aria-label="Gambar ulang"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 4.5v11l9-5.5z"/></svg></button>
+            <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="Geser titik sepanjang kurva"><span class="hint-inline" data-i18n="scrubHint">geser titiknya</span></div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div>
+          <span class="ctl-label" data-i18n="lblLevel">Jenjang</span>
+          <div class="seg" id="levels" role="group"><button type="button" data-j="smp" aria-pressed="false">SMP</button><button type="button" data-j="sma" aria-pressed="false">SMA</button></div>
+        </div>
+        <div><span class="ctl-label" data-i18n="lblEq">Persamaan</span><div class="choices" id="fams" role="group"></div></div>
+
+        <form class="own" id="own" hidden>
+          <div class="seg" id="own-kind" role="group"><button type="button" data-kind="fx" aria-pressed="true"><i>y</i> = f(<i>x</i>)</button><button type="button" data-kind="polar" aria-pressed="false"><i>r</i> = f(<i>θ</i>)</button></div>
+          <div class="own-row"><span class="own-pre" id="own-pre"><i>y</i> =</span><input id="own-src" autocomplete="off" spellcheck="false" aria-label="Persamaan" placeholder="x² − 4"><button type="submit" class="ghost-btn" data-i18n="draw">Gambar</button></div>
+          <label class="dim" id="own-turns" hidden><span data-i18n="turns">θ sampai (× 2π)</span><input type="range" id="own-turns-in" min="1" max="12" step="1" value="1"><b>1</b></label>
+          <p class="own-egs"><span data-i18n="egs">contoh:</span> <button type="button" class="eg" data-kind="fx">x² − 4</button><button type="button" class="eg" data-kind="fx">3 sin(2x)</button><button type="button" class="eg" data-kind="fx">x³ − 3x</button><button type="button" class="eg" data-kind="polar">2 + 4 sin(5θ)</button></p>
+          <p class="own-err" id="own-err" role="alert"></p>
+        </form>
+
+        <div class="ctl-wrap" id="params-wrap"><span class="ctl-label" data-i18n="lblParams">Parameter</span><div id="sliders"></div></div>
+        <div class="readouts info" id="info"></div>
+
+        <div>
+          <span class="ctl-label" data-i18n="lblCanvas">Kanvas karya</span>
+          <div class="swatches" id="inks" role="group" aria-label="Warna">
+            <button type="button" data-ink="nila" aria-pressed="true" style="background:#1c2a55" aria-label="nila"></button>
+            <button type="button" data-ink="merah" aria-pressed="false" style="background:#a31d1a" aria-label="merah gorga"></button>
+            <button type="button" data-ink="emas" aria-pressed="false" style="background:#8a5f1c" aria-label="emas"></button>
+            <button type="button" data-ink="hitam" aria-pressed="false" style="background:#141414" aria-label="hitam"></button>
+          </div>
+          <div class="art-actions">
+            <button type="button" class="ghost-btn" id="keep" data-i18n="keep">Simpan ke kanvas</button>
+            <button type="button" class="text-btn" id="clear" data-i18n="clear">Kosongkan</button>
+            <button type="button" class="text-btn" id="save" data-i18n="save">Unduh gambar</button>
+          </div>
+          <label class="check"><input type="checkbox" id="withgrid"> <span data-i18n="withGrid">sertakan grid di gambar</span></label>
+          <p class="note-small" id="layers"></p>
+        </div>
+        <p class="think" id="q"></p>
+      </div>
+    </section>
+
+    <section class="explain" data-rv>
+      <div><h3 data-i18n="x1h">Dari persamaan ke titik</h3><p data-i18n="x1p">Kurva adalah kumpulan semua titik yang memenuhi persamaannya. Untuk setiap x, persamaan memberi satu y; titik (x, y) itulah yang digambar.</p></div>
+      <div><h3 data-i18n="x2h">Koordinat kutub</h3><p data-i18n="x2p">Di persamaan r = f(θ), titik ditentukan oleh sudut θ dan jarak r dari pusat. Garis emas menunjukkan sudut dan jarak itu. Kalau r negatif, titiknya pindah ke arah berlawanan.</p></div>
+      <div><h3 data-i18n="x3h">Seni dari parameter</h3><p data-i18n="x3p">Satu persamaan dengan angka berbeda memberi bentuk berbeda. Simpan beberapa kurva dengan warna gorga, lalu unduh karyamu.</p>
+        <span class="src" data-i18n="src">Rujukan: mawar Grandi (abad ke-18); kurva kupu-kupu, T. H. Fay, <i>The American Mathematical Monthly</i> 96(5), 1989.</span></div>
+    </section>
+  </main>
+
+  <footer class="foot"><p data-i18n="foot">Gorga · seni matematika: kurva dari persamaan, di luar GeoGebra.</p></footer>
+
+  <script>
+    gorgaApplyI18n({ id: {}, en: {
+      _title: "Math Art — Gorga", navLevels: "Levels", navGeo: "3D Geometry", navArt: "Math Art", crumb: "Levels", extra: "Math Art · outside GeoGebra",
+      h1: "Pictures born from <em>equations.</em>", lead: "The ninja face, the robot and the rumah bolon below are not drawn by hand. Every line is one equation. Take a picture apart, change its numbers, then make your own curves in the studio.",
+      lblPic: "Picture", lblPicParams: "Change the numbers", eqHint: "Point at an equation to see its line.", k2: "Curve studio",
+      h2: "Curves born from <em>equations.</em>", intro2: "Choose an equation and move its numbers. The gold point computes one value after another, and its trail becomes the curve. Keep several curves on the canvas and turn them into one piece of art.",
+      scrubHint: "move the point", lblLevel: "Level", lblEq: "Equation", lblParams: "Parameters", lblCanvas: "Art canvas", egs: "examples:", draw: "Draw", turns: "θ up to (× 2π)",
+      keep: "Keep on the canvas", clear: "Clear", save: "Download picture", withGrid: "include the grid in the picture",
+      x1h: "From equation to point", x1p: "A curve is the set of all points that satisfy its equation. For each x the equation gives one y; that point (x, y) is what gets drawn.",
+      x2h: "Polar coordinates", x2p: "In r = f(θ), a point is set by the angle θ and the distance r from the centre. The gold lines show that angle and distance. When r is negative, the point moves to the opposite side.",
+      x3h: "Art from parameters", x3p: "One equation with different numbers gives different shapes. Keep several curves in gorga colours, then download your piece.",
+      src: "References: Grandi's rose (18th century); the butterfly curve, T. H. Fay, <i>The American Mathematical Monthly</i> 96(5), 1989.",
+      foot: "Gorga · math art: curves from equations, outside GeoGebra." } });
+  </script>
+  <script type="module" src="app.js"></script>
+  <script type="module" src="gallery.js"></script>
+  <script src="../assets/motif.js"></script>
+</body>
+</html>

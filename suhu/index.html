@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skala Suhu — Gorga</title>
+  <meta name="description" content="Aktivitas Gorga: soal suhu di applet termometer GeoGebra, dengan tutor AI yang menggali cara berpikir siswa.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/gorga.css">
+  <link rel="stylesheet" href="../assets/activity.css">
+  <script src="../assets/i18n.js"></script>
+</head>
+<body>
+  <div class="sky" aria-hidden="true"><i></i><i></i><i></i></div>
+  <header class="bar">
+    <div style="display:flex;align-items:center;gap:22px">
+      <a class="mark" href="../" id="home-link" aria-label="Gorga"><img src="../assets/logo-nila.svg" alt=""><span>gorga</span></a>
+      <nav class="crumbs" aria-label="Lokasi"><a href="../#aktivitas" id="acts-link" data-i18n="crumb">Aktivitas</a><span>/</span><span aria-current="page" data-i18n="crumbHere">Skala suhu</span></nav>
+    </div>
+    <div class="bar-right">
+      <span id="mode-badge" class="badge">Mode naskah</span>
+      <label class="switch">
+        <input type="checkbox" id="teacher-toggle">
+        <span data-i18n="teacher">Mode guru</span>
+      </label>
+      <div class="langs" role="group" aria-label="Bahasa / Language">
+        <a href="?lang=id" data-set-lang="id">ID</a><a href="?lang=en" data-set-lang="en">EN</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="intro-band">
+    <div>
+      <span class="eyebrow"><span data-i18n="stageLabel">Tahap 1 · Skala suhu</span> · <span id="stage-no">soal 1 dari 2</span></span>
+      <h1 data-i18n="h1">Suhu naik, suhu turun</h1>
+      <a class="sibling" id="sibling-link" href="../aktivitas/?a=1" data-i18n="sibling">Soal asli aktivitas ini: 9 soal, protokol umum →</a>
+    </div>
+    <div class="context">
+      <span class="label" data-i18n="ctxLabel">Konteks</span>
+      <p data-i18n="ctx">Bumi kita semakin panas, dan suhu di berbagai tempat berubah-ubah. Ada daerah dengan suhu di bawah nol
+        derajat. Geser penanda biru dan merah di termometer, tulis jawabanmu, lalu tekan <b>Periksa</b>.</p>
+    </div>
+  </div>
+
+  <main class="layout">
+    <section class="pane pane-applet" aria-label="Applet GeoGebra">
+      <div class="applet-wrap fixed-ratio" id="applet-wrap">
+        <div id="ggb"></div>
+        <div class="applet-loading" id="applet-loading" data-i18n="loading">Memuat applet GeoGebra…</div>
+      </div>
+      <div class="state-strip">
+        <span class="item"><span class="dot dot-blue"></span> <span data-i18n="blue">Biru</span> <b id="val-blue">0 °C</b></span>
+        <span class="item"><span class="dot dot-red"></span> <span data-i18n="red">Merah</span> <b id="val-red">0 °C</b></span>
+        <span class="sep"></span>
+        <span class="item"><span data-i18n="answer">Jawaban</span> <b id="val-ans">–</b></span>
+        <span class="state-note" data-i18n="readLive">dibaca langsung dari applet</span>
+      </div>
+      <div class="journey" aria-live="polite">
+        <div class="journey-head">
+          <span class="label" data-i18n="path">Jejak penalaran</span>
+          <span class="hint" data-i18n="pathHint">setiap langkah tutor menambah satu motif</span>
+        </div>
+        <ol class="path" id="journey"><li class="empty">–</li></ol>
+      </div>
+    </section>
+
+    <section class="pane pane-chat" aria-label="Poda">
+      <div class="chat-head">
+        <div class="who"><img src="../assets/logo-nila.svg" alt=""><div><b>Poda</b><small data-i18n="tutorSub">bertanya, tidak memberi jawaban</small></div></div>
+        <button class="ghost" id="reset-btn" type="button" data-i18n="reset">Ulangi</button>
+      </div>
+      <div class="chat-log" id="chat-log" aria-live="polite"></div>
+      <div class="chat-foot">
+        <form class="chat-form" id="chat-form" autocomplete="off">
+          <input id="chat-input" type="text" maxlength="400" placeholder="Jelaskan caramu…" data-i18n-ph="placeholder" aria-label="Penjelasan">
+          <button type="submit" id="send-btn" data-i18n="send">Kirim</button>
+        </form>
+        <details class="try">
+          <summary data-i18n="try">Contoh jawaban untuk mencoba</summary>
+          <div class="quick stacked" id="quick"></div>
+        </details>
+      </div>
+    </section>
+
+    <section class="pane pane-log" id="log-pane" hidden aria-label="Mode guru">
+      <div class="log-head">
+        <div><span class="eyebrow" data-i18n="teacher">Mode guru</span><div style="font:400 26px/1.1 var(--serif);margin-top:4px" data-i18n="summary">Ringkasan sesi</div></div>
+        <div class="actions">
+          <button class="ghost" id="copy-btn" type="button" data-i18n="copy">Salin transkrip</button>
+          <button class="ghost" id="csv-btn" type="button" data-i18n="csv">Unduh CSV</button>
+        </div>
+      </div>
+      <div class="panel-grid">
+        <div class="stat"><span class="label" data-i18n="stTurns">Giliran siswa</span><b id="st-turns">0</b><small data-i18n="stTurnsNote">sesi ini</small></div>
+        <div class="stat"><span class="label" data-i18n="stAi">Balasan AI</span><b id="st-ai">–</b><small data-i18n="stAiNote">sisanya dari naskah</small></div>
+        <div class="stat"><span class="label" data-i18n="stTime">Sampai target</span><b id="st-time">–</b><small data-i18n="stTimeNote">menit, soal terakhir</small></div>
+        <div class="stat"><span class="label" data-i18n="stMoves">Langkah tutor</span><div class="bars" id="st-bars"></div></div>
+      </div>
+      <div class="log-scroll">
+        <table>
+          <thead><tr><th>#</th><th data-i18n="thTime">waktu</th><th data-i18n="thQ">soal</th><th data-i18n="thMarkers">biru/merah</th><th data-i18n="thFrom">dari</th><th data-i18n="thText">jawaban siswa</th><th data-i18n="thDiag">diagnosis</th><th data-i18n="thMove">langkah</th><th data-i18n="thSource">sumber</th></tr></thead>
+          <tbody id="log-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="ipon thin"></div>
+    <span data-i18n="foot">Prototipe riset, non-komersial. Aktivitas “Menjelajahi Bilangan Bulat pada Skala Suhu”: Dr. Rahmi Ramadhani Umar
+    (GeoGebra yx7ubuvn); applet termometer di dalamnya: A.M. Vuković (2013). Teks soal diterjemahkan dan umpan balik
+    benar/salah bawaan applet disembunyikan, karena konfirmasi diberikan tutor di akhir percakapan. Contoh jawaban
+    bertanda “sesi asli” berasal dari percakapan siswa yang sudah dianonimkan.</span>
+    <p class="gh-line"><a class="gh" href="https://github.com/rahmiumar" rel="noopener">github.com/rahmiumar</a></p>
+  </footer>
+
+  <script>
+    gorgaApplyI18n({
+      id: {},
+      en: {
+        _title: "Temperature Scale — Gorga",
+        crumb: "Activities", crumbHere: "Temperature scale", teacher: "Teacher mode",
+        stageLabel: "Stage 1 · Temperature scale", h1: "Temperatures rise, temperatures fall",
+        ctxLabel: "Context",
+        ctx: "Our Earth is getting hotter, and temperatures change from place to place. Some areas are below zero degrees. Move the blue and red markers on the thermometer, type your answer, then press <b>Check answer</b>.",
+        loading: "Loading the GeoGebra applet…", blue: "Blue", red: "Red", answer: "Answer", readLive: "read live from the applet",
+        path: "Reasoning path", pathHint: "each tutor step adds one motif",
+        tutorSub: "asks, never gives the answer", reset: "Restart", placeholder: "Explain how you did it…", send: "Send",
+        try: "Sample answers to try", summary: "Session summary", copy: "Copy transcript", csv: "Download CSV",
+        stTurns: "Student turns", stTurnsNote: "this session", stAi: "AI replies", stAiNote: "the rest from the script",
+        stTime: "Time to target", stTimeNote: "minutes, last question", stMoves: "Tutor moves",
+        thTime: "time", thQ: "question", thMarkers: "blue/red", thFrom: "from", thText: "student answer", thDiag: "diagnosis", thMove: "move", thSource: "source",
+        sibling: "This activity's own questions: 9 questions, general protocol →",
+        foot: "Research prototype, non-commercial. Activity “Exploring integers on a temperature scale”: Dr. Rahmi Ramadhani Umar (GeoGebra yx7ubuvn); thermometer applet inside it: A.M. Vuković (2013). The applet's own right/wrong feedback is hidden, because the tutor confirms at the end of the conversation. Samples marked “real session” come from anonymised student conversations, translated.",
+      },
+    });
+    document.getElementById("home-link").href = window.GORGA_LANG === "en" ? "../en/" : "../";
+    document.getElementById("acts-link").href = window.GORGA_LANG === "en" ? "../en/#activities" : "../#aktivitas";
+    document.getElementById("sibling-link").href = "../aktivitas/?a=1&lang=" + window.GORGA_LANG;
+  </script>
+  <script src="https://www.geogebra.org/apps/deployggb.js"></script>
+  <script src="task.js"></script>
+  <script src="../assets/ladder.js"></script>
+  <script src="tutor.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

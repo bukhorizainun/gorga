@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gorga — the tutor that asks back</title>
+  <meta name="description" content="Gorga pairs a GeoGebra applet with Poda, an AI tutor that does not give the answer. Poda asks, points, and waits until the student finds the reasoning.">
+  <meta property="og:title" content="Gorga — the tutor that asks back">
+  <meta property="og:description" content="GeoGebra applets and an AI tutor that follows a teacher&#x27;s scaffolding protocol.">
+  <meta property="og:image" content="https://rahmiumar.github.io/gorga/assets/covers/a1.jpg">
+  <meta name="theme-color" content="#f4f5fa">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="alternate" hreflang="id" href="https://rahmiumar.github.io/gorga/">
+  <link rel="alternate" hreflang="en" href="https://rahmiumar.github.io/gorga/en/">
+  <link rel="alternate" hreflang="de" href="https://rahmiumar.github.io/gorga/de/">
+  <link rel="alternate" hreflang="tr" href="https://rahmiumar.github.io/gorga/tr/">
+  <link rel="alternate" hreflang="x-default" href="https://rahmiumar.github.io/gorga/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/gorga.css">
+  <link rel="stylesheet" href="../assets/home.css">
+</head>
+<body class="landing">
+  <div class="sky" aria-hidden="true"><i></i><i></i><i></i></div>
+  <canvas class="mathfield" aria-hidden="true"></canvas>
+
+  <header class="top">
+    <a class="mark" href="../" aria-label="Gorga, home"><img src="../assets/logo-nila.svg" alt="" width="34" height="34"><span>gorga</span></a>
+    <nav aria-label="Sections">
+      <a href="#conversation">Conversation</a><a href="#protocol">Protocol</a><a href="#teachers">For teachers</a><a href="#activities">Levels</a>
+    </nav>
+    <div class="end">
+      <div class="langs" role="group" aria-label="Language"><a href="../" hreflang="id" lang="id">ID</a><a href="../en/" hreflang="en" lang="en" aria-current="true">EN</a><a href="../de/" hreflang="de" lang="de">DE</a><a href="../tr/" hreflang="tr" lang="tr">TR</a></div>
+      <a class="pill" href="../suhu/?lang=en">Try an activity <span aria-hidden="true">→</span></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-text">
+        <p class="kicker">GeoGebra · AI tutor · mathematical reasoning</p>
+        <h1>The tutor that <em>asks</em> back.</h1>
+        <p class="lead">Students work on a question in a GeoGebra applet. Poda, the AI tutor in Gorga, does not give the answer. It asks, points at one thing on the screen, and waits until the student finds and explains the reasoning.</p>
+        <div class="cta">
+          <a class="btn" href="../suhu/?lang=en">Try the Temperature Scale activity <span aria-hidden="true">→</span></a>
+          <a class="link" href="#conversation">See a conversation</a>
+        </div>
+        
+        <ul class="facts"><li><b>L1–L4</b><span>the teacher's scaffolding moves</span></li><li><b>No give-aways</b><span>every AI sentence is checked first</span></li><li><b>CSV</b><span>turn-by-turn log for research</span></li></ul>
+      </div>
+      <figure class="art">
+        <svg data-gorga role="img" aria-label="Gorga medallion: simeol-eol scrolls and a ring of ipon-ipon triangles"></svg>
+        <figcaption><b>Simeol-eol</b> — two Archimedean spirals <b>r = aθ</b>, one turned by 180°, ringed by eight small scrolls: rotational symmetry of order eight.</figcaption>
+      </figure>
+    </section>
+
+    <section class="chapter" id="conversation">
+      <header class="ch-head" data-rv>
+        <p class="kicker"><span class="no">I</span>A conversation</p>
+        <h2>The student finds <em>zero</em> alone.</h2>
+        <p class="intro">Question: the temperature is −6 °C; how much must it rise to reach 4 °C? The student already answered 10 by counting one by one. The protocol does not let the tutor say “zero”. Watch how Poda draws it out.</p>
+      </header>
+      <div class="dialogue">
+        <div class="lines" data-rv="seq"><p class="say st" style="--i:0"><span class="who">Student</span><span class="txt">so from -6 up to -5, then -4, then -3, -2, -1, then 0. Then up to 1, 2, 3, and finally 4.</span></p><p class="say ai" style="--i:1"><span class="who">Poda</span><span class="txt">You went from -6 to -5, -4, -3, -2, -1, then to 1, 2, 3, up to 4. What happens as you pass a certain temperature before 1?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:2"><span class="who">Student</span><span class="txt">oh, stop at zero first</span></p><p class="say ai" style="--i:3"><span class="who">Poda</span><span class="txt">You stop at zero first. How do you count the rise from -6 to 0, and then from 0 to 4?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:4"><span class="who">Student</span><span class="txt">from -6 to 0 it goes up 6</span></p><p class="say ai" style="--i:5"><span class="who">Poda</span><span class="txt">From -6 to 0 it goes up 6. Then from 0 to 4 it goes up by how much, and how does that give the total rise?<sup class="lvl">L1</sup></span></p><p class="say st" style="--i:6"><span class="who">Student</span><span class="txt">then 4 more, so 10</span></p><p class="say found" style="--i:7"><span class="who">Poda</span><span class="txt">Your answer is correct. You split the rise into two parts: from -6 to 0 it rises 6 degrees, then from 0 to 4 it rises 4 degrees, 10 degrees in total.</span></p></div>
+        <aside class="note" data-rv>
+          <h3>“Correct” comes only at the end.</h3>
+          <p>Counting one by one already gives 10, but it is not enough. Poda confirms only after the student splits the change at 0 on their own, as the teacher's protocol requires.</p>
+          <p class="small">This conversation ran in Indonesian in a simulation test and is translated here. Poda's replies were written by the AI; the student lines were written by the team as test sentences.</p>
+          <a class="link" href="../suhu/?lang=en">Try it yourself <span aria-hidden="true">→</span></a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="chapter" id="protocol">
+      <header class="ch-head" data-rv>
+        <p class="kicker"><span class="no">II</span>The teacher's protocol</p>
+        <h2>The ladder always goes in order, <em>then fades step by step.</em></h2>
+        <p class="intro">Poda follows the teacher's scaffolding framework. Every question climbs the ladder L1 → L2 → L3 → L4 in order, one rung for each student reply, even when the answer is already right. From applet to applet the ladder starts higher (L1–L4, then L2–L4, then L3–L4), so students slowly let go of the scaffold. The answer still has to come from the student.</p>
+      </header>
+      <div class="ascent" data-rv="seq">
+        <svg class="path" aria-hidden="true"><path pathLength="1"/></svg>
+        <ol><li class="rung r1" style="--i:0">
+            <span class="code" lang="en">L1 · Probe</span><h3>Probe</h3><p>An open question to see what the student notices, does or thinks. Nothing is pointed out yet.</p><blockquote>“What do you notice about the positions of −6 and 4 on the thermometer?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class=""></i><i class=""></i></span>
+          </li><li class="rung r2" style="--i:1">
+            <span class="code" lang="en">L2 · Point</span><h3>Point</h3><p>Directs attention to one relevant feature of the applet, without saying what it means.</p><blockquote>“Look at −6 and 0 on the thermometer. Where is −6 relative to 0?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class="on"></i><i class=""></i></span>
+          </li><li class="rung r3" style="--i:2">
+            <span class="code" lang="en">L3 · Focus</span><h3>Focus</h3><p>Reduces the task to one smaller, answerable sub-question, without giving the procedure.</p><blockquote>“First, from −6 °C to 0 °C, how many degrees does it increase?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i></span>
+          </li><li class="rung r4" style="--i:3">
+            <span class="code" lang="en">L4 · Revoice & fade</span><h3>Revoice, then fade</h3><p>After success, the student explains the reasoning with the applet. Poda confirms without a new explanation, then support is withdrawn.</p><blockquote>“Now explain using the thermometer why the total increase is 10 °C.”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class=""></i><i class=""></i></span>
+          </li></ol>
+      </div>
+      <p class="ladder-note" data-rv>Framework: van de Pol, Volman & Beishuizen (2010); van de Pol & Elbers (2013); Wood, Bruner & Ross (1976).</p>
+      <ul class="guards" data-rv><li><b>No give-aways</b><span>Every AI sentence is checked: numbers the student has not found yet may not appear.</span></li><li><b>Content, not labels</b><span>The check reads what the sentence says. An “L4” label that still splits the question is rejected.</span></li><li><b>Always a fallback</b><span>If the AI breaks a rule, the student gets a scripted sentence the teacher approved.</span></li></ul>
+    </section>
+
+    <section class="chapter" id="how">
+      <header class="ch-head" data-rv>
+        <p class="kicker"><span class="no">III</span>How it works</p>
+        <h2>Three steps <em>in class.</em></h2>
+        <p class="intro">Nothing to install. Students open a link on a laptop or tablet.</p>
+      </header>
+      <ol class="steps" data-rv="seq"><li style="--i:0"><span class="n">1</span><h3>Work in the applet</h3><p>Move the markers in the GeoGebra applet, type an answer, press Check. Poda reads the answer and the marker positions straight from the applet.</p></li><li style="--i:1"><span class="n">2</span><h3>Explain your way</h3><p>Poda does not grade. It asks how the student got there, in the student's own everyday words.</p></li><li style="--i:2"><span class="n">3</span><h3>Find it yourself</h3><p>Step by step until the target reasoning appears. The path is drawn as motifs under the applet.</p></li></ol>
+    </section>
+
+    <section class="chapter teach" id="teachers">
+      <div class="teach-text" data-rv>
+        <p class="kicker"><span class="no">IV</span>For teachers and researchers</p>
+        <h2>Every turn <em>is recorded.</em></h2>
+        <ul class="feats"><li><b>Teacher mode</b><span>The L1–L4 label on every reply, and a mark on answers the AI had to read.</span></li><li><b>Session summary</b><span>Number of turns, spread of moves, AI replies versus script, and time until the reasoning was found.</span></li><li><b>Log and transcript</b><span>Download a turn-by-turn CSV for analysis, or copy the conversation transcript.</span></li><li><b>Storage per class <em class="soon">next stage</em></b><span>Class codes, with data saved automatically for research.</span></li></ul>
+      </div>
+      <div class="mock" aria-hidden="true" data-rv>
+        <div class="stats"><div class="stat"><span>Turns</span><b>7</b><small>question 1</small></div><div class="stat"><span>AI replies</span><b>94%</b><small>the rest scripted</small></div><div class="stat"><span>To target</span><b>2:41</b><small>minutes</small></div>
+          <div class="stat moves"><span>Moves</span>
+            <div class="bars"><div>L1<i style="width:30%"></i>2</div><div>L2<i style="width:15%"></i>1</div><div>L3<i style="width:0"></i>0</div><div>L4<i style="width:60%"></i>4</div></div>
+          </div>
+        </div>
+        <table><thead><tr><th>#</th><th>student answer</th><th>diagnosis</th><th>move</th></tr></thead><tbody><tr><td>3</td><td>I counted 10 boxes</td><td>correct, no explanation yet</td><td>L4</td></tr><tr><td>4</td><td>I don't know</td><td>stuck</td><td>L2</td></tr><tr><td>5</td><td>from -6 to 0 is 6, then 0 to 4 is 4</td><td>split at 0 (target)</td><td>Confirmation</td></tr></tbody></table>
+        <p class="mock-note">Sample of the teacher view</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="activities">
+      <header class="ch-head" data-rv>
+        <p class="kicker"><span class="no">V</span>Levels</p>
+        <h2>Choose a level, <em>then a topic.</em></h2>
+        <p class="intro">Each school level has its own page with topics and activities: the teacher's GeoGebra applets with the full protocol, plus a 3D geometry studio and math art outside GeoGebra.</p>
+      </header>
+      <ol class="levels" data-rv="seq"><li style="--i:0"><a class="level later" href="../jenjang/?j=sd&amp;lang=en">
+            <span class="lv-name long" lang="en">Primary</span>
+            <span class="lv-phase">Phases A–C · grades 1–6</span>
+            <span class="lv-topics">Whole numbers and fractions · Plane shapes · Measurement</span>
+            <span class="lv-count">in preparation <span aria-hidden="true">→</span></span></a></li><li style="--i:1"><a class="level" href="../jenjang/?j=smp&amp;lang=en">
+            <span class="lv-name long" lang="en">Lower secondary</span>
+            <span class="lv-phase">Phase D · grades 7–9</span>
+            <span class="lv-topics">Numbers · Algebra · Geometry · Math Art</span>
+            <span class="lv-count">11 items <span aria-hidden="true">→</span></span></a></li><li style="--i:2"><a class="level" href="../jenjang/?j=sma&amp;lang=en">
+            <span class="lv-name long" lang="en">Upper secondary</span>
+            <span class="lv-phase">Phases E–F · grades 10–12</span>
+            <span class="lv-topics">Math Art</span>
+            <span class="lv-count">1 items <span aria-hidden="true">→</span></span></a></li></ol>
+      <p class="extra-links" data-rv>Extra material: <a href="../geometri/?lang=en">3D Geometry</a> · <a href="../seni/?lang=en">Math Art</a></p>
+    </section>
+
+    <section class="chapter name">
+      <img class="name-mark" src="../assets/logo-nila.svg" alt="Gorga logo" width="260" height="260" data-rv>
+      <div data-rv>
+        <p class="kicker">About Gorga</p>
+        <h2>A place to learn that <em>guides instead of answering.</em></h2>
+        <p class="name-what">Gorga is a research platform for mathematics education in lower secondary school. The teacher's GeoGebra activities are paired with Poda, an AI tutor that follows the teacher's scaffolding protocol: students work in the applet, explain their thinking, and find the reasoning themselves. Teachers and researchers get a record of every turn.</p>
+        <p>The name comes from <b>gorga</b>, the carving on Batak traditional houses in North Sumatra, in three colours: red, white and black. Its patterns are full of symmetry, reflection and repetition. Mathematics has lived in it for a long time.</p>
+        <p><b>Poda</b> is the Toba Batak word for advice given gently and indirectly. That is how the tutor works: it guides with questions instead of giving answers.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Gorga · a research prototype in mathematics education, non-commercial. Temperature Scale activity: Dr. Rahmi Ramadhani Umar. Thermometer applet: A.M. Vuković (2013), via GeoGebra.</p>
+    <p>© 2026 Gorga · Dr. Rahmi Ramadhani Umar · <a href="https://github.com/rahmiumar" rel="noopener">github.com/rahmiumar</a></p>
+    <div class="langs foot-langs" role="group" aria-label="Language"><a href="../" hreflang="id" lang="id">ID</a><a href="../en/" hreflang="en" lang="en" aria-current="true">EN</a><a href="../de/" hreflang="de" lang="de">DE</a><a href="../tr/" hreflang="tr" lang="tr">TR</a></div>
+  </footer>
+
+  <script>
+    try { localStorage.setItem("gorga-lang", "en"); } catch (e) {}
+  </script>
+  <script src="../assets/motif.js"></script>
+  <script src="../assets/mathfield.js"></script>
+</body>
+</html>

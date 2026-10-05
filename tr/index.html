@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gorga — soruyla karşılık veren öğretmen</title>
+  <meta name="description" content="Gorga, bir GeoGebra uygulamasını cevabı söylemeyen yapay zekâ öğretmen Poda ile birleştirir. Poda soru sorar, bir noktayı gösterir ve öğrenci akıl yürütmesini kendisi bulana kadar bekler.">
+  <meta property="og:title" content="Gorga — soruyla karşılık veren öğretmen">
+  <meta property="og:description" content="GeoGebra uygulamaları ve öğretmenin destek (scaffolding) protokolünü izleyen bir yapay zekâ öğretmen.">
+  <meta property="og:image" content="https://rahmiumar.github.io/gorga/assets/covers/a1.jpg">
+  <meta name="theme-color" content="#f4f5fa">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="alternate" hreflang="id" href="https://rahmiumar.github.io/gorga/">
+  <link rel="alternate" hreflang="en" href="https://rahmiumar.github.io/gorga/en/">
+  <link rel="alternate" hreflang="de" href="https://rahmiumar.github.io/gorga/de/">
+  <link rel="alternate" hreflang="tr" href="https://rahmiumar.github.io/gorga/tr/">
+  <link rel="alternate" hreflang="x-default" href="https://rahmiumar.github.io/gorga/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/gorga.css">
+  <link rel="stylesheet" href="../assets/home.css">
+</head>
+<body class="landing">
+  <div class="sky" aria-hidden="true"><i></i><i></i><i></i></div>
+  <canvas class="mathfield" aria-hidden="true"></canvas>
+
+  <header class="top">
+    <a class="mark" href="../" aria-label="Gorga, ana sayfa"><img src="../assets/logo-nila.svg" alt="" width="34" height="34"><span>gorga</span></a>
+    <nav aria-label="Bölümler">
+      <a href="#konusma">Konuşma</a><a href="#protokol">Protokol</a><a href="#ogretmenler">Öğretmenler için</a><a href="#etkinlikler">Kademeler</a>
+    </nav>
+    <div class="end">
+      <div class="langs" role="group" aria-label="Language"><a href="../" hreflang="id" lang="id">ID</a><a href="../en/" hreflang="en" lang="en">EN</a><a href="../de/" hreflang="de" lang="de">DE</a><a href="../tr/" hreflang="tr" lang="tr" aria-current="true">TR</a></div>
+      <a class="pill" href="../suhu/?lang=en">Etkinliği dene <span aria-hidden="true">→</span></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-text">
+        <p class="kicker">GeoGebra · yapay zekâ öğretmen · matematiksel akıl yürütme</p>
+        <h1>Soruyla <em>karşılık veren</em> öğretmen.</h1>
+        <p class="lead">Öğrenciler bir GeoGebra uygulamasında soru çözer. Gorga’nın yapay zekâ öğretmeni Poda cevabı vermez. Soru sorar, ekranda tek bir noktayı gösterir ve öğrenci akıl yürütmesini kendisi bulup açıklayana kadar bekler.</p>
+        <div class="cta">
+          <a class="btn" href="../suhu/?lang=en">“Sıcaklık Ölçeği” etkinliğini dene <span aria-hidden="true">→</span></a>
+          <a class="link" href="#konusma">Bir konuşmaya göz at</a>
+        </div>
+        <p class="app-note">Etkinliklerin kendisi şimdilik İngilizce ve Endonezce olarak sunuluyor.</p>
+        <ul class="facts"><li><b>L1–L4</b><span>öğretmenin destek adımları</span></li><li><b>Cevap sızmaz</b><span>her yapay zekâ cümlesi önce denetlenir</span></li><li><b>CSV</b><span>araştırma için tur tur kayıt</span></li></ul>
+      </div>
+      <figure class="art">
+        <svg data-gorga role="img" aria-label="Gorga madalyonu: simeol-eol sarmalları ve ipon-ipon üçgenlerinden bir halka"></svg>
+        <figcaption><b>Simeol-eol</b> — biri 180° döndürülmüş iki Arşimet sarmalı <b>r = aθ</b>, çevresinde sekiz küçük sarmal: sekizinci dereceden dönme simetrisi.</figcaption>
+      </figure>
+    </section>
+
+    <section class="chapter" id="konusma">
+      <header class="ch-head" data-rv>
+        <p class="kicker"><span class="no">I</span>Bir konuşma</p>
+        <h2>Öğrenci <em>sıfırı</em> kendisi bulur.</h2>
+        <p class="intro">Soru: sıcaklık −6 °C; 4 °C’ye ulaşmak için ne kadar artmalı? Öğrenci birer birer sayarak 10 cevabını zaten verdi. Protokol, öğretmenin “sıfır” demesini yasaklar. Poda’nın onu oraya nasıl yönlendirdiğine bakın.</p>
+      </header>
+      <div class="dialogue">
+        <div class="lines" data-rv="seq"><p class="say st" style="--i:0"><span class="who">Öğrenci</span><span class="txt">yani -6’dan -5’e, sonra -4’e, sonra -3, -2, -1, sonra 0’a çıktım. Sonra 1, 2, 3 ve en son 4’e.</span></p><p class="say ai" style="--i:1"><span class="who">Poda</span><span class="txt">-6’dan -5, -4, -3, -2, -1 üzerinden 1, 2, 3 ve 4’e çıktın. 1’den önceki belli bir sıcaklığı geçerken ne oluyor?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:2"><span class="who">Öğrenci</span><span class="txt">ha, önce sıfırda durmak</span></p><p class="say ai" style="--i:3"><span class="who">Poda</span><span class="txt">Önce sıfırda duruyorsun. -6’dan 0’a ve sonra 0’dan 4’e olan artışı nasıl sayıyorsun?<sup class="lvl">L4</sup></span></p><p class="say st" style="--i:4"><span class="who">Öğrenci</span><span class="txt">-6’dan 0’a 6 artıyor</span></p><p class="say ai" style="--i:5"><span class="who">Poda</span><span class="txt">-6’dan 0’a 6 artıyor. Peki 0’dan 4’e ne kadar artıyor ve bu toplam artışı nasıl veriyor?<sup class="lvl">L1</sup></span></p><p class="say st" style="--i:6"><span class="who">Öğrenci</span><span class="txt">sonra 4 daha, yani 10</span></p><p class="say found" style="--i:7"><span class="who">Poda</span><span class="txt">Cevabın doğru. Artışı iki parçaya ayırdın: -6’dan 0’a 6 derece, sonra 0’dan 4’e 4 derece, toplam 10 derece.</span></p></div>
+        <aside class="note" data-rv>
+          <h3>“Doğru” kelimesi ancak sonda gelir.</h3>
+          <p>Birer birer saymak da 10 verir ama yeterli değildir. Poda, öğrenci değişimi kendisi 0’da ikiye ayırdıktan sonra onaylar; öğretmenin protokolü bunu ister.</p>
+          <p class="small">Bu konuşma bir simülasyon testinde Endonezce yapıldı ve burada çevrildi. Poda’nın yanıtlarını yapay zekâ yazdı; öğrenci cümlelerini ekip test cümlesi olarak hazırladı.</p>
+          <a class="link" href="../suhu/?lang=en">Kendin dene <span aria-hidden="true">→</span></a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="chapter" id="protokol">
+      <header class="ch-head" data-rv>
+        <p class="kicker"><span class="no">II</span>Öğretmenin protokolü</p>
+        <h2>Merdiven her zaman sırayla ilerler, <em>sonra adım adım azalır.</em></h2>
+        <p class="intro">Poda, öğretmenin destek (scaffolding) çerçevesini izler. Her soru L1 → L2 → L3 → L4 merdivenini sırayla çıkar; cevap doğru olsa bile öğrencinin her cevabı için bir basamak. Uygulamadan uygulamaya merdiven daha yukarıdan başlar (L1–L4, sonra L2–L4, sonra L3–L4); böylece öğrenci destekten yavaş yavaş ayrılır. Cevap yine de öğrenciden gelmelidir.</p>
+      </header>
+      <div class="ascent" data-rv="seq">
+        <svg class="path" aria-hidden="true"><path pathLength="1"/></svg>
+        <ol><li class="rung r1" style="--i:0">
+            <span class="code" lang="en">L1 · Probe</span><h3>Sormak</h3><p>Öğrencinin neyi fark ettiğini, ne yaptığını ya da ne düşündüğünü görmek için açık bir soru. Henüz hiçbir şey gösterilmez.</p><blockquote>“Termometrede −6 ile 4’ün konumlarıyla ilgili neyi fark ediyorsun?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class=""></i><i class=""></i></span>
+          </li><li class="rung r2" style="--i:1">
+            <span class="code" lang="en">L2 · Point</span><h3>Göstermek</h3><p>Dikkati uygulamadaki önemli tek bir özelliğe çeker, ne anlama geldiğini söylemeden.</p><blockquote>“Termometrede −6’ya ve 0’a bak. −6, 0’a göre nerede?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class="on"></i><i class=""></i></span>
+          </li><li class="rung r3" style="--i:2">
+            <span class="code" lang="en">L3 · Focus</span><h3>Odaklamak</h3><p>Görevi, cevaplanabilir tek bir küçük alt soruya indirir; yöntemi vermez.</p><blockquote>“Önce, −6 °C’den 0 °C’ye kaç derece artıyor?”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i></span>
+          </li><li class="rung r4" style="--i:3">
+            <span class="code" lang="en">L4 · Revoice & fade</span><h3>Açıklamak, sonra bırakmak</h3><p>Başarıdan sonra öğrenci akıl yürütmesini uygulamayla açıklar. Poda yeni bir açıklama eklemeden onaylar, sonra destek geri çekilir.</p><blockquote>“Şimdi termometreyle, toplam artışın neden 10 °C olduğunu açıkla.”</blockquote><span class="lv" aria-hidden="true"><i class="on"></i><i class=""></i><i class=""></i></span>
+          </li></ol>
+      </div>
+      <p class="ladder-note" data-rv>Çerçeve: van de Pol, Volman & Beishuizen (2010); van de Pol & Elbers (2013); Wood, Bruner & Ross (1976).</p>
+      <ul class="guards" data-rv><li><b>Cevap sızmaz</b><span>Her yapay zekâ cümlesi denetlenir: öğrencinin henüz bulmadığı sayılar geçemez.</span></li><li><b>Etiket değil içerik</b><span>Denetim cümlenin ne dediğini okur. Soruyu yine de parçalayan bir “L4” reddedilir.</span></li><li><b>Her zaman yedek var</b><span>Yapay zekâ bir kuralı çiğnerse öğrenci, öğretmenin onayladığı bir senaryo cümlesi alır.</span></li></ul>
+    </section>
+
+    <section class="chapter" id="how">
+      <header class="ch-head" data-rv>
+        <p class="kicker"><span class="no">III</span>Nasıl çalışır</p>
+        <h2>Sınıfta <em>üç adım.</em></h2>
+        <p class="intro">Kurulacak bir şey yok. Öğrenciler dizüstü bilgisayarda ya da tablette bir bağlantı açar.</p>
+      </header>
+      <ol class="steps" data-rv="seq"><li style="--i:0"><span class="n">1</span><h3>Uygulamada çalış</h3><p>GeoGebra uygulamasında işaretçileri kaydır, cevabını yaz, Kontrol Et’e bas. Poda cevabı ve işaretçilerin yerini doğrudan uygulamadan okur.</p></li><li style="--i:1"><span class="n">2</span><h3>Yolunu açıkla</h3><p>Poda not vermez. Öğrencinin oraya nasıl vardığını, kendi gündelik sözcükleriyle sorar.</p></li><li style="--i:2"><span class="n">3</span><h3>Kendin bul</h3><p>Hedef akıl yürütme ortaya çıkana kadar adım adım. Yol, uygulamanın altında motif olarak çizilir.</p></li></ol>
+    </section>
+
+    <section class="chapter teach" id="ogretmenler">
+      <div class="teach-text" data-rv>
+        <p class="kicker"><span class="no">IV</span>Öğretmenler ve araştırmacılar için</p>
+        <h2>Her tur <em>kaydedilir.</em></h2>
+        <ul class="feats"><li><b>Öğretmen modu</b><span>Her yanıtta L1–L4 etiketi ve yapay zekânın okumak zorunda kaldığı cevaplarda bir işaret.</span></li><li><b>Oturum özeti</b><span>Tur sayısı, adımların dağılımı, senaryoya karşı yapay zekâ yanıtları ve akıl yürütmenin bulunmasına kadar geçen süre.</span></li><li><b>Kayıt ve döküm</b><span>Analiz için tur tur CSV indir ya da konuşma dökümünü kopyala.</span></li><li><b>Sınıf bazında kayıt <em class="soon">sonraki aşama</em></b><span>Sınıf kodları; veriler araştırma için otomatik kaydedilir.</span></li></ul>
+      </div>
+      <div class="mock" aria-hidden="true" data-rv>
+        <div class="stats"><div class="stat"><span>Tur</span><b>7</b><small>soru 1</small></div><div class="stat"><span>YZ yanıtı</span><b>%94</b><small>kalanı senaryo</small></div><div class="stat"><span>Hedefe kadar</span><b>2:41</b><small>dakika</small></div>
+          <div class="stat moves"><span>Adımlar</span>
+            <div class="bars"><div>L1<i style="width:30%"></i>2</div><div>L2<i style="width:15%"></i>1</div><div>L3<i style="width:0"></i>0</div><div>L4<i style="width:60%"></i>4</div></div>
+          </div>
+        </div>
+        <table><thead><tr><th>#</th><th>öğrenci cevabı</th><th>teşhis</th><th>adım</th></tr></thead><tbody><tr><td>3</td><td>10 kutu saydım</td><td>doğru, henüz açıklama yok</td><td>L4</td></tr><tr><td>4</td><td>bilmiyorum</td><td>takıldı</td><td>L2</td></tr><tr><td>5</td><td>-6’dan 0’a 6, sonra 0’dan 4’e 4</td><td>0’da ayırdı (hedef)</td><td>Onay</td></tr></tbody></table>
+        <p class="mock-note">Öğretmen görünümünden örnek</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="etkinlikler">
+      <header class="ch-head" data-rv>
+        <p class="kicker"><span class="no">V</span>Kademeler</p>
+        <h2>Önce kademeyi, <em>sonra konuyu seç.</em></h2>
+        <p class="intro">Her kademenin konu ve etkinliklerini içeren kendi sayfası var: öğretmenin tam protokollü GeoGebra uygulamaları, ayrıca GeoGebra dışında 3B geometri stüdyosu ve matematik sanatı.</p>
+      </header>
+      <ol class="levels" data-rv="seq"><li style="--i:0"><a class="level later" href="../jenjang/?j=sd&amp;lang=en">
+            <span class="lv-name long" lang="tr">İlkokul</span>
+            <span class="lv-phase">A–C evreleri · 1–6. sınıflar</span>
+            <span class="lv-topics">Doğal sayılar ve kesirler · Düzlem şekiller · Ölçme</span>
+            <span class="lv-count">hazırlanıyor <span aria-hidden="true">→</span></span></a></li><li style="--i:1"><a class="level" href="../jenjang/?j=smp&amp;lang=en">
+            <span class="lv-name long" lang="tr">Ortaokul</span>
+            <span class="lv-phase">D evresi · 7–9. sınıflar</span>
+            <span class="lv-topics">Sayılar · Cebir · Geometri · Matematik Sanatı</span>
+            <span class="lv-count">11 içerik <span aria-hidden="true">→</span></span></a></li><li style="--i:2"><a class="level" href="../jenjang/?j=sma&amp;lang=en">
+            <span class="lv-name" lang="tr">Lise</span>
+            <span class="lv-phase">E–F evreleri · 10–12. sınıflar</span>
+            <span class="lv-topics">Matematik Sanatı</span>
+            <span class="lv-count">1 içerik <span aria-hidden="true">→</span></span></a></li></ol>
+      <p class="extra-links" data-rv>Ek materyal: <a href="../geometri/?lang=en">3B Geometri</a> · <a href="../seni/?lang=en">Matematik Sanatı</a></p>
+    </section>
+
+    <section class="chapter name">
+      <img class="name-mark" src="../assets/logo-nila.svg" alt="Gorga logosu" width="260" height="260" data-rv>
+      <div data-rv>
+        <p class="kicker">Gorga hakkında</p>
+        <h2>Cevap vermeyen, <em>yol gösteren</em> bir öğrenme alanı.</h2>
+        <p class="name-what">Gorga, ortaokul matematik eğitimi için bir araştırma platformudur. Öğretmenin GeoGebra etkinlikleri, öğretmenin destek protokolünü izleyen yapay zekâ öğretmen Poda ile eşleştirilir: öğrenciler uygulamada çalışır, düşüncelerini açıklar ve akıl yürütmeyi kendileri bulur. Öğretmenler ve araştırmacılar her turun kaydını alır.</p>
+        <p>Ad, Kuzey Sumatra’daki geleneksel Batak evlerinin oyma süslemesi <b>gorga</b>dan gelir; üç rengi vardır: kırmızı, beyaz ve siyah. Desenleri simetri, yansıma ve tekrarla doludur. Matematik uzun zamandır onun içinde yaşıyor.</p>
+        <p><b>Poda</b>, Toba Batak dilinde nazik ve dolaylı biçimde verilen öğüt demektir. Öğretmen de böyle çalışır: cevap vermek yerine sorularla yol gösterir.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Gorga · matematik eğitimi için ticari olmayan bir araştırma prototipi. “Sıcaklık Ölçeği” etkinliği: Dr. Rahmi Ramadhani Umar. Termometre uygulaması: A.M. Vuković (2013), GeoGebra üzerinden.</p>
+    <p>© 2026 Gorga · Dr. Rahmi Ramadhani Umar · <a href="https://github.com/rahmiumar" rel="noopener">github.com/rahmiumar</a></p>
+    <div class="langs foot-langs" role="group" aria-label="Language"><a href="../" hreflang="id" lang="id">ID</a><a href="../en/" hreflang="en" lang="en">EN</a><a href="../de/" hreflang="de" lang="de">DE</a><a href="../tr/" hreflang="tr" lang="tr" aria-current="true">TR</a></div>
+  </footer>
+
+  <script>
+    try { localStorage.setItem("gorga-lang", "en"); } catch (e) {}
+  </script>
+  <script src="../assets/motif.js"></script>
+  <script src="../assets/mathfield.js"></script>
+</body>
+</html>
