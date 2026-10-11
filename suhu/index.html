@@ -102,7 +102,7 @@
       </div>
       <div class="log-scroll">
         <table>
-          <thead><tr><th>#</th><th data-i18n="thTime">waktu</th><th data-i18n="thQ">soal</th><th data-i18n="thMarkers">biru/merah</th><th data-i18n="thFrom">dari</th><th data-i18n="thText">jawaban siswa</th><th data-i18n="thDiag">diagnosis</th><th data-i18n="thMove">langkah</th><th data-i18n="thSource">sumber</th></tr></thead>
+          <thead><tr><th>#</th><th data-i18n="thTime">waktu</th><th data-i18n="thQ">soal</th><th data-i18n="thMarkers">biru/merah</th><th data-i18n="thFrom">dari</th><th data-i18n="thText">jawaban siswa</th><th data-i18n="thDiag">diagnosis</th><th data-i18n="thAssess">penilaian Poda · bukti</th><th data-i18n="thMove">langkah</th><th data-i18n="thSource">sumber</th><th data-i18n="thFix">koreksi guru</th></tr></thead>
           <tbody id="log-body"></tbody>
         </table>
       </div>
@@ -133,7 +133,7 @@
         try: "Sample answers to try", summary: "Session summary", copy: "Copy transcript", csv: "Download CSV",
         stTurns: "Student turns", stTurnsNote: "this session", stAi: "AI replies", stAiNote: "the rest from the script",
         stTime: "Time to target", stTimeNote: "minutes, last question", stMoves: "Tutor moves",
-        thTime: "time", thQ: "question", thMarkers: "blue/red", thFrom: "from", thText: "student answer", thDiag: "diagnosis", thMove: "move", thSource: "source",
+        thTime: "time", thQ: "question", thMarkers: "blue/red", thFrom: "from", thText: "student answer", thDiag: "diagnosis", thMove: "move", thSource: "source", thAssess: "Poda's assessment · evidence", thFix: "teacher correction",
         sibling: "This activity's own questions: 9 questions, general protocol →",
         foot: "Research prototype, non-commercial. Activity “Exploring integers on a temperature scale”: Dr. Rahmi Ramadhani Umar (GeoGebra yx7ubuvn); thermometer applet inside it: A.M. Vuković (2013). The applet's own right/wrong feedback is hidden, because the tutor confirms at the end of the conversation. Samples marked “real session” come from anonymised student conversations, translated.",
       },
@@ -145,6 +145,7 @@
   <script src="https://www.geogebra.org/apps/deployggb.js"></script>
   <script src="task.js"></script>
   <script src="../assets/ladder.js"></script>
+  <script src="../assets/assess.js"></script>
   <script src="../assets/poda.js"></script>
   <script src="tutor.js"></script>
   <script src="app.js"></script>
