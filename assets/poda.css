@@ -1,0 +1,143 @@
+/* Poda, the character, and the lively parts of the chat (chips, cards, confetti, help buttons).
+   Loaded after activity.css. Motion stops for readers who ask for reduced motion. */
+
+.poda { display: inline-block; width: 44px; height: 44px; flex: 0 0 auto; line-height: 0; }
+.poda svg { width: 100%; height: 100%; overflow: visible; }
+.poda-mini { width: 44px; height: 44px; margin-bottom: 2px; }
+.poda-big { width: 60px; height: 60px; }
+.poda g, .poda path, .poda circle, .poda rect, .poda ellipse { transform-box: fill-box; transform-origin: center; }
+.poda .pd-body { transform-origin: 50% 100%; }
+.poda .pd-prop, .poda .pd-eye-happy, .poda .pd-eye-squint, .poda .pd-mouth-o { display: none; }
+
+/* idle: a slow blink and a gentle breath */
+.poda .pd-eye-open { animation: pd-blink 4.6s infinite; transform-origin: 50% 55%; }
+.poda-big .pd-body { animation: pd-breathe 3.8s ease-in-out infinite; }
+@keyframes pd-blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+@keyframes pd-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.025, .98); } }
+
+/* L1 probe: a question mark pops up, the head tilts */
+.poda[data-mood="probe"] .pd-probe { display: inline; }
+.poda.play[data-mood="probe"] .pd-probe { animation: pd-pop .45s cubic-bezier(.3, 1.6, .5, 1), pd-bob 1.5s ease-in-out .45s 3; }
+.poda.play[data-mood="probe"] .pd-body { animation: pd-tilt 1.6s ease-in-out 2; }
+@keyframes pd-pop { from { transform: scale(0) rotate(-30deg); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes pd-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes pd-tilt { 0%, 100% { transform: rotate(0); } 40% { transform: rotate(-7deg); } }
+
+/* L2 point: the left arm points towards the applet, a spark blinks */
+.poda[data-mood="point"] .pd-point { display: inline; }
+.poda[data-mood="point"] .pd-arm-l { display: none; }
+.poda.play[data-mood="point"] .pd-point { animation: pd-jab .55s ease-in-out 4 alternate; transform-origin: 100% 100%; }
+.poda.play[data-mood="point"] .pd-spark { animation: pd-twinkle .8s ease-in-out 3; }
+@keyframes pd-jab { from { transform: translate(0, 0); } to { transform: translate(-3px, -2px); } }
+@keyframes pd-twinkle { 0%, 100% { transform: scale(.6); opacity: .4; } 50% { transform: scale(1.2); opacity: 1; } }
+
+/* L3 focus: a magnifying glass sweeps */
+.poda[data-mood="focus"] .pd-focus { display: inline; }
+.poda.play[data-mood="focus"] .pd-focus { animation: pd-sweep 1.3s ease-in-out 2; }
+@keyframes pd-sweep { 0%, 100% { transform: translate(0, 0) rotate(0); } 33% { transform: translate(-4px, -3px) rotate(-8deg); } 66% { transform: translate(2px, 2px) rotate(6deg); } }
+
+/* L4 revoice: a microphone, sound waves, an open mouth that listens */
+.poda[data-mood="voice"] .pd-voice { display: inline; }
+.poda[data-mood="voice"] .pd-mouth { display: none; }
+.poda[data-mood="voice"] .pd-mouth-o { display: inline; }
+.poda.play[data-mood="voice"] .pd-wave { animation: pd-pulse 1s ease-out 3; transform-origin: 0 50%; }
+@keyframes pd-pulse { 0% { opacity: 0; transform: scale(.6); } 50% { opacity: 1; } 100% { opacity: 0; transform: scale(1.15); } }
+
+/* chance cards: a card flips into Poda's hand */
+.poda[data-mood="card"] .pd-card { display: inline; }
+.poda.play[data-mood="card"] .pd-card-face { animation: pd-flip .8s cubic-bezier(.3, 1.4, .5, 1); }
+@keyframes pd-flip { from { transform: perspective(60px) rotateY(180deg) scale(.4); opacity: 0; } to { transform: rotateY(0) scale(1); opacity: 1; } }
+
+/* recovery: a puzzle piece spins in */
+.poda[data-mood="puzzle"] .pd-puzzle { display: inline; }
+.poda.play[data-mood="puzzle"] .pd-puzzle { animation: pd-spin .9s cubic-bezier(.3, 1.4, .5, 1); }
+@keyframes pd-spin { from { transform: rotate(-200deg) scale(0); } to { transform: rotate(0) scale(1); } }
+
+/* success: a jump, happy eyes, stars */
+.poda[data-mood="cheer"] .pd-stars { display: inline; }
+.poda[data-mood="cheer"] .pd-eye-open, .poda[data-mood="heart"] .pd-eye-open { display: none; }
+.poda[data-mood="cheer"] .pd-eye-happy, .poda[data-mood="heart"] .pd-eye-happy { display: inline; }
+.poda.play[data-mood="cheer"] .pd-body { animation: pd-jump .6s cubic-bezier(.3, 1.6, .5, 1) 3; }
+.poda.play[data-mood="cheer"] .pd-stars path { animation: pd-twinkle .7s ease-in-out 4; }
+.poda.play[data-mood="cheer"] .pd-stars path:nth-child(2n) { animation-delay: .2s; }
+@keyframes pd-jump { 0%, 100% { transform: translateY(0) scale(1); } 30% { transform: translateY(0) scale(1.06, .92); } 60% { transform: translateY(-9px) scale(.96, 1.05); } }
+
+/* off topic: a wave and an arrow back */
+.poda[data-mood="wave"] .pd-wavehand { display: inline; }
+.poda[data-mood="wave"] .pd-arm-r { display: none; }
+.poda.play[data-mood="wave"] .pd-wavehand path:first-child, .poda.play[data-mood="wave"] .pd-wavehand circle { animation: pd-wave .45s ease-in-out 5 alternate; transform-origin: 0 100%; }
+@keyframes pd-wave { from { transform: rotate(-10deg); } to { transform: rotate(12deg); } }
+
+/* clarify: squinting; thinking: dots above the head */
+.poda[data-mood="squint"] .pd-eye-open { display: none; }
+.poda[data-mood="squint"] .pd-eye-squint, .poda[data-mood="squint"] .pd-dots, .poda[data-mood="think"] .pd-dots { display: inline; }
+.poda[data-mood="think"] .pd-eye-open { transform: translateY(-1.6px); animation: none; }
+.poda[data-mood="think"] .pd-dots circle, .poda.play[data-mood="squint"] .pd-dots circle { animation: pd-dot 1s ease-in-out infinite; }
+.poda .pd-dots .d2 { animation-delay: .15s !important; }
+.poda .pd-dots .d3 { animation-delay: .3s !important; }
+@keyframes pd-dot { 0%, 100% { transform: translateY(0); opacity: .4; } 50% { transform: translateY(-2px); opacity: 1; } }
+
+/* needs further help: a heart */
+.poda[data-mood="heart"] .pd-heart { display: inline; }
+.poda.play[data-mood="heart"] .pd-heart { animation: pd-beat .8s ease-in-out 3; }
+@keyframes pd-beat { 0%, 100% { transform: scale(1); } 40% { transform: scale(1.25); } }
+
+/* ---------- chat with Poda ---------- */
+.poda-head { display: flex; align-items: center; gap: 12px; padding: 2px 4px 12px; }
+.poda-head b { font: 400 26px/1 var(--serif); color: var(--nila); }
+.poda-head small { display: block; margin-top: 4px; font: 12.5px/1.35 var(--sans); color: var(--nila-3); }
+.pane-chat { position: relative; }
+
+.msg.has-poda { flex-direction: row; align-items: flex-end; gap: 10px; max-width: 94%; }
+.msg.has-poda .bubble-col { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.msg.has-poda .bubble-col p { animation: pd-bubble .38s cubic-bezier(.23, 1, .32, 1); transform-origin: 0 100%; }
+@keyframes pd-bubble { from { opacity: 0; transform: translateY(6px) scale(.96); } to { opacity: 1; transform: none; } }
+.poda-chip { align-self: flex-start; font: 600 11.5px/1 var(--sans); letter-spacing: .02em; color: var(--gold); background: rgba(195, 154, 82, .14);
+  padding: 5px 11px; border-radius: 999px; animation: pd-chip .45s cubic-bezier(.3, 1.5, .5, 1); }
+@keyframes pd-chip { from { opacity: 0; transform: translateY(4px) scale(.9); } to { opacity: 1; transform: none; } }
+.msg.has-poda .meta { padding-left: 6px; }
+
+.msg.ai.card p { background: linear-gradient(180deg, #fff, #fffaf0); box-shadow: 0 0 0 1.6px var(--gold-2), 0 18px 34px -24px rgba(138, 95, 28, .65);
+  animation: pd-cardin .6s cubic-bezier(.3, 1.3, .5, 1); transform-origin: 50% 0; }
+@keyframes pd-cardin { from { opacity: 0; transform: perspective(500px) rotateX(-70deg); } to { opacity: 1; transform: none; } }
+.msg.ai.puzzle p { background: #fff; border: 1.5px dashed var(--gold-2); box-shadow: 0 14px 30px -24px rgba(28, 42, 85, .55); }
+.msg.ai.end p { background: rgba(28, 42, 85, .07); color: var(--nila); }
+.msg.ai.confirm .poda-chip { color: #fff; background: var(--nila); }
+
+.msg.student.help p { background: rgba(195, 154, 82, .18); color: var(--gold); box-shadow: none; font-weight: 500; }
+.chat-note.soft { font-size: 12.5px; color: var(--nila-3); }
+
+/* the help and pause buttons under the input */
+.poda-actions { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 6px 0; align-items: center; }
+.poda-actions button { border: 0; background: rgba(28, 42, 85, .06); color: var(--nila); border-radius: 999px; padding: 8px 14px;
+  font: 500 13px/1 var(--sans); cursor: pointer; transition: background .2s ease, transform .15s ease-out; }
+.poda-actions button:hover { background: rgba(28, 42, 85, .12); }
+.poda-actions button:active { transform: scale(.97); }
+.poda-actions button:disabled { opacity: .4; cursor: default; }
+.poda-actions .grow { flex: 1; }
+.poda-actions .reset { background: none; color: var(--nila-3); font-size: 12px; padding: 6px 8px; }
+.q-status { display: inline-block; margin-left: 8px; padding: 3px 9px; border-radius: 999px; font: 600 11px/1.2 var(--sans); letter-spacing: .03em;
+  background: rgba(28, 42, 85, .07); color: var(--nila-3); vertical-align: middle; }
+.q-status.success { background: rgba(195, 154, 82, .2); color: var(--gold); }
+.q-status.needsHelp { background: rgba(208, 122, 110, .16); color: #a2483c; }
+
+/* L2 pointing: a soft gold glow travels round the applet */
+.applet-wrap.poda-spot { animation: pd-spot 2.6s ease-out; }
+@keyframes pd-spot {
+  0% { box-shadow: var(--lift), 0 0 0 0 rgba(195, 154, 82, 0); }
+  18% { box-shadow: var(--lift), 0 0 0 5px rgba(195, 154, 82, .55); }
+  100% { box-shadow: var(--lift), 0 0 0 26px rgba(195, 154, 82, 0); }
+}
+
+/* success: confetti over the chat */
+.poda-confetti { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 5; }
+.poda-confetti i { position: absolute; top: 18%; width: 8px; height: 12px; border-radius: 2px; opacity: .95; animation: pd-fall 1.7s cubic-bezier(.2, .6, .4, 1) forwards; }
+@keyframes pd-fall { to { transform: translate(var(--dx), 360px) rotate(var(--r)); opacity: 0; } }
+
+/* level meter: one current level instead of a fixed ladder */
+.level-meter i.now { background: var(--gold-2); box-shadow: 0 0 0 3px rgba(195, 154, 82, .22); }
+.level-meter i.been { background: rgba(28, 42, 85, .28); }
+
+@media (prefers-reduced-motion: reduce) {
+  .poda *, .poda-chip, .msg.has-poda .bubble-col p, .msg.ai.card p, .applet-wrap.poda-spot { animation: none !important; }
+}

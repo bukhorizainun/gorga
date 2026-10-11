@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/gorga.css">
   <link rel="stylesheet" href="../assets/activity.css">
+  <link rel="stylesheet" href="../assets/poda.css">
   <script src="../assets/i18n.js"></script>
 </head>
 <body>
@@ -103,7 +104,7 @@
       </div>
       <div class="log-scroll">
         <table>
-          <thead><tr><th>#</th><th data-i18n="thTime">waktu</th><th data-i18n="thQ">soal</th><th data-i18n="thText">jawaban siswa</th><th data-i18n="thMove">langkah</th><th data-i18n="thSource">sumber</th><th data-i18n="thReply">balasan tutor</th></tr></thead>
+          <thead><tr><th>#</th><th data-i18n="thTime">waktu</th><th data-i18n="thQ">soal</th><th data-i18n="thText">jawaban siswa</th><th data-i18n="thCat">input / penalaran</th><th data-i18n="thMove">level · langkah</th><th data-i18n="thState">penghitung / status</th><th data-i18n="thSource">sumber</th><th data-i18n="thReply">balasan tutor</th></tr></thead>
           <tbody id="log-body"></tbody>
         </table>
       </div>
@@ -127,7 +128,7 @@
         summary: "Session summary", copy: "Copy transcript", csv: "Download CSV",
         stTurns: "Student turns", stTurnsNote: "this session", stAi: "AI replies", stAiNote: "the rest from the script",
         stDone: "Questions done", stMoves: "Tutor moves",
-        thTime: "time", thQ: "question", thText: "student answer", thMove: "move", thSource: "source", thReply: "tutor reply",
+        thTime: "time", thQ: "question", thText: "student answer", thCat: "input / reasoning", thMove: "level · move", thState: "counters / status", thSource: "source", thReply: "tutor reply",
         foot: "Research prototype, non-commercial. Activities and questions: Dr. Rahmi Ramadhani Umar, via GeoGebra. Applets follow the licence and attribution of their original authors on GeoGebra.",
       },
     });
@@ -136,6 +137,8 @@
   </script>
   <script src="https://www.geogebra.org/apps/deployggb.js"></script>
   <script src="../assets/ladder.js"></script>
+  <script src="../assets/poda.js"></script>
+  <script src="../assets/cards/chance.js"></script>
   <script src="../assets/cards/engine.js"></script>
   <script src="../assets/cards/a2.js"></script>
   <script src="../assets/cards/a3.js"></script>
