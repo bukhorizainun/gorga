@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ruang guru — Gorga</title>
+  <meta name="description" content="Ruang guru Gorga: buat kelas, bagikan tautan ke siswa, dan unduh jawaban seluruh kelas sebagai CSV.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/gorga.css">
+  <link rel="stylesheet" href="../assets/activity.css">
+  <link rel="stylesheet" href="../assets/kelas.css">
+  <link rel="stylesheet" href="guru.css">
+  <script src="../assets/i18n.js"></script>
+</head>
+<body>
+  <div class="sky" aria-hidden="true"><i></i><i></i><i></i></div>
+  <header class="bar">
+    <div style="display:flex;align-items:center;gap:22px">
+      <a class="mark" href="../" id="home-link" aria-label="Gorga"><img src="../assets/logo-nila.svg" alt=""><span>gorga</span></a>
+      <nav class="crumbs" aria-label="Lokasi"><span aria-current="page" data-i18n="crumb">Ruang guru</span></nav>
+    </div>
+    <div class="bar-right">
+      <button type="button" class="ghost" id="lock-btn" hidden data-i18n="lock">Kunci</button>
+      <div class="langs" role="group" aria-label="Bahasa / Language">
+        <a href="?lang=id" data-set-lang="id">ID</a><a href="?lang=en" data-set-lang="en">EN</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="guru">
+    <!-- locked: the teacher's key opens the data -->
+    <section class="g-lock" id="lock" aria-labelledby="lock-title">
+      <span class="eyebrow" data-i18n="eyebrow">Ruang guru</span>
+      <h1 id="lock-title" data-i18n="lockTitle">Jawaban seluruh kelas, dalam satu berkas.</h1>
+      <p class="g-lead" data-i18n="lockLead">Buat kelas, bagikan tautannya ke siswa, lalu unduh jawaban mereka sebagai CSV. Siswa cukup menulis nomor dan nama sekali; tidak ada kata sandi untuk mereka.</p>
+      <form id="key-form" class="g-key" autocomplete="off">
+        <label><span data-i18n="keyLabel">Kunci guru</span><input id="key" type="password" autocomplete="current-password" spellcheck="false" required></label>
+        <label class="g-check"><input type="checkbox" id="remember"><span data-i18n="remember">Ingat di perangkat ini</span></label>
+        <button type="submit" class="kelas-go" id="key-go" data-i18n="open">Buka</button>
+        <p class="kelas-err" id="key-err" role="alert"></p>
+      </form>
+      <ol class="g-how">
+        <li><b data-i18n="how1t">Buat kelas</b><span data-i18n="how1">Tiap kelas mendapat kode, misalnya 7A-K4PX.</span></li>
+        <li><b data-i18n="how2t">Bagikan tautan atau QR</b><span data-i18n="how2">Siswa membuka tautan, lalu menulis nomor induk atau absen dan namanya.</span></li>
+        <li><b data-i18n="how3t">Unduh CSV</b><span data-i18n="how3">Setiap giliran siswa tersimpan otomatis. Ada CSV per giliran dan CSV ringkasan per soal.</span></li>
+      </ol>
+    </section>
+
+    <!-- open: classes on the left, the chosen class on the right -->
+    <section class="g-desk" id="desk" hidden>
+      <aside class="g-classes" aria-labelledby="classes-title">
+        <div class="g-head"><h2 id="classes-title" data-i18n="classes">Kelas</h2><button type="button" class="ghost" id="reload-btn" data-i18n="reload">Muat ulang</button></div>
+        <ul id="class-list" class="g-list"></ul>
+        <form id="new-form" class="g-new" autocomplete="off">
+          <label><span data-i18n="newName">Kelas baru</span><input id="new-name" maxlength="60" required data-i18n-ph="newPh" placeholder="mis. 7A · SMP Negeri 1"></label>
+          <label class="g-check"><input type="checkbox" id="new-roster"><span data-i18n="rosterOnly">Hanya nomor di daftar yang boleh masuk</span></label>
+          <button type="submit" class="kelas-go" data-i18n="create">Buat kelas</button>
+          <p class="kelas-err" id="new-err" role="alert"></p>
+        </form>
+      </aside>
+
+      <article class="g-class" id="detail" aria-live="polite">
+        <p class="g-empty" id="empty" data-i18n="empty">Pilih kelas di kiri, atau buat kelas baru.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="ipon thin"></div>
+    <span data-i18n="foot">Data kelas tersimpan di akun Cloudflare pemilik Gorga. Hanya pemegang kunci guru yang dapat membukanya. Gunakan untuk riset dengan izin sekolah dan orang tua.</span>
+  </footer>
+
+  <script>
+    gorgaApplyI18n({
+      id: {},
+      en: {
+        _title: "Teacher's room — Gorga", crumb: "Teacher's room", lock: "Lock", eyebrow: "Teacher's room",
+        lockTitle: "The whole class's answers, in one file.",
+        lockLead: "Make a class, share its link with the students, then download their answers as CSV. Students write their number and name once; they have no password.",
+        keyLabel: "Teacher's key", remember: "Remember on this device", open: "Open",
+        how1t: "Make a class", how1: "Each class gets a code, for example 7A-K4PX.",
+        how2t: "Share the link or QR", how2: "Students open the link and write their student number and name.",
+        how3t: "Download CSV", how3: "Every student turn is saved automatically. There is a CSV per turn and a summary CSV per question.",
+        classes: "Classes", reload: "Reload", newName: "New class", newPh: "e.g. 7A · Junior High 1", rosterOnly: "Only numbers on the list may join",
+        create: "Make class", empty: "Choose a class on the left, or make a new one.",
+        foot: "Class data is stored in the Gorga owner's Cloudflare account. Only the holder of the teacher's key can open it. Use it for research with the school's and parents' consent.",
+      },
+    });
+    document.getElementById("home-link").href = window.GORGA_LANG === "en" ? "../en/" : "../";
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js" integrity="sha512-ZDSPMa/JM1D+7kdg2x3BsruQ6T/JpJo3jWDWkCZsP+5yVyp1KfESqLI+7RqB5k24F7p2cV7i2YHh/890y6P6Sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="app.js"></script>
+</body>
+</html>

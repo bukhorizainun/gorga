@@ -1,0 +1,87 @@
+/* Class sign-in (assets/kelas.js): the chip in the top bar and the two dialogs.
+   Same 'Nila' language as the activity pages: glass, indigo ink, gold accent, no framed boxes. */
+
+.kelas-chip {
+  display: inline-flex; align-items: center; gap: 8px; max-width: 240px; min-height: 32px;
+  border: 0; border-radius: 999px; padding: 7px 13px 7px 11px;
+  background: rgba(28, 42, 85, .06); color: #1c2a55;
+  font: 500 13px/1 "Onest", system-ui, sans-serif; cursor: pointer;
+  transition: background .2s ease, transform .12s ease;
+}
+.kelas-chip:hover { background: rgba(28, 42, 85, .12); }
+.kelas-chip:active { transform: scale(.97); }
+.kelas-chip:focus-visible { outline: 2px solid #c39a52; outline-offset: 2px; }
+.kelas-chip .who { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kelas-chip .who b { font-weight: 500; }
+.kelas-chip.join { background: #1c2a55; color: #fff; padding: 7px 15px; }
+.kelas-chip.join:hover { background: #8a5f1c; }
+
+.kelas-chip .dot, .kelas-sync .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; background: #c39a52; }
+[data-sync="wait"] > .dot { background: #9aa3c4; animation: kelas-pulse 1.4s ease-in-out infinite; }
+[data-sync="error"] > .dot { background: #b3261e; }
+@keyframes kelas-pulse { 50% { opacity: .35; } }
+
+dialog.kelas {
+  width: min(440px, calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow: auto;
+  border: 0; border-radius: 28px; padding: 0; color: #1c2a55;
+  background: rgba(255, 255, 255, .94); -webkit-backdrop-filter: blur(22px) saturate(1.3); backdrop-filter: blur(22px) saturate(1.3);
+  box-shadow: 0 40px 90px -40px rgba(28, 42, 85, .65), 0 12px 32px -20px rgba(28, 42, 85, .35);
+}
+dialog.kelas::backdrop { background: rgba(28, 42, 85, .3); -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); }
+dialog.kelas[open] { animation: kelas-in .32s cubic-bezier(.23, 1, .32, 1); }
+@keyframes kelas-in { from { opacity: 0; transform: translateY(10px) scale(.985); } }
+@media (prefers-reduced-motion: reduce) { dialog.kelas[open], [data-sync="wait"] > .dot { animation: none; } }
+
+.kelas form { display: grid; gap: 14px; padding: 28px 28px 22px; }
+.kelas-mark { display: inline-flex; align-items: center; gap: 8px; color: #1c2a55; }
+.kelas-mark img { width: 26px; height: 26px; }
+.kelas-mark span { font: 500 22px/1 "Cormorant Garamond", Georgia, serif; }
+.kelas h2 { margin: 6px 0 0; font: 400 36px/1.02 "Cormorant Garamond", Georgia, serif; letter-spacing: -.01em; }
+.kelas-lead { margin: 0; font-size: 15px; line-height: 1.55; color: #34437a; }
+.kelas-lead b { font-weight: 600; color: #1c2a55; }
+
+.kelas label { display: grid; gap: 6px; }
+.kelas label[hidden], .kelas-class[hidden] { display: none; }
+.kelas label span, .kelas-class .lbl { font: 600 10.5px/1.2 "Onest", system-ui, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #56628f; }
+.kelas input {
+  width: 100%; padding: 13px 16px; border: 0; border-radius: 14px;
+  background: rgba(28, 42, 85, .06); color: #1c2a55; font: 500 17px "Onest", system-ui, sans-serif;
+  outline: none; transition: background .2s ease, box-shadow .2s ease;
+}
+.kelas input:focus { background: #fff; box-shadow: 0 0 0 2px #c39a52; }
+.kelas input[name="code"] { text-transform: uppercase; letter-spacing: .08em; }
+
+.kelas-class { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; padding: 12px 16px; border-radius: 14px; background: rgba(195, 154, 82, .12); }
+.kelas-class b { font: 500 19px/1.2 "Onest", system-ui, sans-serif; }
+.kelas-class code { font: 500 12.5px "JetBrains Mono", ui-monospace, monospace; color: #56628f; }
+.kelas-class button { margin-left: auto; border: 0; background: none; padding: 2px 0; color: #8a5f1c; font: 500 13px "Onest", system-ui, sans-serif; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+
+.kelas-err { margin: 0; min-height: 1.2em; font-size: 13.5px; line-height: 1.45; color: #b3261e; }
+.kelas-err:empty { min-height: 0; }
+.kelas-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex-wrap: wrap; margin-top: 2px; }
+.kelas-go {
+  border: 0; border-radius: 999px; padding: 13px 24px; background: #1c2a55; color: #fff;
+  font: 500 15px/1 "Onest", system-ui, sans-serif; cursor: pointer; transition: background .2s ease, transform .12s ease;
+}
+.kelas-go:hover { background: #8a5f1c; }
+.kelas-go:active { transform: scale(.97); }
+.kelas-go:disabled { opacity: .6; cursor: default; }
+.kelas-later { margin-right: auto; border: 0; background: none; padding: 10px 4px; color: #56628f; font: 500 14px "Onest", system-ui, sans-serif; cursor: pointer; }
+.kelas-later:hover { color: #1c2a55; }
+.kelas-go:focus-visible, .kelas-later:focus-visible, .kelas-class button:focus-visible { outline: 2px solid #c39a52; outline-offset: 2px; }
+.kelas-fine { margin: 0; font-size: 12.5px; color: #5f6994; }
+.kelas-sync { display: flex; align-items: center; gap: 9px; margin: 0; font-size: 14px; color: #34437a; }
+
+@media (max-width: 760px) {
+  .kelas-chip { max-width: 130px; padding: 6px 11px 6px 9px; font-size: 12.5px; }
+  .kelas-chip .cls { display: none; }
+  .kelas form { padding: 24px 20px 18px; }
+  .kelas h2 { font-size: 32px; }
+}
+/* phones: the bar holds the logo, the chip, the teacher switch and the language pair */
+@media (max-width: 520px) {
+  .bar:has(.kelas-chip) .mark span { display: none; }
+  .bar-right:has(.kelas-chip) { gap: 10px; }
+  .bar-right:has(.kelas-chip) .switch span { display: none; }
+  .kelas-chip { max-width: 112px; }
+}
