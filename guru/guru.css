@@ -122,3 +122,22 @@ dialog.g-qr { width: min(560px, calc(100% - 32px)); }
   .g-key { grid-template-columns: 1fr; }
   .g-key .kelas-go { grid-column: 1; grid-row: auto; justify-self: start; }
 }
+
+/* One student's conversation, rebuilt from the saved turns */
+.g-acts { white-space: nowrap; }
+.g-view { border: 0; background: none; padding: 4px 6px; color: var(--nila); font: 500 12.5px var(--sans); cursor: pointer; border-radius: 8px; text-decoration: underline; text-underline-offset: 3px; }
+.g-view:hover { background: rgba(28, 42, 85, .06); }
+.g-view:disabled { color: var(--nila-3); text-decoration: none; cursor: default; }
+dialog.g-talk { width: min(760px, calc(100% - 32px)); max-height: calc(100vh - 48px); }
+.g-talk h2 small { display: block; font: 400 13px var(--sans); color: var(--nila-3); margin-top: 4px; }
+.g-talk-body { max-height: calc(100vh - 230px); overflow-y: auto; display: grid; gap: 22px; padding-right: 4px; }
+.g-talk-q { display: flex; flex-direction: column; gap: 10px; }
+.g-talk-q h3 { margin: 0 0 2px; font: 600 14px var(--sans); color: var(--nila); }
+.g-talk-q h3 small { display: block; font-weight: 400; color: var(--nila-3); margin-top: 2px; }
+.g-talk-s { align-self: flex-end; max-width: 78%; background: var(--nila); color: #fff; border-radius: 16px 16px 4px 16px; padding: 9px 13px; }
+.g-talk-s p { margin: 0; }
+.g-talk-s small { display: block; opacity: .7; font-size: 11px; margin-top: 3px; text-align: right; }
+.g-talk-p { align-self: flex-start; max-width: 82%; background: #fff; border: 1px solid rgba(28, 42, 85, .1); border-radius: 16px 16px 16px 4px; padding: 9px 13px; }
+.g-talk-p span { display: block; font: 600 11px var(--sans); color: #8a5f1c; letter-spacing: .02em; margin-bottom: 3px; }
+.g-talk-p p { margin: 0; }
+.g-talk-note { align-self: center; margin: 0; font-size: 12.5px; color: var(--nila-3); }
